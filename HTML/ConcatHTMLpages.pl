@@ -18,16 +18,14 @@ foreach $file (@Order)
 		shift(@CurrentFile);
 	};
 	# Insert a page break in printing
-	if($HeaderPrinted)
-	{
-		$anchorName = $file;
-		$anchorName =~ s/\.html//g;
-		print <<"ENDOFCHAPTERHEADER";
+	$anchorName = $file;
+	$anchorName =~ s/\.html//g;
+	print <<"ENDOFCHAPTERHEADER";
 	<p style="page-break-before:always;">
 	<a name="$anchorName">&nbsp;</a>
 	</p>
 ENDOFCHAPTERHEADER
-	};
+
 	++$HeaderPrinted;
 	
 	
