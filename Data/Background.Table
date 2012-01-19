@@ -1,0 +1,12 @@
+font	size	align	colour	text
+Helvetica	96	centre	{0.9,0.9,0.9}	 
+!demo command	0	-	{0.9,0.7,0.7}	Line width... 5
+!demo command	0	-	{0.9,0.7,0.7}	Draw line... 10 [[{YTEXT$} + 1.4*{DY$}]] 75 [[{YTEXT$} + 1.4*{DY$}]]
+!demo command	0	-	{0.9,0.9,0.9}	Line width... 1
+Helvetica	96	centre	{0.9,0.9,0.9}	NKI       
+Helvetica	96	centre	{0.9,0.9,0.9}	TE-VOICE ANALYSIS       
+Helvetica	84	centre	{0.9,0.9,0.9}	TOOL       
+!demo command	0	-	{0.9,0.7,0.7}	Line width... 5
+!demo command	0	-	{0.9,0.7,0.7}	Draw line... 10 [[{YTEXT$} + 1.0*{DY$}]] 75 [[{YTEXT$} + 1.0*{DY$}]]
+!demo command	0	-	{0.9,0.9,0.9}	Line width... 1
+Helvetica	96	centre	{0.9,0.9,0.9}	 

@@ -1,0 +1,80 @@
+ManPagesTextFile
+"Analysis" "R.J.J.H. van Son" 20111213 0
+<intro> "Praat commands used to calculate the analysis results"
+<normal> "TEVA is a Praat script. The commands used to perform the analysis and draw the 
+displays are listed here:"
+
+<entry> "Displays"
+<entry> "##[Sound]#"
+<code> "-"
+
+<entry> "##[Pitch]#"
+<code> "select Sound SND"
+<code> "##[Sound: To Pitch...|To Pitch...]# 0 60 600"
+
+<entry> "##[Spectrogram]#"
+<code> "select Sound SND"
+<code> "##[Sound: To Spectrogram...|To Spectrogram...]# 0.1 'F__n_' 0.001 10 Gaussian"
+<normal> "F__n_ is the Nyquist frequency"
+
+<entry> "##[Ltas]#"
+<code> "select Sound SND"
+<code> "##[Sound: To Spectrum...|To Spectrum...]# yes"
+<code> "##[Spectrum: To Ltas (1-to-1)|To Ltas (1-to-1)]#"
+		
+<entry> "##[Intensity]#"
+<code> "select Sound SND"
+<code> "##[Sound: To Intensity...|To Intensity...]# 60 0 yes"
+
+<entry> "##[Harmonicity]#"
+<code> "select Sound SND"
+<code> "##[Sound: To Harmonicity (cc)...|To Harmonicity (cc)...]# 'dT' 60 0.1 1.0"
+<normal> "dT is the time step"
+
+<entry> "Measurements"
+<entry> "Voiced fraction"
+<code> "select Sound SND"
+<code> "##[Sound: To Pitch...|To Pitch...]# 0 60 600"
+<normal> "Count the number of voiced frames in the window and divide by the total number of frames. 
+Using these settings, the step size (frame duration) is 0.0125s."
+
+<entry> "GNE (glottal to noise excitation ratio) "
+<code> "select Sound SND"
+<code> "Extract part... 'T__1_' 'T__2_' rectangular 1.0 false"
+<code> "To Harmonicity (gne)... 500 4500 1000 80"
+<code> "gne = Get maximum"
+<normal> "T__1_ and T__2_ are the start and end time, respectively"
+
+<entry> "##[Voice 2. Jitter|Jitter]#"
+<code> "select Sound SND"
+<code> "##[Sound: To Pitch...|To Pitch...]# 0 60 600"
+<code> "##[Pitch: To PointProcess|To PointProcess]#"
+<code> "jitter = ##[PointProcess: Get jitter (local)...|Get jitter (local)...]# 'T__1_' 'T__2_' 0.0001 0.05 5"
+<normal> "T__1_ and T__2_ are the start and end time, respectively"
+
+<entry> "##[Voice 3. Shimmer|Shimmer]#"
+<code> "select Sound SND"
+<code> "##[Sound: To Pitch...|To Pitch...]# 0 60 600"
+<code> "##[Pitch: To PointProcess|To PointProcess]#"
+<code> "select Sound SND"
+<code> "plus PointProcess SND"
+<code> "shimmer = Get shimmer (local)... 'T__1_' 'T__2_' 0.0001 0.05 5 5"
+<normal> "T__1_ and T__2_ are the start and end time, respectively"
+
+<entry> "BED (band energy difference)"
+<code> "select Sound SND"
+<code> "##[Sound: To Spectrum...|To Spectrum...]# yes"
+<code> "##[Spectrum: To Ltas (1-to-1)|To Ltas (1-to-1)]#"
+<code> "Get number of bins"
+<normal> "Average power over bins. Where $lowPower is the average power over bins between 
+0 and 500 Hz and $highPower is the average power over bins between 4000 and 5000 Hz"
+<code> "bed = 10 * log10(lowPower / highPower)"
+
+<entry> "CoG (spectral center of gravity)"
+<code> "select Sound SND"
+<code> "##[Sound: To Spectrum...|To Spectrum...]# yes"
+<code> "##[Spectrum: To Ltas (1-to-1)|To Ltas (1-to-1)]#"
+<code> "Get number of bins"
+<normal> "Sum the power ($$10^^(power/10)^$), $sumPower over the bins and the product of frequency and energy
+($$f * 10^^(power/10)^$), $productFreq, over all bins."
+<code> "cog = productFreq / sumPower"

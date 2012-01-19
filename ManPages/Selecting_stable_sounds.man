@@ -1,0 +1,41 @@
+ManPagesTextFile
+"Selecting stable sounds" "R.J.J.H. van Son" 20111220 0
+<intro> "How to select a stable part of the voice."
+<normal> "Record or Open an /a/ sound and add information about the speaker and recording:"
+<list_item> "\bu @@Recording your own voice@"
+<list_item> "\bu @@Opening an existing recording@"
+<list_item> "\bu @@Adding speaker information@"
+
+<entry> "Introduction and basics"
+<normal> "Not all parts of your recording will be useful for the analysis. Selecting 
+a part of the recording is done with the buttons around the %Select button. If the current interval is smaller than the current window, 
+the boundaries of the current interval are indicated by vertical blue lines. With %%Zoom in% (+) and %%Zoom out% (-) you can decrease and increase the size 
+of the window. With the %Previous and %Next buttons you can step through the recording. With the %Select button you can indicate the start and end of 
+the preferred interval. "
+
+<entry> "Selecting a stable interval of speech"
+
+<normal> "Go to the %Spectrogram for selecting a stable part of your /a/ recording. %%Zoom out% until you see the complete recording. You might 
+notice that the recorded sound is not 4 seconds long (or whatever your recording setting is). TEVA will cut off silence at the start and end of the 
+recording. A stable /a/ sound will show a smooth spectrogram with many harmonics as horizontal lines. The more harmonics are clearly visible, 
+the better the voice is. Find the longest stretch of speech with many, flat harmonics. This will be the interval to analyse. For the 
+@@Acoustic Signal Typing@ analysis, around 0.1-0.2 seconds of speech are needed."
+
+<normal> "Click on %Select. A blue text will appear below the display ""%%Select new start time (or press Select or a key to continue)%"". If you 
+press %Select again or press any key on the keyboard, the selection procedure will stop. Use the mouse pointer to click on the start 
+of the desired stable interval inside the display."
+
+<normal> "A vertical blue line will be draw at the point where you clicked. The text below the display will have changed to 
+""%%Select new end time (or press Select or a key to continue)%"". Use the mouse pointer to click on the end of the desired stable interval 
+inside the display. A second blue line will appear and the text disappears. "
+
+<normal> "If you now click on the %Play button, you will hear only the 
+fragment you selected. The blue lines will be present in all other displays, except the %Ltas display. The %Ltas display will have changed and will 
+only give the spectrum of the selected interval. All the statistics printed below the displays will refer to only the selected interval."
+
+<normal> "You can move around the selected interval with the %Previous and %Next buttons. You can make the window match the selected interval by 
+clicking on %%To selection%." 
+
+<entry> "Next:"
+<list_item> "\bu @@Determine pathological type@"
+<list_item> "\bu @@Saving a report@"

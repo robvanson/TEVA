@@ -1,0 +1,62 @@
+ManPagesTextFile
+"Getting started with TEVA" "R.J.J.H. van Son" 20111206 0
+<intro> "The NKI TE-VOICE ANALYSIS tool (TEVA) is a multi-platform stand-alone application. It is 
+available for MS Windows, Apple Macintosh OSX, and Linux. It is also available as a separate interactive 
+Praat script (http://www.praat.org)." 
+<entry> "Getting a copy of TEVA"
+<normal> "TEVA is licensed under the @@TEVA license|GNU GPLv2@ and can be freely used and distributed. You can 
+download a copy of TEVA from ##http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/#. TEVA 
+can be saved on your hard disk or USB thumb drive and started by clicking on the icon."
+
+<entry> "The TEVA pages"
+<normal> "After you start TEVA, a window will appear. This will initially contain the %Main page. 
+In normal practice, this is the page you will spend most of your time in. 
+There is a second page which allows you to change the settings of the application, 
+the %Configuration page. You can turn pages using a button on the top right of each page 
+(with an arrow symbol \->)."
+
+<normal> "Each page contains a number of buttons. The %Main page also contains a canvas which is used 
+to draw the results of the analysis on. You interact with TEVA by clicking the buttons. For instance, 
+at the top-right of the Main page, there is a #Quit button labeled with a red #$X cross that will terminate the 
+application when you click on it. While the TEVA application is busy processing whatever the click of a button 
+asks it to do, the button will be grayed out (the label will be gray too instead of black or colored). 
+While a button is grayed out, TEVA will not respond to other button clicks."
+
+<normal> "Every button has a keyboard shortcut. This shortcut is generally a single character, one of the letters of the 
+label on the button. That character will be printed in %italic in the label. For instance, in English, the 
+Quit button is labeled ##%%Q%uit# (with an italic %Q). Hitting the #Q key (upper or lowercase) will terminate the program."
+
+<normal> "You can change the size of the TEVA window just as you can with every other window on your desktop. 
+However, you will notice that the positioning of the buttons and texts on the page will be off. 
+Sometimes the windows will look completely scrambled. The page can be redrawn with the #Refresh button 
+or by hitting the ##space bar#. Use the ##space bar# when the page is so scrambled that you cannot click the 
+#Refresh button anymore."
+
+<normal> "Each page contains a #Help button. This button is labeled with a ##?# question mark. Hitting the 
+##?# or ##/# key will start the interactive #Help service. While #Help is active, a single line of help text will 
+appear whenever you click a button. Clicking the #Help button again will stop the #Help service. The help text 
+for each button will include the keyboard shortcuts in the current language."
+
+<entry> "General functions"
+<normal> "Here are descriptions of a few often used buttons for general use. 
+English labels will be used here. The keyboard shortcuts are given between the [brackets] (might depend on language)."
+<list_item> "On the %Main page"
+<list_item> "\bu #Quit: [Q] Stop TEVA. Will save the current preferences"
+<list_item> "\bu #Settings: [S] Go to %Configuration page"
+<list_item> "\bu #Refresh: [h] Redraw the current page, hitting the space-bar always refreshes the screen"
+<list_item> "\bu #Help: [?] Press on the button you want information on, press %%Help% again to continue"
+<list_item> "  "
+<list_item> "On the %Configuration page"
+<list_item> "\bu #Help: [?] Press the button you want information on, press %%Help% again to continue"
+<list_item> "\bu #Return: [R] Go back to %Main page"
+<list_item> "\bu #English: [E] Use English labels and help"
+<list_item> "\bu #Deutsch: [D] Use German labels and help"
+<list_item> "\bu #Nederlands: [N] Use Dutch labels and help"
+<list_item> "\bu #Manual: [M] Display this manual"
+
+<normal> "More can be found in @@Overview of Main page@ and @@Overview of Configuration page@ ."
+
+<entry> "Language support"
+<normal> "TEVA supports a few languages, currently English, German, and Dutch. Extending this to other languages 
+is rather easy (just translating a few dozen sentences). But it can only be done with the help of a native speakers of that language. 
+Please contact us if you would like to help to port TEVA to your language."

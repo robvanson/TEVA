@@ -1,0 +1,19 @@
+ManPagesTextFile
+"Opening an existing recording" "R.J.J.H. van Son" 20111220 0
+<intro> "How to open existing sound files in TEVA."
+
+<entry> "Audio formats"
+<normal> "TEVA can handel all ##[Sound files|audio file formats]## that Praat can read. 
+This includes, among others, WAV, AIFF/C, FLAC, and MP3 files."
+
+<entry> "Open a file"
+<normal> "To open an existing recording, click the %Open button on the @@Overview of Main page|Main page@. 
+A file select window will open which allows you to select the file in the customary way. Then click %Choose. 
+The file will open and the currently selected analysis display will be drawn."
+
+<entry> "Next:"
+<list_item> "\bu @@Recording your own voice@"
+<list_item> "\bu @@Selecting stable sounds@"
+<list_item> "\bu @@Adding speaker information@"
+<list_item> "\bu @@Determine pathological type@"
+<list_item> "\bu @@Saving a report@"

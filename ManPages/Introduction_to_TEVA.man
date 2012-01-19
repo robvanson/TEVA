@@ -1,0 +1,12 @@
+ManPagesTextFile
+"Introduction to TEVA" "R.J.J.H. van Son" 20111206 0
+<intro> "the NKI TE-VOICE ANALSYSIS tool (TEVA) is developed as a tool for use in education and research. 
+TEVA is intended to help Speech Pathologists and other researchers to study 
+the acoustic characteristics of TE speech and to allow them to 
+get experience with the acoustic analysis of Tracheoesophageal (TE) speech."
+
+<entry> "Introduction"
+<normal> "TEVA is build on top of the Praat phonetics software package (http://www.praat.org). As such  
+TEVA presents a selection of the relevant analysis methods with an easy to use interface. 
+The approach to the analysis of TE speech used in TEVA is based on the work of Corina van As as described in her 
+PhD thesis (@@Acoustic Signal Typing|Van As, 2001@)."

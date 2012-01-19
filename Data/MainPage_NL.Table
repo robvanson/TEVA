@@ -1,0 +1,27 @@
+Label	Text	Key	Helptext
+!Author	Auteur	¤	R.J.J.H. van Son
+!Copyright	Copyright	¤	Copyright 2010 R.J.J.H. van Son \&  the NKI
+!License	Licentie	¤	GNU GPL version 2 or later
+!WindowTitle	NKI TE-VOICE ANALYSIS tool: Hoofdpagina 	¤	NKI TE-VOICE ANALYSIS tool: Hoofdpagina
+!PathologicalType	- Pathologisch type:	01234	Pathologisch type in venstertitel I-IV
+Speaker	!90!Spreker	r	Invoer spreker gegevens
+File	Open	p	Open geluids bestand
+Record	Opnemen	O	Neem spraak op. U hebt 4 seconden, let op het rode "lampje"
+Play	Afspelen	A	Speel je opgenomen uitspraak af
+Quit	Stop	S	Stop NKI TE-VOICE ANALYSIS tool
+Config	Instellingen	I	Ga naar de pagina met instellingen
+Refresh	Ververs	r	Ververs de huidige pagina, de spatiebalk ververst altijd de pagina
+Help	Help	?/	Druk op de knop waar u informatie over wilt hebben, "Help" als u verder wilt
+Save	Bewaar \# 	#	Bewaar metingen en opname
+Draw_Sound	Geluid	G	Teken de geluidsfile
+Draw_Pitch	Toon	T	Teken de toonhoogte
+Draw_Harmonicity	Harmoniciteit	H	Teken de Harmonicity to Noise ratio
+Draw_Spectrogram	Spectrogram	L	Smalband spectrogram (100 ms)
+Draw_Ltas	Ltas	L	Long time average spectrum
+Draw_Intensity	Intensiteit	I	Teken de intensiteit
+Select	Selecteer	e	Selecteer nieuwe start en eindtijd
+ToSelection	Naar selectie	c	Ga naar geselecteerde start and eindtijd
+ZoomOut	Zoom uit -	u\-_	Verdubbel het huidige tijdsvenster
+ZoomIn	Zoom in +	n+=	Halveer het huidige tijdsvenster
+Previous	< Vorige	\<\,	Vorige interval
+Next	Volgende >	\>\.	Volgende interval

@@ -1,0 +1,27 @@
+ManPagesTextFile
+"TEVA license" "R.J.J.H. van Son" 20111206 0
+<entry> "NKI TE-VOICE ANALYSIS tool version 1.0"
+<normal> "Netherlands Cancer Institute tool for ##Tracheoesophageal Voice Analysis# (TEVA)"
+<normal> "For more information, visit our website: http://www.fon.hum.uva.nl/rob/PraatDemoApps. 
+TEVA is based on Praat (http://www.praat.org)"
+<normal> "This application was made possible by an unrestricted research grant from: 
+##ATOS MEDICAL AB#: P.O. BOX 183 SE-242 22 H\O""RBY SWEDEN"
+
+<normal> "This application is licensed under the GNU GPL version 2 or later (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)"
+<code> "The NKI TE-VOICE ANALYSIS tool"
+<code> "Copyright \co 2011 Netherlands Cancer Institute and R.J.J.H. van Son"
+<code> "Praat code Copyright \co 1992-2011 Paul Boersma and David Weenink"
+
+<normal> "$$This program is free software; you can redistribute it and/or 
+modify it under the terms of the GNU General Public License 
+as published by the Free Software Foundation; either version 2 
+of the License, or (at your option) any later version.$"
+
+<normal> "$$This program is distributed in the hope that it will be useful, 
+but ##WITHOUT ANY WARRANTY#; without even the implied warranty of 
+##MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE#.  See the 
+GNU General Public License for more details.$"
+
+<normal> "$$You should have received a copy of the GNU General Public License 
+along with this program; if not, write to the Free Software 
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.$"

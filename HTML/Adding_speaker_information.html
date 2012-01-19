@@ -1,0 +1,93 @@
+<html><head><meta name="robots" content="index,follow">
+<title>Adding speaker information</title></head><body bgcolor="#FFFFFF">
+
+<table border=0 cellpadding=0 cellspacing=0><tr><td bgcolor="#CCCC00"><table border=4 cellpadding=9><tr><td align=middle bgcolor="#000000"><font face="Palatino,Times" size=6 color="#999900"><b>
+Adding speaker information
+</b></font></table></table><p align=center>
+<a href="Main_page_screenshot.png" target="_blank"><img width="33%" src="Main_page_screenshot.png"></a>
+</p>
+<p>
+How to add information about a speaker to TEVA.</p>
+<p>
+Record or Open an /a/ sound, select a stable part of the recording:</p>
+<ul>
+<li>
+&nbsp;<a href="Recording_your_own_voice.html">Recording your own voice</a>
+<li>
+&nbsp;<a href="Opening_an_existing_recording.html">Opening an existing recording</a>
+<li>
+&nbsp;<a href="Selecting_stable_sounds.html">Selecting stable sounds</a>
+</ul>
+<h3>
+Adding information about a recording<p align=center>
+<a href="Speaker_screenshot.png" target="_blank"><img width="25%" src="Speaker_screenshot.png"></a>
+</h3></p>
+<p>
+TEVA can keep a record of recordings. Click the <i>Speaker</i> button at the bottom 
+left of the <a href="Overview_of_Main_page.html">Main page</a>. A window will open where you can enter an 
+identifier (name or code) and other information like sex, age, treatment etc. There is also 
+a field for more informal comments. The string before the first punctuation mark on the first line 
+of the window (the Speaker ID field) will be used internally to represent the ID code of the speaker. 
+Click the <i>Ready</i> button when you have completed the input. You can change the text later if you like.</p>
+<h3>
+Reading a table with speaker information</h3>
+<p>
+In general, it is better to collect speaker information in a table beforehand. 
+You can open such a table with the <i>Open</i> button in the <a href="Overview_of_Main_page.html">Main page</a>, 
+or with the <i>Data</i> button in the <a href="Overview_of_Configuration_page.html">Configuration page</a>. When opened,
+you will have to select a specific speaker or recording from the list. This is done using the <i>Speaker</i> button 
+on the <a href="Overview_of_Main_page.html">Main page</a>. You can type in the ID code of the recording, or the line number in the 
+table, and click <i>Ready</i>. Or you can step through all the records with the next (&gt;) and previous (&lt;) buttons.</p>
+<p>
+You can save changes to the list with the <i>Save</i> button in the 
+<a href="Overview_of_Configuration_page.html">Configuration page</a>.</p>
+<h3>
+Format of the speaker info table <p align=center>
+<a href="SpeakerInfo_screenshot.png" target="_blank"><img width="25%" src="SpeakerInfo_screenshot.png"></a>
+</h3></p>
+<p>
+Speaker Info tables are tab delimited (tsv) lists with four fields, starting with a line 
+with the field names separated by tabs.</p>
+<dl>
+<dd>
+1: ID of speaker or recording (must be unique)
+<dd>
+2: Essential information, often starting with the ID code
+<dd>
+3: Free form comments
+<dd>
+4: Relative path to the audio file
+</dl>
+<p>
+If the table contains a path to a sound file, this file will be opened automatically 
+when the record is chosen</p>
+<p>
+An example file:</p>
+<code>
+ID          Text                        Description Audio<br></code>
+<code>
+Speaker1    Speaker1, M 66yo, Type I    [comments]  signaltype1voicesample.wav<br></code>
+<code>
+Speaker2    Speaker2, M 48yo, Type II   [comments]  signaltype2voicesample.wav<br></code>
+<code>
+Speaker3    Speaker3, F 77yo, Type III  [comments]  signaltype3voicesample.wav<br></code>
+<code>
+Speaker4    Speaker4, F 48yo, Type IV   [comments]  signaltype4voicesample.wav<br></code>
+<h3>
+Next:</h3>
+<ul>
+<li>
+&nbsp;<a href="Determine_pathological_type.html">Determine pathological type</a>
+<li>
+&nbsp;<a href="Saving_a_report.html">Saving a report</a>
+</ul>
+<h3>Links to this page</h3>
+<ul>
+<li><a href="TEVA_Tutorials.html">TEVA Tutorials</a>
+</ul>
+<hr>
+<address>
+	<p>&copy; R.J.J.H. van Son, December 20, 2011</p>
+</address>
+</body>
+</html>

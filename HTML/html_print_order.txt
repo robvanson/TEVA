@@ -1,0 +1,16 @@
+NKI_TE-VOICE_ANALYSIS_tool.html
+Introduction_to_TEVA.html
+Getting_started_with_TEVA.html
+Overview_of_Main_page.html
+Overview_of_Configuration_page.html
+TEVA_Tutorials.html
+Recording_your_own_voice.html
+Opening_an_existing_recording.html
+Adding_speaker_information.html
+Selecting_stable_sounds.html
+Determine_pathological_type.html
+Saving_a_report.html
+Analysis.html
+Acoustic_Signal_Typing.html
+AST_categories.html
+TEVA_license.html

@@ -1,0 +1,30 @@
+ManPagesTextFile
+"Saving a report" "R.J.J.H. van Son" 20111220 0
+<intro> "Generate a printable report."
+<normal> "Record or Open an /a/ sound, select a stable part of the recording and add information 
+about the speaker and recording:"
+<list_item> "\bu @@Recording your own voice@"
+<list_item> "\bu @@Opening an existing recording@"
+<list_item> "\bu @@Selecting stable sounds@"
+<list_item> "\bu @@Adding speaker information@"
+<list_item> "\bu @@Determine pathological type@"
+
+<normal> "After selecting a stable part of a recording and determining the pathological type, 
+the results should be stored in a report for later use. This is done by clicking the %Save 
+button on the @@Overview of Main page|Main page@. A name can be entered and then click %Save. 
+The default name is the ID code in the Speaker information."
+
+<normal> "All displays are regenerated and a map (directory) is created with the report in 
+two formats: An HTML document and an ODT (.odt) document. The odt document can be opened with 
+LibreOffice.org and OpenOffice.org and printed on all platforms. On MS Windows and Mac OSX, a web 
+page (HTML) file is generated with the same information:"
+<list_item> "Windows: Open the HTML file with Internet Explorer, graphics are in Windows Meta File formant (MFT)"
+<list_item> "Mac OSX: Open the HTML file with Safari, graphics are in PDF format"
+<normal> "%%(work is under way to generate HTML files on all platforms using PNG graphics)%"
+
+<entry> "Viewing and printing"
+<normal> "The report files are in the directory with the name you saved, e.g., %Speaker3. Inside, there are 
+three files and two directories. The files are %%Exmaple1%.odt and %%Speaker3%.html (the latter not on Linux). 
+There is also a copy of the recording in the directory. The two subdirectories contain the graphics, one is 
+called %eps and contains the graphics in %eps format, the other is called either %wmf (Windows) or %pdf (OSX) 
+and contains the graphics in %wmf or %pdf format."

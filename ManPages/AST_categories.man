@@ -1,0 +1,25 @@
+ManPagesTextFile
+"AST categories" "R.J.J.H. van Son" 20111201 0
+<entry> "Category boundaries"
+<normal> "Categories are determined when the corresponding analysis is performed, e.g., when a display is drawn or data are saved. 
+Automatically determined values are displayed in Arabic numbers (1, 2, 3, 4). Categories set by hand are displayed by Roman 
+numerals (%I, %II, %III, %IV). Category boundaries are taken from (Van As, 2001, Table 5.4 p88) and here indicated by Roman numerals for clarity."
+<list_item> "\bu Voiced Fraction:"
+<list_item> "  %I < 90.2\%  < %II < 77.45\%  < %III < 50\%  < %IV (VF < 50\%  is %IV also for F__0_ sd and Jitter)"
+
+<list_item> "\bu F__0_ standard deviation:"
+<list_item> "  %I < 3.360 < %II < 7.495 < %III; %IV if Voiced Fraction < 50\% "
+
+<list_item> "\bu Jitter:"
+<list_item> "  %I < 5.3\%  < %II < 8.05\%  <  %III; %IV if Voiced Fraction < 50\% "
+
+<list_item> "\bu Mean Harmonicity:"
+<list_item> "  %I > 7.195 > %II > 4.050 > %III > 1.925 > %IV (dB)"
+
+<list_item> "\bu GNE:"
+<list_item> "  %I > 0.820 > %II > 0.795 > %III > .745 > %IV"
+
+<list_item> "\bu BED:"
+<list_item> "  %I > 23.85 > %II > 19.95 > %III > 13.50 > %IV (dB)"
+
+<normal> "The final automatic AST category is defined as the median of the individual measures."

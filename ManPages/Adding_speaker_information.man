@@ -1,0 +1,47 @@
+ManPagesTextFile
+"Adding speaker information" "R.J.J.H. van Son" 20111220 0
+<intro> "How to add information about a speaker to TEVA."
+<normal> "Record or Open an /a/ sound, select a stable part of the recording:"
+<list_item> "\bu @@Recording your own voice@"
+<list_item> "\bu @@Opening an existing recording@"
+<list_item> "\bu @@Selecting stable sounds@"
+
+<entry> "Adding information about a recording"
+<normal> "TEVA can keep a record of recordings. Click the %Speaker button at the bottom 
+left of the @@Overview of Main page|Main page@. A window will open where you can enter an 
+identifier (name or code) and other information like sex, age, treatment etc. There is also 
+a field for more informal comments. The string before the first punctuation mark on the first line 
+of the window (the Speaker ID field) will be used internally to represent the ID code of the speaker. 
+Click the %Ready button when you have completed the input. You can change the text later if you like."
+
+<entry> "Reading a table with speaker information"
+<normal> "In general, it is better to collect speaker information in a table beforehand. 
+You can open such a table with the %Open button in the @@Overview of Main page|Main page@, 
+or with the %Data button in the @@Overview of Configuration page|Configuration page@. When opened,
+you will have to select a specific speaker or recording from the list. This is done using the %Speaker button 
+on the @@Overview of Main page|Main page@. You can type in the ID code of the recording, or the line number in the 
+table, and click %Ready. Or you can step through all the records with the next (>) and previous (<) buttons."
+
+<normal> "You can save changes to the list with the %Save button in the 
+@@Overview of Configuration page|Configuration page@."
+
+<entry> "Format of the speaker info table"
+<normal> "Speaker Info tables are tab delimited (tsv) lists with four fields, starting with a line 
+with the field names separated by tabs."
+<list_item> "1: ID of speaker or recording (must be unique)"
+<list_item> "2: Essential information, often starting with the ID code"
+<list_item> "3: Free form comments"
+<list_item> "4: Relative path to the audio file"
+<normal> "If the table contains a path to a sound file, this file will be opened automatically 
+when the record is chosen"
+
+<normal> "An example file:"
+<code> "ID          Text                        Description Audio"
+<code> "Speaker1    Speaker1, M 66yo, Type I    [comments]  signaltype1voicesample.wav"
+<code> "Speaker2    Speaker2, M 48yo, Type II   [comments]  signaltype2voicesample.wav"
+<code> "Speaker3    Speaker3, F 77yo, Type III  [comments]  signaltype3voicesample.wav"
+<code> "Speaker4    Speaker4, F 48yo, Type IV   [comments]  signaltype4voicesample.wav"
+
+<entry> "Next:"
+<list_item> "\bu @@Determine pathological type@"
+<list_item> "\bu @@Saving a report@"

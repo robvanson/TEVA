@@ -1,0 +1,27 @@
+Label	Text	Key	Helptext
+!Author	Autor	¤	R.J.J.H. van Son, \U"bersetzung: Irene Jacobi
+!Copyright	Copyright	¤	Copyright 2010 R.J.J.H. van Son \&  the NKI
+!License	Lizenz	¤	GNU GPL version 2 or later
+!WindowTitle	DemoVersion: Hauptseite	¤	DemoVersion: Hauptseite
+!PathologicalType	- Pathologischer Typos:	01234	Pathologischer Typos in \U"berschrift I-IV
+Speaker	!90!Sprecher	p	Eingabe Sprecher daten
+File	\O"ffnen	f	Laden einer Audio-Datei
+Record	Aufnahme	A	Machen Sie eine Sprachaufnahme. Sie haben 4 Sekunden bevor die Aufnahme beginnt; achten Sie auf das rote Licht.
+Play	Wiedergabe	W	Abspielen der Aufnahme
+Quit	Ende	E	Das Programm beenden
+Config	Einstellungen	g	Zur Seite "Einstellungen"
+Refresh	Aktualisieren	u	Der aktuelle Bildschirm wird abgebildet. Mit der Leertaste kann der Bildschirm aktualisiert werden.
+Help	Hilfe	?/	Dr\u"cken Sie auf den Knopf \u"ber den Sie Informationen m\o"chten. Dr\u"cken Sie danach auf "Hilfe".
+Save	Speichern \#	#	Speichern der Daten und Aufnahme
+Draw_Sound	Audio	d	Abbildung des Audiosignals
+Draw_Pitch	Tonh\o"he	T	Abbildung der Tonh\o"he
+Draw_Harmonicity	Harmonizit\a"t	H	Abbildung des Harmonicity-to-Noise Verh\a"ltnis
+Draw_Spectrogram	Spektrogramm	S	Abbildung des Schmalband-Spektrogramms (100 ms)
+Draw_Ltas	Ltas	L	Abbildung des gemittelten Langzeitspektrums
+Draw_Intensity	Intensit\a"t	I	Abbildung der Intensit\a"t
+Select	Selektieren	r	Selektieren von Start- und Endzeiten
+ToSelection	Zur Selektion	Z	Gehe zum selektierten Abschnitt
+ZoomOut	Zoom out +	o+=	Verdoppelung der Fenstergr\o"sse / Verkleinern
+ZoomIn	Zoom in -	m\-_	Halbierung der Fenstergr\o"sse / Vergr\o"ssern
+Previous	< Zur\u"ck	\<\,	zum vorigen Abschnitt
+Next	Voraus >	\>\.	zum n\a"chsten Abschnitt

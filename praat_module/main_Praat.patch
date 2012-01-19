@@ -1,0 +1,16 @@
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/main/main_Praat.cpp demo_praat_sources/main/main_Praat.cpp
+--- praat_sources/main/main_Praat.cpp	2011-09-02 13:53:32.000000000 +0200
++++ demo_praat_sources/main/main_Praat.cpp	2011-09-02 14:32:27.000000000 +0200
+@@ -44,9 +44,11 @@ static void logo (Graphics g) {
+ 	Graphics_text (g, 0.5, 0.16, L"Copyright \\co 1992-" xstr(PRAAT_YEAR) " by Paul Boersma and David Weenink");
+ }
+ 
++#include "demopraatapplication.h"
+ int main (int argc, char *argv []) {
+ 	praat_setLogo (130, 80, logo);
+-	praat_init ("Praat", argc, argv);
++	praat_setStandAloneScriptText (myDemoScript);
++	praat_init ("TEanalysis", argc, argv);
+ 	INCLUDE_LIBRARY (praat_uvafon_init)
+ 	INCLUDE_LIBRARY (praat_contrib_Ola_KNN_init)
+ 	praat_run ();

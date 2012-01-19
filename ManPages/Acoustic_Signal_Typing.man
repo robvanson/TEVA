@@ -1,0 +1,68 @@
+ManPagesTextFile
+"Acoustic Signal Typing" "R.J.J.H. van Son" 20111201 0
+<entry> "Introduction"
+
+<normal> "The quality of the voice in Tracheoesophageal (TE) speech is determined by the characteristics 
+of the neo-glottis. Individual differences in the functioning of the neo-glottis after treatment cause great variation 
+in the intelligibility and quality of speech. The voice pathology of TE speech is graded into four levels."
+
+<entry> "Pathology types (Van As, 2001, Chapter 5)"
+
+<normal> "%%Type I - Stable \&  Harmonic% \s{(press 1)}"
+<list_item> "\bu Stable signal for longer than two seconds"
+<list_item> "\bu Clear harmonics up to at least 1000 Hz"
+
+<normal> "%%Type II - Stable \&  At least one harmonic% \s{(press 2)}"
+<list_item> "\bu Stable signal for longer than two seconds"
+<list_item> "\bu At least one stable harmonic at the fundamental frequency for longer than two seconds"
+<normal> "%%Type III - Unstable or Partly harmonic% \s{(press 3)}"
+
+<list_item> "\bu No stable signal for longer than two seconds, or"
+<list_item> "\bu Harmonics in only part of the sample (for longer than 1 second)"
+
+<normal> "%%Type IV - Barely harmonic% \s{(press 4)}"
+<list_item> "\bu No or only short-term detectable harmonics (for shorter than 1 second)"
+<normal> "\s{(press 0 to reset)}"
+
+<normal> "%%Table of the relation between the four types of acoustic signal typing 
+and the perceptual judgment of overall voice quality for 39 speakers 
+(converted to percentages).%"
+<code> "|  Perceptual judgment of overall voice quality |"
+<code> "|         Good     Reasonable  Poor             |"
+<code> "| Type I    70\%       40\%          0\%              |"
+<code> "| Type II   45\%       45\%         10\%              |"
+<code> "| Type III  20\%       35\%         45\%              |"
+<code> "| Type IV    0\%       25\%         75\%              |"
+
+<entry> "Acoustic measures of voice quality"
+<normal> "In Acoustic Signal Typing, the voice characteristics are determined using acoustic analysis of speech. 
+The typing is based on both visual inspection of plots of these analysis parameters and quantitive measures 
+of a short (e.g., 0.1 second) stretch of ""stable"" speech."
+<normal> "Visual determination of pathology uses displays of:"
+<list_item> "\bu ##[waveform|Waveform]#"
+<list_item> "\bu ##[Pitch]#"
+<list_item> "\bu ##[Spectrogram]#"
+<list_item> "\bu ##[Ltas|Long Time Average Spectrum]# (LTAS)"
+<list_item> "\bu ##[Intensity]#"
+<list_item> "\bu ##[Harmonicity|Harmonicity-to-Noise ratio]#"
+<normal> "A quantitative evaluation is based on the analysis of:"
+<list_item> "\bu ##[Voice 1. Voice breaks|Voiced fraction]#, fraction of frames that is voiced (\% )"
+<list_item> "\bu ##[Voice 2. Jitter|Jitter]# (\% )"
+<list_item> "\bu Standard deviation of the ##[Pitch]#"
+<list_item> "\bu BED (band energy difference), difference in dB between high and low power in the ##[Ltas|LTAS]#"
+<list_item> "\bu The mean of the ##[Harmonicity]#"
+<list_item> "\bu GNE (glottal to noise excitation ratio), the maximum of a form of ##[Harmonicity]#"
+<normal> "These measures are determined on a short segment (around 0.1 second) of speech from the most stable part 
+of a sustained /a/ sound. @@AST categories|Pathological categories@ are defined using (Van As, 2001).
+See @@Analysis|Analysis calculations and displays@ for details on the commands used."
+
+<entry> "References:"
+
+<list_item> "\bu Van As, C.J. (##2001#), %%Tracheoesophageal Speech. A Multidimensional Assessment of Voice Quality%, 
+Ph.D.-thesis, University of Amsterdam, 209 pag."
+<list_item> "\bu van As-Brooks, C.J., Koopmans-van Beinum, F.J., Pols, L.C.W., and Hilgers, F.J.M. (##2006#), 
+%%Acoustic Signal Typing for Evaluation of Voice Quality in Tracheoesophageal Speech% 
+Journal of Voice, Volume ##20# (3), p355-368."
+<list_item> "\bu Van As, C.J. (##2008#), %%Acoustic analyses of postlaryngectomy voice and their perceptual relevance% 
+Invitational Round Table ""Evidence-based Voice and Speech Rehabilitation in Head and Neck Cancer"", p8-14 
+<http://dare.uva.nl/document/130984>"

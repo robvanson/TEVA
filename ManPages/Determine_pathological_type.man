@@ -1,0 +1,35 @@
+ManPagesTextFile
+"Determine pathological type" "R.J.J.H. van Son" 20111220 0
+<intro> "How to determine the @@Acoustic Signal Typing|pathological type and read the acoustic signal typing@"
+<normal> "Record or Open an /a/ sound, select a stable part of the recording and add information 
+about the speaker and recording:"
+<list_item> "\bu @@Recording your own voice@"
+<list_item> "\bu @@Opening an existing recording@"
+<list_item> "\bu @@Selecting stable sounds@"
+<list_item> "\bu @@Adding speaker information@"
+
+<entry> "Pathological type"
+<normal> "A short description of the criteria to determine the pathological type is displayed 
+when you click on the %Pathology button on the @@Overview of Configuration page|Configuration page@. 
+It can also be found on the @@Acoustic Signal Typing@ manual page."
+
+<normal> "The criteria for the pathological typing are mostly impressionistic. This is about the ability 
+of the speaker to produce a stable /a/ sound with many harmonics. This can be evaluated by listening 
+to the sound, and looking at the %Spectrogram. Inspection of the %Pitch and %Harmonicity displays will 
+give extra information. "
+
+<normal> "When a voice has been evaluated and a type decided upon, the type can be entered by pressing 
+one of the number keys, 1-4 for types I - IV. The types can always be changed. Pressing 0 will erase the 
+type. The currently selected type will be printed over the display." 
+
+<entry> "Acoustic signal typing"
+<normal> "There is also an @@AST categories|automatic evaluation of pathological type@. The displays 
+for %Pitch, %Ltas, and %Harmonicity contain pathological type estimates preceded by ""AST:"" 
+(@@Acoustic Signal Typing@) based on individual @@AST categories|acoustic measures@. 
+The median value of these measures is displayed in arabic numerals (1-4) as long as no pathological type has 
+been entered by hand. Note that the automatic AST will only be calculated from measures for which the display 
+has been shown (calculated). So it will change until all the relevant displays have been shown. 
+The median AST will be calculated when a report is generated."
+
+<entry> "Next:"
+<list_item> "\bu @@Saving a report@"

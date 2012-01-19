@@ -1,0 +1,11 @@
+ManPagesTextFile
+"TEVA Tutorials" "R.J.J.H. van Son" 20111219 0
+<intro> "Tutorials to get acquainted with TEVA"
+<list_item> "\bu @@Recording your own voice@"
+<list_item> "\bu @@Opening an existing recording@"
+<list_item> "\bu @@Selecting stable sounds@"
+<list_item> "\bu @@Adding speaker information@"
+<list_item> "\bu @@Determine pathological type@"
+<list_item> "\bu @@Saving a report@"
+
+<list_item> "\bu Using examples"

@@ -1,0 +1,49 @@
+ManPagesTextFile
+"Overview of Main page" "R.J.J.H. van Son" 20111206 0
+<intro> "TEVA is used by clicking buttons on the current page. Here is a list of the buttons on the Main page with a description of their use.
+English labels will be used here. The keyboard shortcuts are given between the []-brackets (might depend on language).
+See also the @@Overview of Configuration page@."
+
+<entry> "General functions"
+<list_item> "\bu #Quit: [Q] Stop TEVA. Will save the current preferences"
+<list_item> "\bu #Settings: [S] Go to %Configuration page"
+<list_item> "\bu #Refresh: [h] Redraw the current page, hitting the space-bar always refreshes the screen"
+<list_item> "\bu #Help: [?] Press on the button you want information on, press %%Help% again to continue"
+
+<entry> "Recorded speech"
+<list_item> "\bu ##Speaker#: [k] Input speaker data. Speakers from a table can be selected by ID, row number, 
+or by stepping to the next, ##>#, or previous , ##<#, speaker. Click ##Ready# to complete"
+<list_item> "\bu ##Open#: [O] Open sound file (or a list of sound files)"
+<list_item> "\bu ##Record#: [R] Record your speech. You have 4 seconds, watch the recording ""light"" on the top left"
+<list_item> "\bu ##Play#: [P] Play back of recording"
+<normal> "The sound level of the sound will be indicated as a colored circle in the top left of the page. The diameter scales with 
+the maximal amplitude and the color indicates whether the maximal amplitude is too high (red), good (green), or too low (darker green to black)."
+
+<entry> "Selecting an interval of speech"
+<normal> "The current time window will be indicated with vertical blue lines if it is smaller than the 
+current display. Changing the display (eg, zoom in or out) will set the display window to the current time window."
+<list_item> "\bu #Select: [e] Select a new start and an endtime with the cursor"
+<list_item> "\bu ##To selection#: [c] Go to selected start and endtime"
+<list_item> "\bu ##Zoom out#: [u-] Double the current time window"
+<list_item> "\bu ##Zoom in#: [n+] Halve the current time window"
+<list_item> "\bu ##Previous#: [<] Previous interval, or shift current time window to the left"
+<list_item> "\bu ##Next#: [>] Next interval, or shift the current time window to the right"
+
+<entry> "Saving and printing a report"
+<list_item> "\bu #Save [\# ] Save recording and a report of the analysis"
+<normal> "The current sound, and a report with all graphs and the analysis results can be saved into a seperate map (or directory). 
+The analysis windows are calculated and pictures are stored. A web page (.html and .odt) is created for printing on Apple OSX and
+Microsoft Windows systems. On Apple OSX the pictures are saved as PDF graphics, on Microsoft Windows as WMF graphics. On these 
+two systems, a web page (.html) is created with the report. On all systems, pictures are also saved as PostScript graphics (EPS) and a 
+report with an .odt extension is created. This report can be opened with OpenOffice.org or LibreOffice word processors for inspection 
+and printing. Both OpenOffice.org and LibreOffice.org are Free and Open Source word processing programs."
+
+<entry> "@@Analysis|Analysis calculations and displays@"
+<normal> "Selected statistics about the analysis will be written below the display. This includes the 
+@@Acoustic Signal Typing@ analysis related to the display."
+<list_item> "\bu ##Sound#: [S] The Sound waveform"
+<list_item> "\bu ##Pitch#: [t] Pitch contour"
+<list_item> "\bu ##Spectrogram#: [L] Narrow band spectrogram (100 ms window)"
+<list_item> "\bu ##Ltas#: [L] Long time average spectrum"
+<list_item> "\bu ##Intensity#: [I] Intensity"
+<list_item> "\bu ##Harmonicity#: [H] The Harmonicity to Noise ratio"

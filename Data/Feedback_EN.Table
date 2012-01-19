@@ -1,0 +1,20 @@
+Key	Text
+!Author	Author R.J.J.H. van Son
+!Copyright	Copyright 2010 R.J.J.H. van Son \&  the NKI
+!License	License GNU GPL version 2 or later
+Select1	Select new start time (or press Select or a key to continue)
+Select2	Select new end time (or press a Select or key to continue)
+PitchValues	Pitch - Voiced: VOICEDFRACTIONS$ , Jitter: JITTER$ , Shimmer: SHIMMER$ , Mean: MEANPITCH$ Hz, SD: SDPITCH$ Hz, Median: MEDIANPITCH$ Hz
+HarmonicityValues	Harmonicity - Max.: MAXHARMONICITY$ dB, Min.: MINHARMONICITY$ dB, Mean: MEANHARMONICITY$ dB, SD: SDHARMONICITY$ dB, GNE: GNEVALUE$
+IntensityValues	Intensity - Max.: MAXINTENSITY$ dB, Min.: MININTENSITY$ dB, Mean: MEANINTENSITY$ dB, SD: SDINTENSITY$ dB
+LtasValues	Ltas - Max.: MAXFREQUENCY$ Hz, Min.: MINFREQUENCY$ Hz, BED: BED$ dB, CoG: COG$ Hz  [SELECTEDSTARTTIME$; SELECTEDENDTIME$] S
+TimeValues	Time interval: SELECTEDSTARTTIME$ - SELECTEDENDTIME$ S (SELECTEDINTERVAL$ S)
+Recording	Recording
+Cancel	Cancel
+Continue	Ready
+Next	>
+Previous	<
+Current	=
+SpeakerText	Spreaker info
+SpeakerDefault	Speaker ID, name, sex, age, or row number
+SpeakerComments	Comments

@@ -1,0 +1,38 @@
+font	size	text
+Times	16	Pathology Types
+Times	10	(Pathology types will be displayed in the main window, press a number key to set the type)
+Times	12	  
+Times	14	%%Type I - Stable \&  Harmonic% \s{(press 1)}
+Times	12	- Stable signal for longer than two seconds, and
+Times	12	- Clear harmonics up to at least 1000 Hz
+Times	12	 
+Times	14	%%Type II - Stable \&  At least one harmonic% \s{(press 2)}
+Times	12	- Stable signal for longer than two seconds, and
+Times	12	- At least one stable harmonic at the fundamental frequency for longer than two seconds
+Times	12	 
+Times	14	%%Type III - Unstable or Partly harmonic% \s{(press 3)}
+Times	12	- No stable signal for longer than two seconds, or
+Times	12	- Harmonics in only part of the sample (for longer than 1 second)
+Times	12	 
+Times	14	%%Type IV - Barely harmonic% \s{(press 4)}
+Times	12	- No or only short-term detectable harmonics (for shorter than 1 second)
+Times	12	  
+Times	12	%%Table of the relation between the four types of acoustic signal typing%
+Times	12	%%and the perceptual judgment of overall voice quality for 39 speakers%
+Times	12	%%(converted to percentages).%
+Courier	12	|  Perceptual judgment of overall voice quality |
+Courier	12	|         Good     Reasonable  Poor             |
+Courier	12	| Type I    70\%       40\%          0\%              |  
+Courier	12	| Type II   45\%       45\%         10\%              |
+Courier	12	| Type III  20\%       35\%         45\%              |
+Courier	12	| Type IV    0\%       25\%         75\%              |
+Times	12	  
+Helvetica	10	References:
+Helvetica	10	\bu Van As, C.J. (##2001#), %%Tracheoesophageal Speech. A Multidimensional Assessment of Voice Quality%, 
+Helvetica	10	Ph.D.-thesis, University of Amsterdam, 209 pag.
+Helvetica	10	\bu van As-Brooks, C.J., Koopmans-van Beinum, F.J., Pols, L.C.W., and Hilgers, F.J.M. (##2006#),
+Helvetica	10	%%Acoustic Signal Typing for Evaluation of Voice Quality in Tracheoesophageal Speech%
+Helvetica	10	Journal of Voice, Volume ##20# (3), p355-368
+Helvetica	10	\bu Van As, C.J. (##2008#), %%Acoustic analyses of postlaryngectomy voice and their perceptual relevance%
+Helvetica	10	Invitational Round Table "Evidence-based Voice and Speech Rehabilitation in Head and Neck Cancer", p8-14
+Helvetica	10	<http://dare.uva.nl/document/130984>

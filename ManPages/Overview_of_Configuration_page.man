@@ -1,0 +1,48 @@
+ManPagesTextFile
+"Overview of Configuration page" "R.J.J.H. van Son" 20111206 0
+<intro> "TEVA is used by clicking buttons on the current page. Here is a list of the buttons on the Configuration page with a 
+description of their use. English labels will be used here. The keyboard shortcuts are given between the []-brackets (might depend on language).
+See also the @@Overview of Main page@."
+<normal> "Man buttons are radio type push buttons. When clicked, they remain ""pushed down"" until another button is pushed. The state 
+of these button is remembered between invocations of TEVA."
+
+<entry> "General functions"
+<list_item> "\bu #Help: [?] Press the button you want information on, press %%Help% again to continue"
+<list_item> "\bu #Return: [R] Go back to %Main page"
+<list_item> "\bu #English: [E] Use English labels and help"
+<list_item> "\bu #Deutsch: [D] Use German labels and help"
+<list_item> "\bu #Nederlands: [N] Use Dutch labels and help"
+
+<entry> "Spectral display"
+<normal> "The display of spectral features should be reduced to exclude irrelevant detail. 
+Set the maximal frequency to a frequency that just includes all the relevant features"
+<list_item> "\bu ##10kHz#: [01] Display up to 10 kHz"
+<list_item> "\bu ##8kHz#: [8] Display up to 8 kHz"
+<list_item> "\bu ##5kHz#: [5] Display up to 5 kHz"
+<list_item> "\bu ##4kHz#: [4] Display up to 4 kHz"
+<list_item> "\bu ##3kHz#: [3] Display up to 3 kHz"
+
+<entry> "Speaker data tables and recording duration"
+<normal> "It is useful to have a list of speaker data available. TEVA can read and write Tab delimited tables (tsv) 
+with speaker data."
+<list_item> "\bu ##Data#: [D] Read table with speaker data"
+<list_item> "\bu ##Save#: [v] Write current table with speaker data"
+<list_item> "\bu ##Recording#: [c] Time of recording in seconds"
+<normal> "Each row in the speaker table contains four fields separated by tabs:"
+<list_item> "[1] Speaker, or Recording, ID (must be unique)"
+<list_item> "[2] Speaker description (age, sex, etc)"
+<list_item> "[3] Comments"
+<list_item> "[4] File name of a recording with path relative to the table"
+<normal> "If given, the recording will be automatically loaded if this speaker is selected 
+in the main page. ##Recording# sets the duration of live recordings."
+
+<entry> "Miscelaneous"
+<list_item> "\bu ##Background#: [B] Show background or not"
+<list_item> "\bu ##Microphone#: [h] Use the build-in microphone for recording"
+<list_item> "\bu ##Line input |#: [|+] Use the line-input for recording"
+<list_item> "\bu ##Test recording#: [T] Test recording level"
+
+<entry> "Additional information"
+<list_item> "\bu ##Pathology#: [P] Information about pathological types"
+<list_item> "\bu ##Manual#: [M] This manual"
+<list_item> "\bu ##About#: [iA] Information about NKI TE-VOICE ANALYSIS tool and credits"

@@ -1,0 +1,28 @@
+font	size	text
+Helvetica	12	 
+Helvetica	16	NKI TE-VOICE ANALYSIS tool Version 1.0
+Helvetica	12	 
+Helvetica	12	Netherlands Cancer Institute Anwendung f\u"r Tracheoesophageale Stimmanalyse
+Helvetica	12	F\u"r weitere Informationen, besuchen sie bitte unsere Website: http://www.fon.hum.uva.nl/rob/PraatDemoApps/
+Helvetica	12	Entwickeld mit Praat 'praatVersion$' (http://www.praat.org)
+Helvetica	12	 
+Helvetica	12	Erstellt und Copyrights \co 2010-'dateYear$' von Rob van Son und das NKI - R.J.J.H.vanSon@gmail.com
+Helvetica	12	 
+Helvetica	12	Diese Anwendung wurde erm\o"glicht durch ein uneingeschr\a"nktes Forschungsstipendium von
+Helvetica	12	ATOS MEDICAL AB: P.O. BOX 183 SE-242 22 H\O"RBY SWEDEN
+Helvetica	12	 
+Courier	12	Dieses Programm ist freie Software. Sie k\o"nnen es unter den Bedingungen
+Courier	12	der GNU General Public License, wie von der Free Software Foundation
+Courier	12	ver\o"ffentlicht, weitergeben und/oder modifizieren, entweder gem\a"\ss
+Courier	12	Version2 der Lizenz oder (nach Ihrer Option) jeder sp\a"teren Version.
+Courier	12	
+Courier	12	Die Ver\o"ffentlichung dieses Programms erfolgt in der Hoffnung, da\ss es
+Courier	12	Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne
+Courier	12	die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT F\U"R EINEN
+Courier	12	BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License.
+Courier	12	
+Courier	12	Sie sollten ein Exemplar der GNU General Public License zusammen mit
+Courier	12	diesem Programm erhalten haben. Falls nicht, siehe
+Courier	12	<http://www.gnu.org/licenses/>.
+Courier	12	 
+Helvetica	8	%%V: 'build_SHA$'%
