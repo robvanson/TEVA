@@ -6,6 +6,7 @@ PRAAT = /Applications/Praat.app/Contents/MacOS/Praat
 endif
 
 all: *.praat CreateTables.praat
+	$(MAKE) -C HTML 2>&1
 	$(MAKE) -C praat_module 2>&1
 
 CreateTables.praat: Data/*.Table
