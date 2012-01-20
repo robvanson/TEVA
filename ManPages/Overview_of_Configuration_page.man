@@ -38,7 +38,7 @@ in the main page. ##Recording# sets the duration of live recordings."
 
 <entry> "Miscelaneous"
 <list_item> "\bu ##Background#: [B] Show background or not"
-<list_item> "\bu ##Microphone#: [h] Use the build-in microphone for recording"
+<list_item> "\bu ##Microphone#: [h] Use the built-in microphone for recording"
 <list_item> "\bu ##Line input |#: [|+] Use the line-input for recording"
 <list_item> "\bu ##Test recording#: [T] Test recording level"
 
