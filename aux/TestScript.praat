@@ -1,5 +1,8 @@
 #!praat
-
+# 
+# Open a SpeakerData.Table file and run the AST parameters on each entry
+# Print the values as a tsv table
+#
 # Load for non-interactive use with initialization
 non_interactive_initialize = 1
 include ../praat_module/TEanalysisexpanded.praat
