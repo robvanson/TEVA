@@ -376,6 +376,7 @@ procedure get_speakerInfo .speakerID$
 		if config.speakerDataTable > 0
 			select config.speakerDataTable
 			.numRows = Get number of rows
+			.numEntries = .numRows
 			.numCols = Get number of columns
 			.row = Search column... ID '.speakerID$'
 			if .row <= 0 and index_regex(.speakerID$, "^\d+$") > 0
@@ -413,6 +414,7 @@ procedure loadSpeaker speakerID$
 	te.currentFileName$ = get_speakerInfo.audio$
 	call getOpenFile 'te.currentFileName$'
 	Rename... Speech
+	.duration = Get total duration
 	call post_processing_sound
 endproc
 
@@ -552,5 +554,7 @@ procedure autoSetPathType
 			pathologicalTypeText$ = replace_regex$(pathologicalTypeText$, "[\d\-\.]+\s*$", "'.pathologicalAutoType'", 0)
 		endif
 	endif
-	call set_window_title 'buttons$' 'speakerID$' 'pathologicalTypeText$'
+	if not noDrawingOrWriting
+		call set_window_title 'buttons$' 'speakerID$' 'pathologicalTypeText$'
+	endif
 endproc

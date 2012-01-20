@@ -24,6 +24,19 @@
 # 
 mainPage.outputPraatObject$ = "Draw"
 
+
+# Define some variables
+procedure initializeMainPage
+	# Do not recalculate needlessly
+	calculateHarmonicityValues.previousSelectedGNEStartTime = -1
+	calculateHarmonicityValues.previousSelectedGNEEndTime = -1
+	previousHarmonicityStart = -1
+	previousHarmonicityEnd = -1
+	previousGNEstart = -1
+	previousGNEend = -1
+endproc
+call initializeMainPage
+
 ###############################################################
 #
 # Button Drawing Routines
@@ -1072,8 +1085,6 @@ procedure DrawPitchObject
 endproc
 
 # Do not recalculate without need
-previousHarmonicityStart = -1
-previousHarmonicityEnd = -1
 procedure DrawHarmonicityObject
 	if harmonicityName$ <> ""
 		if currentStartTime != previousHarmonicityStart or currentEndTime != previousHarmonicityEnd
@@ -1128,9 +1139,6 @@ endproc
 #
 # Mostly useless as the GNE tends to increase for short intervals.
 # Do not recalculate without need
-previousGNEstart = -1
-previousGNEend = -1
-
 procedure DrawGNEObject
 	.windowSize = 0.120
 	if gneName$ <> ""
@@ -1157,6 +1165,7 @@ procedure DrawGNEObject
 				.gneID = noprogress To Harmonicity (gne)... 500 4500 1000 80
 				.gneValue = Get maximum
 				select .frameID
+				plus .tmpPartID
 				plus .gneID
 				Remove
 				select .gneSoundID
@@ -1719,8 +1728,6 @@ procedure calculatePitchValues
 endproc
 
 # Do not recalculate needlessly
-calculateHarmonicityValues.previousSelectedGNEStartTime = -1
-calculateHarmonicityValues.previousSelectedGNEEndTime = -1
 procedure calculateHarmonicityValues
 	.maxHarmonicity = 0
 	.minHarmonicity = 0

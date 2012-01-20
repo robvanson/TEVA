@@ -96,8 +96,16 @@ printerPresets$ = "Standard"
 ##########################################################
 
 # When using this script as a library in "include <script>", 
-# suppress the execution of actual code
-if variableExists("non_interactive")
+# suppress the execution of actual code but DO run the 
+# non-interactive initialisation
+if variableExists("non_interactive_initialize")
+	# Initialization from Initialise.praat
+	call global_initialization
+	call global_setup
+	call initializeMainPage
+endif
+if variableExists("non_interactive") or variableExists("non_interactive_initialize")
+	# Jump
 	goto NON_INTERACTIVE
 endif
 
