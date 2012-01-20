@@ -33,6 +33,7 @@ ENDOFCHAPTERHEADER
 	{
 		$currentLine = shift(@CurrentFile);
 		$currentLine =~ s!href\=\"([\w\-]+)\.html\"!href="#\1"!ig;
+		$currentLine =~ s!href\=\"([\w\-]+)\.(png|gif|jpg)\"!href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/TEVA/HTML/\1.\2"!ig;
 		print $currentLine;
 	};
 	

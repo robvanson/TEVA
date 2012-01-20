@@ -10,17 +10,17 @@ perl -n -i'' ConvertHTMLpages.pl ${@:-*.html}
 for file in $(ls -1 ${@:-*.html}); do
 	
 	if [[ "${file}" == "Overview_of_Main_page.html" ]]; then
-		perl -i'' -ne 's!(\Q</b></font></table></table>\E)\s*$!\1<p align=center>\n<a href="Main_page_screenshot.png" target="_blank"><img width="50%" src="Main_page_screenshot.png"></a>\n</p>\n!g;print $_' \
+		perl -i'' -ne 's!(\Q</b></font></table></table>\E)\s*$!\1<p align=center>\n<a href="Main_page_screenshot.png" target="_blank"><img width="50%" src="Main_page_screenshot.png" VSPACE=10></a>\n</p>\n!g;print $_' \
 			${file}
 	fi
 
 	if [[ "${file}" == "Overview_of_Configuration_page.html" ]]; then
-		perl -i'' -ne 's!(\Q</b></font></table></table>\E)\s*$!\1<p align=center>\n<a href="Configure_page_screenshot.png" target="_blank"><img width="50%" src="Configure_page_screenshot.png"></a>\n</p>\n!g;print $_' \
+		perl -i'' -ne 's!(\Q</b></font></table></table>\E)\s*$!\1<p align=center>\n<a href="Configure_page_screenshot.png" target="_blank"><img width="50%" src="Configure_page_screenshot.png" VSPACE=10></a>\n</p>\n!g;print $_' \
 			${file}
 	fi
 	
 	if [[ "NKI_TE-VOICE_ANALYSIS_tool.html Recording_your_own_voice.html Opening_an_existing_recording.html Adding_speaker_information.html Selecting_stable_sounds.html Saving_a_report.html " =~ ${file} ]]; then
-		perl -i'' -ne 's!(\Q</b></font></table></table>\E)\s*$!\1<p align=center>\n<a href="Main_page_screenshot.png" target="_blank"><img width="33%" src="Main_page_screenshot.png"></a>\n</p>\n!g;print $_' \
+		perl -i'' -ne 's!(\Q</b></font></table></table>\E)\s*$!\1<p align=center>\n<a href="Main_page_screenshot.png" target="_blank"><img width="33%" src="Main_page_screenshot.png" VSPACE=10></a>\n</p>\n!g;print $_' \
 			${file}
 	fi
 	
@@ -30,9 +30,9 @@ for file in $(ls -1 ${@:-*.html}); do
 	fi
 	
 	if [[ "${file}" == "Adding_speaker_information.html" ]]; then
-		perl -i'' -ne 's!^(\QAdding information about a recording\E)</h3>\s*$!\1 <p align=center>\n<a href="Speaker_screenshot.png" target="_blank"><img width="25%" src="Speaker_screenshot.png"></a>\n</h3></p>\n!g;print $_' \
+		perl -i'' -ne 's!^(\QAdding information about a recording\E)</h3>\s*$!\1 <p align=center>\n<a href="Speaker_screenshot.png" target="_blank"><img width="25%" src="Speaker_screenshot.png" VSPACE=10></a>\n</h3></p>\n!g;print $_' \
 			${file}
-		perl -i'' -ne 's!^(\QFormat of the speaker info table\E)</h3>\s*$!\1 <p align=center>\n<a href="SpeakerInfo_screenshot.png" target="_blank"><img width="25%" src="SpeakerInfo_screenshot.png"></a>\n</h3></p>\n!g;print $_' \
+		perl -i'' -ne 's!^(\QFormat of the speaker info table\E)</h3>\s*$!\1 <p align=center>\n<a href="SpeakerInfo_screenshot.png" target="_blank"><img width="25%" src="SpeakerInfo_screenshot.png" VSPACE=10></a>\n</h3></p>\n!g;print $_' \
 			${file}
 	fi
 done
