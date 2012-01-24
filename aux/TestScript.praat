@@ -38,7 +38,7 @@ for .i to .numSpeakers
 	currentEndTime = selectedEndTime
 
 	# Get pathological type
-	.ast$ = "-"
+	.ast = 0
 	if index_regex(get_speakerInfo.text$, "Type ")
 		if index_regex(get_speakerInfo.text$, "Type IV($|[^A-Z])")
 			.ast = 4
