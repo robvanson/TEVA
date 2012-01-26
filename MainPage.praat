@@ -456,6 +456,7 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 				speakerID$ = get_speakerInfo.id$
 				speakerInfo$ = get_speakerInfo.text$
 				speakerComments$ = get_speakerInfo.description$
+				pathologicalType = 'get_speakerInfo.ast$'
 				te.currentFileName$ = get_speakerInfo.audio$
 				call load_audio_file 'te.currentFileName$'
 				call autoSetPathType
@@ -474,6 +475,7 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 			speakerInfo$ = get_previousSpeaker.text$
 			speakerComments$ = get_previousSpeaker.description$
 			te.currentFileName$ = get_previousSpeaker.audio$
+			pathologicalType = 'get_previousSpeaker.ast$'
 			call load_audio_file 'te.currentFileName$'
 			call autoSetPathType
 		elsif clicked = 3
@@ -482,6 +484,7 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 			speakerInfo$ = get_nextSpeaker.text$
 			speakerComments$ = get_nextSpeaker.description$
 			te.currentFileName$ = get_nextSpeaker.audio$
+			pathologicalType = 'get_nextSpeaker.ast$'
 			call load_audio_file 'te.currentFileName$'
 			call autoSetPathType
 		endif
@@ -552,7 +555,7 @@ procedure processMainPagePathologicalType .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "!PathologicalType"
 	if index_regex(.pressed$, "[0-4]") > 0
-		pathologicalType = '.pressed$'
+		call setPathType '.pressed$'
 		call init_window
 	endif
 endproc

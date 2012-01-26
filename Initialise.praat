@@ -341,6 +341,7 @@ procedure get_nextSpeaker .speakerID$
    .text$ = get_speakerInfo.text$
    .description$ = get_speakerInfo.description$
    .audio$ = get_speakerInfo.audio$
+   .ast$ = get_speakerInfo.ast$
 endproc
 
 procedure get_previousSpeaker .speakerID$
@@ -363,6 +364,7 @@ procedure get_previousSpeaker .speakerID$
    .text$ = get_speakerInfo.text$
    .description$ = get_speakerInfo.description$
    .audio$ = get_speakerInfo.audio$
+   .ast$ = get_speakerInfo.ast$
 endproc
 
 procedure get_speakerInfo .speakerID$
@@ -370,6 +372,7 @@ procedure get_speakerInfo .speakerID$
 	.text$ = speakerInfo$
 	.description$ = speakerComments$
 	.audio$ = te.currentFileName$
+	.ast$ = "'pathologicalType'"
 	.row = 0
 	if .speakerID$ <> "" and config.speakerData$ <> "" and fileReadable (config.speakerData$)
 		call ReadSpeakerData 'config.speakerData$'
@@ -389,16 +392,18 @@ procedure get_speakerInfo .speakerID$
 				.id$ = Get value... '.row' ID
 				.text$ = Get value... '.row' Text
 				.description$ = Get value... '.row' Description
-				if .numCols > 3
-					.audio$ = Get value... '.row' Audio
-					if .audio$ = "-"
-						.audio$ = ""
-					elsif .audio$ <> ""
-						# Root of audio files is in config.speakerData$, if not rooted elsewhere
-						if index_regex(.audio$, "^(?i[\\/:~]|[a-z]:)") <= 0
-							.audio$ = replace_regex$(config.speakerData$, "[^\\/:]+$", "'.audio$'", 0)
-						endif
-					endif
+				.audio$ = Get value... '.row' Audio
+				if .audio$ = "-"
+					.audio$ = ""
+				elsif .audio$ <> ""
+					# Root of audio files is in config.speakerData$, if not rooted elsewhere
+					#if index_regex(.audio$, "^(?i[\\/:~]|[a-z]:)") <= 0
+					#	.audio$ = replace_regex$(config.speakerData$, "[^\\/:]+$", "'.audio$'", 0)
+					#endif
+				endif
+				.ast$ = Get value... '.row' AST
+				if index_regex(.ast$, "\d") <= 0
+					.ast$ = "0"
 				endif
 			endif
 		endif
@@ -412,6 +417,7 @@ procedure loadSpeaker speakerID$
 	speakerInfo$ = get_speakerInfo.text$
 	speakerComments$ = get_speakerInfo.description$
 	te.currentFileName$ = get_speakerInfo.audio$
+	pathologicalType = 'get_speakerInfo.ast$'
 	call getOpenFile 'te.currentFileName$'
 	Rename... Speech
 	.duration = Get total duration
@@ -430,6 +436,27 @@ procedure ReadSpeakerData .speakerData$
 	if .speakerData$ <> "" and fileReadable(.speakerData$) and (.speakerData$ <> config.speakerData$ or config.speakerDataTable <= 0)
 		if index_regex(.speakerData$, "\.(?itsv|table)")
 			config.speakerDataTable = Read from file... '.speakerData$'
+			# Complete columns
+			.col = Get column index... ID
+			if .col <= 0
+				Append column... ID
+			endif
+			.col = Get column index... Text
+			if .col <= 0
+				Append column... Text
+			endif
+			.col = Get column index... Description
+			if .col <= 0
+				Append column... Description
+			endif
+			.col = Get column index... Audio
+			if .col <= 0
+				Append column... Audio
+			endif
+			.col = Get column index... AST
+			if .col <= 0
+				Append column... AST
+			endif
 		else
 			# Reset SpeakerData table
 			config.speakerData$ = .speakerData$
@@ -442,7 +469,7 @@ procedure ReadSpeakerData .speakerData$
 			.rawStrings = Read Strings from raw text file... '.speakerData$'
 			.numStrings = Get number of strings
 			if .numStrings > 0
-				config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio
+				config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST
 				.currentText$ = ""
 				.currentDescription$ = ""
 				for .row to .numStrings
@@ -457,6 +484,19 @@ procedure ReadSpeakerData .speakerData$
 					else
 						if .currentText$ <> ""
 							.id$ = replace_regex$(.currentText$, "^\W*([\w\- ]+).*$", "\1", 0)
+							# Get AST
+							.ast$ = "-"
+							if index_regex(.currentText$, "Type: IV($|[^[IV])")
+								.ast$ = "4"
+							elsif index_regex(.currentText$, "Type: III($|[^[IV])")
+								.ast$ = "3"
+							elsif index_regex(.currentText$, "Type: II($|[^[IV])")
+								.ast$ = "2"
+							elsif index_regex(.currentText$, "Type: I($|[^[IV])")
+								.ast$ = "1"
+							elsif index_regex(.currentText$, "Type: \d+")
+								.ast$ = replace_regex$(.currentText$, ".*Type: (\d+).*$", "\1", 0)
+							endif
 							select config.speakerDataTable
 							Append row
 							.numRows = Get number of rows
@@ -464,9 +504,11 @@ procedure ReadSpeakerData .speakerData$
 							Set string value... '.numRows' Text '.currentText$'
 							Set string value... '.numRows' Description '.currentDescription$'
 							Set string value... '.numRows' Audio -
+							Set string value... '.numRows' AST '.ast$'
 							.id$ = ""
 							.currentText$ = ""
 							.currentDescription$ = ""
+							.ast$ = "-"
 						endif
 					endif
 				endfor
@@ -478,6 +520,12 @@ procedure ReadSpeakerData .speakerData$
 					Set string value... '.numRows' ID '.id$'
 					Set string value... '.numRows' Text '.currentText$'
 					Set string value... '.numRows' Description '.currentDescription$'
+					Set string value... '.numRows' Audio -
+					if pathologicalType > 0
+						Set string value... '.numRows' AST 'pathologicalType'
+					else
+						Set string value... '.numRows' AST -
+					endif
 					.id$ = ""
 					.currentText$ = ""
 					.currentDescription$ = ""
@@ -507,7 +555,7 @@ procedure WriteSpeakerData
 	# Table does not exist
 	if config.speakerDataTable <= 0
 		config.speakerData$ = ""
-		config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio
+		config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST
 		select config.speakerDataTable
 		.row = Get number of rows
 	elsif get_speakerInfo.row > 0
@@ -522,6 +570,11 @@ procedure WriteSpeakerData
 	Set string value... '.row' Text 'speakerInfo$'
 	Set string value... '.row' Description 'speakerComments$'
 	Set string value... '.row' Audio 'te.currentFileName$'
+	if pathologicalType > 0
+		Set string value... '.row' AST 'pathologicalType'
+	else
+		Set string value... '.row' AST -
+	endif
 	
 endproc
 
@@ -556,5 +609,17 @@ procedure autoSetPathType
 	endif
 	if not noDrawingOrWriting
 		call set_window_title 'buttons$' 'speakerID$' 'pathologicalTypeText$'
+	endif
+endproc
+
+procedure setPathType .pathType
+	pathologicalType = .pathType
+	call get_speakerInfo 'speakerID$'
+	if get_speakerInfo.row > 0
+		if pathologicalType > 0
+			Set string value... 'get_speakerInfo.row' AST 'pathologicalType'
+		else
+			Set string value... 'get_speakerInfo.row' AST -
+		endif
 	endif
 endproc
