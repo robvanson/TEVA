@@ -164,6 +164,23 @@ procedure processConfigSaveSpeaker .clickX .clickY .pressed$
     call Draw_button 'table$' '.label$' 0
 endproc
 
+procedure processConfigCloseSpeaker .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "CloseSpeaker"
+	if config.speakerDataTable > 0
+		select config.speakerDataTable
+		Remove
+	endif
+	# Initialize Speaker Data
+	config.speakerData$ = ""
+	config.speakerDataTable = -1
+	speakerID$ = ""
+	speakerInfo$ = ""
+	speakerComments$ = ""
+	pathologicalType = 0
+    call Draw_button 'table$' '.label$' 0
+endproc
+
 procedure processConfigRecordingTime .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "RecordingTime"
