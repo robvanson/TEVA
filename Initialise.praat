@@ -397,9 +397,9 @@ procedure get_speakerInfo .speakerID$
 					.audio$ = ""
 				elsif .audio$ <> ""
 					# Root of audio files is in config.speakerData$, if not rooted elsewhere
-					#if index_regex(.audio$, "^(?i[\\/:~]|[a-z]:)") <= 0
-					#	.audio$ = replace_regex$(config.speakerData$, "[^\\/:]+$", "'.audio$'", 0)
-					#endif
+					if index_regex(.audio$, "^(?i[\\/:~]|[a-z]:)") <= 0
+						.audio$ = replace_regex$(config.speakerData$, "[^\\/:]+$", "'.audio$'", 0)
+					endif
 				endif
 				.ast$ = Get value... '.row' AST
 				if index_regex(.ast$, "\d") <= 0
@@ -569,7 +569,12 @@ procedure WriteSpeakerData
 	Set string value... '.row' ID 'speakerID$'
 	Set string value... '.row' Text 'speakerInfo$'
 	Set string value... '.row' Description 'speakerComments$'
-	Set string value... '.row' Audio 'te.currentFileName$'
+	.speakerDataDir$ = replace_regex$(config.speakerData$, "[^\\/:]+$", "", 0)
+	.audio$ = te.currentFileName$
+	if index_regex(.audio$, "'.speakerDataDir$'")
+		.audio$ = replace_regex$(.audio$, "'.speakerDataDir$'", "", 0)
+	endif
+	Set string value... '.row' Audio '.audio$'
 	if pathologicalType > 0
 		Set string value... '.row' AST 'pathologicalType'
 	else
