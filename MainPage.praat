@@ -492,9 +492,9 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 			call ReadSpeakerData 'config.speakerData$'
 			if config.speakerDataTable > 0
 				select config.speakerDataTable
-				.tmpDataTable = Copy... TMP
+				.tmpDataTable = Copy... Speaker_Data
 			else
-				.tmpDataTable = Create Table with column names... TMP 1 ID Text Description Audio
+				.tmpDataTable = Create Table with column names... Speaker_Data 1 ID Text Description Audio AST
 			endif
 			View & Edit
 			demoWaitForInput()
