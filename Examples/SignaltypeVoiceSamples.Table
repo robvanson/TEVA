@@ -1,5 +1,5 @@
-ID	Text	Description	Audio
-Speaker1	Speaker1, M 66yo, Type I		signaltype1voicesample.wav
-Speaker2	Speaker2, M 48yo, Type II		signaltype2voicesample.wav
-Speaker3	Speaker3, F 77yo, Type III		signaltype3voicesample.wav
-Speaker4	Speaker4, F 48yo, Type IV		signaltype4voicesample.wav
+ID	Text	Description	Audio	AST
+Speaker1	Speaker1, M 66yo, Type I		signaltype1voicesample.wav	I
+Speaker2	Speaker2, M 48yo, Type II		signaltype2voicesample.wav	II
+Speaker3	Speaker3, F 77yo, Type III		signaltype3voicesample.wav	III
+Speaker4	Speaker4, F 48yo, Type IV		signaltype4voicesample.wav	IV

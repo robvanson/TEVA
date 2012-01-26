@@ -27,6 +27,7 @@ Set the maximal frequency to a frequency that just includes all the relevant fea
 with speaker data."
 <list_item> "\bu ##Data#: [D] Read table with speaker data"
 <list_item> "\bu ##Save#: [v] Write current table with speaker data"
+<list_item> "\bu ##Close#: [o] Close current table and open a new, empty one"
 <list_item> "\bu ##Recording#: [c] Time of recording in seconds"
 <normal> "Each row in the speaker table contains four fields separated by tabs:"
 <list_item> "[1] Speaker, or Recording, ID (must be unique)"

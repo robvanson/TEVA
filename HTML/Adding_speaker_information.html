@@ -40,7 +40,9 @@ on the <a href="Overview_of_Main_page.html">Main page</a>. You can type in the I
 table, and click <i>Ready</i>. Or you can step through all the records with the next (&gt;) and previous (&lt;) buttons.</p>
 <p>
 You can save changes to the list with the <i>Save</i> button in the 
-<a href="Overview_of_Configuration_page.html">Configuration page</a>.</p>
+<a href="Overview_of_Configuration_page.html">Configuration page</a>. You can close and purge the current table with the 
+<i>Close</i> button in the <a href="Overview_of_Configuration_page.html">Configuration page</a>. With <i>Close</i>, the current table is not 
+saved.</p>
 <h3>
 Format of the speaker info table <p align=center>
 <a href="SpeakerInfo_screenshot.png" target="_blank"><img width="25%" src="SpeakerInfo_screenshot.png" VSPACE=10></a>
@@ -57,22 +59,31 @@ with the field names separated by tabs.</p>
 3: Free form comments
 <dd>
 4: Relative path to the audio file
+<dd>
+5: Manually entered <a href="Acoustic_Signal_Typing.html">Acoustic Signal Type</a>, i.e., <i>I</i>, <i>II</i>, <i>III</i>, or <i>IV</i>
 </dl>
 <p>
 If the table contains a path to a sound file, this file will be opened automatically 
 when the record is chosen</p>
 <p>
+Missing columns are automatically generated when the table is read. So, a table without the Description and 
+AST columns is read, two empty columns with the labels <i>Description</i> and <i>AST</i> are created.</p>
+<p>
 An example file:</p>
 <code>
-ID          Text                        Description Audio<br></code>
+ID          Text                        Description Audio                      AST<br></code>
 <code>
-Speaker1    Speaker1, M 66yo, Type I    [comments]  signaltype1voicesample.wav<br></code>
+Speaker1    Speaker1, M 66yo, Type I    [comments]  signaltype1voicesample.wav I<br></code>
 <code>
-Speaker2    Speaker2, M 48yo, Type II   [comments]  signaltype2voicesample.wav<br></code>
+Speaker2    Speaker2, M 48yo, Type II   [comments]  signaltype2voicesample.wav II<br></code>
 <code>
-Speaker3    Speaker3, F 77yo, Type III  [comments]  signaltype3voicesample.wav<br></code>
+Speaker3    Speaker3, F 77yo, Type III  [comments]  signaltype3voicesample.wav III<br></code>
 <code>
-Speaker4    Speaker4, F 48yo, Type IV   [comments]  signaltype4voicesample.wav<br></code>
+Speaker4    Speaker4, F 48yo, Type IV   [comments]  signaltype4voicesample.wav IV<br></code>
+<p>
+A text-only file without the <i>.tsv</i> or <i>.Table</i> extension will be read as a list of <a href="http://www.fon.hum.uva.nl/praat/manual/Strings.html" target="_blank">Strings</a>. The table 
+with the speaker data is constructed from these <a href="http://www.fon.hum.uva.nl/praat/manual/Strings.html" target="_blank">Strings</a>. Each line in this file is interpreted as a <i>Text</i> field 
+and the (unique?) ID is extracted from the text upto the first punctuation mark.</p>
 <h3>
 Next:</h3>
 <ul>

@@ -23,7 +23,9 @@ on the @@Overview of Main page|Main page@. You can type in the ID code of the re
 table, and click %Ready. Or you can step through all the records with the next (>) and previous (<) buttons."
 
 <normal> "You can save changes to the list with the %Save button in the 
-@@Overview of Configuration page|Configuration page@."
+@@Overview of Configuration page|Configuration page@. You can close and purge the current table with the 
+%Close button in the @@Overview of Configuration page|Configuration page@. With %Close, the current table is not 
+saved."
 
 <entry> "Format of the speaker info table"
 <normal> "Speaker Info tables are tab delimited (tsv) lists with four fields, starting with a line 
@@ -32,15 +34,22 @@ with the field names separated by tabs."
 <list_item> "2: Essential information, often starting with the ID code"
 <list_item> "3: Free form comments"
 <list_item> "4: Relative path to the audio file"
+<list_item> "5: Manually entered @@Acoustic Signal Typing|Acoustic Signal Type@, i.e., %I, %II, %III, or %IV"
 <normal> "If the table contains a path to a sound file, this file will be opened automatically 
 when the record is chosen"
+<normal> "Missing columns are automatically generated when the table is read. So, if a table without the Description and 
+AST columns is read, two empty columns with the labels %Description and %AST are created."
 
 <normal> "An example file:"
-<code> "ID          Text                        Description Audio"
-<code> "Speaker1    Speaker1, M 66yo, Type I    [comments]  signaltype1voicesample.wav"
-<code> "Speaker2    Speaker2, M 48yo, Type II   [comments]  signaltype2voicesample.wav"
-<code> "Speaker3    Speaker3, F 77yo, Type III  [comments]  signaltype3voicesample.wav"
-<code> "Speaker4    Speaker4, F 48yo, Type IV   [comments]  signaltype4voicesample.wav"
+<code> "ID          Text                        Description Audio                      AST"
+<code> "Speaker1    Speaker1, M 66yo, Type I    [comments]  signaltype1voicesample.wav I"
+<code> "Speaker2    Speaker2, M 48yo, Type II   [comments]  signaltype2voicesample.wav II"
+<code> "Speaker3    Speaker3, F 77yo, Type III  [comments]  signaltype3voicesample.wav III"
+<code> "Speaker4    Speaker4, F 48yo, Type IV   [comments]  signaltype4voicesample.wav IV"
+
+<normal> "A text-only file without the %%.tsv% or %%.Table% extension will be read as a list of ##[Strings]#. The table 
+with the speaker data is constructed from these ##[Strings]#. Each line in this file is interpreted as a %Text field 
+and the (unique?) ID is extracted from the text upto the first punctuation mark."
 
 <entry> "Next:"
 <list_item> "\bu @@Determine pathological type@"
