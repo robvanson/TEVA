@@ -34,7 +34,7 @@ with the field names separated by tabs."
 <list_item> "2: Essential information, often starting with the ID code"
 <list_item> "3: Free form comments"
 <list_item> "4: Relative path to the audio file"
-<list_item> "5: Manually entered @@Acoustic Signal Typing|Acoustic Signal Type@, i.e., %I, %II, %III, or %IV"
+<list_item> "5: Manually entered @@Acoustic Signal Typing|Acoustic Signal Type@, i.e., %1, %2, %3, or %4"
 <normal> "If the table contains a path to a sound file, this file will be opened automatically 
 when the record is chosen"
 <normal> "Missing columns are automatically generated when the table is read. So, if a table without the Description and 
@@ -42,14 +42,15 @@ AST columns is read, two empty columns with the labels %Description and %AST are
 
 <normal> "An example file:"
 <code> "ID          Text                        Description Audio                      AST"
-<code> "Speaker1    Speaker1, M 66yo, Type I    [comments]  signaltype1voicesample.wav I"
-<code> "Speaker2    Speaker2, M 48yo, Type II   [comments]  signaltype2voicesample.wav II"
-<code> "Speaker3    Speaker3, F 77yo, Type III  [comments]  signaltype3voicesample.wav III"
-<code> "Speaker4    Speaker4, F 48yo, Type IV   [comments]  signaltype4voicesample.wav IV"
+<code> "Speaker1    Speaker1, M 66yo, Type I    [comments]  signaltype1voicesample.wav 1"
+<code> "Speaker2    Speaker2, M 48yo, Type II   [comments]  signaltype2voicesample.wav 2"
+<code> "Speaker3    Speaker3, F 77yo, Type III  [comments]  signaltype3voicesample.wav 3"
+<code> "Speaker4    Speaker4, F 48yo, Type IV   [comments]  signaltype4voicesample.wav 4"
 
 <normal> "A text-only file without the %%.tsv% or %%.Table% extension will be read as a list of ##[Strings]#. The table 
 with the speaker data is constructed from these ##[Strings]#. Each line in this file is interpreted as a %Text field 
-and the (unique?) ID is extracted from the text upto the first punctuation mark."
+and the (unique?) ID is extracted from the text upto the first punctuation mark. If a %%Type: IV% or %%Type: 4% like
+string is found in the line, the %AST is set to this value."
 
 <entry> "Next:"
 <list_item> "\bu @@Determine pathological type@"

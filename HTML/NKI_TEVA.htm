@@ -590,30 +590,31 @@ with the field names separated by tabs.</p>
 <dd>
 4: Relative path to the audio file
 <dd>
-5: Manually entered <a href="#Acoustic_Signal_Typing">Acoustic Signal Type</a>, i.e., <i>I</i>, <i>II</i>, <i>III</i>, or <i>IV</i>
+5: Manually entered <a href="#Acoustic_Signal_Typing">Acoustic Signal Type</a>, i.e., <i>1</i>, <i>2</i>, <i>3</i>, or <i>4</i>
 </dl>
 <p>
 If the table contains a path to a sound file, this file will be opened automatically 
 when the record is chosen</p>
 <p>
-Missing columns are automatically generated when the table is read. So, a table without the Description and 
+Missing columns are automatically generated when the table is read. So, if a table without the Description and 
 AST columns is read, two empty columns with the labels <i>Description</i> and <i>AST</i> are created.</p>
 <p>
 An example file:</p>
 <code>
 ID          Text                        Description Audio                      AST<br></code>
 <code>
-Speaker1    Speaker1, M 66yo, Type I    [comments]  signaltype1voicesample.wav I<br></code>
+Speaker1    Speaker1, M 66yo, Type I    [comments]  signaltype1voicesample.wav 1<br></code>
 <code>
-Speaker2    Speaker2, M 48yo, Type II   [comments]  signaltype2voicesample.wav II<br></code>
+Speaker2    Speaker2, M 48yo, Type II   [comments]  signaltype2voicesample.wav 2<br></code>
 <code>
-Speaker3    Speaker3, F 77yo, Type III  [comments]  signaltype3voicesample.wav III<br></code>
+Speaker3    Speaker3, F 77yo, Type III  [comments]  signaltype3voicesample.wav 3<br></code>
 <code>
-Speaker4    Speaker4, F 48yo, Type IV   [comments]  signaltype4voicesample.wav IV<br></code>
+Speaker4    Speaker4, F 48yo, Type IV   [comments]  signaltype4voicesample.wav 4<br></code>
 <p>
 A text-only file without the <i>.tsv</i> or <i>.Table</i> extension will be read as a list of <a href="http://www.fon.hum.uva.nl/praat/manual/Strings.html" target="_blank">Strings</a>. The table 
 with the speaker data is constructed from these <a href="http://www.fon.hum.uva.nl/praat/manual/Strings.html" target="_blank">Strings</a>. Each line in this file is interpreted as a <i>Text</i> field 
-and the (unique?) ID is extracted from the text upto the first punctuation mark.</p>
+and the (unique?) ID is extracted from the text upto the first punctuation mark. If a <i>Type: IV</i> or <i>Type: 4</i> like
+string is found in the line, the <i>AST</i> is set to this value.</p>
 <h3>
 Next:</h3>
 <ul>
