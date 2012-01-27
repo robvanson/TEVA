@@ -6,7 +6,7 @@
 #     TEanalysis: main.praat is the master GUI of TEanalysis
 #     It is written in Praat script for the demo window 
 #     
-#     Copyright (C) 2010  R.J.J.H. van Son and the Netherlands Cancer Institute
+#     Copyright (C) 2010-2012  R.J.J.H. van Son and the Netherlands Cancer Institute
 # 
 #     This program is free software; you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by

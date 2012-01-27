@@ -65,4 +65,4 @@ Ph.D.-thesis, University of Amsterdam, 209 pag."
 Journal of Voice, Volume ##20# (3), p355-368."
 <list_item> "\bu Van As, C.J. (##2008#), %%Acoustic analyses of postlaryngectomy voice and their perceptual relevance% 
 Invitational Round Table ""Evidence-based Voice and Speech Rehabilitation in Head and Neck Cancer"", p8-14 
-<http://dare.uva.nl/document/130984>"
+[http://dare.uva.nl/document/130984]"

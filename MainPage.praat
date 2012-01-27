@@ -6,7 +6,7 @@
 #     TEanalysis: MainPage.praat loads the code needed for the 
 #     main, practice, page of DemoApp and the sound handling and recognition.
 #     
-#     Copyright (C) 2010  R.J.J.H. van Son and the Netherlands Cancer Institute
+#     Copyright (C) 2010-2012  R.J.J.H. van Son and the Netherlands Cancer Institute
 # 
 #     This program is free software; you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by

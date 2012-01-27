@@ -2,7 +2,8 @@ ManPagesTextFile
 "TEVA license" "R.J.J.H. van Son" 20111206 0
 <entry> "NKI TE-VOICE ANALYSIS tool version 1.0"
 <normal> "Netherlands Cancer Institute tool for ##Tracheoesophageal Voice Analysis# (TEVA)"
-<normal> "For more information, visit our website: http://www.fon.hum.uva.nl/rob/PraatDemoApps. 
+<normal> "For more information, visit our websites: http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/ 
+and http://www.provoxweb.info/acoustic-analyses.html . 
 TEVA is based on Praat (http://www.praat.org)"
 <normal> "This application was made possible by an unrestricted research grant from: 
 ##ATOS MEDICAL AB#: P.O. BOX 183 SE-242 22 H\O""RBY SWEDEN"
