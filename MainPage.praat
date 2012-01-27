@@ -1647,6 +1647,8 @@ procedure calculatePitchValues
 	
 	# Calculated from van As, C.J. "Tracheolesophageal Speech", 2001, p88
 	# Acoustic Signal Typing: Pitch
+	call setPathParameter 'pathologicalParameters' Pitch '.sdPitch'
+	
 	.textAST$ = "";
 	.astPitch = 0
 	if .voicedFractions < 0.5
@@ -1674,6 +1676,8 @@ procedure calculatePitchValues
 	
 	# Calculated from van As, C.J. "Tracheolesophageal Speech", 2001, p88
 	# Acoustic Signal Typing: Jitter
+	call setPathParameter 'pathologicalParameters' Jitter '.jitter'
+
 	.astJitter = 0
 	if .voicedFractions < 0.5
 		.astJitter = 4
@@ -1700,6 +1704,8 @@ procedure calculatePitchValues
 	
 	# Calculated from van As, C.J. "Tracheolesophageal Speech", 2001, p88
 	# Acoustic Signal Typing: VoicedFraction
+	call setPathParameter 'pathologicalParameters' VoicedFraction '.voicedFractions'
+
 	.astVoicedFraction = 0
 	if .voicedFractions < 0.5
 		.astVoicedFraction = 4
@@ -1777,6 +1783,8 @@ procedure calculateHarmonicityValues
 	.textAST$ = "";
 	# Calculated from van As, C.J. "Tracheolesophageal Speech", 2001, p88
 	# Acoustic Signal Typing: HNR
+	call setPathParameter 'pathologicalParameters' HNR '.meanHarmonicity'
+
 	.astHNR = 0
 	if .meanHarmonicity > (10.14 + 4.25) / 2
 		.astHNR = 1
@@ -1802,6 +1810,8 @@ procedure calculateHarmonicityValues
 	
 	# Calculated from van As, C.J. "Tracheolesophageal Speech", 2001, p88
 	# Acoustic Signal Typing: GNE
+	call setPathParameter 'pathologicalParameters' GNE '.gneValue'
+
 	.astGNE = 0
 	if .gneValue > (0.82 + 0.82) / 2
 		.astGNE = 1
@@ -1919,6 +1929,8 @@ procedure calculateLtasValues
 	.textAST$ = "";
 	# Calculated from van As, C.J. "Tracheolesophageal Speech", 2001, p88
 	# Acoustic Signal Typing: BED
+	call setPathParameter 'pathologicalParameters' BED '.bed'
+
 	.astBED = 0
 	if .bed > (24.8 + 22.9) / 2
 		.astBED = 1

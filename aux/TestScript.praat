@@ -13,7 +13,7 @@ mainPage.outputPraatObject$ = "Draw"
 call getOpenFile Select a speaker table
 
 clearinfo
-printline i'tab$'ID'tab$'start'tab$'end'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'HNR'tab$'GNE'tab$'AST
+printline i'tab$'ID'tab$'start'tab$'end'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'HNR'tab$'GNE'tab$'BED'tab$'AST
 
 call get_speakerInfo 1
 .numSpeakers = get_speakerInfo.numEntries
@@ -58,7 +58,12 @@ for .i to .numSpeakers
 	.calcVF = calculatePitchValues.voicedFractions
 	.calcPitch = calculatePitchValues.sdPitch
 	.calcJitter = calculatePitchValues.jitter 	
+
+	call DrawLtasObject
+	call calculateLtasValues
+	.calcBED = calculateLtasValues.bed
 	
+	call DrawHarmonicityObject
 	call calculateHarmonicityValues
 	.calcHNR = calculateHarmonicityValues.meanHarmonicity
 	.calcGNE = calculateHarmonicityValues.gneValue
@@ -68,9 +73,10 @@ for .i to .numSpeakers
 	print 'tab$''selectedStartTime:3''tab$''selectedEndTime:3'
 	print 'tab$''.calcVF:3'
 	print 'tab$''.calcPitch:3'
-	print 'tab$''.calcJitter:3'
+	print 'tab$''.calcJitter:4'
 	print 'tab$''.calcHNR:3'
 	print 'tab$''.calcGNE:3'
+	print 'tab$''.calcBED:3'
 	print 'tab$''.ast:0'
 	printline
 	

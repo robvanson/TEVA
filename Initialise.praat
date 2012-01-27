@@ -73,6 +73,10 @@ procedure global_initialization
 	
 	pathologicalType = 0
 	pathologicalTypeText$ = "- Pathological type = 'pathologicalType'"
+	# Table for CART
+	pathologicalParameters = Create TableOfReal... PathParam 1 1
+	Set row label (index)... 1 AST
+	Set value... 1 1 -1
 	pathologicalAutoType = Create TableOfReal... PathAutoType 1 1
 	Set row label (index)... 1 Median
 	Set value... 1 1 -1
@@ -585,30 +589,58 @@ endproc
 
 procedure autoSetPathType
 	if pathologicalType <= 0
-		select pathologicalAutoType
-		.rowIndex = Get row index... Median
-		Set value... '.rowIndex' 1 -1
-		.numOfTypes = Get number of rows
-		Sort by column... 1 0
-		.offset = 0
-		for .i from 1 to .numOfTypes
-			.value = Get value... '.i' 1
-			if .value <= 0
-				.offset += 1
-				.numOfTypes -= 1
-			endif
-		endfor
-		if .numOfTypes > 0
-			if floor(.numOfTypes / 2) = ceiling(.numOfTypes / 2 )
-				.medianType = floor(.numOfTypes / 2 ) + 1
-				.lower = Get value... '.medianType' 1
-				.medianType += .offset
-				.upper = Get value... '.medianType' 1
-				.pathologicalAutoType = (.lower + .upper)/2
+		call getPathParameter pathologicalParameters VoicedFraction
+		.vf = getPathParameter.value
+		call getPathParameter pathologicalParameters Jitter
+		.jitter = getPathParameter.value
+		call getPathParameter pathologicalParameters Pitch
+		.pitch = getPathParameter.value
+		call getPathParameter pathologicalParameters HNR
+		.hnr = getPathParameter.value
+		call getPathParameter pathologicalParameters GNE
+		.gne = getPathParameter.value
+		call getPathParameter pathologicalParameters BED
+		.bed = getPathParameter.value
+		
+		# Cart (added undefined tests)
+		.pathologicalAutoType = undefined
+		if .vf <> undefined and .vf = 0
+			.pathologicalAutoType = 4
+		elsif .pitch <> undefined and .pitch < 0.9615
+			.pathologicalAutoType = 1
+		else
+			if .hnr <> undefined and .hnr >= 2.12
+				if .hnr <> undefined and .hnr < 10.43
+					if .jitter <> undefined and .jitter < 0.0085
+						.pathologicalAutoType = 2
+					else
+						if .vf <> undefined and .vf >= 0.7885
+							.pathologicalAutoType = 2
+						else
+							if .vf <> undefined and .vf < 0.3235
+								.pathologicalAutoType = 2
+							else
+								.pathologicalAutoType = 3
+							endif
+						endif
+					endif
+				else
+					.pathologicalAutoType = 3
+				endif
 			else
-				.medianType = ceiling(.numOfTypes / 2 ) + .offset
-				.pathologicalAutoType = Get value... '.medianType' 1
+				if .gne <> undefined and .gne >= 0.837
+					if .gne >= 0.887
+						.pathologicalAutoType = 2
+					else
+						.pathologicalAutoType = 3
+					endif
+				else
+					.pathologicalAutoType = 4
+				endif
 			endif
+		endif
+		
+		if .pathologicalAutoType <> undefined
 			pathologicalTypeText$ = replace_regex$(pathologicalTypeText$, "[\d\-\.]+\s*$", "'.pathologicalAutoType'", 0)
 		endif
 	endif
@@ -626,5 +658,27 @@ procedure setPathType .pathType
 		else
 			Set string value... 'get_speakerInfo.row' AST -
 		endif
+	endif
+endproc
+
+procedure setPathParameter .table .paramName$ .valueText$
+	select .table
+	.rowIndex = Get row index... '.paramName$'
+	if .rowIndex <= 0
+		Insert row (index)... 1
+		.rowIndex = 1
+		Set row label (index)... 1 '.paramName$'
+	endif
+	if index(.valueText$, "undefined") <= 0
+		Set value... '.rowIndex' 1 '.valueText$'
+	endif
+endproc
+
+procedure getPathParameter .table .paramName$
+	.value = undefined
+	select .table
+	.rowIndex = Get row index... '.paramName$'
+	if .rowIndex > 0
+		.value = Get value... '.rowIndex' 1
 	endif
 endproc
