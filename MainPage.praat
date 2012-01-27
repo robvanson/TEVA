@@ -1672,7 +1672,7 @@ procedure calculatePitchValues
 	endif
 	Set value... '.rowIndex' 1 '.astPitch'
 	
-	.textAST$ = .textAST$+"<li>Pitch: '.astPitch'</li>'newline$'"
+	#.textAST$ = .textAST$+"<li>Pitch: '.astPitch'</li>'newline$'"
 	
 	# Calculated from van As, C.J. "Tracheolesophageal Speech", 2001, p88
 	# Acoustic Signal Typing: Jitter
@@ -1700,7 +1700,7 @@ procedure calculatePitchValues
 	endif
 	Set value... '.rowIndex' 1 '.astJitter'
 
-	.textAST$ = .textAST$+"<li>Jitter: '.astJitter'</li>'newline$'"
+	#.textAST$ = .textAST$+"<li>Jitter: '.astJitter'</li>'newline$'"
 	
 	# Calculated from van As, C.J. "Tracheolesophageal Speech", 2001, p88
 	# Acoustic Signal Typing: VoicedFraction
@@ -1729,9 +1729,9 @@ procedure calculatePitchValues
 	Set value... '.rowIndex' 1 '.astVoicedFraction'
 	call autoSetPathType
 	
-	.textAST$ = .textAST$+"<li>Voice Fraction: '.astVoicedFraction'</li>'newline$'"
+	#.textAST$ = .textAST$+"<li>Voice Fraction: '.astVoicedFraction'</li>'newline$'"
 
-	.shorttextAST$ = " (AST: P-'.astPitch', J-'.astJitter', V-'.astVoicedFraction')"
+	#.shorttextAST$ = " (AST: P-'.astPitch', J-'.astJitter', V-'.astVoicedFraction')"
 
 	#.text$ = "Pitch - Voiced: '.voicedFractions:1%'\% , Jitter: '.jitter:1%'\% , Shimmer: '.shimmer:1%'\% , Mean: '.meanPitch:0' Hz, SD: '.sdPitch:1' Hz, Median: '.medianPitch:0' Hz"
 endproc
@@ -1795,7 +1795,7 @@ procedure calculateHarmonicityValues
 	else
 		.astHNR = 3
 	endif
-	.textAST$ = .textAST$+"<li>HNR: '.astHNR'</li>'newline$'"
+	#.textAST$ = .textAST$+"<li>HNR: '.astHNR'</li>'newline$'"
 
 	select pathologicalAutoType
 	.rowIndex = Get row index... Median
@@ -1822,8 +1822,8 @@ procedure calculateHarmonicityValues
 	else
 		.astGNE = 4
 	endif
-	.textAST$ = .textAST$+"<li>GNE: '.astGNE'</li>'newline$'"
-	.shorttextAST$ = " (AST: H-'.astHNR', G-'.astGNE')"
+	#.textAST$ = .textAST$+"<li>GNE: '.astGNE'</li>'newline$'"
+	#.shorttextAST$ = " (AST: H-'.astHNR', G-'.astGNE')"
 
 	select pathologicalAutoType
 	.rowIndex = Get row index... Median
@@ -1941,8 +1941,8 @@ procedure calculateLtasValues
 	else
 		.astBED = 4
 	endif
-	.textAST$ = .textAST$+"<li>BED: '.astBED'</li>'newline$'"
-	.shorttextAST$ = " (AST: B-'.astBED')"
+	#.textAST$ = .textAST$+"<li>BED: '.astBED'</li>'newline$'"
+	#.shorttextAST$ = " (AST: B-'.astBED')"
 	
 	select pathologicalAutoType
 	.rowIndex = Get row index... Median
