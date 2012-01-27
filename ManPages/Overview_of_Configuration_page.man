@@ -29,11 +29,12 @@ with speaker data."
 <list_item> "\bu ##Save#: [v] Write current table with speaker data"
 <list_item> "\bu ##Close#: [o] Close current table and open a new, empty one"
 <list_item> "\bu ##Recording#: [c] Time of recording in seconds"
-<normal> "Each row in the speaker table contains four fields separated by tabs:"
+<normal> "Each row in the speaker table contains five fields separated by tabs:"
 <list_item> "[1] Speaker, or Recording, ID (must be unique)"
 <list_item> "[2] Speaker description (age, sex, etc)"
 <list_item> "[3] Comments"
 <list_item> "[4] File name of a recording with path relative to the table"
+<list_item> "[5] @@Acoustic Signal Typing|Acoustic Signal Type@ (%%1-4%)"
 <normal> "If given, the recording will be automatically loaded if this speaker is selected 
 in the main page. ##Recording# sets the duration of live recordings."
 

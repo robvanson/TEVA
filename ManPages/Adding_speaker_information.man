@@ -28,8 +28,8 @@ table, and click %Ready. Or you can step through all the records with the next (
 saved."
 
 <entry> "Format of the speaker info table"
-<normal> "Speaker Info tables are tab delimited (tsv) lists with four fields, starting with a line 
-with the field names separated by tabs."
+<normal> "Speaker Info tables are tab delimited (tsv) lists with five fields, starting with a line 
+with the field names separated by tabs, i.e., %ID, %Text, %Description, %Audio, %AST."
 <list_item> "1: ID of speaker or recording (must be unique)"
 <list_item> "2: Essential information, often starting with the ID code"
 <list_item> "3: Free form comments"
@@ -37,8 +37,8 @@ with the field names separated by tabs."
 <list_item> "5: Manually entered @@Acoustic Signal Typing|Acoustic Signal Type@, i.e., %1, %2, %3, or %4"
 <normal> "If the table contains a path to a sound file, this file will be opened automatically 
 when the record is chosen"
-<normal> "Missing columns are automatically generated when the table is read. So, if a table without the Description and 
-AST columns is read, two empty columns with the labels %Description and %AST are created."
+<normal> "Missing columns are automatically generated when the table is read. So, if a table without the %Description and 
+%AST columns is read, two empty columns with the corresponding labels are created."
 
 <normal> "An example file:"
 <code> "ID          Text                        Description Audio                      AST"
@@ -49,7 +49,7 @@ AST columns is read, two empty columns with the labels %Description and %AST are
 
 <normal> "A text-only file without the %%.tsv% or %%.Table% extension will be read as a list of ##[Strings]#. The table 
 with the speaker data is constructed from these ##[Strings]#. Each line in this file is interpreted as a %Text field 
-and the (unique?) ID is extracted from the text upto the first punctuation mark. If a %%Type: IV% or %%Type: 4% like
+and the (unique?) ID is extracted from the text up to the first punctuation mark. If a %%Type: IV% or %%Type: 4% like
 string is found in the line, the %AST is set to this value."
 
 <entry> "Next:"

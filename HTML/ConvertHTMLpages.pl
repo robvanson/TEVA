@@ -9,7 +9,7 @@
 # perl -n -i'' ConvertHTMLpages.pl *
 #
 # Replace all external links with a real link
-s!([\[\(\{\s\:])(http://[/\w\-\.\%\?]+[/\w])([\]\)\}\s])!\1<a href="\2" target="_blank">\2</a>\3!ig;
+s!([\[\(\{\s\:])(http://)([/\w\-\.\%\?]+[/\w])([\]\)\}\s])!\1<a href="\2\3" target="_blank">\3</a>\4!ig;
 # Mark all Praat links and convert to href anchors
 s!\<b\>\[([^\]]*)\]\</b\>!<a href=[[["$1"]]]>$1</a>!g;
 # Cut out URL from Text

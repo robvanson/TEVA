@@ -53,7 +53,7 @@ get experience with the acoustic analysis of Tracheoesophageal (TE) speech.</p>
 <h3>
 Introduction</h3>
 <p>
-TEVA is built on top of the Praat phonetics software package (<a href="http://www.praat.org" target="_blank">http://www.praat.org</a>). As such  
+TEVA is built on top of the Praat phonetics software package (<a href="http://www.praat.org" target="_blank">www.praat.org</a>). As such  
 TEVA presents a selection of the relevant analysis methods with an easy to use interface. 
 The approach to the analysis of TE speech used in TEVA is based on the work of Corina van As-Brooks as described in her 
 PhD thesis (<a href="#Acoustic_Signal_Typing">Van As, 2001</a>).</p>
@@ -75,12 +75,12 @@ Getting started with TEVA
 <p>
 The NKI TE-VOICE ANALYSIS tool (TEVA) is a multi-platform stand-alone application. It is 
 available for MS Windows, Apple Macintosh OSX, and Linux. It is also available as a separate interactive 
-Praat script (<a href="http://www.praat.org" target="_blank">http://www.praat.org</a>).</p>
+Praat script (<a href="http://www.praat.org" target="_blank">www.praat.org</a>).</p>
 <h3>
 Getting a copy of TEVA</h3>
 <p>
 TEVA is licensed under the <a href="#TEVA_license">GNU GPLv2</a> and can be freely used and distributed. You can 
-download a copy of TEVA from <a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/" target="_blank">http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/</a> . TEVA 
+download a copy of TEVA from <a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/" target="_blank">www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/</a> . TEVA 
 can be saved on your hard disk or USB thumb drive and started by clicking on the icon.</p>
 <h3>
 The TEVA pages</h3>
@@ -329,7 +329,7 @@ with speaker data.</p>
 &nbsp;<b>Recording</b>: [c] Time of recording in seconds
 </ul>
 <p>
-Each row in the speaker table contains four fields separated by tabs:</p>
+Each row in the speaker table contains five fields separated by tabs:</p>
 <dl>
 <dd>
 [1] Speaker, or Recording, ID (must be unique)
@@ -339,6 +339,8 @@ Each row in the speaker table contains four fields separated by tabs:</p>
 [3] Comments
 <dd>
 [4] File name of a recording with path relative to the table
+<dd>
+[5] <a href="#Acoustic_Signal_Typing">Acoustic Signal Type</a> (<i>1-4</i>)
 </dl>
 <p>
 If given, the recording will be automatically loaded if this speaker is selected 
@@ -427,7 +429,7 @@ Record your voice</h3>
 First set up your computer for voice recording. You should use a microphone of a reasonable 
 quality. Furthermore, if your computer has some kind of <i>Microphone</i> boost feature, make sure it is turned off. 
 Then use some application you know to check whether you can actually record your sound. For instance, if you have 
-Praat (www.praat.org) or Audacity (audacity.sourceforge.net) installed, try to record your voice with them. 
+Praat (<a href="http://www.praat.org" target="_blank">www.praat.org</a>) or Audacity (<a href="http://audacity.sourceforge.net" target="_blank">audacity.sourceforge.net</a>) installed, try to record your voice with them. 
 If recording works, you can continue.</p>
 <p>
 After you started TEVA, click on the <i>Settings</i> (&#8594;) button to go to the <a href="#Overview_of_Configuration_page">Configuration page</a>. 
@@ -452,7 +454,7 @@ the sound level of the recording might have been too soft.</p>
 <p>
 Listen to the recorded sound. You can play the recorded sound by clicking the red <i>Play</i> button (right pointing solid triangle). 
 You might notice that the recorded sound is not 4 seconds long (or whatever your recording setting is). TEVA will cut off silence at the 
-start and end of the recording.Check whether there is enough of the /a/ recorded and that there is no background noise in the recording. 
+start and end of the recording. Check whether there is enough of the /a/ recorded and that there is no background noise in the recording. 
 Repeat the recording procedure until you are satisfied with the result. You do not have to reject the old recording, a new recording simply 
 replaces the existing recording.</p>
 <h3>
@@ -578,8 +580,8 @@ Format of the speaker info table <p align=center>
 <a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/TEVA/HTML/SpeakerInfo_screenshot.png" target="_blank"><img width="25%" src="SpeakerInfo_screenshot.png" VSPACE=10></a>
 </h3></p>
 <p>
-Speaker Info tables are tab delimited (tsv) lists with four fields, starting with a line 
-with the field names separated by tabs.</p>
+Speaker Info tables are tab delimited (tsv) lists with five fields, starting with a line 
+with the field names separated by tabs, i.e., <i>ID</i>, <i>Text</i>, <i>Description</i>, <i>Audio</i>, <i>AST</i>.</p>
 <dl>
 <dd>
 1: ID of speaker or recording (must be unique)
@@ -596,8 +598,8 @@ with the field names separated by tabs.</p>
 If the table contains a path to a sound file, this file will be opened automatically 
 when the record is chosen</p>
 <p>
-Missing columns are automatically generated when the table is read. So, if a table without the Description and 
-AST columns is read, two empty columns with the labels <i>Description</i> and <i>AST</i> are created.</p>
+Missing columns are automatically generated when the table is read. So, if a table without the <i>Description</i> and 
+<i>AST</i> columns is read, two empty columns with the corresponding labels are created.</p>
 <p>
 An example file:</p>
 <code>
@@ -613,7 +615,7 @@ Speaker4    Speaker4, F 48yo, Type IV   [comments]  signaltype4voicesample.wav 4
 <p>
 A text-only file without the <i>.tsv</i> or <i>.Table</i> extension will be read as a list of <a href="http://www.fon.hum.uva.nl/praat/manual/Strings.html" target="_blank">Strings</a>. The table 
 with the speaker data is constructed from these <a href="http://www.fon.hum.uva.nl/praat/manual/Strings.html" target="_blank">Strings</a>. Each line in this file is interpreted as a <i>Text</i> field 
-and the (unique?) ID is extracted from the text upto the first punctuation mark. If a <i>Type: IV</i> or <i>Type: 4</i> like
+and the (unique?) ID is extracted from the text up to the first punctuation mark. If a <i>Type: IV</i> or <i>Type: 4</i> like
 string is found in the line, the <i>AST</i> is set to this value.</p>
 <h3>
 Next:</h3>
@@ -735,7 +737,7 @@ give extra information. </p>
 <p>
 When a voice has been evaluated and a type decided upon, the type can be entered by pressing 
 one of the number keys, 1-4 for types I - IV. The types can always be changed. Pressing 0 will erase the 
-type. The currently selected type will be printed over the display.</p>
+type. The currently selected type will be printed over the display and stored in the table with speaker data.</p>
 <h3>
 Acoustic signal typing</h3>
 <p>
@@ -808,7 +810,7 @@ Mac OSX: Open the HTML file with Safari, graphics are in PDF format
 Viewing and printing</h3>
 <p>
 The report files are in the directory with the name you saved, e.g., <i>Speaker3</i>. Inside, there are 
-three files and two directories. The files are <i>example1</i>.odt and <i>Speaker3</i>.html (the latter not on Linux). 
+three files and two directories. The files are <i>Sample3</i>.odt and <i>Speaker3</i>.html (the latter not on Linux). 
 There is also a copy of the recording in the directory. The two subdirectories contain the graphics, one is 
 called <i>eps</i> and contains the graphics in <i>eps</i> format, the other is called either <i>wmf</i> (Windows) or <i>pdf</i> (OSX) 
 and contains the graphics in <i>wmf</i> or <i>pdf</i> format.</p>
@@ -1085,7 +1087,7 @@ Journal of Voice, Volume <b>20</b> (3), p355-368.
 <li>
 &nbsp;Van As, C.J. (<b>2008</b>), <i>Acoustic analyses of postlaryngectomy voice and their perceptual relevance</i> 
 Invitational Round Table "Evidence-based Voice and Speech Rehabilitation in Head and Neck Cancer", p8-14 
-[<a href="http://dare.uva.nl/document/130984" target="_blank">http://dare.uva.nl/document/130984</a>]
+[<a href="http://dare.uva.nl/document/130984" target="_blank">dare.uva.nl/document/130984</a>]
 </ul>
 <h3>Links to this page</h3>
 <ul>
@@ -1093,6 +1095,7 @@ Invitational Round Table "Evidence-based Voice and Speech Rehabilitation in Head
 <li><a href="#Determine_pathological_type">Determine pathological type</a>
 <li><a href="#Introduction_to_TEVA">Introduction to TEVA</a>
 <li><a href="#NKI_TE-VOICE_ANALYSIS_tool">NKI TE-VOICE ANALYSIS tool</a>
+<li><a href="#Overview_of_Configuration_page">Overview of Configuration page</a>
 <li><a href="#Overview_of_Main_page">Overview of Main page</a>
 <li><a href="#Selecting_stable_sounds">Selecting stable sounds</a>
 </ul>
@@ -1162,14 +1165,14 @@ NKI TE-VOICE ANALYSIS tool version 1.0</h3>
 <p>
 Netherlands Cancer Institute tool for <b>Tracheoesophageal Voice Analysis</b> (TEVA)</p>
 <p>
-For more information, visit our websites: <a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/" target="_blank">http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/</a> 
-and <a href="http://www.provoxweb.info/acoustic-analyses.html" target="_blank">http://www.provoxweb.info/acoustic-analyses.html</a> . 
-TEVA is based on Praat (<a href="http://www.praat.org" target="_blank">http://www.praat.org</a>)</p>
+For more information, visit our websites: <a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/" target="_blank">www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/</a> 
+and <a href="http://www.provoxweb.info/acoustic-analyses.html" target="_blank">www.provoxweb.info/acoustic-analyses.html</a> . 
+TEVA is based on Praat (<a href="http://www.praat.org" target="_blank">www.praat.org</a>)</p>
 <p>
 This application was made possible by an unrestricted research grant from: 
 <b>ATOS MEDICAL AB</b>: P.O. BOX 183 SE-242 22 H&#214;RBY SWEDEN</p>
 <p>
-This application is licensed under the GNU GPL version 2 or later (<a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank">http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</a>)</p>
+This application is licensed under the GNU GPL version 2 or later (<a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank">www.gnu.org/licenses/old-licenses/gpl-2.0.html</a>)</p>
 <code>
 The NKI TE-VOICE ANALYSIS tool<br></code>
 <code>

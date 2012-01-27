@@ -5,7 +5,7 @@ ManPagesTextFile
 <normal> "First set up your computer for voice recording. You should use a microphone of a reasonable 
 quality. Furthermore, if your computer has some kind of %Microphone boost feature, make sure it is turned off. 
 Then use some application you know to check whether you can actually record your sound. For instance, if you have 
-Praat (www.praat.org) or Audacity (audacity.sourceforge.net) installed, try to record your voice with them. 
+Praat (http://www.praat.org) or Audacity (http://audacity.sourceforge.net) installed, try to record your voice with them. 
 If recording works, you can continue."
 
 <normal> "After you started TEVA, click on the %Settings (\->) button to go to the @@Overview of Configuration page|Configuration page@. 
@@ -30,7 +30,7 @@ the sound level of the recording might have been too soft."
 
 <normal> "Listen to the recorded sound. You can play the recorded sound by clicking the red %Play button (right pointing solid triangle). 
 You might notice that the recorded sound is not 4 seconds long (or whatever your recording setting is). TEVA will cut off silence at the 
-start and end of the recording.Check whether there is enough of the /a/ recorded and that there is no background noise in the recording. 
+start and end of the recording. Check whether there is enough of the /a/ recorded and that there is no background noise in the recording. 
 Repeat the recording procedure until you are satisfied with the result. You do not have to reject the old recording, a new recording simply 
 replaces the existing recording."
 

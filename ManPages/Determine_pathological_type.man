@@ -20,7 +20,7 @@ give extra information. "
 
 <normal> "When a voice has been evaluated and a type decided upon, the type can be entered by pressing 
 one of the number keys, 1-4 for types I - IV. The types can always be changed. Pressing 0 will erase the 
-type. The currently selected type will be printed over the display." 
+type. The currently selected type will be printed over the display and stored in the table with speaker data." 
 
 <entry> "Acoustic signal typing"
 <normal> "There is also an @@AST categories|automatic evaluation of pathological type@. The displays 

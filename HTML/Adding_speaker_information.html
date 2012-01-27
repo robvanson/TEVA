@@ -48,8 +48,8 @@ Format of the speaker info table <p align=center>
 <a href="SpeakerInfo_screenshot.png" target="_blank"><img width="25%" src="SpeakerInfo_screenshot.png" VSPACE=10></a>
 </h3></p>
 <p>
-Speaker Info tables are tab delimited (tsv) lists with four fields, starting with a line 
-with the field names separated by tabs.</p>
+Speaker Info tables are tab delimited (tsv) lists with five fields, starting with a line 
+with the field names separated by tabs, i.e., <i>ID</i>, <i>Text</i>, <i>Description</i>, <i>Audio</i>, <i>AST</i>.</p>
 <dl>
 <dd>
 1: ID of speaker or recording (must be unique)
@@ -66,8 +66,8 @@ with the field names separated by tabs.</p>
 If the table contains a path to a sound file, this file will be opened automatically 
 when the record is chosen</p>
 <p>
-Missing columns are automatically generated when the table is read. So, if a table without the Description and 
-AST columns is read, two empty columns with the labels <i>Description</i> and <i>AST</i> are created.</p>
+Missing columns are automatically generated when the table is read. So, if a table without the <i>Description</i> and 
+<i>AST</i> columns is read, two empty columns with the corresponding labels are created.</p>
 <p>
 An example file:</p>
 <code>
@@ -83,7 +83,7 @@ Speaker4    Speaker4, F 48yo, Type IV   [comments]  signaltype4voicesample.wav 4
 <p>
 A text-only file without the <i>.tsv</i> or <i>.Table</i> extension will be read as a list of <a href="http://www.fon.hum.uva.nl/praat/manual/Strings.html" target="_blank">Strings</a>. The table 
 with the speaker data is constructed from these <a href="http://www.fon.hum.uva.nl/praat/manual/Strings.html" target="_blank">Strings</a>. Each line in this file is interpreted as a <i>Text</i> field 
-and the (unique?) ID is extracted from the text upto the first punctuation mark. If a <i>Type: IV</i> or <i>Type: 4</i> like
+and the (unique?) ID is extracted from the text up to the first punctuation mark. If a <i>Type: IV</i> or <i>Type: 4</i> like
 string is found in the line, the <i>AST</i> is set to this value.</p>
 <h3>
 Next:</h3>
