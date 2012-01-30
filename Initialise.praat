@@ -67,6 +67,7 @@ procedure global_initialization
 	config.showBackground = 1
 	config.recordingTime$ = "4"
 	config.speakerData$ = ""
+	config.speakerDataBackup$ = ""
 	config.speakerDataTable = -1
 	printerName$ = "BHK301"
 	printerPresets$ = "Standard"
@@ -437,7 +438,10 @@ endproc
 # ID Text Description Audio
 #
 procedure ReadSpeakerData .speakerData$
+	# Create a new table or read the file
 	if .speakerData$ <> "" and fileReadable(.speakerData$) and (.speakerData$ <> config.speakerData$ or config.speakerDataTable <= 0)
+		# New SpeakerData, forget old backup
+		config.speakerDataBackup$ = ""
 		if index_regex(.speakerData$, "\.(?itsv|table)")
 			config.speakerDataTable = Read from file... '.speakerData$'
 			# Complete columns
@@ -585,6 +589,11 @@ procedure WriteSpeakerData
 		Set string value... '.row' AST -
 	endif
 	
+	if config.speakerData$ <> "" and fileReadable(config.speakerData$)
+		config.speakerDataBackup$ = replace_regex$(config.speakerData$, "(\.[a-z0-9A-Z]+)$", "~\1",0)
+		select config.speakerDataTable
+		Save as tab-separated file... 'config.speakerDataBackup$'
+	endif
 endproc
 
 procedure autoSetPathType

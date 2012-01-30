@@ -156,6 +156,9 @@ procedure processConfigSaveSpeaker .clickX .clickY .pressed$
 		call getLanguageTexts '.table$' '.label$'
 		.filename$ = chooseWriteFile$ (getLanguageTexts.helpText$, config.speakerData$)
 		if .filename$ <> ""
+			if config.speakerDataBackup$ <> "" and config.speakerData$ <> config.speakerDataBackup$
+				deleteFile(config.speakerDataBackup$)
+			endif
 			config.speakerData$ = .filename$
 			select config.speakerDataTable
 			Save as tab-separated file... 'config.speakerData$'
