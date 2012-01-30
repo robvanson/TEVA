@@ -1902,6 +1902,9 @@ procedure reset_analysis
  		if gneName$ <> ""
 			plus Sound 'gneName$'
 		endif
+ 		if ltasName$ <> ""
+			plus Ltas 'ltasName$'
+		endif
  		if pointProcessName$ <> ""
 			plus PointProcess 'pointProcessName$'
 		endif

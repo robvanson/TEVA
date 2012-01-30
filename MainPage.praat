@@ -1168,7 +1168,6 @@ procedure DrawGNEObject
 				.gneID = noprogress To Harmonicity (gne)... 500 4500 1000 80
 				.gneValue = Get maximum
 				select .frameID
-				plus .tmpPartID
 				plus .gneID
 				Remove
 				select .gneSoundID
@@ -1244,10 +1243,10 @@ procedure DrawLtasObject
 	endif
 	if recordedSound$ <> ""
 		select te.openSound
-		Extract part... 'selectedStartTime' 'selectedEndTime' rectangular 1.0 false
+		.tmpPartID = Extract part... 'selectedStartTime' 'selectedEndTime' rectangular 1.0 false
 		Rename... TmpPart
-		noprogress To Spectrum... yes
-		noprogress To Ltas (1-to-1)
+		.tmpSpecID = noprogress To Spectrum... yes
+		.tmpLtasID = noprogress To Ltas (1-to-1)
 		ltasName$ = selected$("Ltas")
 		.minimum = -20
 		.maximum = Get maximum... 0 0 None
@@ -1255,8 +1254,8 @@ procedure DrawLtasObject
 		
 		call writeAnalysisValues 'buttons.draw$'
 		
-		select Sound TmpPart
-		plus Spectrum TmpPart
+		select .tmpPartID
+		plus .tmpSpecID
 		Remove
 	endif
 endproc
