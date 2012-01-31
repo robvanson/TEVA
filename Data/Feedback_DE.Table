@@ -10,7 +10,7 @@ IntensityValues	Intensit\a"t - Max.: MAXINTENSITY$ dB, Min.: MININTENSITY$ dB, M
 LtasValues	Ltas - Max.: MAXFREQUENCY$ Hz, Min.: MINFREQUENCY$ Hz, BED: BED$ dB, CoG: COG$ Hz  [SELECTEDSTARTTIME$; SELECTEDENDTIME$] S
 TimeValues	Zeitinterval: SELECTEDSTARTTIME$ - SELECTEDENDTIME$ S (SELECTEDINTERVAL$ S)
 Recording	Aufname
-Cancel	Cancel
+Cancel	Zur\u"ck
 Continue	Fertig
 Next	>
 Previous	<

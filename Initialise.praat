@@ -667,6 +667,7 @@ procedure setPathType .pathType
 		else
 			Set string value... 'get_speakerInfo.row' AST -
 		endif
+		call WriteSpeakerData
 	endif
 endproc
 

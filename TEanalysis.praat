@@ -977,6 +977,7 @@ procedure config_page
 	    # Do things
 	    if .label$ != ""
 		    # Handle push button in process_config
+			call Draw_button 'config$' '.label$' 1
 		    call process_config '.label$' '.clickX' '.clickY' '.pressed$'
 	    endif
         

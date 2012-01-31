@@ -150,18 +150,31 @@ endproc
 
 procedure processConfigSaveSpeaker .clickX .clickY .pressed$
 	.table$ = "Config"
-	.label$ = "SpeakerData"
+	.label$ = "SaveSpeaker"
 	# Get help text
-	if config.speakerDataTable > 0
+	if config.speakerDataTable > 0 or (config.speakerData$ <> "" and fileReadable(config.speakerData$))
+		# If the table has not yet been read, do that now
+		if config.speakerDataTable <= 0
+			call ReadSpeakerData 'config.speakerData$'
+		endif
+		# Get (new) filename
 		call getLanguageTexts '.table$' '.label$'
 		.filename$ = chooseWriteFile$ (getLanguageTexts.helpText$, config.speakerData$)
 		if .filename$ <> ""
-			if config.speakerDataBackup$ <> "" and config.speakerData$ <> config.speakerDataBackup$
-				deleteFile(config.speakerDataBackup$)
+			# Clean up backup file, if there is one
+			.saveBackupFile = 1
+			# Do NOT delete the speakerDataBackup file if it is the current open file
+			if config.speakerDataBackup$ = "" or config.speakerData$ = config.speakerDataBackup$
+				.saveBackupFile = 0
 			endif
 			config.speakerData$ = .filename$
 			select config.speakerDataTable
 			Save as tab-separated file... 'config.speakerData$'
+			# Remove SpeakerData Backup file, but only if it is not the file just saved!
+			if .saveBackupFile and config.speakerData$ <> config.speakerDataBackup$ and fileReadable(config.speakerData$)
+				# Note that the backup is ONLY deleted if the saved file actually exists!
+				deleteFile(config.speakerDataBackup$)
+			endif
 		endif
 	endif
     call Draw_button 'table$' '.label$' 0
@@ -170,17 +183,26 @@ endproc
 procedure processConfigCloseSpeaker .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "CloseSpeaker"
-	if config.speakerDataTable > 0
-		select config.speakerDataTable
-		Remove
+	
+	# Get feedback texts
+	call getLanguageTexts '.table$' '.label$'
+	.inputText$ = getLanguageTexts.inputText$
+	beginPause("")
+		comment(getLanguageTexts.helpText$)
+	clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2)
+	if clicked = 2
+		if config.speakerDataTable > 0
+			select config.speakerDataTable
+			Remove
+		endif
+		# Initialize Speaker Data
+		config.speakerData$ = ""
+		config.speakerDataTable = -1
+		speakerID$ = ""
+		speakerInfo$ = ""
+		speakerComments$ = ""
+		pathologicalType = 0
 	endif
-	# Initialize Speaker Data
-	config.speakerData$ = ""
-	config.speakerDataTable = -1
-	speakerID$ = ""
-	speakerInfo$ = ""
-	speakerComments$ = ""
-	pathologicalType = 0
     call Draw_button 'table$' '.label$' 0
 endproc
 
