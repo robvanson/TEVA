@@ -52,10 +52,12 @@ when the record is chosen"
 <code> "Speaker3    Speaker3, F 77yo, Type III  [comments]  signaltype3voicesample.wav 3"
 <code> "Speaker4    Speaker4, F 48yo, Type IV   [comments]  signaltype4voicesample.wav 4"
 
-<normal> "A text-only file without the %%.tsv% or %%.Table% extension will be read as a single record. A table 
-with a single speaker entry is constructed. The first line in this file is interpreted as a %Text field 
-and the (unique?) ID is extracted from the text up to the first punctuation mark. If a %%Type: IV% or %%Type: 4% like 
-string is found in the line, the %AST is set to this value. The remaining lines are interpreted as the %Description field."
+<normal> "A text-only file without the %%.tsv% or %%.Table% extension will be read as a list of records separated by empty 
+lines. The first line in each block of text is interpreted as a %Text field and the (unique?) ID is extracted from the text 
+up to the first punctuation mark. If a %%Type: IV% or %%Type: 4% like string is found in the line, the %AST is set to this 
+value. The remaining lines up to the next empty line, if any, are interpreted as the %Description field. The first line of 
+the next block is again interpreted as a %Text field, and so on. Such a file can only be saved as a full Table (%%.tsv%). 
+Backup files too will be saved as %%.tsv% files."
 
 <entry> "Next:"
 <list_item> "\bu @@Determine pathological type@"

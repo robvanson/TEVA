@@ -480,6 +480,7 @@ procedure ReadSpeakerData .speakerData$
 				config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST
 				.currentText$ = ""
 				.currentDescription$ = ""
+
 				for .row to .numStrings
 					select .rawStrings
 					.currentString$ = Get string... '.row'
@@ -491,6 +492,7 @@ procedure ReadSpeakerData .speakerData$
 							.currentDescription$ = .currentDescription$ + .currentString$ + "\n"
 						endif
 					else
+						.currentDescription$ = replace_regex$(.currentDescription$, "\\n$", "", 0)
 						if .currentText$ <> ""
 							.id$ = replace_regex$(.currentText$, "^\W*([\w\- ]+).*$", "\1", 0)
 							# Get AST
