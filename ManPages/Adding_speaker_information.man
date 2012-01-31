@@ -31,9 +31,10 @@ This backup file will be kept until the table is saved to file using the %Save b
 with the %Close button, after which the backup will be removed. 
 The backup file will be overwritten the next time the table is opened from file and a change is made."
 
-<entry> "Format of the speaker info table"
+<entry> "Format of the speaker info table (%%.tsv% or %%.Table%)"
 <normal> "Speaker Info tables are tab delimited (tsv) lists with five fields, starting with a line 
-with the field names separated by tabs, i.e., %ID, %Text, %Description, %Audio, %AST."
+with the field names separated by tabs, i.e., %ID, %Text, %Description, %Audio, %AST. The extension of the file 
+should be %%.tsv% or %%.Table%."
 <list_item> "1: ID of speaker or recording (must be unique)"
 <list_item> "2: Essential information, often starting with the ID code"
 <list_item> "3: Free form comments"
@@ -44,7 +45,7 @@ when the record is chosen"
 <normal> "Missing columns are automatically generated when the table is read. So, if a table without the %Description and 
 %AST columns is read, two empty columns with the corresponding labels are created."
 
-<normal> "An example file:"
+<normal> "An example file: %%SignaltypeVoiceSamples.Table%"
 <code> "ID          Text                        Description Audio                      AST"
 <code> "Speaker1    Speaker1, M 66yo, Type I    [comments]  signaltype1voicesample.wav 1"
 <code> "Speaker2    Speaker2, M 48yo, Type II   [comments]  signaltype2voicesample.wav 2"
@@ -52,7 +53,7 @@ when the record is chosen"
 <code> "Speaker4    Speaker4, F 48yo, Type IV   [comments]  signaltype4voicesample.wav 4"
 
 <normal> "A text-only file without the %%.tsv% or %%.Table% extension will be read as a single record. A table 
-with single speaker entry is constructed. The first line in this file is interpreted as a %Text field 
+with a single speaker entry is constructed. The first line in this file is interpreted as a %Text field 
 and the (unique?) ID is extracted from the text up to the first punctuation mark. If a %%Type: IV% or %%Type: 4% like 
 string is found in the line, the %AST is set to this value. The remaining lines are interpreted as the %Description field."
 
