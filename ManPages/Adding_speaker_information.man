@@ -25,7 +25,11 @@ table, and click %Ready. Or you can step through all the records with the next (
 <normal> "You can save changes to the list with the %Save button in the 
 @@Overview of Configuration page|Configuration page@. You can close and purge the current table with the 
 %Close button in the @@Overview of Configuration page|Configuration page@. With %Close, the current table is not 
-saved."
+saved. However, all changes made in an existing speaker table will be saved in a backup file with the same name 
+as the original file, but with a tilde (~) added to the name (e.g., %%example.Table% becomes %%example~.Table%). 
+This backup file will be kept until the table is saved to file using the %Save button or all changes are purged 
+with the %Close button, after which the backup will be removed. 
+The backup file will be overwritten the next time the table is opened from file and a change is made."
 
 <entry> "Format of the speaker info table"
 <normal> "Speaker Info tables are tab delimited (tsv) lists with five fields, starting with a line 

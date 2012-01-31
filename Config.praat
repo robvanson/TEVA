@@ -202,6 +202,10 @@ procedure processConfigCloseSpeaker .clickX .clickY .pressed$
 		speakerInfo$ = ""
 		speakerComments$ = ""
 		pathologicalType = 0
+		# Purge all changes and delete the backup file
+		if config.speakerDataBackup$ <> "" and fileReadable(config.speakerDataBackup$)
+			deleteFile(config.speakerDataBackup$)
+		endif
 	endif
     call Draw_button 'table$' '.label$' 0
 endproc
