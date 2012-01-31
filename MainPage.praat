@@ -462,9 +462,6 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 				call autoSetPathType
 				.known_speaker = get_speakerInfo.row
 			endif
-			if index_regex(.newSpeakerComments$, "\S")
-				speakerComments$ = replace_regex$(.newSpeakerComments$, "\\n", "\n", 0)
-			endif
 			# Store changes
 			if index_regex(.newSpeakerComments$, "\S") or .known_speaker <= 0
 				call WriteSpeakerData

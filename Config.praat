@@ -157,9 +157,13 @@ procedure processConfigSaveSpeaker .clickX .clickY .pressed$
 		if config.speakerDataTable <= 0
 			call ReadSpeakerData 'config.speakerData$'
 		endif
-		# Get (new) filename
+		# Get (new) filename, default to .tsv extension if not such
+		.newFileName$ = config.speakerData$
+		if index_regex(.newFileName$, "\.(?itsv|table)") <= 0
+			.newFileName$ = replace_regex$(.newFileName$, "\.(\w+)$", ".tsv", 0)
+		endif
 		call getLanguageTexts '.table$' '.label$'
-		.filename$ = chooseWriteFile$ (getLanguageTexts.helpText$, config.speakerData$)
+		.filename$ = chooseWriteFile$ (getLanguageTexts.helpText$, .newFileName$)
 		if .filename$ <> ""
 			# Clean up backup file, if there is one
 			.deleteBackupFile = 1

@@ -487,7 +487,8 @@ procedure ReadSpeakerData .speakerData$
 						if .currentText$ = ""
 							.currentText$ = .currentString$
 						else
-							.currentDescription$ = .currentDescription$ + .currentString$ + newline$
+							# Use fake newlines
+							.currentDescription$ = .currentDescription$ + .currentString$ + "\n"
 						endif
 					else
 						if .currentText$ <> ""
@@ -594,7 +595,11 @@ procedure WriteSpeakerData
 	endif
 	
 	if config.speakerData$ <> "" and fileReadable(config.speakerData$)
-		config.speakerDataBackup$ = replace_regex$(config.speakerData$, "(\.[a-z0-9A-Z]+)$", "~\1",0)
+		config.speakerDataBackup$ = replace_regex$(config.speakerData$, "(\.\w+)$", "~\1", 0)
+		# The backup file is a Table, so give it the correct extension
+		if index_regex(config.speakerDataBackup$, "\.(?itsv|table)") <= 0
+			config.speakerDataBackup$ = replace_regex$(config.speakerDataBackup$, "\.\w+$", ".tsv", 0)
+		endif
 		select config.speakerDataTable
 		Save as tab-separated file... 'config.speakerDataBackup$'
 	endif
