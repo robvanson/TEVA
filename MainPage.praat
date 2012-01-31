@@ -461,6 +461,8 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 				call load_audio_file 'te.currentFileName$'
 				call autoSetPathType
 				.known_speaker = get_speakerInfo.row
+			elsif index_regex(.newSpeakerComments$, "\S")
+				speakerComments$ = .newSpeakerComments$
 			endif
 			# Store changes
 			if index_regex(.newSpeakerComments$, "\S") or .known_speaker <= 0
