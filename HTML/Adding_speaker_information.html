@@ -42,14 +42,17 @@ table, and click <i>Ready</i>. Or you can step through all the records with the 
 You can save changes to the list with the <i>Save</i> button in the 
 <a href="Overview_of_Configuration_page.html">Configuration page</a>. You can close and purge the current table with the 
 <i>Close</i> button in the <a href="Overview_of_Configuration_page.html">Configuration page</a>. With <i>Close</i>, the current table is not 
-saved.</p>
+saved. However, all changes made in an existing speaker table will be saved in a backup file with the same name 
+as the original file, but with a tilde (~) added to the name (e.g., <i>example.Table</i> becomes <i>example~.Table</i>). 
+This backup file will be kept until the table is saved to file using the <i>Save</i> button or all changes are purged 
+with the <i>Close</i> button, after which the backup will be removed. 
+The backup file will be overwritten the next time the table is opened from file and a change is made.</p>
 <h3>
-Format of the speaker info table <p align=center>
-<a href="SpeakerInfo_screenshot.png" target="_blank"><img width="25%" src="SpeakerInfo_screenshot.png" VSPACE=10></a>
-</h3></p>
+Format of the speaker info table (<i>.tsv</i> or <i>.Table</i>)</h3>
 <p>
 Speaker Info tables are tab delimited (tsv) lists with five fields, starting with a line 
-with the field names separated by tabs, i.e., <i>ID</i>, <i>Text</i>, <i>Description</i>, <i>Audio</i>, <i>AST</i>.</p>
+with the field names separated by tabs, i.e., <i>ID</i>, <i>Text</i>, <i>Description</i>, <i>Audio</i>, <i>AST</i>. The extension of the file 
+should be <i>.tsv</i> or <i>.Table</i>.</p>
 <dl>
 <dd>
 1: ID of speaker or recording (must be unique)
@@ -69,7 +72,7 @@ when the record is chosen</p>
 Missing columns are automatically generated when the table is read. So, if a table without the <i>Description</i> and 
 <i>AST</i> columns is read, two empty columns with the corresponding labels are created.</p>
 <p>
-An example file:</p>
+An example file: <i>SignaltypeVoiceSamples.Table</i></p>
 <code>
 ID          Text                        Description Audio                      AST<br></code>
 <code>
@@ -81,10 +84,12 @@ Speaker3    Speaker3, F 77yo, Type III  [comments]  signaltype3voicesample.wav 3
 <code>
 Speaker4    Speaker4, F 48yo, Type IV   [comments]  signaltype4voicesample.wav 4<br></code>
 <p>
-A text-only file without the <i>.tsv</i> or <i>.Table</i> extension will be read as a list of <a href="http://www.fon.hum.uva.nl/praat/manual/Strings.html" target="_blank">Strings</a>. The table 
-with the speaker data is constructed from these <a href="http://www.fon.hum.uva.nl/praat/manual/Strings.html" target="_blank">Strings</a>. Each line in this file is interpreted as a <i>Text</i> field 
-and the (unique?) ID is extracted from the text up to the first punctuation mark. If a <i>Type: IV</i> or <i>Type: 4</i> like
-string is found in the line, the <i>AST</i> is set to this value.</p>
+A text-only file without the <i>.tsv</i> or <i>.Table</i> extension will be read as a list of records separated by empty 
+lines. The first line in each block of text is interpreted as a <i>Text</i> field and the (unique?) ID is extracted from the text 
+up to the first punctuation mark. If a <i>Type: IV</i> or <i>Type: 4</i> like string is found in the line, the <i>AST</i> is set to this 
+value. The remaining lines up to the next empty line, if any, are interpreted as the <i>Description</i> field. The first line of 
+the next block is again interpreted as a <i>Text</i> field, and so on. Such a file can only be saved as a full Table (<i>.tsv</i>). 
+Backup files too will be saved as <i>.tsv</i> files.</p>
 <h3>
 Next:</h3>
 <ul>
