@@ -162,16 +162,16 @@ procedure processConfigSaveSpeaker .clickX .clickY .pressed$
 		.filename$ = chooseWriteFile$ (getLanguageTexts.helpText$, config.speakerData$)
 		if .filename$ <> ""
 			# Clean up backup file, if there is one
-			.saveBackupFile = 1
+			.deleteBackupFile = 1
 			# Do NOT delete the speakerDataBackup file if it is the current open file
 			if config.speakerDataBackup$ = "" or config.speakerData$ = config.speakerDataBackup$
-				.saveBackupFile = 0
+				.deleteBackupFile = 0
 			endif
 			config.speakerData$ = .filename$
 			select config.speakerDataTable
 			Save as tab-separated file... 'config.speakerData$'
 			# Remove SpeakerData Backup file, but only if it is not the file just saved!
-			if .saveBackupFile and config.speakerData$ <> config.speakerDataBackup$ and fileReadable(config.speakerData$)
+			if .deleteBackupFile and config.speakerData$ <> config.speakerDataBackup$ and fileReadable(config.speakerData$)
 				# Note that the backup is ONLY deleted if the saved file actually exists!
 				deleteFile(config.speakerDataBackup$)
 			endif

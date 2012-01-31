@@ -579,7 +579,11 @@ procedure WriteSpeakerData
 	Set string value... '.row' Description 'speakerComments$'
 	.speakerDataDir$ = replace_regex$(config.speakerData$, "[^\\/:]+$", "", 0)
 	.audio$ = te.currentFileName$
-	if index_regex(.audio$, "'.speakerDataDir$'")
+	# Catch Windows \ path separator
+	if windows
+		.speakerDataDir$ = replace_regex$(.speakerDataDir$, "\\", "\\\\", 0)
+	endif
+	if index_regex(.audio$, "'.speakerDataDir$'") > 0
 		.audio$ = replace_regex$(.audio$, "'.speakerDataDir$'", "", 0)
 	endif
 	Set string value... '.row' Audio '.audio$'
