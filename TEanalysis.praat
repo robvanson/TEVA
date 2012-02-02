@@ -1811,6 +1811,11 @@ procedure convert_praat_to_latin1 .text$
 	.text$ = replace_regex$(.text$, "\\ss", "\xdf", 0)
 endproc
 
+procedure protect_praat_special_characters .text$
+	.text$ = replace_regex$(.text$, "([_%^#])", "\\\1 ", 0)
+endproc
+
+
 # Expand 'variable$' into the value of variable$.
 # Eg, 'praatVersion$' becomes 5.1.45 or whatever is the current version
 # Single quotes can be protected by \'

@@ -199,7 +199,8 @@ procedure init_window
 	pathologicalTypeText$ = "'pathologicalTypeText$' '.typeRoman$'"
 	call autoSetPathType
 	if pathologicalType > 0
-		call write_header_text Blue 'speakerID$' 'pathologicalTypeText$'
+		call protect_praat_special_characters 'speakerID$'
+		call write_header_text Blue 'protect_praat_special_characters.text$' 'pathologicalTypeText$'
 	endif
 	# Draw something
 	call draw_signal
