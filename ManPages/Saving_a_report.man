@@ -28,3 +28,7 @@ three files and two directories. The files are %%Sample3%.odt and %%Speaker3%.ht
 There is also a copy of the recording in the directory. The two subdirectories contain the graphics, one is 
 called %eps and contains the graphics in %eps format, the other is called either %wmf (Windows) or %pdf (OSX) 
 and contains the graphics in %wmf or %pdf format."
+
+<entry> "Next:"
+<list_item> "\bu @@Example evaluating AST@"
+
