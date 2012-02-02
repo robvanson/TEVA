@@ -1,0 +1,13 @@
+ManPagesTextFile
+"Example evaluating AST" "R.J.J.H. van Son" 20120202 0
+<intro> "A tutorial example of how to evaluate the Acoustic Signal Typing on a sample of recordings"
+<entry> "Download and open the example corpus"
+<normal> "Download the TEVA_AST_example.zip file from [To be announced] and extra it to a convenient location. 
+Open TEVA and then click the %Open button on the @@Overview of Main page|Main page@. Navigate into the 
+map you just downloaded and select %%SignaltypeVoiceSamples.Table%. Then click %Choose. The 
+@@Overview of Main page|Main page@ now contains a display of an empty sound. %%SignaltypeVoiceSamples.Table% 
+contains data on a number of recordings. You must now select the recording you want to use."
+<normal> "Click on the %Speaker button (lower left). A new window will open. Click on the ##=# button. 
+You now see a table with 5 columns and 4 lines (enlarge the window if you do not see all of it). The headings 
+read %ID, %Text, %Description, %Audio, and %AST. Except for the %Description column, all columns contain 
+metadata for the recordings mentioned in the %Audio column."
