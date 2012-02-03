@@ -10,8 +10,8 @@ ManPagesTextFile
 <normal> "TEVA can keep a record of recordings. Click the %Speaker button at the bottom 
 left of the @@Overview of Main page|Main page@. A window will open where you can enter an 
 identifier (name or code) and other information like sex, age, treatment etc. There is also 
-a field for more informal comments. The string before the first punctuation mark on the first line 
-of the window (the Speaker ID field) will be used internally to represent the ID code of the speaker. 
+a field for more informal comments. The top text field is an identifier for the recording, the next lower one 
+contains information about the speaker, ID, name, and so on. The bottom text field is for comments. 
 Click the %Ready button when you have completed the input. You can change the text later if you like."
 
 <entry> "Reading a table with speaker information"
@@ -19,8 +19,10 @@ Click the %Ready button when you have completed the input. You can change the te
 You can open such a table with the %Open button in the @@Overview of Main page|Main page@, 
 or with the %Data button in the @@Overview of Configuration page|Configuration page@. When opened,
 you will have to select a specific speaker or recording from the list. This is done using the %Speaker button 
-on the @@Overview of Main page|Main page@. You can type in the ID code of the recording, or the line number in the 
-table, and click %Ready. Or you can step through all the records with the next (>) and previous (<) buttons."
+on the @@Overview of Main page|Main page@. In the top text field, you can type in the ID code of the recording, 
+or the line number in the table, and click %Ready. Or you can step through all the records with the next (>) 
+and previous (<) buttons. If you enter a non-existing recording ID in the top, ID, field, a new record is 
+added to the table. You can remove the current record by completely emptying the top, record ID field."
 
 <normal> "You can save changes to the list with the %Save button in the 
 @@Overview of Configuration page|Configuration page@. You can close and purge the current table with the 

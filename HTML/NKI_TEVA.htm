@@ -559,8 +559,8 @@ Adding information about a recording <p align=center>
 TEVA can keep a record of recordings. Click the <i>Speaker</i> button at the bottom 
 left of the <a href="#Overview_of_Main_page">Main page</a>. A window will open where you can enter an 
 identifier (name or code) and other information like sex, age, treatment etc. There is also 
-a field for more informal comments. The string before the first punctuation mark on the first line 
-of the window (the Speaker ID field) will be used internally to represent the ID code of the speaker. 
+a field for more informal comments. The top text field is an identifier for the recording, the next lower one 
+contains information about the speaker, ID, name, and so on. The bottom text field is for comments. 
 Click the <i>Ready</i> button when you have completed the input. You can change the text later if you like.</p>
 <h3>
 Reading a table with speaker information</h3>
@@ -569,8 +569,10 @@ In general, it is better to collect speaker information in a table beforehand.
 You can open such a table with the <i>Open</i> button in the <a href="#Overview_of_Main_page">Main page</a>, 
 or with the <i>Data</i> button in the <a href="#Overview_of_Configuration_page">Configuration page</a>. When opened,
 you will have to select a specific speaker or recording from the list. This is done using the <i>Speaker</i> button 
-on the <a href="#Overview_of_Main_page">Main page</a>. You can type in the ID code of the recording, or the line number in the 
-table, and click <i>Ready</i>. Or you can step through all the records with the next (&gt;) and previous (&lt;) buttons.</p>
+on the <a href="#Overview_of_Main_page">Main page</a>. In the top text field, you can type in the ID code of the recording, 
+or the line number in the table, and click <i>Ready</i>. Or you can step through all the records with the next (&gt;) 
+and previous (&lt;) buttons. If you enter a non-existing recording ID in the top, ID, field, a new record is 
+added to the table. You can remove the current record by completely emptying the top, record ID field.</p>
 <p>
 You can save changes to the list with the <i>Save</i> button in the 
 <a href="#Overview_of_Configuration_page">Configuration page</a>. You can close and purge the current table with the 
@@ -820,6 +822,12 @@ three files and two directories. The files are <i>Sample3</i>.odt and <i>Speaker
 There is also a copy of the recording in the directory. The two subdirectories contain the graphics, one is 
 called <i>eps</i> and contains the graphics in <i>eps</i> format, the other is called either <i>wmf</i> (Windows) or <i>pdf</i> (OSX) 
 and contains the graphics in <i>wmf</i> or <i>pdf</i> format.</p>
+<h3>
+Next:</h3>
+<ul>
+<li>
+&nbsp;<a href="#Example_evaluating_AST">Example evaluating AST</a>
+</ul>
 <p align=center>
 <a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/TEVA/HTML/Save_screenshotTop.png" target="_blank"><img width="25%" src="Save_screenshotTop.png"></a>
 <a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/TEVA/HTML/Save_screenshotBottom.png" target="_blank"><img width="25%" src="Save_screenshotBottom.png"></a>
@@ -842,22 +850,31 @@ A tutorial example of how to evaluate the Acoustic Signal Typing on a sample of 
 <h3>
 Download and open the example corpus</h3>
 <p>
-Download the TEVA_AST_example.zip file from [To be announced] and extra it to a convenient location. 
+Download the TEVA_AST_example.zip file from [To be announced] and extract it to a convenient location. 
 Open TEVA and then click the <i>Open</i> button on the <a href="#Overview_of_Main_page">Main page</a>. Navigate into the 
 map you just downloaded and select <i>SignaltypeVoiceSamples.Table</i>. Then click <i>Choose</i>. The 
 <a href="#Overview_of_Main_page">Main page</a> now contains a display of an empty sound. <i>SignaltypeVoiceSamples.Table</i> 
 contains data on a number of recordings. You must now select the recording you want to use.</p> <p align=center>
 <a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/TEVA/HTML/Speaker_screenshot.png" target="_blank"><img width="25%" src="Speaker_screenshot.png" VSPACE=10></a>
 </h3></p>
+<h3>
+Select speakers</h3>
 <p>
 Click on the <i>Speaker</i> button (lower left). A new window will open. Click on the <b>=</b> button. 
 You now see a table with 5 columns and 4 lines (enlarge the window if you do not see all of it). The headings 
 read <i>ID</i>, <i>Text</i>, <i>Description</i>, <i>Audio</i>, and <i>AST</i>. Except for the <i>Description</i> column, all columns contain 
-metadata for the recordings mentioned in the <i>Audio</i> column.</p> <p align=center>
+metadata for the recordings mentioned in the <i>Audio</i> column. Close the Info window.</p> <p align=center>
 <a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/TEVA/HTML/SpeakerInfo_screenshot.png" target="_blank"><img width="50%" src="SpeakerInfo_screenshot.png" VSPACE=10></a>
 </p>
+<p>
+The Speaker window has three text fields. The top one contains the ID of the recording, the next field 
+a short description of the speaker (e.g., name or ID, age, sex, etc.). You can change this field, or even create 
+it for a newly recorded voice. If you enter an ID or line number, the corresponding speaker from the Info window 
+will be read and displayed in TEVA. If you empty the ID field completely, the current record will be removed from 
+the table.</p>
 <h3>Links to this page</h3>
 <ul>
+<li><a href="#Saving_a_report">Saving a report</a>
 <li><a href="#TEVA_Tutorials">TEVA Tutorials</a>
 </ul>
 <hr>

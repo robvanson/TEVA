@@ -15,6 +15,7 @@ Continue	Klaar
 Next	>
 Previous	<
 Current	=
+SpeakerID	Opname ID of regelnummer
 SpeakerText	Spreker info
-SpeakerDefault	Spreker ID, naam, geslacht, leeftijd of regelnummer
+SpeakerDefault	Spreker ID, naam, geslacht en/of leeftijd
 SpeakerComments	Opmerkingen

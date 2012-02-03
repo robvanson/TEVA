@@ -416,6 +416,18 @@ procedure get_speakerInfo .speakerID$
 	endif
 endproc
 
+procedure delete_speakerData .speakerID$
+	call get_nextSpeaker '.speakerID$'
+	.newID$ = get_nextSpeaker.id$
+	call get_speakerInfo '.speakerID$'
+	.deleteRow = get_speakerInfo.row
+	if .deleteRow > 0
+		select config.speakerDataTable
+		Remove row... '.deleteRow'
+		.speakerID$ = .newID$
+	endif
+endproc
+
 # Non-interactive procedure to load a specific speaker from Speaker Data
 procedure loadSpeaker speakerID$
 	call get_speakerInfo 'speakerID$'

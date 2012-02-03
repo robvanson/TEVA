@@ -392,15 +392,19 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 	clicked = -1
 	while clicked <> 4
 		# The speaker Text
+		.speakerID$ = "ID"
+		.speakerIDDefault$ = speakerID$
+		if .speakerIDDefault$ = ""
+			call get_feedback_text 'config.language$' SpeakerID
+			call convert_praat_to_latin1 'get_feedback_text.text$'
+			.speakerIDDefault$ = convert_praat_to_latin1.text$
+		endif
 		.speakerText$ = "Speaker"
 		.speakerDefault$ = speakerInfo$
 		if .speakerDefault$ = ""
 			call get_feedback_text 'config.language$' SpeakerDefault
 			call convert_praat_to_latin1 'get_feedback_text.text$'
 			.speakerDefault$ = convert_praat_to_latin1.text$
-			if speakerID$ <> ""
-				.speakerDefault$ = speakerID$
-			endif
 		endif
 		# The comments
 		call get_feedback_text 'config.language$' SpeakerComments
@@ -436,22 +440,32 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 
 		# The user text input window (beginPause .... endPause)
 		beginPause(.helpText$)
+			text (.speakerID$, .speakerIDDefault$)
 			text (.speakerText$, .speakerDefault$)
 			text (.speakerCommentInput$, .speakerCommentDef$)
 		clicked = endPause ("'.prevText$'", "'.currentText$'", "'.nextText$'", "'.continueText$'", 4)
 		if clicked = 2 or clicked = 4
 			# The text of the field name equals the name of the variable! That is, an indirection
+			.speakerID$ = replace_regex$(.speakerID$, ".+", "\l&\$", 0)
 			.speakerText$ = replace_regex$(.speakerText$, ".+", "\l&\$", 0)
 			.speakerCommentInput$ = replace_regex$(.speakerCommentInput$, ".+", "\l&\$", 0)
-			.newspeakerID$ = '.speakerText$'
+			.newSpeakerID$ = '.speakerID$'
+			.newSpeakerInfo$ = '.speakerText$'
 			.newSpeakerComments$ = '.speakerCommentInput$'
+			if .newSpeakerInfo$ = .speakerDefault$
+				.newSpeakerInfo$ = ""
+			endif
 			if .newSpeakerComments$ = .speakerCommentDef$
 				.newSpeakerComments$ = ""
 			endif
-			.known_speaker = 1
-			if .newspeakerID$ <> .speakerDefault$
-				speakerID$ = .newspeakerID$
-				speakerInfo$ = .newspeakerID$
+			.change_speakerdata = 0
+			if .newSpeakerID$ = ""
+				#Delete record
+				call delete_speakerData  'speakerID$'
+				.newSpeakerID$ = delete_speakerData.speakerID$
+			endif
+			if .newSpeakerID$ <> .speakerIDDefault$
+				speakerID$ = .newSpeakerID$
 				call get_speakerInfo 'speakerID$'
 				speakerID$ = get_speakerInfo.id$
 				speakerInfo$ = get_speakerInfo.text$
@@ -460,12 +474,19 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 				te.currentFileName$ = get_speakerInfo.audio$
 				call load_audio_file 'te.currentFileName$'
 				call autoSetPathType
-				.known_speaker = get_speakerInfo.row
-			elsif index_regex(.newSpeakerComments$, "\S")
-				speakerComments$ = .newSpeakerComments$
+				.change_speakerdata = 1
+			else
+				if index_regex(.newSpeakerInfo$, "\S")
+					speakerInfo$ = .newSpeakerInfo$
+					.change_speakerdata = 1
+				endif
+				if index_regex(.newSpeakerComments$, "\S")
+					speakerComments$ = .newSpeakerComments$
+					.change_speakerdata = 1
+				endif
 			endif
 			# Store changes
-			if index_regex(.newSpeakerComments$, "\S") or .known_speaker <= 0
+			if .change_speakerdata > 0
 				call WriteSpeakerData
 			endif
 		elsif clicked = 1

@@ -15,6 +15,7 @@ Continue	Fertig
 Next	>
 Previous	<
 Current	=
+SpeakerID	Aufnahme ID oder Zeilennummer
 SpeakerText	Sprecher daten
-SpeakerDefault	Sprecher ID, Namen, Geschlecht, Alter, oder Zeilennummer
+SpeakerDefault	Sprecher ID, Namen, Geschlecht, und/oder Alter
 SpeakerComments	Kommentare

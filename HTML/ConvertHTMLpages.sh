@@ -38,7 +38,7 @@ for file in $(ls -1 ${@:-*.html}); do
 	if [[ "${file}" == "Example_evaluating_AST.html" ]]; then
 		perl -i'' -ne 's!(\QYou must now select the recording you want to use.</p>\E)\s*$!\1 <p align=center>\n<a href="Speaker_screenshot.png" target="_blank"><img width="25%" src="Speaker_screenshot.png" VSPACE=10></a>\n</h3></p>\n!g;print $_' \
 			${file}
-		perl -i'' -ne 's!(\Q<i>Audio</i> column.\E)</p>\s*$!\1</p> <p align=center>\n<a href="SpeakerInfo_screenshot.png" target="_blank"><img width="50%" src="SpeakerInfo_screenshot.png" VSPACE=10></a>\n</p>\n!g;print $_' \
+		perl -i'' -ne 's!(\QClose the Info window.\E)</p>\s*$!\1</p> <p align=center>\n<a href="SpeakerInfo_screenshot.png" target="_blank"><img width="50%" src="SpeakerInfo_screenshot.png" VSPACE=10></a>\n</p>\n!g;print $_' \
 			${file}
 	fi
 done
