@@ -25,3 +25,4 @@ the current record will be removed from the table."
 Then Click the %Ready button. You now see a display of the recording of the fourth speaker. You see the ID of this 
 speaker and the @@Acoustic Signal Typing|Pathological Type@ as it was recorded in the Table."
 
+<entry> "Find a stable interval"
