@@ -398,6 +398,9 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 			call get_feedback_text 'config.language$' SpeakerID
 			call convert_praat_to_latin1 'get_feedback_text.text$'
 			.speakerIDDefault$ = convert_praat_to_latin1.text$
+		else
+			call get_speakerInfo 'speakerID$'
+			.speakerIDDefault$ = "['get_speakerInfo.row'] '.speakerIDDefault$'"
 		endif
 		.speakerText$ = "Speaker"
 		.speakerDefault$ = speakerInfo$
@@ -465,6 +468,7 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 				.newSpeakerID$ = delete_speakerData.speakerID$
 			endif
 			if .newSpeakerID$ <> .speakerIDDefault$
+				.newSpeakerID$ = replace_regex$(.newSpeakerID$, "^\[\d+\]\s+", "", 0)
 				speakerID$ = .newSpeakerID$
 				call get_speakerInfo 'speakerID$'
 				speakerID$ = get_speakerInfo.id$
