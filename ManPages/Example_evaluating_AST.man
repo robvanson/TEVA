@@ -1,6 +1,7 @@
 ManPagesTextFile
 "Example evaluating AST" "R.J.J.H. van Son" 20120202 0
 <intro> "A tutorial example of how to evaluate the Acoustic Signal Typing on a sample of recordings"
+
 <entry> "Download and open the example corpus"
 <normal> "Download the TEVA_AST_example.zip file from [To be announced] and extract it to a convenient location. 
 Open TEVA and then click the %Open button on the @@Overview of Main page|Main page@. Navigate into the 
@@ -13,8 +14,13 @@ contains data on a number of recordings. You must now select the recording you w
 You now see a table with 5 columns and 4 lines (enlarge the window if you do not see all of it). The headings 
 read %ID, %Text, %Description, %Audio, and %AST. Except for the %Description column, all columns contain 
 metadata for the recordings mentioned in the %Audio column. Close the Info window."
+
 <normal> "The Speaker window has three text fields. The top one contains the ID of the recording, the next field 
 a short description of the speaker (e.g., name or ID, age, sex, etc.). You can change this field, or even create 
 it for a newly recorded voice. If you enter an ID or line number, the corresponding speaker from the Info window 
 will be read and displayed in TEVA. If you empty the ID field completely and replace it with a single dash ""-"", 
 the current record will be removed from the table."
+
+<normal> "Put a single ""1"" in the top row of the Sepaker window to select the first entry in the Table. Then Click 
+the %Ready button. You now see a display of the recording of the first speaker. "
+
