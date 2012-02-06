@@ -459,7 +459,7 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 				.newSpeakerComments$ = ""
 			endif
 			.change_speakerdata = 0
-			if .newSpeakerID$ = ""
+			if .newSpeakerID$ = "-"
 				#Delete record
 				call delete_speakerData  'speakerID$'
 				.newSpeakerID$ = delete_speakerData.speakerID$

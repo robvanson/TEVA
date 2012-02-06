@@ -22,7 +22,8 @@ you will have to select a specific speaker or recording from the list. This is d
 on the @@Overview of Main page|Main page@. In the top text field, you can type in the ID code of the recording, 
 or the line number in the table, and click %Ready. Or you can step through all the records with the next (>) 
 and previous (<) buttons. If you enter a non-existing recording ID in the top, ID, field, a new record is 
-added to the table. You can remove the current record by completely emptying the top, record ID field."
+added to the table. You can remove the current record by completely emptying the top, record ID field, and replace 
+it with a single dash, ""-""."
 
 <normal> "You can save changes to the list with the %Save button in the 
 @@Overview of Configuration page|Configuration page@. You can close and purge the current table with the 

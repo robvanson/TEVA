@@ -16,5 +16,5 @@ metadata for the recordings mentioned in the %Audio column. Close the Info windo
 <normal> "The Speaker window has three text fields. The top one contains the ID of the recording, the next field 
 a short description of the speaker (e.g., name or ID, age, sex, etc.). You can change this field, or even create 
 it for a newly recorded voice. If you enter an ID or line number, the corresponding speaker from the Info window 
-will be read and displayed in TEVA. If you empty the ID field completely, the current record will be removed from 
-the table."
+will be read and displayed in TEVA. If you empty the ID field completely and replace it with a single dash ""-"", 
+the current record will be removed from the table."
