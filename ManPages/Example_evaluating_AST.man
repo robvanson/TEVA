@@ -21,6 +21,7 @@ it for a newly recorded voice. If you enter an ID or line number, the correspond
 will be read and displayed in TEVA. If you empty the ID field completely and replace it with a single dash ""-"", 
 the current record will be removed from the table."
 
-<normal> "Put a single ""1"" in the top row of the Sepaker window to select the first entry in the Table. Then Click 
-the %Ready button. You now see a display of the recording of the first speaker. "
+<normal> "Put a single ""4"" in the top row of the Sepaker window to select the fourth (and last) entry in the Table. 
+Then Click the %Ready button. You now see a display of the recording of the fourth speaker. You see the ID of this 
+speaker and the @@Acoustic Signal Typing|Pathological Type@ as it was recorded in the Table."
 
