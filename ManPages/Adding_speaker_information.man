@@ -21,9 +21,10 @@ or with the %Data button in the @@Overview of Configuration page|Configuration p
 you will have to select a specific speaker or recording from the list. This is done using the %Speaker button 
 on the @@Overview of Main page|Main page@. In the top text field, you can type in the ID code of the recording, 
 or the line number in the table, and click %Ready. Or you can step through all the records with the next (>) 
-and previous (<) buttons. If you enter a non-existing recording ID in the top, ID, field, a new record is 
-added to the table. You can remove the current record by completely emptying the top, record ID field, and replace 
-it with a single dash, ##-#."
+and previous (<) buttons. If you enter a partial ID, it will be matched to the start of the ID's in the table. 
+The first record that matches will be selected. If you enter a non-existing recording ID in the top, ID, field, 
+a new record is added to the table. You can remove the current record by completely emptying the top, record ID 
+field, and replace it with a single dash, ##-#."
 
 <normal> "You can save changes to the list with the %Save button in the 
 @@Overview of Configuration page|Configuration page@. You can close and purge the current table with the 
@@ -36,8 +37,8 @@ The backup file will be overwritten the next time the table is opened from file 
 
 <entry> "Format of the speaker info table (%%.tsv% or %%.Table%)"
 <normal> "Speaker Info tables are tab delimited (tsv) lists with five fields, starting with a line 
-with the field names separated by tabs, i.e., %ID, %Text, %Description, %Audio, %AST. The extension of the file 
-should be %%.tsv% or %%.Table%."
+with the field names separated by tabs, i.e., %ID, %Text, %Description, %Audio, %AST (the order is immaterial). 
+The extension of the file should be %%.tsv% or %%.Table%."
 <list_item> "1: ID of speaker or recording (must be unique)"
 <list_item> "2: Essential information, often starting with the ID code"
 <list_item> "3: Free form comments"

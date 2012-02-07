@@ -4,8 +4,8 @@ ManPagesTextFile
 
 <entry> "Download and open the example corpus"
 <normal> "Download the TEVA_AST_example.zip file from [To be announced] and extract it to a convenient location. 
-Open TEVA and then click the %Open button on the @@Overview of Main page|Main page@. Navigate into the 
-map you just downloaded and select %%SignaltypeVoiceSamples.Table%. Then click %Choose. The 
+Open TEVA and then click the %Open button on the @@Overview of Main page|Main page@. A file selection window will 
+open. Navigate into the map you just downloaded and select %%SignaltypeVoiceSamples.Table%. Then click %Choose. The 
 @@Overview of Main page|Main page@ now contains a display of an empty sound. %%SignaltypeVoiceSamples.Table% 
 contains data on a number of recordings. You must now select the recording you want to use."
 
@@ -13,16 +13,41 @@ contains data on a number of recordings. You must now select the recording you w
 <normal> "Click on the %Speaker button (lower left). A new window will open. Click on the ##=# button. 
 You now see a table with 5 columns and 4 lines (enlarge the window if you do not see all of it). The headings 
 read %ID, %Text, %Description, %Audio, and %AST. Except for the %Description column, all columns contain 
-metadata for the recordings mentioned in the %Audio column. Close the Info window."
+metadata for the recordings mentioned in the %Audio column. Close the Info window and click in the TEVA window 
+to view the Speaker window."
 
 <normal> "The Speaker window has three text fields. The top one contains the ID of the recording, the next field 
 a short description of the speaker (e.g., name or ID, age, sex, etc.). You can change this field, or even create 
-it for a newly recorded voice. If you enter an ID or line number, the corresponding speaker from the Info window 
-will be read and displayed in TEVA. If you empty the ID field completely and replace it with a single dash ""-"", 
-the current record will be removed from the table."
+it for a newly recorded voice. If you enter an ID, or just the start of the ID, or row number in the table, 
+the corresponding speaker from the Info window will be read and displayed in TEVA. If you empty the ID field 
+completely and replace it with a single dash ##-#, the current record will be removed from the table."
 
-<normal> "Put a single ""4"" in the top row of the Sepaker window to select the fourth (and last) entry in the Table. 
+<normal> "Put a single %%3% in the top field of the Sepaker window to select the third entry in the Table. 
 Then Click the %Ready button. You now see a display of the recording of the fourth speaker. You see the ID of this 
 speaker and the @@Acoustic Signal Typing|Pathological Type@ as it was recorded in the Table."
 
 <entry> "Find a stable interval"
+<normal> "Inspect the recording using the %Sound and %Spectrogram windows. Then decide how the speech can be 
+judged according to following statements as %Good, %Mediocre, or %Bad. See also @@Acoustic Signal Typing@"
+<list_item> "\bu The speaker can keep a stable /a/ sound over more than 2 seconds"
+<list_item> "\bu There are clear harmonics up to 1000Hz"
+<list_item> "\bu There is at least one stable harmonic for longer than 2 seconds"
+<list_item> "\bu There are harmonics in part of the sample, for longer than 1 second"
+
+<normal> "With these statments in mind, pick an interval where the vowel is most stable. You can use 
+the %%Zoom in% and %%Zoom out% buttons as well as the %%Previous% (move left) and %%Next% (move right) buttons 
+to navigate around."
+
+<normal> "When you found a part that you think is most stable, select an interval of 200 ms. Click the %Select 
+button. You are now asked to click on the position in the display where you want the start of the interval. When 
+you do that, a vertical blue line appears. Now you are asked to click on the position in the display where the 
+end of the interval should come. Click there. Make sure that the interval is at least 100 ms long. You can find 
+the times of start and end points at the top of the graph. You can %%Zoom in% or go %%To selection%, but that is 
+not necessary. "
+
+<entry> "Acoustic analysis"
+<normal> "Inspect the other displays, %%Pitch%, %%Ltas%, %%Intensity%, and %%Harmonicity%. Below each 
+of these displays, analysis parameters will be printed about the selected interval (see also 
+@@Analysis@ and @@AST categories@). Do these acoustic parameters support your evaluation of the preceding 
+statements? Use the %%Previous% (move left) and %%Next% (move right) buttons to move the selected interval around 
+and see how this affects the acoustic parameters. " 
