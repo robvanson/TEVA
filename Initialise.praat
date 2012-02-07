@@ -393,6 +393,17 @@ procedure get_speakerInfo .speakerID$
 				if .row < 0 or .row > .numRows
 					.row = 0
 				endif
+			elsif .row <= 0 and index_regex(.speakerID$, "[^\d]") > 0
+				# Do a limited match
+				for .r to .numRows
+					if .row <= 0
+						select config.speakerDataTable
+						.currentKey$ = Get value... '.r' ID
+						if startsWith(.currentKey$, .speakerID$) > 0
+							.row = .r
+						endif
+					endif
+				endfor
 			endif
 			if .row > 0
 				.id$ = Get value... '.row' ID
