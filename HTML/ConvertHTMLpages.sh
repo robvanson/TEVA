@@ -24,6 +24,10 @@ for file in $(ls -1 ${@:-*.html}); do
 			${file}
 	fi
 	
+	if [[ "${file}" == "NKI_TE-VOICE_ANALYSIS_tool.html" ]]; then
+		perl -i'' -ne 's!(\Q<img width="33%" src="Main_page_screenshot.png" VSPACE=10></a>\E)\s*$!\1&nbsp;<a href="Configure_page_screenshot.png" target="_blank"><img width="39%" src="Configure_page_screenshot.png" VSPACE=10></a>\n!g;print $_' \
+			${file}
+	fi
 	if [[ "${file}" == "Saving_a_report.html" ]]; then
 		perl -i'' -ne 's!^(\Q<h3>Links to this page</h3>\E)\s*$!<p align=center>\n<a href="Save_screenshotTop.png" target="_blank"><img width="25%" src="Save_screenshotTop.png"></a>\n<a href="Save_screenshotBottom.png" target="_blank"><img width="25%" src="Save_screenshotBottom.png"></a>\n</p>\1!g;print $_' \
 			${file}

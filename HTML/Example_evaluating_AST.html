@@ -10,8 +10,8 @@ A tutorial example of how to evaluate the Acoustic Signal Typing on a sample of 
 Download and open the example corpus</h3>
 <p>
 Download the TEVA_AST_example.zip file from [To be announced] and extract it to a convenient location. 
-Open TEVA and then click the <i>Open</i> button on the <a href="Overview_of_Main_page.html">Main page</a>. Navigate into the 
-map you just downloaded and select <i>SignaltypeVoiceSamples.Table</i>. Then click <i>Choose</i>. The 
+Open TEVA and then click the <i>Open</i> button on the <a href="Overview_of_Main_page.html">Main page</a>. A file selection window will 
+open. Navigate into the map you just downloaded and select <i>SignaltypeVoiceSamples.Table</i>. Then click <i>Choose</i>. The 
 <a href="Overview_of_Main_page.html">Main page</a> now contains a display of an empty sound. <i>SignaltypeVoiceSamples.Table</i> 
 contains data on a number of recordings. You must now select the recording you want to use.</p> <p align=center>
 <a href="Speaker_screenshot.png" target="_blank"><img width="25%" src="Speaker_screenshot.png" VSPACE=10></a>
@@ -22,15 +22,52 @@ Select speakers</h3>
 Click on the <i>Speaker</i> button (lower left). A new window will open. Click on the <b>=</b> button. 
 You now see a table with 5 columns and 4 lines (enlarge the window if you do not see all of it). The headings 
 read <i>ID</i>, <i>Text</i>, <i>Description</i>, <i>Audio</i>, and <i>AST</i>. Except for the <i>Description</i> column, all columns contain 
-metadata for the recordings mentioned in the <i>Audio</i> column. Close the Info window.</p> <p align=center>
-<a href="SpeakerInfo_screenshot.png" target="_blank"><img width="50%" src="SpeakerInfo_screenshot.png" VSPACE=10></a>
-</p>
+metadata for the recordings mentioned in the <i>Audio</i> column. Close the Info window and click in the TEVA window 
+to view the Speaker window.</p>
 <p>
 The Speaker window has three text fields. The top one contains the ID of the recording, the next field 
 a short description of the speaker (e.g., name or ID, age, sex, etc.). You can change this field, or even create 
-it for a newly recorded voice. If you enter an ID or line number, the corresponding speaker from the Info window 
-will be read and displayed in TEVA. If you empty the ID field completely, the current record will be removed from 
-the table.</p>
+it for a newly recorded voice. If you enter an ID, or just the start of the ID, or row number in the table, 
+the corresponding speaker from the Info window will be read and displayed in TEVA. If you empty the ID field 
+completely and replace it with a single dash <b>-</b>, the current record will be removed from the table.</p>
+<p>
+Put a single <i>3</i> in the top field of the Sepaker window to select the third entry in the Table. 
+Then Click the <i>Ready</i> button. You now see a display of the recording of the fourth speaker. You see the ID of this 
+speaker and the <a href="Acoustic_Signal_Typing.html">Pathological Type</a> as it was recorded in the Table.</p>
+<h3>
+Find a stable interval</h3>
+<p>
+Inspect the recording using the <i>Sound</i> and <i>Spectrogram</i> windows. Then decide how the speech can be 
+judged according to following statements as <i>Good</i>, <i>Mediocre</i>, or <i>Bad</i>. See also <a href="Acoustic_Signal_Typing.html">Acoustic Signal Typing</a></p>
+<ul>
+<li>
+&nbsp;The speaker can keep a stable /a/ sound over more than 2 seconds
+<li>
+&nbsp;There are clear harmonics up to 1000Hz
+<li>
+&nbsp;There is at least one stable harmonic for longer than 2 seconds
+<li>
+&nbsp;There are harmonics in part of the sample, for longer than 1 second
+</ul>
+<p>
+With these statments in mind, pick an interval where the vowel is most stable. You can use 
+the <i>Zoom in</i> and <i>Zoom out</i> buttons as well as the <i>Previous</i> (move left) and <i>Next</i> (move right) buttons 
+to navigate around.</p>
+<p>
+When you found a part that you think is most stable, select an interval of 200 ms. Click the <i>Select</i> 
+button. You are now asked to click on the position in the display where you want the start of the interval. When 
+you do that, a vertical blue line appears. Now you are asked to click on the position in the display where the 
+end of the interval should come. Click there. Make sure that the interval is at least 100 ms long. You can find 
+the times of start and end points at the top of the graph. You can <i>Zoom in</i> or go <i>To selection</i>, but that is 
+not necessary. </p>
+<h3>
+Acoustic analysis</h3>
+<p>
+Inspect the other displays, <i>Pitch</i>, <i>Ltas</i>, <i>Intensity</i>, and <i>Harmonicity</i>. Below each 
+of these displays, analysis parameters will be printed about the selected interval (see also 
+<a href="Analysis.html">Analysis</a> and <a href="AST_categories.html">AST categories</a>). Do these acoustic parameters support your evaluation of the preceding 
+statements? Use the <i>Previous</i> (move left) and <i>Next</i> (move right) buttons to move the selected interval around 
+and see how this affects the acoustic parameters. </p>
 <h3>Links to this page</h3>
 <ul>
 <li><a href="Saving_a_report.html">Saving a report</a>
