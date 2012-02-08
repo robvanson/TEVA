@@ -54,7 +54,7 @@ English labels will be used here. The keyboard shortcuts are given between the [
 <list_item> "\bu #Nederlands: [N] Use Dutch labels and help"
 <list_item> "\bu #Manual: [M] Display this manual"
 
-<normal> "More can be found in @@Overview of Main page@ and @@Overview of Configuration page@ ."
+<normal> "More can be found in @@Overview of Main page@ and @@Overview of Configuration page@."
 
 <entry> "Language support"
 <normal> "TEVA supports a few languages, currently English, German, and Dutch. Extending this to other languages 

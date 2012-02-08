@@ -28,6 +28,8 @@ current display. Changing the display (eg, zoom in or out) will set the display 
 <list_item> "\bu ##Zoom in#: [n+] Halve the current time window"
 <list_item> "\bu ##Previous#: [<] Previous interval, or shift current time window to the left"
 <list_item> "\bu ##Next#: [>] Next interval, or shift the current time window to the right"
+<normal> "A shortcut to the %Select button is to click inside the display graph. The point where clicked will be marked as the 
+first boundary and all will proceed as if the %Select button was pressed. "
 
 <entry> "Saving and printing a report"
 <list_item> "\bu #Save [\# ] Save recording and a report of the analysis"

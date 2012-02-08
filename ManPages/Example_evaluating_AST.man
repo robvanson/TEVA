@@ -38,12 +38,13 @@ judged according to following statements as %Good, %Mediocre, or %Bad. See also 
 the %%Zoom in% and %%Zoom out% buttons as well as the %%Previous% (move left) and %%Next% (move right) buttons 
 to navigate around."
 
-<normal> "When you found a part that you think is most stable, select an interval of 200 ms. Click the %Select 
-button. You are now asked to click on the position in the display where you want the start of the interval. When 
-you do that, a vertical blue line appears. Now you are asked to click on the position in the display where the 
-end of the interval should come. Click there. Make sure that the interval is at least 100 ms long. You can find 
-the times of start and end points at the top of the graph. You can %%Zoom in% or go %%To selection%, but that is 
-not necessary. "
+<normal> "When you found a part that you think is most stable, select an interval of 200 ms. Click the %Select button. 
+You are now asked to click on the position in the display where you want the start of the interval. When you do that, 
+a vertical blue line appears. Now you are asked to click on the position in the display where the end of the interval 
+should come. Click there. Alternatively, you can simply click inside the display window to select the first boundary.
+After that it proceeds as with the %Select button. Make sure that the interval is at least 100 ms 
+long. You can find the times of start and end points at the top of the graph. You can %%Zoom in% or go %%To selection%, 
+but that is not necessary. "
 
 <entry> "Acoustic analysis"
 <normal> "Inspect the other displays, %%Pitch%, %%Ltas%, %%Intensity%, and %%Harmonicity%. Below each 
@@ -51,3 +52,20 @@ of these displays, analysis parameters will be printed about the selected interv
 @@Analysis@ and @@AST categories@). Do these acoustic parameters support your evaluation of the preceding 
 statements? Use the %%Previous% (move left) and %%Next% (move right) buttons to move the selected interval around 
 and see how this affects the acoustic parameters. " 
+
+<entry> "Entering the Pathological Type"
+<normal> "When you have decided what type of pathological voice the recording has, you simply push one of the numbers 
+%%1-4%, and the type is recorded. The type will be displayed in the window and in the title bar. Push %%0% to remove 
+the type."
+
+<entry> "Saving your work"
+<normal> "After evaluating the sounds, the pathological types and remarks added to the Speaker Info table should be saved 
+to disk. Go to the @@Overview of Configuration page|Configuration page@ and click on %Save. Fill in the name you want the file 
+to have (or use the default) and click %Save. During the work, every change or addition made to the Speaker Info table 
+is saved into a backup file with the same name as the original file and an added ##~# character. When you %Save or %Close 
+the table, this backup file is removed. Otherwise, it will remain until you open the table again and change something in it. 
+If you accidently forgot to save the table, you can simply open the backup file and save it under the old, or a new, name."
+
+<normal> "To save the analysis of a single recording, use the @@Saving a report|Save@ button on the 
+@@Overview of Main page|Main page@. This will ask for a place and name to save a directory with all the displays and 
+all the analysis data for the current time interval."
