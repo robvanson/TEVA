@@ -257,6 +257,9 @@ endproc
 
 # Use this function if you want to control erasing
 procedure Draw_button_internal .erase_button_area .table$ .label$ .push
+    if startsWith(.label$, "!")
+    	goto NOBUTTON
+    endif
 	# Scale rounding of rounded rectangles
 	.wc = 1
 	.mm = demo Horizontal wc to mm... '.wc' 
@@ -316,8 +319,6 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 		.rotation = extractNumber(.buttonText$, "!")
 		.buttonText$ = replace_regex$(.buttonText$, "^![0-9\.]+!", "", 0)
 	endif
-
-    goto NOBUTTON startsWith(.label$, "!") and not .forceDraw
 
     # Replace button text with ALERT
     if .push = 3

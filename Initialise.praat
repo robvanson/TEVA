@@ -69,8 +69,6 @@ procedure global_initialization
 	config.speakerData$ = ""
 	config.speakerDataBackup$ = ""
 	config.speakerDataTable = -1
-	printerName$ = "BHK301"
-	printerPresets$ = "Standard"
 	
 	pathologicalType = 0
 	pathologicalTypeText$ = "- Pathological type = 'pathologicalType'"
@@ -175,6 +173,17 @@ procedure init_window
 	call set_font_size 'defaultFontSize'
 	demo Black
 	call reset_viewport
+	# Set canvas (if available)
+	call findLabel 'buttons$' !CANVAS
+	.row = findLabel.row
+	if .row > 0
+		select Table 'buttons$'
+		canvasXL = Get value... '.row' LeftX
+		canvasXR = Get value... '.row' RightX
+		canvasYL = Get value... '.row' LowY
+		canvasYH = Get value... '.row' HighY
+	endif
+	
 	# Draw background
 	if config.showBackground
 		call draw_background Background

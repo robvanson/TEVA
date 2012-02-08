@@ -701,6 +701,100 @@ procedure processMainPageSelect .clickX .clickY .pressed$
 	label ESCAPESELECT
 endproc
 
+procedure processMainPageCANVAS .clickX .clickY .pressed$
+	.table$ = "MainPage"
+	.label$ = "CANVAS"
+	.firstT = -1
+	.secondT = -1
+	if runningCommandMode = 1
+		# Do nothing
+		skipNextStep = 1
+		goto ENDOFDISPLAYSELECT
+	elsif currentStartTime <= 0 and currentEndTime <= 0
+		goto ENDOFDISPLAYSELECT
+	elsif .clickX < canvasXL or .clickX > canvasXR
+		goto ESCAPEDISPLAYSELECT
+	elsif .clickY < canvasYL or .clickX > canvasYH
+		goto ESCAPEDISPLAYSELECT
+	elsif buttons.draw$ = "Ltas"
+		goto ESCAPEDISPLAYSELECT
+	endif
+	# Redraw window if there is an old selection
+	if selectedStartTime > currentStartTime or selectedEndTime < currentEndTime
+		selectedStartTime = currentStartTime
+		selectedEndTime = currentEndTime
+		call init_window
+	endif
+	# Get feedback text
+	call get_feedback_text 'config.language$' Select2
+	.feedback2$ = get_feedback_text.text$
+	call reset_viewport
+	call write_feedback_text Blue '.feedback2$'
+	
+	# Set first border
+	.selectedTime = currentStartTime + (currentEndTime - currentStartTime)*(.clickX - canvasXL + canvasCorrection)/(canvasXR - canvasXL)
+	demo Colour... Blue
+	demo Line width... 2
+	demo Draw line... '.clickX' 'canvasYH' '.clickX' 'canvasYL'
+	demo Text special... '.clickX' Centre 'canvasYH' Bottom Helvetica 9 0 '.selectedTime:4'
+	demoShow()
+	demo Colour... Black
+	demo Line width... 'defaultLineWidth'
+	if .firstT < 0 and .secondT < 0
+		.firstT = .selectedTime
+	endif
+	
+	# Set second border
+	while demoWaitForInput()
+		.clickX = -1
+		.clickY = -1
+		if demoClicked()
+			.clickX = demoX()
+			.clickY = demoY()
+			if demoClickedIn (canvasXL, canvasXR, canvasYL, canvasYH)
+				.selectedTime = currentStartTime + (currentEndTime - currentStartTime)*(.clickX - canvasXL + canvasCorrection)/(canvasXR - canvasXL)
+				demo Colour... Blue
+				demo Line width... 2
+				demo Draw line... '.clickX' 'canvasYH' '.clickX' 'canvasYL'
+				demo Text special... '.clickX' Centre 'canvasYH' Bottom Helvetica 9 0 '.selectedTime:4'
+				demoShow()
+				demo Colour... Black
+				demo Line width... 'defaultLineWidth'
+				if .firstT < 0 and .secondT < 0
+					.firstT = .selectedTime
+					call write_feedback_text Blue '.feedback2$'
+				else
+					.secondT = .selectedTime
+					call wipeArea 'wipeFeedbackArea$'
+					goto ENDOFDISPLAYSELECT
+				endif
+			else
+		    	call buttonClicked 'buttons$' '.clickX' '.clickY'
+		    	if buttonClicked.label$ = "Select"
+					call init_window
+					goto ENDOFDISPLAYSELECT
+				endif
+			endif
+		elsif demoKeyPressed()
+			call wipeArea 'wipeFeedbackArea$'
+			goto ENDOFDISPLAYSELECT
+		endif
+
+	endwhile
+	
+	label ENDOFDISPLAYSELECT
+	# Do things
+	if .firstT >= 0 and .secondT >= 0
+		selectedStartTime = min(.firstT, .secondT)
+		selectedEndTime = max(.firstT, .secondT)
+		call DrawCurrentSelection 0 1
+		call log_command MainPage SetSelection 'selectedStartTime' 'selectedEndTime' --
+	endif
+	call reset_viewport
+	
+	label ESCAPEDISPLAYSELECT
+endproc
+
 # Pseudo command for executing log commands
 procedure processMainPageSetSelection .clickX .clickY .pressed$
 	.table$ = "MainPage"

@@ -3,6 +3,7 @@ Label	Text	Key	Helptext
 !Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
 !License	License	!	GNU GPL version 2 or later
 !WindowTitle	NKI TE-VOICE ANALYSIS tool: Main page	!	NKI TE-VOICE ANALYSIS tool: Main page
+!CANVAS	Display	¤	Display area
 !PathologicalType	- Pathological Type:	01234	Pathological Type in window title I-IV
 Speaker	!90!Speaker	k	Input speaker data
 File	Open	O	Open sound file
