@@ -25,7 +25,7 @@ for file in $(ls -1 ${@:-*.html}); do
 	fi
 	
 	if [[ "${file}" == "NKI_TE-VOICE_ANALYSIS_tool.html" ]]; then
-		perl -i'' -ne 's!(\Q<img width="33%" src="Main_page_screenshot.png" VSPACE=10></a>\E)\s*$!\1&nbsp;<a href="Configure_page_screenshot.png" target="_blank"><img width="39%" src="Configure_page_screenshot.png" VSPACE=10></a>\n!g;print $_' \
+		perl -i'' -ne 's!(\Q<img width="33%" src="Main_page_screenshot.png" VSPACE=10></a>\E)\s*$!\1&nbsp;<a href="Configure_page_screenshot.png" target="_blank"><img width="33%" src="Configure_page_screenshot.png" VSPACE=10></a>\n!g;print $_' \
 			${file}
 	fi
 	if [[ "${file}" == "Saving_a_report.html" ]]; then

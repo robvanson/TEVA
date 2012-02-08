@@ -1,5 +1,5 @@
 ManPagesTextFile
-"Example evaluating AST" "R.J.J.H. van Son" 20120202 0
+"Example evaluating AST" "R.J.J.H. van Son" 20120208 0
 <intro> "A tutorial example of how to evaluate the Acoustic Signal Typing on a sample of recordings"
 
 <entry> "Download and open the example corpus"

@@ -7,7 +7,7 @@
 <table border=0 cellpadding=0 cellspacing=0><tr><td bgcolor="#CCCC00"><table border=4 cellpadding=9><tr><td align=middle bgcolor="#000000"><font face="Palatino,Times" size=6 color="#999900"><b>
 NKI TE-VOICE ANALYSIS tool
 </b></font></table></table><p align=center>
-<a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/TEVA/HTML/Main_page_screenshot.png" target="_blank"><img width="33%" src="Main_page_screenshot.png" VSPACE=10></a>&nbsp;<a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/TEVA/HTML/Configure_page_screenshot.png" target="_blank"><img width="39%" src="Configure_page_screenshot.png" VSPACE=10></a>
+<a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/TEVA/HTML/Main_page_screenshot.png" target="_blank"><img width="33%" src="Main_page_screenshot.png" VSPACE=10></a>&nbsp;<a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/TEVA/HTML/Configure_page_screenshot.png" target="_blank"><img width="33%" src="Configure_page_screenshot.png" VSPACE=10></a>
 </p>
 <p>
 The <i>NKI TE-VOICE ANALYSIS tool</i> (TEVA) is intended to help the 
@@ -146,7 +146,7 @@ On the <i>Configuration</i> page
 &#8226; <b>Manual</b>: [M] Display this manual
 </dl>
 <p>
-More can be found in <a href="#Overview_of_Main_page">Overview of Main page</a> and <a href="#Overview_of_Configuration_page">Overview of Configuration page</a> .</p>
+More can be found in <a href="#Overview_of_Main_page">Overview of Main page</a> and <a href="#Overview_of_Configuration_page">Overview of Configuration page</a>.</p>
 <h3>
 Language support</h3>
 <p>
@@ -221,6 +221,9 @@ current display. Changing the display (eg, zoom in or out) will set the display 
 <li>
 &nbsp;<b>Next</b>: [&gt;] Next interval, or shift the current time window to the right
 </ul>
+<p>
+A shortcut to the <i>Select</i> button is to click inside the display graph. The point where clicked will be marked as the 
+first boundary and all will proceed as if the <i>Select</i> button was pressed. </p>
 <h3>
 Saving and printing a report</h3>
 <ul>
@@ -372,6 +375,7 @@ Additional information</h3>
 <ul>
 <li><a href="#Adding_speaker_information">Adding speaker information</a>
 <li><a href="#Determine_pathological_type">Determine pathological type</a>
+<li><a href="#Example_evaluating_AST">Example evaluating AST</a>
 <li><a href="#Getting_started_with_TEVA">Getting started with TEVA</a>
 <li><a href="#NKI_TE-VOICE_ANALYSIS_tool">NKI TE-VOICE ANALYSIS tool</a>
 <li><a href="#Recording_your_own_voice">Recording your own voice</a>
@@ -683,7 +687,8 @@ the better the voice is. Find the longest stretch of speech with many, flat harm
 <p>
 Click on <i>Select</i>. A blue text will appear below the display "<i>Select new start time (or press Select or a key to continue)</i>". If you 
 press <i>Select</i> again or press any key on the keyboard, the selection procedure will stop. Use the mouse pointer to click on the start 
-of the desired stable interval inside the display.</p>
+of the desired stable interval inside the display. This procedure can be done much easier by simply clicking on the display at the point 
+where you want the border to be. This will automatically bring you into step two of the <i>Select</i> procedure.</p>
 <p>
 A vertical blue line will be draw at the point where you clicked. The text below the display will have changed to 
 "<i>Select new end time (or press Select or a key to continue)</i>". Use the mouse pointer to click on the end of the desired stable interval 
@@ -897,12 +902,13 @@ With these statments in mind, pick an interval where the vowel is most stable. Y
 the <i>Zoom in</i> and <i>Zoom out</i> buttons as well as the <i>Previous</i> (move left) and <i>Next</i> (move right) buttons 
 to navigate around.</p>
 <p>
-When you found a part that you think is most stable, select an interval of 200 ms. Click the <i>Select</i> 
-button. You are now asked to click on the position in the display where you want the start of the interval. When 
-you do that, a vertical blue line appears. Now you are asked to click on the position in the display where the 
-end of the interval should come. Click there. Make sure that the interval is at least 100 ms long. You can find 
-the times of start and end points at the top of the graph. You can <i>Zoom in</i> or go <i>To selection</i>, but that is 
-not necessary. </p>
+When you found a part that you think is most stable, select an interval of 200 ms. Click the <i>Select</i> button. 
+You are now asked to click on the position in the display where you want the start of the interval. When you do that, 
+a vertical blue line appears. Now you are asked to click on the position in the display where the end of the interval 
+should come. Click there. Alternatively, you can simply click inside the display window to select the first boundary.
+After that it proceeds as with the <i>Select</i> button. Make sure that the interval is at least 100 ms 
+long. You can find the times of start and end points at the top of the graph. You can <i>Zoom in</i> or go <i>To selection</i>, 
+but that is not necessary. </p>
 <h3>
 Acoustic analysis</h3>
 <p>
@@ -911,9 +917,27 @@ of these displays, analysis parameters will be printed about the selected interv
 <a href="#Analysis">Analysis</a> and <a href="#AST_categories">AST categories</a>). Do these acoustic parameters support your evaluation of the preceding 
 statements? Use the <i>Previous</i> (move left) and <i>Next</i> (move right) buttons to move the selected interval around 
 and see how this affects the acoustic parameters. </p>
+<h3>
+Entering the Pathological Type</h3>
+<p>
+When you have decided what type of pathological voice the recording has, you simply push one of the numbers 
+<i>1-4</i>, and the type is recorded. The type will be displayed in the window and in the title bar. Push <i>0</i> to remove 
+the type.</p>
+<h3>
+Saving your work</h3>
+<p>
+After evaluating the sounds, the pathological types and remarks added to the Speaker Info table should be saved 
+to disk. Go to the <a href="#Overview_of_Configuration_page">Configuration page</a> and click on <i>Save</i>. Fill in the name you want the file 
+to have (or use the default) and click <i>Save</i>. During the work, every change or addition made to the Speaker Info table 
+is saved into a backup file with the same name as the original file and an added <b>~</b> character. When you <i>Save</i> or <i>Close</i> 
+the table, this backup file is removed. Otherwise, it will remain until you open the table again and change something in it. 
+If you accidently forgot to save the table, you can simply open the backup file and save it under the old, or a new, name.</p>
+<p>
+To save the analysis of a single recording, use the <a href="#Saving_a_report">Save</a> button on the 
+<a href="#Overview_of_Main_page">Main page</a>. This will ask for a place and name to save a directory with all the displays and 
+all the analysis data for the current time interval.</p>
 <h3>Links to this page</h3>
 <ul>
-<li><a href="#Saving_a_report">Saving a report</a>
 <li><a href="#TEVA_Tutorials">TEVA Tutorials</a>
 </ul>
 <hr>
