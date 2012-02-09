@@ -78,3 +78,9 @@ Using these settings, the step size (frame duration) is 0.0125s."
 <normal> "Sum the power ($$10^^(power/10)^$), $sumPower over the bins and the product of frequency and energy
 ($$f * 10^^(power/10)^$), $productFreq, over all bins."
 <code> "cog = productFreq / sumPower"
+
+<entry> "Maximum Voicing Duration (MVD)"
+<code> "select Pitch SND"
+<code> "To PointProcess"
+<code> "To TextGrid (vuv)... 0.2 0.1"
+<code> "Get longest interval with label %V"

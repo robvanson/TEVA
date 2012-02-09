@@ -13,7 +13,7 @@ mainPage.outputPraatObject$ = "Draw"
 call getOpenFile Select a speaker table
 
 clearinfo
-printline i'tab$'ID'tab$'start'tab$'end'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'HNR'tab$'GNE'tab$'BED'tab$'AST
+printline i'tab$'ID'tab$'start'tab$'end'tab$'MVD'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'HNR'tab$'GNE'tab$'BED'tab$'AST
 
 call get_speakerInfo 1
 .numSpeakers = get_speakerInfo.numEntries
@@ -55,6 +55,7 @@ for .i to .numSpeakers
 	# Calculate values
 	call DrawPitchObject
 	call calculatePitchValues
+	.calcMVD = calculatePitchValues.maximumVoicingDuration
 	.calcVF = calculatePitchValues.voicedFractions
 	.calcPitch = calculatePitchValues.sdPitch
 	.calcJitter = calculatePitchValues.jitter 	
@@ -71,6 +72,7 @@ for .i to .numSpeakers
 	# Print output
 	print '.i''tab$''get_speakerInfo.id$'
 	print 'tab$''selectedStartTime:3''tab$''selectedEndTime:3'
+	print 'tab$''.calcMVD:3'
 	print 'tab$''.calcVF:3'
 	print 'tab$''.calcPitch:3'
 	print 'tab$''.calcJitter:4'

@@ -1,11 +1,11 @@
 <html><head><meta name="robots" content="index,follow">
-<title>NKI TE-VOICE ANALYSIS tool</title></head><body bgcolor="#FFFFFF">
+<title>NKI TE-VOICE ANALYSIS tool (EN)</title></head><body bgcolor="#FFFFFF">
 	<p style="page-break-before:always;">
-	<a name="NKI_TE-VOICE_ANALYSIS_tool">&nbsp;</a>
+	<a name="NKI_TE-VOICE_ANALYSIS_tool__EN_">&nbsp;</a>
 	</p>
 
 <table border=0 cellpadding=0 cellspacing=0><tr><td bgcolor="#CCCC00"><table border=4 cellpadding=9><tr><td align=middle bgcolor="#000000"><font face="Palatino,Times" size=6 color="#999900"><b>
-NKI TE-VOICE ANALYSIS tool
+NKI TE-VOICE ANALYSIS tool (EN)
 </b></font></table></table><p align=center>
 <a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/TEVA/HTML/Main_page_screenshot.png" target="_blank"><img width="33%" src="Main_page_screenshot.png" VSPACE=10></a>&nbsp;<a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/TEVA/HTML/Configure_page_screenshot.png" target="_blank"><img width="33%" src="Configure_page_screenshot.png" VSPACE=10></a>
 </p>
@@ -59,7 +59,7 @@ The approach to the analysis of TE speech used in TEVA is based on the work of C
 PhD thesis (<a href="#Acoustic_Signal_Typing">Van As, 2001</a>).</p>
 <h3>Links to this page</h3>
 <ul>
-<li><a href="#NKI_TE-VOICE_ANALYSIS_tool">NKI TE-VOICE ANALYSIS tool</a>
+<li><a href="#NKI_TE-VOICE_ANALYSIS_tool__EN_">NKI TE-VOICE ANALYSIS tool (EN)</a>
 </ul>
 <hr>
 <address>
@@ -155,7 +155,7 @@ is rather easy (just translating a few dozen sentences). But it can only be done
 Please contact us if you would like to help to port TEVA to your language.</p>
 <h3>Links to this page</h3>
 <ul>
-<li><a href="#NKI_TE-VOICE_ANALYSIS_tool">NKI TE-VOICE ANALYSIS tool</a>
+<li><a href="#NKI_TE-VOICE_ANALYSIS_tool__EN_">NKI TE-VOICE ANALYSIS tool (EN)</a>
 </ul>
 <hr>
 <address>
@@ -261,7 +261,7 @@ Selected statistics about the analysis will be written below the display. This i
 <li><a href="#Adding_speaker_information">Adding speaker information</a>
 <li><a href="#Example_evaluating_AST">Example evaluating AST</a>
 <li><a href="#Getting_started_with_TEVA">Getting started with TEVA</a>
-<li><a href="#NKI_TE-VOICE_ANALYSIS_tool">NKI TE-VOICE ANALYSIS tool</a>
+<li><a href="#NKI_TE-VOICE_ANALYSIS_tool__EN_">NKI TE-VOICE ANALYSIS tool (EN)</a>
 <li><a href="#Opening_an_existing_recording">Opening an existing recording</a>
 <li><a href="#Recording_your_own_voice">Recording your own voice</a>
 <li><a href="#Saving_a_report">Saving a report</a>
@@ -377,7 +377,7 @@ Additional information</h3>
 <li><a href="#Determine_pathological_type">Determine pathological type</a>
 <li><a href="#Example_evaluating_AST">Example evaluating AST</a>
 <li><a href="#Getting_started_with_TEVA">Getting started with TEVA</a>
-<li><a href="#NKI_TE-VOICE_ANALYSIS_tool">NKI TE-VOICE ANALYSIS tool</a>
+<li><a href="#NKI_TE-VOICE_ANALYSIS_tool__EN_">NKI TE-VOICE ANALYSIS tool (EN)</a>
 <li><a href="#Recording_your_own_voice">Recording your own voice</a>
 </ul>
 <hr>
@@ -411,7 +411,7 @@ Tutorials to get acquainted with TEVA</p>
 </ul>
 <h3>Links to this page</h3>
 <ul>
-<li><a href="#NKI_TE-VOICE_ANALYSIS_tool">NKI TE-VOICE ANALYSIS tool</a>
+<li><a href="#NKI_TE-VOICE_ANALYSIS_tool__EN_">NKI TE-VOICE ANALYSIS tool (EN)</a>
 </ul>
 <hr>
 <address>
@@ -933,7 +933,7 @@ is saved into a backup file with the same name as the original file and an added
 the table, this backup file is removed. Otherwise, it will remain until you open the table again and change something in it. 
 If you accidently forgot to save the table, you can simply open the backup file and save it under the old, or a new, name.</p>
 <p>
-To save the analysis of a single recording, use the <a href="#Saving_a_report">Save</a> button on the 
+To save the complete analysis of a single recording, use the <a href="#Saving_a_report">Save</a> button on the 
 <a href="#Overview_of_Main_page">Main page</a>. This will ask for a place and name to save a directory with all the displays and 
 all the analysis data for the current time interval.</p>
 <h3>Links to this page</h3>
@@ -942,7 +942,7 @@ all the analysis data for the current time interval.</p>
 </ul>
 <hr>
 <address>
-	<p>&copy; R.J.J.H. van Son, February 2, 2012</p>
+	<p>&copy; R.J.J.H. van Son, February 8, 2012</p>
 </address>
 	<p style="page-break-before:always;">
 	<a name="Analysis">&nbsp;</a>
@@ -1079,11 +1079,19 @@ Sum the power (<code>10<sup>(power/10)</sup></code>), <code>sumPower</code> over
 (<code>f * 10<sup>(power/10)</sup></code>), <code>productFreq</code>, over all bins.</p>
 <code>
 cog = productFreq / sumPower<br></code>
+<h3>
+Maximum Voicing Duration (MVD)</h3>
+<code>
+select PointProcess SND<br></code>
+<code>
+To TextGrid (vuv)... 0.2 0.1<br></code>
+<code>
+Get longest interval with label <i>V</i><br></code>
 <h3>Links to this page</h3>
 <ul>
 <li><a href="#Acoustic_Signal_Typing">Acoustic Signal Typing</a>
 <li><a href="#Example_evaluating_AST">Example evaluating AST</a>
-<li><a href="#NKI_TE-VOICE_ANALYSIS_tool">NKI TE-VOICE ANALYSIS tool</a>
+<li><a href="#NKI_TE-VOICE_ANALYSIS_tool__EN_">NKI TE-VOICE ANALYSIS tool (EN)</a>
 <li><a href="#Overview_of_Main_page">Overview of Main page</a>
 </ul>
 <hr>
@@ -1179,6 +1187,8 @@ Visual determination of pathology uses displays of:</p>
 A quantitative evaluation is based on the analysis of:</p>
 <ul>
 <li>
+&nbsp;<a href="http://www.fon.hum.uva.nl/praat/manual/PointProcess__To_TextGrid__vuv____.html" target="_blank">Maximum Voicing Duration</a>, longest interval of voicing (seconds)
+<li>
 &nbsp;<a href="http://www.fon.hum.uva.nl/praat/manual/Voice_1__Voice_breaks.html" target="_blank">Voiced fraction</a>, fraction of frames that is voiced (%)
 <li>
 &nbsp;<a href="http://www.fon.hum.uva.nl/praat/manual/Voice_2__Jitter.html" target="_blank">Jitter</a> (%)
@@ -1216,7 +1226,7 @@ Invitational Round Table "Evidence-based Voice and Speech Rehabilitation in Head
 <li><a href="#Determine_pathological_type">Determine pathological type</a>
 <li><a href="#Example_evaluating_AST">Example evaluating AST</a>
 <li><a href="#Introduction_to_TEVA">Introduction to TEVA</a>
-<li><a href="#NKI_TE-VOICE_ANALYSIS_tool">NKI TE-VOICE ANALYSIS tool</a>
+<li><a href="#NKI_TE-VOICE_ANALYSIS_tool__EN_">NKI TE-VOICE ANALYSIS tool (EN)</a>
 <li><a href="#Overview_of_Configuration_page">Overview of Configuration page</a>
 <li><a href="#Overview_of_Main_page">Overview of Main page</a>
 <li><a href="#Selecting_stable_sounds">Selecting stable sounds</a>
@@ -1319,7 +1329,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.<
 <h3>Links to this page</h3>
 <ul>
 <li><a href="#Getting_started_with_TEVA">Getting started with TEVA</a>
-<li><a href="#NKI_TE-VOICE_ANALYSIS_tool">NKI TE-VOICE ANALYSIS tool</a>
+<li><a href="#NKI_TE-VOICE_ANALYSIS_tool__EN_">NKI TE-VOICE ANALYSIS tool (EN)</a>
 </ul>
 <hr>
 <address>
