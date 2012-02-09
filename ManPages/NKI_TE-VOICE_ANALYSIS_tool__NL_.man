@@ -1,5 +1,5 @@
 ManPagesTextFile
-"NKI TE-VOICE ANALYSIS tool" "R.J.J.H. van Son" 20111201 0
+"NKI TE-VOICE ANALYSIS tool NL" "R.J.J.H. van Son" 20111201 0
 <intro> "The %%NKI TE-VOICE ANALYSIS tool% (TEVA) is intended to help the 
 education and research of Speech Pathologists and others who want to study 
 Tracheoesophageal speech. TEVA implements @@Acoustic Signal Typing@ from the 
