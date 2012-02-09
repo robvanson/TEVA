@@ -7,7 +7,8 @@ ManPagesTextFile
 Open TEVA and then click the %Open button on the @@Overview of Main page|Main page@. A file selection window will 
 open. Navigate into the map you just downloaded and select %%SignaltypeVoiceSamples.Table%. Then click %Choose. The 
 @@Overview of Main page|Main page@ now contains a display of an empty sound. %%SignaltypeVoiceSamples.Table% 
-contains data on a number of recordings. You must now select the recording you want to use."
+contains data on a number of recordings. You must now select the recording you want to use. 
+##%%   %#"
 
 <entry> "Select speakers"
 <normal> "Click on the %Speaker button (lower left). A new window will open. Click on the ##=# button. 
@@ -20,7 +21,8 @@ to view the Speaker window."
 a short description of the speaker (e.g., name or ID, age, sex, etc.). You can change this field, or even create 
 it for a newly recorded voice. If you enter an ID, or just the start of the ID, or row number in the table, 
 the corresponding speaker from the Info window will be read and displayed in TEVA. If you empty the ID field 
-completely and replace it with a single dash ##-#, the current record will be removed from the table."
+completely and replace it with a single dash ##-#, the current record will be removed from the table.
+##%%    %#"
 
 <normal> "Put a single %%3% in the top field of the Sepaker window to select the third entry in the Table. 
 Then Click the %Ready button. You now see a display of the recording of the fourth speaker. You see the ID of this 
