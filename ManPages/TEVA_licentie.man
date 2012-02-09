@@ -1,0 +1,29 @@
+ManPagesTextFile
+"TEVA licentie" "R.J.J.H. van Son" 20120208 0
+<entry> "NKI TE-VOICE ANALYSIS tool versie 1.0"
+<normal> "Nederlands Kanker Instituut aplicatie voor ##Tracheoesophageale Stemanalyse# (TEVA)"
+<normal> "Voor meer informatie, bezoek onze websites: http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/ 
+en http://www.provoxweb.info/acoustic-analyses.html . 
+Gebaseerd op Praat (http://www.praat.org)"
+<normal> "Deze applicatie is mogelijk gemaakt door een vrije onderzoeksbeurs van:" 
+<normal> "##ATOS MEDICAL AB#: P.O. BOX 183 SE-242 22 H\O""RBY SWEDEN"
+
+<normal> "TEVA wordt gedistribueerd onder de GNU GPL Licentie versie 2 of later (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)"
+<code> "NKI TE-VOICE ANALYSIS tool"
+<code> "Productie en auteursrechten \co 2010-2012 Het Nederlands Kanker Instituut en R.J.J.H. van Son"
+<code> "Praat auteursrechten \co 1992-2012 Paul Boersma en David Weenink"
+
+<normal> "$$Dit programma is vrije software: je mag het herdistribueren 
+en/of wijzigen onder de voorwaarden van de GNU Algemene 
+Publieke Licentie zoals gepubliceerd door de Free Software Foundation, 
+onder versie 2 van de Licentie of (naar jouw keuze) 
+elke latere versie.$"
+
+<normal> "$$Dit programma is gedistribueerd in de hoop dat het nuttig zal
+zijn maar ##ZONDER ENIGE GARANTIE#; zelfs zonder de impliciete garanties
+die ##GEBRUIKELIJK ZIJN IN DE HANDEL# of voor ##BRUIKBAARHEID VOOR EEN
+SPECIFIEK DOEL#. Zie de GNU Algemene Publieke Licentie voor meer details.$"
+
+<normal> "$$Je hoort een kopie van de GNU Algemene Publieke Licentie te hebben
+ontvangen samen met dit programma. Als dat niet het geval is, zie
+[http://www.gnu.org/licenses/].$"
