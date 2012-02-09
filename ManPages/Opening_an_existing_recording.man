@@ -1,6 +1,7 @@
 ManPagesTextFile
 "Opening an existing recording" "R.J.J.H. van Son" 20111220 0
-<intro> "How to open existing sound files in TEVA."
+<intro> "How to open existing sound files in TEVA. 
+##%%   %#"
 
 <entry> "Audio formats"
 <normal> "TEVA can handle all ##[Sound files|audio file formats]## that Praat can read. 

@@ -1,6 +1,8 @@
 ManPagesTextFile
 "Saving a report" "R.J.J.H. van Son" 20111220 0
-<intro> "Generate a printable report."
+<intro> "Generate a printable report. 
+##%%   %#"
+
 <normal> "Record or Open an /a/ sound, select a stable part of the recording and add information 
 about the speaker and recording:"
 <list_item> "\bu @@Recording your own voice@"

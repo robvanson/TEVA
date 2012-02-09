@@ -15,17 +15,17 @@ for file in $(ls -1 ${@:-*.html}); do
 	fi
 
 	if [[ "${file}" == "Overview_of_Configuration_page.html" ]]; then
-		perl -i'' -ne 's!(\Q</b></font></table></table>\E)\s*$!\1<p align=center>\n<a href="Configure_page_screenshot.png" target="_blank"><img width="50%" src="Configure_page_screenshot.png" VSPACE=10></a>\n</p>\n!g;print $_' \
+		perl -i'' -ne 's!(\Q</b></font></table></table>\E)\s*$!\1<p align=center>\n<a href="Configure_page_screenshot.png" target="_blank"><img width="50%" src="Configure_page_screenshot.png" VSPACE=10></a>\n</p>!g;print $_' \
 			${file}
 	fi
 	
 	if [[ "NKI_TE-VOICE_ANALYSIS_tool__EN_.html Recording_your_own_voice.html Opening_an_existing_recording.html Adding_speaker_information.html Selecting_stable_sounds.html Saving_a_report.html " =~ ${file} ]]; then
-		perl -i'' -ne 's!(\Q</b></font></table></table>\E)\s*$!\1<p align=center>\n<a href="Main_page_screenshot.png" target="_blank"><img width="33%" src="Main_page_screenshot.png" VSPACE=10></a>\n</p>\n!g;print $_' \
+		perl -i'' -ne 's!(\Q<b><i>   </i></b>\E)!<p align=center>\n<a href="Main_page_screenshot.png" target="_blank"><img width="33%" src="Main_page_screenshot.png" VSPACE=10></a>\n</p>!g;print $_' \
 			${file}
 	fi
 	
 	if [[ "${file}" == "NKI_TE-VOICE_ANALYSIS_tool__EN_.html" ]]; then
-		perl -i'' -ne 's!(\Q<img width="33%" src="Main_page_screenshot.png" VSPACE=10></a>\E)\s*$!\1&nbsp;<a href="Configure_page_screenshot.png" target="_blank"><img width="33%" src="Configure_page_screenshot.png" VSPACE=10></a>\n!g;print $_' \
+		perl -i'' -ne 's!(\Q</p>\E\s*\Q<b><i>    </i></b>\E)!&nbsp;<a href="Configure_page_screenshot.png" target="_blank"><img width="33%" src="Configure_page_screenshot.png" VSPACE=10></a></p>\n!g;print $_' \
 			${file}
 	fi
 	if [[ "${file}" == "Saving_a_report.html" ]]; then

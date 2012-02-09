@@ -1,6 +1,8 @@
 ManPagesTextFile
 "Adding speaker information" "R.J.J.H. van Son" 20111220 0
-<intro> "How to add information about a speaker to TEVA."
+<intro> "How to add information about a speaker to TEVA. 
+##%%   %#"
+
 <normal> "Record or Open an /a/ sound, select a stable part of the recording:"
 <list_item> "\bu @@Recording your own voice@"
 <list_item> "\bu @@Opening an existing recording@"

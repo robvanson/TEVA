@@ -1,6 +1,8 @@
 ManPagesTextFile
 "Recording your own voice" "R.J.J.H. van Son" 20111220 0
-<intro> "How to record and analyze a voice."
+<intro> "How to record and analyze a voice. 
+##%%   %#"
+
 <entry> "Record your voice"
 <normal> "First set up your computer for voice recording. You should use a microphone of a reasonable 
 quality. Furthermore, if your computer has some kind of %Microphone boost feature, make sure it is turned off. 

@@ -2,7 +2,8 @@ ManPagesTextFile
 "Overview of Main page" "R.J.J.H. van Son" 20111206 0
 <intro> "TEVA is used by clicking buttons on the current page. Here is a list of the buttons on the Main page with a description of their use.
 English labels will be used here. The keyboard shortcuts are given between the []-brackets (might depend on language).
-See also the @@Overview of Configuration page@."
+See also the @@Overview of Configuration page@. 
+##%%   %#"
 
 <entry> "General functions"
 <list_item> "\bu #Quit: [Q] Stop TEVA. Will save the current preferences"
