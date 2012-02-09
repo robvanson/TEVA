@@ -90,6 +90,7 @@ procedure global_initialization
 	harmonicityName$ = ""
 	gneName$ = ""
 	pointProcessName$ = ""
+	voicingTextGrid = -1
 	
 	# Global time
 	currentStartTime = 0

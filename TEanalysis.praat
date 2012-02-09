@@ -1915,6 +1915,9 @@ procedure reset_analysis
  		if pointProcessName$ <> ""
 			plus PointProcess 'pointProcessName$'
 		endif
+		if voicingTextGrid > 0
+			plus 'voicingTextGrid'
+		endif
  		if spectrogramName$ <> ""
 			plus Spectrogram 'spectrogramName$'
 		endif
@@ -1928,6 +1931,7 @@ procedure reset_analysis
 		intensityName$ = ""
 		spectrogramName$ = ""
 		pointProcessName$ = ""
+		voicingTextGrid = -1
 		gneName$ = ""
 		harmonicityName$ = ""
 		

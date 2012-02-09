@@ -1220,6 +1220,7 @@ procedure DrawPitchObject
 		endif
 		To PointProcess
 		pointProcessName$ = selected$("PointProcess")
+		voicingTextGrid = To TextGrid (vuv)... 0.02 0.01
 	endif
 
 	if pitchName$ <> ""
@@ -1775,9 +1776,26 @@ procedure calculatePitchValues
 		plus PointProcess 'pitchName$'
 		.shimmer = Get shimmer (local)... 'selectedStartTime' 'selectedEndTime' 0.0001 0.05 5 5
 	endif
+	if voicingTextGrid > 0
+		select 'voicingTextGrid'
+		.numberOfIntervals = Get number of intervals... 1
+		.maximumVoicingDuration = 0
+		for .interval to .numberOfIntervals
+			.label$ = Get label of interval... 1 '.interval'
+			if .label$ = "V"
+				.start = Get start point... 1 '.interval'
+				.end = Get end point... 1 '.interval'
+				.duration = .end - .start
+				if .duration > .maximumVoicingDuration
+					.maximumVoicingDuration = .duration
+				endif
+			endif
+		endfor
+	endif
 	
 	call get_feedback_text 'config.language$' PitchValues
 	.pitchValues$ = get_feedback_text.text$
+	.pitchValues$ = replace$(.pitchValues$, "MAXIMUMVOICINGDUR$", "'.maximumVoicingDuration:1's", 0)
 	.pitchValues$ = replace$(.pitchValues$, "VOICEDFRACTIONS$", "'.voicedFractions:1%'", 0)
 	.pitchValues$ = replace$(.pitchValues$, "JITTER$", "'.jitter:1%'", 0)
 	.pitchValues$ = replace$(.pitchValues$, "SHIMMER$", "'.shimmer:1%'", 0)
