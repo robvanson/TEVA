@@ -281,10 +281,10 @@ procedure processConfigManual .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "Manual"
 	call Draw_button '.table$' '.label$' 1
-	if fileReadable("ManPages/NKI_TE-VOICE_ANALYSIS_tool.man")
-		Read from file... ManPages/NKI_TE-VOICE_ANALYSIS_tool.man
+	if fileReadable("ManPages/NKI_TE-VOICE_ANALYSIS_tool__'config.language$'_.man")
+		Read from file... ManPages/NKI_TE-VOICE_ANALYSIS_tool__'config.language$'_.man
 	else
-		Go to manual page... NKI TE-VOICE ANALYSIS tool
+		Go to manual page... NKI TE-VOICE ANALYSIS tool ('config.language$')
 	endif
 	# Wait until the manual is put to the background
 	demoWaitForInput()

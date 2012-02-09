@@ -212,14 +212,14 @@ procedure init_window
 		call protect_praat_special_characters 'speakerID$'
 		call write_header_text Blue 'protect_praat_special_characters.text$' 'pathologicalTypeText$'
 	endif
-	# Draw something
-	call draw_signal
 	# Set draw button
 	call set_draw_signal_button
 	# Sound recording level
 	call draw_recording_level
 	# Logging light
 	call paint_logging_light
+	# Draw something (do it last so the axes do not get erased)
+	call draw_signal
 endproc
 
 procedure print_window

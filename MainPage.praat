@@ -1142,15 +1142,39 @@ procedure DrawCurrentSelection .minimum .maximum
 	    if .selectXstart > 0 or .selectXend > 0
 		    demo Colour... Blue
 		    demo Line width... 2
+		    call set_font_size 9
+		    demo Helvetica
+		    .startTextWidth = 0
+		    .endTextWidth = 0
 		    if .selectXstart > 0
 			    demo Draw line... '.selectXstart' 'canvasYH' '.selectXstart' 'canvasYL'
 			    demo Text special... '.selectXstart' Centre 'canvasYH' Bottom Helvetica 9 0 'selectedStartTime:4'
+			    .startTextWidth = demo Text width (wc)... 'selectedStartTime:4'
 		    endif
 		    if .selectXend > 0
 			    demo Draw line... '.selectXend' 'canvasYH' '.selectXend' 'canvasYL'
 			    demo Text special... '.selectXend' Centre 'canvasYH' Bottom Helvetica 9 0 'selectedEndTime:4'
+			    .endTextWidth = demo Text width (wc)... 'selectedEndTime:4'
 		    endif
+		    # Write intervalduration
+		    .intervalDuration = selectedEndTime - selectedStartTime
+		    .minPos = max(.selectXstart, canvasXL)
+		    .maxPos = min(.selectXend, canvasXR)
+		    .spaceAvailable = (.maxPos - .minPos) - (.startTextWidth+.endTextWidth)/2
+		    .textPosition = (.minPos + .maxPos)/2
+		    .intervalDurationText$ = "['.intervalDuration:4']"
+		    .textWidth = demo Text width (wc)... '.intervalDurationText$'
+		    while index_regex(.intervalDurationText$, "[1-9]") and .textWidth > .spaceAvailable
+				.intervalDurationText$ = replace_regex$(.intervalDurationText$, "[\d\.]\]", "]", 0)
+				.textWidth = demo Text width (wc)... '.intervalDurationText$'
+		    endwhile
+		    if index_regex(.intervalDurationText$, "[1-9]")
+				demo Text special... '.textPosition' Centre 'canvasYH' Bottom Helvetica 9 0 '.intervalDurationText$'
+		    endif
+		    
 		    demoShow()
+		    call set_font_size 'defaultFontSize'
+			demo 'defaultFont$'
 		    demo Colour... Black
 		    demo Line width... 'defaultLineWidth'
 	    endif
