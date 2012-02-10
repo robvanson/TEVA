@@ -10,7 +10,11 @@ include ../praat_module/TEanalysisexpanded.praat
 noDrawingOrWriting = 1
 mainPage.outputPraatObject$ = "Draw"
 
-call getOpenFile ../../../NKIcorpora/NKI98N96Vox/Speech/a/a_TLE.Table
+form Give table file
+	sentence tablefile ../../../NKIcorpora/NKI98N96Vox/Speech/a/a_TLE.Table
+endform
+
+call getOpenFile 'tablefile$'
 #call getOpenFile Select a speaker table
 
 clearinfo
@@ -25,7 +29,7 @@ for .i to .numSpeakers
 	select te.openSound
 	call DrawHarmonicityObject
 	call calculateHarmonicityValues
-	.intervalLength = 0.200
+	.intervalLength = 0.250
 	selectedStartTime = maxTimeHarmonicity - .intervalLength/2
 	if selectedStartTime < 0
 		selectedStartTime = 0
@@ -40,22 +44,28 @@ for .i to .numSpeakers
 	call DrawPitchObject
 	call calculatePitchValues
 	select 'voicingTextGrid'
-	.interval = Get interval from time... 1 'maxTimeHarmonicity'
+	.interval = Get interval at time... 1 'maxTimeHarmonicity'
 	.label$ = Get label of interval... 1 '.interval'
-printline Before 'selectedStartTime' 'selectedEndTime'
 	if .label$ = "V"
 		.intStartPoint = Get start point... 1 '.interval'
 		.intEndPoint = Get end point... 1 '.interval'
-		if selectedStartTime < .intStartPoint and (.intStartPoint + .intervalLength) <= loadSpeaker.duration
-printline 'selectedStartTime' < '.intStartPoint'
+		if .intEndPoint - .intStartPoint <= .intervalLength
+			selectedStartTime = max(0, (.intStartPoint + .intEndPoint - .intervalLength)/2)
+			selectedEndTime = selectedStartTime + .intervalLength
+		elsif selectedStartTime < .intStartPoint
 			selectedStartTime = .intStartPoint
 			selectedEndTime = selectedStartTime + .intervalLength
-		elsif selectedEndTime > .intEndPoint and (.intEndPoint - .intervalLength) >= 0
-printline 'selectedEndTime' > '.intEndPoint'
+		elsif selectedEndTime > .intEndPoint
 			selectedEndTime = .intEndPoint
 			selectedStartTime = selectedEndTime - .intervalLength
 		endif
-printline After 'selectedStartTime' 'selectedEndTime'
+		if selectedStartTime < 0
+			selectedStartTime = 0
+			selectedEndTime = selectedStartTime + .intervalLength
+		elsif selectedEndTime > loadSpeaker.duration
+			selectedEndTime = loadSpeaker.duration
+			selectedStartTime = selectedEndTime - .intervalLength
+		endif
 	endif
 	currentStartTime = selectedStartTime
 	currentEndTime = selectedEndTime
