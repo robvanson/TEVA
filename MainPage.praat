@@ -1780,6 +1780,7 @@ procedure calculatePitchValues
 		select 'voicingTextGrid'
 		.numberOfIntervals = Get number of intervals... 1
 		.maximumVoicingDuration = 0
+		.mvdIntervalNumber = 0
 		for .interval to .numberOfIntervals
 			.label$ = Get label of interval... 1 '.interval'
 			if .label$ = "V"
@@ -1788,6 +1789,7 @@ procedure calculatePitchValues
 				.duration = .end - .start
 				if .duration > .maximumVoicingDuration
 					.maximumVoicingDuration = .duration
+					.mvdIntervalNumber = .interval
 				endif
 			endif
 		endfor

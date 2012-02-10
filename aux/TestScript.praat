@@ -10,7 +10,8 @@ include ../praat_module/TEanalysisexpanded.praat
 noDrawingOrWriting = 1
 mainPage.outputPraatObject$ = "Draw"
 
-call getOpenFile Select a speaker table
+call getOpenFile ../../../NKIcorpora/NKI98N96Vox/Speech/a/a_TLE.Table
+#call getOpenFile Select a speaker table
 
 clearinfo
 printline i'tab$'ID'tab$'start'tab$'end'tab$'MVD'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'HNR'tab$'GNE'tab$'BED'tab$'AST
@@ -33,6 +34,28 @@ for .i to .numSpeakers
 	if selectedEndTime > loadSpeaker.duration
 		selectedEndTime = loadSpeaker.duration
 		selectedStartTime = selectedEndTime - .intervalLength
+	endif
+	
+	# Shift measuring interval to fit in voiced interval
+	call DrawPitchObject
+	call calculatePitchValues
+	select 'voicingTextGrid'
+	.interval = Get interval from time... 1 'maxTimeHarmonicity'
+	.label$ = Get label of interval... 1 '.interval'
+printline Before 'selectedStartTime' 'selectedEndTime'
+	if .label$ = "V"
+		.intStartPoint = Get start point... 1 '.interval'
+		.intEndPoint = Get end point... 1 '.interval'
+		if selectedStartTime < .intStartPoint and (.intStartPoint + .intervalLength) <= loadSpeaker.duration
+printline 'selectedStartTime' < '.intStartPoint'
+			selectedStartTime = .intStartPoint
+			selectedEndTime = selectedStartTime + .intervalLength
+		elsif selectedEndTime > .intEndPoint and (.intEndPoint - .intervalLength) >= 0
+printline 'selectedEndTime' > '.intEndPoint'
+			selectedEndTime = .intEndPoint
+			selectedStartTime = selectedEndTime - .intervalLength
+		endif
+printline After 'selectedStartTime' 'selectedEndTime'
 	endif
 	currentStartTime = selectedStartTime
 	currentEndTime = selectedEndTime
