@@ -431,7 +431,19 @@ procedure get_speakerInfo .speakerID$
 				endif
 				.ast$ = Get value... '.row' AST
 				if index_regex(.ast$, "\d") <= 0
-					.ast$ = "0"
+					if index_regex(.text$, "Type[:=\s]+IV($|[^[IV])")
+						.ast$ = "4"
+					elsif index_regex(.text$, "Type[:=\s]+III($|[^[IV])")
+						.ast$ = "3"
+					elsif index_regex(.text$, "Type[:=\s]+II($|[^[IV])")
+						.ast$ = "2"
+					elsif index_regex(.text$, "Type[:=\s]+I($|[^[IV])")
+						.ast$ = "1"
+					elsif index_regex(.text$, "Type[:=\s]+\d+")
+						.ast$ = replace_regex$(.text$, ".*Type[:=\s]+(\d+).*$", "\1", 0)
+					else
+						.ast$ = "0"
+					endif
 				endif
 			endif
 		endif
@@ -532,16 +544,16 @@ procedure ReadSpeakerData .speakerData$
 							.id$ = replace_regex$(.currentText$, "^\W*([\w\- ]+).*$", "\1", 0)
 							# Get AST
 							.ast$ = "-"
-							if index_regex(.currentText$, "Type: IV($|[^[IV])")
+							if index_regex(.currentText$, "Type[:=\s]+IV($|[^[IV])")
 								.ast$ = "4"
-							elsif index_regex(.currentText$, "Type: III($|[^[IV])")
+							elsif index_regex(.currentText$, "Type[:=\s]+III($|[^[IV])")
 								.ast$ = "3"
-							elsif index_regex(.currentText$, "Type: II($|[^[IV])")
+							elsif index_regex(.currentText$, "Type[:=\s]+II($|[^[IV])")
 								.ast$ = "2"
-							elsif index_regex(.currentText$, "Type: I($|[^[IV])")
+							elsif index_regex(.currentText$, "Type[:=\s]+I($|[^[IV])")
 								.ast$ = "1"
-							elsif index_regex(.currentText$, "Type: \d+")
-								.ast$ = replace_regex$(.currentText$, ".*Type: (\d+).*$", "\1", 0)
+							elsif index_regex(.currentText$, "Type[:=\s]+\d+")
+								.ast$ = replace_regex$(.currentText$, ".*Type[:=\s]+(\d+).*$", "\1", 0)
 							endif
 							select config.speakerDataTable
 							Append row
