@@ -12,7 +12,9 @@ mainPage.outputPraatObject$ = "Draw"
 
 form Give table file
 	sentence tablefile ../../../NKIcorpora/NKI98N96Vox/Speech/a/a_TLE.Table
+	positive interval_length 0.250
 endform
+.intervalLength = interval_length
 
 call getOpenFile 'tablefile$'
 #call getOpenFile Select a speaker table
@@ -29,7 +31,6 @@ for .i to .numSpeakers
 	select te.openSound
 	call DrawHarmonicityObject
 	call calculateHarmonicityValues
-	.intervalLength = 0.250
 	selectedStartTime = maxTimeHarmonicity - .intervalLength/2
 	if selectedStartTime < 0
 		selectedStartTime = 0
