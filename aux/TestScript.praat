@@ -11,7 +11,7 @@ noDrawingOrWriting = 1
 mainPage.outputPraatObject$ = "Draw"
 
 form Give table file
-	sentence tablefile ../../../NKIcorpora/NKI98N96Vox/Speech/a/a_TLE.Table
+	sentence tablefile ../../../Publications/AutomaticAST2012/Speech/NKI98N96Vox_a/a_TLE.Table
 	positive interval_length 0.250
 endform
 .intervalLength = interval_length
