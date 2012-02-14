@@ -991,18 +991,8 @@ endproc
 # Print the selected object
 procedure PrintPraatObject .minimum .maximum .printObjectCommand$
 	if not noDrawingOrWriting
-	    # convert Canvas to absolute coordinates
-	    .xL = 0.7
-	    .xR = 5.8
-	    .yL = 0.47
-	    .yH = 4.03
-	    Select inner viewport... '.xL' '.xR' '.yL' '.yH'
-	    Axes... 0 100 0 100
-	    if not index(.printObjectCommand$, "yes")
-		    Draw rectangle...  0 100 0 100
-	    endif
-	    Axes... 0 100 0 100
-	    '.printObjectCommand$'
+		call PrintSuperImposedPraatObject '.minimum' '.maximum' '.printObjectCommand$'
+
 	    call PrintMarksLeft .minimum .maximum
 	    if index(.printObjectCommand$, "0 'config.frequency'") > 0
 		    call PrintMarksBottom 0 'config.frequency'
@@ -1012,6 +1002,24 @@ procedure PrintPraatObject .minimum .maximum .printObjectCommand$
 
 	endif
 endproc
+
+procedure PrintSuperImposedPraatObject .minimum .maximum .printObjectCommand$
+	if not noDrawingOrWriting
+	    # convert Canvas to absolute coordinates
+	    .xL = 0.7
+	    .xR = 5.8
+	    .yL = 0.47
+	    .yH = 4.03
+	    Select inner viewport... '.xL' '.xR' '.yL' '.yH'
+	    Axes... 0 100 0 100
+	    if not (index(.printObjectCommand$, "yes") or index(.printObjectCommand$, "no"))
+		    Draw rectangle...  0 100 0 100
+	    endif
+	    Axes... 0 100 0 100
+	    '.printObjectCommand$'
+	endif
+endproc
+
 
 procedure PrintCurrentSelection .minimum .maximum
 	if not noDrawingOrWriting
@@ -1239,15 +1247,16 @@ endproc
 
 # Do not recalculate without need
 procedure DrawHarmonicityObject
-	if harmonicityName$ <> ""
+	if te.harmonicity > 0
 		if currentStartTime != previousHarmonicityStart or currentEndTime != previousHarmonicityEnd
-			select Harmonicity 'harmonicityName$'
+			select te.harmonicity
 			Remove
 			harmonicityName$ = ""
+			te.harmonicity = 0
 		endif
 	endif
 	if recordedSound$ <> ""
-		if harmonicityName$ = "" or currentStartTime != previousHarmonicityStart or currentEndTime != previousHarmonicityEnd
+		if te.harmonicity = 0 or currentStartTime != previousHarmonicityStart or currentEndTime != previousHarmonicityEnd
 			.timeStep = (currentEndTime - currentStartTime) / 500
 			# do not exagerate precision
 			if .timeStep < 0.001
@@ -1258,7 +1267,7 @@ procedure DrawHarmonicityObject
 			select Sound Speech
 			.tmpPartID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
 			Rename... TmpPart
-			.tmpHarmID = noprogress To Harmonicity (cc)... '.timeStep' 60 0.1 1.0
+			te.harmonicity = noprogress To Harmonicity (cc)... '.timeStep' 60 0.1 1.0
 			# Arbitrarily put a floor of 0dB on the Harmonicity to Noise ratio
 			Formula... if self < 0 then 0 else self fi
 			harmonicityName$ = selected$("Harmonicity")
@@ -1267,7 +1276,7 @@ procedure DrawHarmonicityObject
 			select .tmpPartID
 			Remove
 		endif
-		select Harmonicity 'harmonicityName$'
+		select te.harmonicity
 		minHarmonicity = Get minimum... 0 0 Parabolic
 		minHarmonicity = floor(minHarmonicity)
 		if minHarmonicity < 0
@@ -1280,7 +1289,7 @@ procedure DrawHarmonicityObject
 			maxHarmonicity = 30
 		endif
 		# Get smoothed maximum harmonicity
-		select Harmonicity 'harmonicityName$'
+		select te.harmonicity
 		.tmpMatrix = To Matrix
 		.tmpSound = To Sound
 		.tmpFiltered = Filter (pass Hann band)... 0 5 5
@@ -1291,7 +1300,7 @@ procedure DrawHarmonicityObject
 		plus .tmpFiltered
 		Remove
 
-		select Harmonicity 'harmonicityName$'
+		select te.harmonicity
 		call 'mainPage.outputPraatObject$'PraatObject 'minHarmonicity' 'maxHarmonicity' Draw... 'currentStartTime' 'currentEndTime' 'minHarmonicity' 'maxHarmonicity'
 		call 'mainPage.outputPraatObject$'CurrentSelection 'minHarmonicity' 'maxHarmonicity'
 		
@@ -1381,7 +1390,7 @@ endproc
 
 procedure DrawSpectrogramObject
 
-	if recordedSound$ <> "" and spectrogramName$ = ""
+	if recordedSound$ <> "" and te.spectrogram = 0
 		select Sound Speech
 		.nyquistFrequency = sampleFrequency / 2
 		te.spectrogram = noprogress To Spectrogram... 0.1 '.nyquistFrequency' 0.001 10 Gaussian
@@ -1392,14 +1401,22 @@ procedure DrawSpectrogramObject
 		
 	endif
 
-	if spectrogramName$ <> ""
+	if te.spectrogram > 0
 		select te.spectrogram
 		call 'mainPage.outputPraatObject$'PraatObject 0 'config.frequency' Paint... 'currentStartTime' 'currentEndTime' 0 'config.frequency' 80 yes 70 6 0 yes
 		if config.showFormants > 0
-			demo Colour... Maroon
+			if mainPage.outputPraatObject$ = "Draw"
+				demo Colour... Maroon
+			else
+				Colour... Maroon
+			endif
 			select te.formant
 			call 'mainPage.outputPraatObject$'SuperImposedPraatObject 0 'config.frequency' Speckle... 'currentStartTime' 'currentEndTime' 'config.frequency' 25 no
-			demo Colour... Black
+			if mainPage.outputPraatObject$ = "Draw"
+				demo Colour... Black
+			else
+				Colour... Black
+			endif
 		endif
 		call 'mainPage.outputPraatObject$'CurrentSelection 0 'config.frequency'
 		call writeAnalysisValues 'buttons.draw$'
@@ -1618,7 +1635,7 @@ procedure saveSound .table$ .label$
 		.htmlText$ = .htmlText$ + "<p style=""text-align: center"">'.currentLine$'</p>'newline$'"
 		
 		.htmlText$ = .htmlText$ + "<center><table>'newline$'"
-		.htmlText$ = .htmlText$ + "<tr valign=""top"" width=""100%""><td width=""45%"">'newline$'"
+		.htmlText$ = .htmlText$ + "<tr valign=""top"" width=""100%""><td width=""30%"">'newline$'"
 		
 		call DrawPitchObject
 		call calculatePitchValues
@@ -1627,8 +1644,17 @@ procedure saveSound .table$ .label$
 		.currentLine$ = replace_regex$(.currentLine$, ", ", "<br />", 0)
 		.htmlText$ = .htmlText$ + "<p><b>'.currentLine$'</blockquote></p>'newline$'"
 
-		.htmlText$ = .htmlText$ + "</td><td width=""45%"">'newline$'"
+		.htmlText$ = .htmlText$ + "</td><td width=""30%"">'newline$'"
 		
+		call DrawSpectrogramObject
+		call calculateSpectrogramValues
+		call convert_praat_to_html 'calculateSpectrogramValues.text$'
+		.currentLine$ = replace_regex$(convert_praat_to_html.text$, " - ", "</b><blockquote>", 0)
+		.currentLine$ = replace_regex$(.currentLine$, ", ", "<br />", 0)
+		.htmlText$ = .htmlText$ + "<p><b>'.currentLine$'</blockquote></p>'newline$'"
+		
+		.htmlText$ = .htmlText$ + "</td><td width=""30%"">'newline$'"
+
 		call DrawLtasObject
 		call calculateLtasValues
 		call convert_praat_to_html 'calculateLtasValues.text$'
@@ -1646,7 +1672,7 @@ procedure saveSound .table$ .label$
 		.currentLine$ = replace_regex$(.currentLine$, ", ", "<br />", 0)
 		.htmlText$ = .htmlText$ + "<p><b>'.currentLine$'</blockquote></p>'newline$'"
 
-		.htmlText$ = .htmlText$ + "</td><td width=""45%"">'newline$'"
+		.htmlText$ = .htmlText$ + "</td><td width=""30%"">'newline$'"
 		
 		call DrawHarmonicityObject
 		call calculateHarmonicityValues
@@ -1655,7 +1681,7 @@ procedure saveSound .table$ .label$
 		.currentLine$ = replace_regex$(.currentLine$, ", ", "<br />", 0)
 		.htmlText$ = .htmlText$ + "<p><b>'.currentLine$'</blockquote></p>'newline$'"
 
-		.htmlText$ = .htmlText$ + "</td></tr>'newline$'"
+		.htmlText$ = .htmlText$ + "</td><td></td></tr>'newline$'"
 		.htmlText$ = .htmlText$ + "</table></center>'newline$'"
 		.htmlText$ = .htmlText$ + "'newline$'"
 		
@@ -1720,6 +1746,8 @@ procedure saveSound .table$ .label$
 
 		call getButtonText '.table$' Draw_Spectrogram
 		.htmlText$ = .htmlText$ + "<h1 style=""text-align: center;page-break-before:always;"">'getButtonText.html$'</h1><p style=""text-align: center""><a href=""'.outExtension$'/'.pathlessFilename$'_Spectrogram.'.outExtension$'"" target=""_blank""><img src=""'.outExtension$'/'.pathlessFilename$'_Spectrogram.'.outExtension$'"" width=""70%"" /></a></p>'newline$'"
+		call convert_praat_to_html 'calculateSpectrogramValues.text$'
+		.htmlText$ = .htmlText$ + "<p style=""text-align: center"">'convert_praat_to_html.text$'</p>'newline$'"
 
 		call getButtonText '.table$' Draw_Ltas
 		.htmlText$ = .htmlText$ + "<h1 style=""text-align: center;"">'getButtonText.html$'</h1><p style=""text-align: center""><a href=""'.outExtension$'/'.pathlessFilename$'_Ltas.'.outExtension$'"" target=""_blank""><img src=""'.outExtension$'/'.pathlessFilename$'_Ltas.'.outExtension$'"" width=""70%"" /></a></p>'newline$'"
@@ -1933,8 +1961,8 @@ procedure calculateHarmonicityValues
 	.sdHarmonicity = 0
 	.shorttextAST$ = ""
 
-	if harmonicityName$ <> ""
-		select Harmonicity 'harmonicityName$'
+	if te.harmonicity > 0
+		select te.harmonicity
 		.maxHarmonicity = Get maximum... 'selectedStartTime' 'selectedEndTime' Parabolic
 		.minHarmonicity = Get minimum... 'selectedStartTime' 'selectedEndTime' Parabolic
 		.meanHarmonicity = Get mean... 'selectedStartTime' 'selectedEndTime'

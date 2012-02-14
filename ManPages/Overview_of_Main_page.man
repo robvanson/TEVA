@@ -46,7 +46,7 @@ and printing. Both OpenOffice.org and LibreOffice.org are Free and Open Source w
 @@Acoustic Signal Typing@ analysis related to the display."
 <list_item> "\bu ##Sound#: [S] The Sound waveform"
 <list_item> "\bu ##Pitch#: [t] Pitch contour"
-<list_item> "\bu ##Spectrogram#: [L] Narrow band spectrogram (100 ms window)"
+<list_item> "\bu ##Spectrogram#: [L] Narrow band spectrogram (100 ms window) with formants superimposed"
 <list_item> "\bu ##Ltas#: [L] Long time average spectrum"
 <list_item> "\bu ##Intensity#: [I] Intensity"
 <list_item> "\bu ##Harmonicity#: [H] The Harmonicity to Noise ratio"

@@ -17,7 +17,7 @@ Save	Speichern \#	#	Speichern der Daten und Aufnahme
 Draw_Sound	Audio	d	Abbildung des Audiosignals
 Draw_Pitch	Tonh\o"he	T	Abbildung der Tonh\o"he
 Draw_Harmonicity	Harmonizit\a"t	H	Abbildung des Harmonicity-to-Noise Verh\a"ltnis
-Draw_Spectrogram	Spektrogramm	S	Abbildung des Schmalband-Spektrogramms (100 ms)
+Draw_Spectrogram	Spektrogramm	S	Abbildung des Schmalband-Spektrogramms (100 ms) mit Formante
 Draw_Ltas	Ltas	L	Abbildung des gemittelten Langzeitspektrums
 Draw_Intensity	Intensit\a"t	I	Abbildung der Intensit\a"t
 Select	Selektieren	r	Selektieren von Start- und Endzeiten

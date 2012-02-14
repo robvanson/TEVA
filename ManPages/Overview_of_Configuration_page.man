@@ -22,6 +22,7 @@ Set the maximal frequency to a frequency that just includes all the relevant fea
 <list_item> "\bu ##5kHz#: [5] Display up to 5 kHz"
 <list_item> "\bu ##4kHz#: [4] Display up to 4 kHz"
 <list_item> "\bu ##3kHz#: [3] Display up to 3 kHz"
+<list_item> "\bu ##Formants#: [F] Draw formants in spectrogram"
 
 <entry> "Speaker data tables and recording duration"
 <normal> "It is useful to have a list of speaker data available. TEVA can read and write Tab delimited tables (tsv) 

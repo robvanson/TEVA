@@ -45,6 +45,8 @@ te.recordingTimeStamp$ = ""
 te.currentFileName$ = ""
 te.openSound = 0
 te.spectrogram = 0
+te.harmonicity = 0
+te.formant = 0
 
 # Pop-Up window colors
 popUp.bordercolor$ = "{0.5,0.5,1}"
@@ -1794,6 +1796,22 @@ procedure convert_praat_to_html .text$
 	.text$ = replace_regex$(.text$, "\\e'", "\&eacute;", 0)
 	.text$ = replace_regex$(.text$, "\\E'", "\&acute;", 0)
 	.text$ = replace_regex$(.text$, "\\ss", "\&szlig;", 0)
+	# Subscript __x_
+	.text$ = replace_regex$(.text$, "__([^_]+)_", "<sub>\1</sub>", 0)
+	.text$ = replace_regex$(.text$, "_(\w+)", "<sub>\1</sub>", 0)
+	.text$ = replace_regex$(.text$, "\\_ ", "_", 0)
+	# Supercript ^^x^
+	.text$ = replace_regex$(.text$, "\^\^([^\^]+)\^", "<sup>\1</sup>", 0)
+	.text$ = replace_regex$(.text$, "\^(\w+)", "<sup>\1</sup>", 0)
+	.text$ = replace_regex$(.text$, "\\\^ ", "\^", 0)
+	# Italic %%x%
+	.text$ = replace_regex$(.text$, "%%([^%]+)%", "<i>\1</i>", 0)
+	.text$ = replace_regex$(.text$, "%(\w+)", "<i>\1</i>", 0)
+	.text$ = replace_regex$(.text$, "\\% ", "%", 0)
+	# Bold ##x#
+	.text$ = replace_regex$(.text$, "##([^#]+)#", "<b>\1</b>", 0)
+	.text$ = replace_regex$(.text$, "#(\w+)", "<b>\1</b>", 0)
+	.text$ = replace_regex$(.text$, "\\# ", "#", 0)
 endproc
 
 procedure convert_praat_to_latin1 .text$
@@ -1812,6 +1830,22 @@ procedure convert_praat_to_latin1 .text$
 	.text$ = replace_regex$(.text$, "\\e'", "\xe9", 0)
 	.text$ = replace_regex$(.text$, "\\E'", "\xc9", 0)
 	.text$ = replace_regex$(.text$, "\\ss", "\xdf", 0)
+	# Subscript __x_
+	.text$ = replace_regex$(.text$, "__([^_]+)_", "\1", 0)
+	.text$ = replace_regex$(.text$, "_(\w+)", "\1", 0)
+	.text$ = replace_regex$(.text$, "\\_ ", "_", 0)
+	# Supercript ^^x^
+	.text$ = replace_regex$(.text$, "\^\^([^\^]+)\^", "\1", 0)
+	.text$ = replace_regex$(.text$, "\^(\w+)", "\1", 0)
+	.text$ = replace_regex$(.text$, "\\\^ ", "\^", 0)
+	# Italic %%x%
+	.text$ = replace_regex$(.text$, "%%([^%]+)%", "\1", 0)
+	.text$ = replace_regex$(.text$, "%(\w+)", "\1", 0)
+	.text$ = replace_regex$(.text$, "\\% ", "%", 0)
+	# Bold ##x#
+	.text$ = replace_regex$(.text$, "##([^#]+)#", "\1", 0)
+	.text$ = replace_regex$(.text$, "#(\w+)", "\1", 0)
+	.text$ = replace_regex$(.text$, "\\# ", "#", 0)
 endproc
 
 procedure protect_praat_special_characters .text$
@@ -1905,8 +1939,8 @@ procedure reset_analysis
 		if intensityName$ != ""
 			plus Intensity 'intensityName$'
 		endif
- 		if harmonicityName$ <> ""
-			plus Harmonicity 'harmonicityName$'
+ 		if te.harmonicity > 0
+			plus te.harmonicity
 		endif
  		if gneName$ <> ""
 			plus Sound 'gneName$'
@@ -1928,6 +1962,7 @@ procedure reset_analysis
 		te.openSound = 0
 		te.spectrogram = 0
 		te.formant = 0
+		te.harmonicity = 0
 		
         recordedSound$ = ""
 		pitchName$ = ""

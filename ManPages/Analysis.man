@@ -16,6 +16,8 @@ displays are listed here:"
 <code> "select Sound SND"
 <code> "##[Sound: To Spectrogram...|To Spectrogram...]# 0.1 'F__n_' 0.001 10 Gaussian"
 <normal> "F__n_ is the Nyquist frequency"
+<code> "select Sound SND"
+<code> "##[Sound: To Formant (burg)...|To Formant (burg)...]# 0 4 4400 0.05 50"
 
 <entry> "##[Ltas]#"
 <code> "select Sound SND"

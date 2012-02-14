@@ -17,7 +17,7 @@ Save	Bewaar \# 	#	Bewaar metingen en opname
 Draw_Sound	Geluid	G	Teken de geluidsfile
 Draw_Pitch	Toon	T	Teken de toonhoogte
 Draw_Harmonicity	Harmoniciteit	H	Teken de Harmonicity to Noise ratio
-Draw_Spectrogram	Spectrogram	L	Smalband spectrogram (100 ms)
+Draw_Spectrogram	Spectrogram	L	Smalband spectrogram (100 ms) met formanten
 Draw_Ltas	Ltas	L	Long time average spectrum
 Draw_Intensity	Intensiteit	I	Teken de intensiteit
 Select	Selecteer	e	Selecteer nieuwe start en eindtijd

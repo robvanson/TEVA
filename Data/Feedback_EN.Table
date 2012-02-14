@@ -4,7 +4,7 @@ Key	Text
 !License	License GNU GPL version 2 or later
 Select1	Select new start time (or press Select or a key to continue)
 Select2	Select new end time (or press a Select or key to continue)
-SpectrumValues	Formants - Z1: FORMANTSD1$ , Z2: FORMANTSD2$ , Z3: FORMANTSD3$ , Z4: FORMANTSD4$ [Mean(F)/SD(F)]
+SpectrumValues	Formants - Z_1: FORMANTSD1$ , Z_2: FORMANTSD2$ , Z_3: FORMANTSD3$ , Z_4: FORMANTSD4$ [Mean(F_i)/SD(F_i)]
 PitchValues	Pitch - MVD: MAXIMUMVOICINGDUR$ , Voiced: VOICEDFRACTIONS$ , Jitter: JITTER$ , Shimmer: SHIMMER$ , Mean: MEANPITCH$ Hz, SD: SDPITCH$ Hz, Median: MEDIANPITCH$ Hz
 HarmonicityValues	Harmonicity - Max.: MAXHARMONICITY$ dB, Min.: MINHARMONICITY$ dB, Mean: MEANHARMONICITY$ dB, SD: SDHARMONICITY$ dB, GNE: GNEVALUE$
 IntensityValues	Intensity - Max.: MAXINTENSITY$ dB, Min.: MININTENSITY$ dB, Mean: MEANINTENSITY$ dB, SD: SDINTENSITY$ dB
