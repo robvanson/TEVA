@@ -1077,13 +1077,21 @@ procedure DrawPraatObject .minimum .maximum .drawObjectCommand$
 	if not noDrawingOrWriting
 	    call reset_viewport
 	    call wipeArea 'wipeCanvasArea$'
+	    call DrawSuperImposedPraatObject '.minimum' '.maximum' '.drawObjectCommand$'
+
+	    call reset_viewport
+	endif
+endproc
+
+procedure DrawSuperImposedPraatObject .minimum .maximum .drawObjectCommand$
+	if not noDrawingOrWriting
 	    # convert Canvas to absolute coordinates
 	    .xL = canvasXL + viewportMargin
 	    .xR = canvasXR - viewportMargin
 	    .yL = canvasYL + viewportMargin
 	    .yH = canvasYH - viewportMargin
 	    demo Select inner viewport... '.xL' '.xR' '.yL' '.yH'
-	    if not index(.drawObjectCommand$, "yes")
+	    if not (index(.drawObjectCommand$, "yes") or index(.drawObjectCommand$, "no"))
 		    demo Draw rectangle...  0 100 0 100
 	    endif
 	    demo Axes... 0 100 0 100
@@ -1106,7 +1114,6 @@ procedure DrawPraatObject .minimum .maximum .drawObjectCommand$
 		endif
 	    demoShow()
 
-	    call reset_viewport
 	endif
 endproc
 
@@ -1367,14 +1374,25 @@ procedure DrawSpectrogramObject
 	if recordedSound$ <> "" and spectrogramName$ = ""
 		select Sound Speech
 		.nyquistFrequency = sampleFrequency / 2
-		noprogress To Spectrogram... 0.1 '.nyquistFrequency' 0.001 10 Gaussian
+		te.spectrogram = noprogress To Spectrogram... 0.1 '.nyquistFrequency' 0.001 10 Gaussian
 		spectrogramName$ = selected$("Spectrogram")
+		select Sound Speech
+		te.formant = noprogress To Formant (burg)... 0 4 4400 0.05 50
+		formantName$ = selected$("Formant")
+		
 	endif
 
 	if spectrogramName$ <> ""
-		select Spectrogram 'spectrogramName$'
+		select te.spectrogram
 		call 'mainPage.outputPraatObject$'PraatObject 0 'config.frequency' Paint... 'currentStartTime' 'currentEndTime' 0 'config.frequency' 80 yes 70 6 0 yes
+		if config.showFormants > 0
+			demo Colour... Maroon
+			select te.formant
+			call 'mainPage.outputPraatObject$'SuperImposedPraatObject 0 'config.frequency' Speckle... 'currentStartTime' 'currentEndTime' 'config.frequency' 25 no
+			demo Colour... Black
+		endif
 		call 'mainPage.outputPraatObject$'CurrentSelection 0 'config.frequency'
+		call writeAnalysisValues 'buttons.draw$'
 	endif
 endproc
 
@@ -2148,5 +2166,27 @@ endproc
 procedure calculateSpectrogramValues
 	.text$ = ""
 	.shorttextAST$ = ""
+	
+	select te.formant
+	.meanF1 = Get mean... 1 'selectedStartTime' 'selectedEndTime' Hertz
+	.sdF1 = Get standard deviation... 1 'selectedStartTime' 'selectedEndTime' Hertz
+	.formantSD1 = .meanF1 / .sdF1
+	.meanF2 = Get mean... 2 'selectedStartTime' 'selectedEndTime' Hertz
+	.sdF2 = Get standard deviation... 2 'selectedStartTime' 'selectedEndTime' Hertz
+	.formantSD2 = .meanF2 / .sdF2
+	.meanF3 = Get mean... 3 'selectedStartTime' 'selectedEndTime' Hertz
+	.sdF3 = Get standard deviation... 3 'selectedStartTime' 'selectedEndTime' Hertz
+	.formantSD3 = .meanF3 / .sdF3
+	.meanF4 = Get mean... 4 'selectedStartTime' 'selectedEndTime' Hertz
+	.sdF4 = Get standard deviation... 4 'selectedStartTime' 'selectedEndTime' Hertz
+	.formantSD4 = .meanF4 / .sdF4
+	
+	call get_feedback_text 'config.language$' SpectrumValues
+	.spectrumValues$ = get_feedback_text.text$
+	.spectrumValues$ = replace$(.spectrumValues$, "FORMANTSD1$", "'.formantSD1:0'", 0)
+	.spectrumValues$ = replace$(.spectrumValues$, "FORMANTSD2$", "'.formantSD2:0'", 0)
+	.spectrumValues$ = replace$(.spectrumValues$, "FORMANTSD3$", "'.formantSD3:0'", 0)
+	.spectrumValues$ = replace$(.spectrumValues$, "FORMANTSD4$", "'.formantSD4:0'", 0)
+	.text$ = .spectrumValues$
 endproc
 

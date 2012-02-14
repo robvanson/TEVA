@@ -266,6 +266,14 @@ procedure processConfigFrequency .frequencyK$ .clickX .clickY .pressed$
 	call setFrequencyButton
 endproc
 
+procedure processConfigShowFormants .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "ShowFormants"
+	config.showFormants = not config.showFormants
+	.displayButton = 2*config.showFormants
+    call Draw_button 'table$' '.label$' '.displayButton'
+endproc
+
 procedure processConfigInstruction .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "Instruction"

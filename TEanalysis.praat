@@ -67,6 +67,7 @@ endif
 wipeFeedbackArea$ = ""
 sampleFrequency = 44100
 config.frequency = 5000
+config.showFormants = 1
 
 # Parameters for isolating recorded speech from noise
 # Should be mostly left alone unless you are using ultra clean
@@ -1918,11 +1919,14 @@ procedure reset_analysis
 		if voicingTextGrid > 0
 			plus 'voicingTextGrid'
 		endif
- 		if spectrogramName$ <> ""
-			plus Spectrogram 'spectrogramName$'
+ 		if te.spectrogram > 0
+			plus 'te.spectrogram'
+			plus 'te.formant'
 		endif
 		Remove
 		te.openSound = 0
+		te.spectrogram = 0
+		te.formant = 0
 		
         recordedSound$ = ""
 		pitchName$ = ""
@@ -1930,6 +1934,7 @@ procedure reset_analysis
 		ltasName$ = ""
 		intensityName$ = ""
 		spectrogramName$ = ""
+		formantName$ = ""
 		pointProcessName$ = ""
 		voicingTextGrid = -1
 		gneName$ = ""
