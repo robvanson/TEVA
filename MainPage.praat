@@ -1291,7 +1291,8 @@ procedure DrawHarmonicityObject
 		# Get smoothed maximum harmonicity
 		select te.harmonicity
 		.tmpMatrix = To Matrix
-		.tmpSound = To Sound
+		select .tmpMatrix
+		.tmpSound = To Sound (slice)... 1
 		.tmpFiltered = Filter (pass Hann band)... 0 5 5
 		maxTimeHarmonicity = Get time of maximum... 0 0 Parabolic
 		# Remove temporary files
