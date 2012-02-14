@@ -1275,11 +1275,21 @@ procedure DrawHarmonicityObject
 		endif
 		maxHarmonicity = Get maximum... 0 0 Parabolic
 		maxHarmonicity = ceiling(maxHarmonicity)
-		maxTimeHarmonicity = Get time of maximum... 0 0 Parabolic
 		if minHarmonicity = undefined or maxHarmonicity = undefined
 			minHarmonicity = 0
 			maxHarmonicity = 30
 		endif
+		# Get smoothed maximum harmonicity
+		select Harmonicity 'harmonicityName$'
+		.tmpMatrix = To Matrix
+		.tmpSound = To Sound
+		.tmpFiltered = Filter (pass Hann band)... 0 5 5
+		maxTimeHarmonicity = Get time of maximum... 0 0 Parabolic
+		# Remove temporary files
+		select .tmpMatrix
+		plus .tmpSound
+		plus .tmpFiltered
+		Remove
 
 		select Harmonicity 'harmonicityName$'
 		call 'mainPage.outputPraatObject$'PraatObject 'minHarmonicity' 'maxHarmonicity' Draw... 'currentStartTime' 'currentEndTime' 'minHarmonicity' 'maxHarmonicity'

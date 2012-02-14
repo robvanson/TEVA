@@ -29,7 +29,8 @@ displays are listed here:"
 <entry> "##[Harmonicity]#"
 <code> "select Sound SND"
 <code> "##[Sound: To Harmonicity (cc)...|To Harmonicity (cc)...]# 'dT' 60 0.1 1.0"
-<normal> "dT is the time step"
+<normal> "dT is the time step. The position of the maximum Harmonicity is determined on a smoothed 
+low-pass filtered contour (low-pass 5Hz and 5Hz transition), %not on the highest peak."
 
 <entry> "Measurements"
 <entry> "Voiced fraction"

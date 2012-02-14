@@ -44,6 +44,7 @@ config.input$ = "Microphone"
 te.recordingTimeStamp$ = ""
 te.currentFileName$ = ""
 te.openSound = 0
+te.spectrogram = 0
 
 # Pop-Up window colors
 popUp.bordercolor$ = "{0.5,0.5,1}"
