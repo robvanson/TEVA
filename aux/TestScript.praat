@@ -20,7 +20,7 @@ call getOpenFile 'tablefile$'
 #call getOpenFile Select a speaker table
 
 clearinfo
-printline i'tab$'ID'tab$'start'tab$'end'tab$'MVD'tab$'Z3'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'HNR'tab$'GNE'tab$'BED'tab$'AST
+printline i'tab$'ID'tab$'start'tab$'end'tab$'MVD'tab$'QF3'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'HNR'tab$'GNE'tab$'BED'tab$'AST
 
 call get_speakerInfo 1
 .numSpeakers = get_speakerInfo.numEntries
@@ -105,13 +105,13 @@ for .i to .numSpeakers
 	
 	call DrawSpectrogramObject
 	call calculateSpectrogramValues
-	.calcZ3 = calculateSpectrogramValues.formantSD3
+	.calcQF3 = calculateSpectrogramValues.qualityF3
 
 	# Print output
 	print '.i''tab$''get_speakerInfo.id$'
 	print 'tab$''selectedStartTime:3''tab$''selectedEndTime:3'
 	print 'tab$''.calcMVD:3'
-	print 'tab$''.calcZ3:1'
+	print 'tab$''.calcQF3:1'
 	print 'tab$''.calcVF:3'
 	print 'tab$''.calcPitch:3'
 	print 'tab$''.calcJitter:4'

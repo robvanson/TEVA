@@ -1,0 +1,6 @@
+ManPagesTextFile
+"What's new?" "R.J.J.H. van Son" 20120215 0
+<intro> "Latest changes in TEVA."
+
+<normal> "##15 February 2012#"
+<list_item> "\bu Start of %%What's new?%"  

@@ -15,3 +15,4 @@ work of Corina van As-Brooks (Van As 2001; 2006).
 <list_item> "@@Analysis|Analysis calculations and displays@"
 <list_item> "@@Acoustic Signal Typing@"
 <list_item> "@@TEVA license|TEVA Copyright and License@"
+<list_item> "@@What's new?@"
