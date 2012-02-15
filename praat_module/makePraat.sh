@@ -50,6 +50,8 @@ if [[ ${1:-Normal} == "MinGW" && ${2:-Normal} == "XP" ]]; then
 else
 	ln -s ${CURRENTWORKINGDIR}/${APPLICATIONNAME}expanded.h ./demopraatapplication.h
 fi
+# Create a file containing the Build number
+grep 'build_SHA$ = "' ${CURRENTWORKINGDIR}/TEanalysisexpanded.praat | grep ':' | perl -ane '/\"([^\"]+)\"/;print "$1\n";' > ${CURRENTWORKINGDIR}/Build_SHA.txt
 
 # Get the manual into the tutorials manual
 cp ../fon/manual_tutorials.cpp ../fon/manual_tutorials.cppORIGINAL
