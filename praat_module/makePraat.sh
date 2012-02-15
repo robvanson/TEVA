@@ -51,7 +51,7 @@ else
 	ln -s ${CURRENTWORKINGDIR}/${APPLICATIONNAME}expanded.h ./demopraatapplication.h
 fi
 # Create a file containing the Build number
-grep 'build_SHA$ = "' ${CURRENTWORKINGDIR}/TEanalysisexpanded.praat | grep ':' | perl -ane '/\"([^\"]+)\"/;print "$1\n";' > ${CURRENTWORKINGDIR}/Build_SHA.txt
+grep 'build_SHA$ = "' ${CURRENTWORKINGDIR}/TEanalysisexpanded.praat | grep ':' | perl -ane '/\"([A-F0-9]+)\s+([\d\-]+)(.*)\"/;print "<i>$1</i> <b>$2</b>$3\n";' > ${CURRENTWORKINGDIR}/Build_SHA.html
 
 # Get the manual into the tutorials manual
 cp ../fon/manual_tutorials.cpp ../fon/manual_tutorials.cppORIGINAL
