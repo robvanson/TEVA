@@ -251,7 +251,7 @@ Selected statistics about the analysis will be written below the display. This i
 <li>
 &nbsp;<b>Pitch</b>: [t] Pitch contour
 <li>
-&nbsp;<b>Spectrogram</b>: [L] Narrow band spectrogram (100 ms window)
+&nbsp;<b>Spectrogram</b>: [L] Narrow band spectrogram (100 ms window) with formants superimposed
 <li>
 &nbsp;<b>Ltas</b>: [L] Long time average spectrum
 <li>
@@ -319,6 +319,8 @@ Set the maximal frequency to a frequency that just includes all the relevant fea
 &nbsp;<b>4kHz</b>: [4] Display up to 4 kHz
 <li>
 &nbsp;<b>3kHz</b>: [3] Display up to 3 kHz
+<li>
+&nbsp;<b>Formants</b>: [F] Draw formants in spectrogram
 </ul>
 <h3>
 Speaker data tables and recording duration</h3>
@@ -871,7 +873,7 @@ open. Navigate into the map you just downloaded and select <i>SignaltypeVoiceSam
 <a href="#Overview_of_Main_page">Main page</a> now contains a display of an empty sound. <i>SignaltypeVoiceSamples.Table</i> 
 contains data on a number of recordings. You must now select the recording you want to use. 
 </p> <p align=center>
-<a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/TEVA/HTML/Speaker_screenshot.png" target="_blank"><img width="25%" src="Speaker_screenshot.png" VSPACE=10></a></p></p>
+<a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/TEVA/HTML/Speaker_screenshot.png" target="_blank"><img width="25%" src="Speaker_screenshot.png" VSPACE=10></a></p>
 
 <h3>
 Select speakers</h3>
@@ -987,6 +989,10 @@ select Sound SND<br></code>
 <a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Spectrogram___.html" target="_blank">To Spectrogram...</a> 0.1 'F<sub>n</sub>' 0.001 10 Gaussian<br></code>
 <p>
 F<sub>n</sub> is the Nyquist frequency</p>
+<code>
+select Sound SND<br></code>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Formant__burg____.html" target="_blank">To Formant (burg)...</a> 0.02 4 4400 0.1 50<br></code>
 <h3>
 <a href="http://www.fon.hum.uva.nl/praat/manual/Ltas.html" target="_blank">Ltas</a></h3>
 <code>
@@ -1008,7 +1014,8 @@ select Sound SND<br></code>
 <code>
 <a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Harmonicity__cc____.html" target="_blank">To Harmonicity (cc)...</a> 'dT' 60 0.1 1.0<br></code>
 <p>
-dT is the time step</p>
+dT is the time step. The position of the maximum Harmonicity is determined on a smoothed 
+low-pass filtered contour (low-pass 5Hz and 5Hz transition), <i>not</i> on the highest peak.</p>
 <h3>
 Measurements</h3>
 <h3>
@@ -1100,6 +1107,16 @@ To PointProcess<br></code>
 To TextGrid (vuv)... 0.2 0.1<br></code>
 <code>
 Get longest interval with label <i>V</i><br></code>
+<h3>
+Formant quality factors (QF_i)</h3>
+<code>
+select Formant SND<br></code>
+<code>
+medianF = <a href="http://www.fon.hum.uva.nl/praat/manual/Formant__Get_quantile___.html" target="_blank">Get quantile...</a> 'i' 'T<sub>1</sub>' 'T<sub>2</sub>' Hertz 0.50<br></code>
+<code>
+medianB = <a href="http://www.fon.hum.uva.nl/praat/manual/Formant__Get_quantile___.html" target="_blank">Get quantile of bandwidth...</a> 'i' 'T<sub>1</sub>' 'T<sub>2</sub>' Hertz 0.50<br></code>
+<code>
+qf = medianF / medianB<br></code>
 <h3>Links to this page</h3>
 <ul>
 <li><a href="#Acoustic_Signal_Typing">Acoustic Signal Typing</a>
