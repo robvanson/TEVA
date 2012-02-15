@@ -97,15 +97,16 @@ zip -r ${TARGETNAME}.zip ${TARGETNAME}
 
 # Create MD5SUM
 if [[ -n `which md5` ]] ; then 
-	if [[ -f ${CURRENTWORKINGDIR}/${TARGETNAME} ]]; then
-		md5 ${CURRENTWORKINGDIR}/${TARGETNAME} > ${CURRENTWORKINGDIR}/${TARGETNAME}.md5
+	if [[ -f ${TARGETNAME} ]]; then
+		md5 ${TARGETNAME} > ${TARGETNAME}.md5
 	fi
-	md5 ${CURRENTWORKINGDIR}/${TARGETNAME}.zip > ${CURRENTWORKINGDIR}/${TARGETNAME}.zip.md5
+	md5 ${TARGETNAME}.zip > ${TARGETNAME}.zip.md5
 fi
 if [[ -n `which md5sum` ]] ; then 
-	if [[ -f ${CURRENTWORKINGDIR}/${TARGETNAME} ]]; then
-		md5sum ${CURRENTWORKINGDIR}/${TARGETNAME} > ${CURRENTWORKINGDIR}/${TARGETNAME}.md5
+	if [[ -f ${TARGETNAME} ]]; then
+		md5sum ${TARGETNAME} > ${TARGETNAME}.md5
 	fi
-	md5sum ${CURRENTWORKINGDIR}/${TARGETNAME}.zip > ${CURRENTWORKINGDIR}/${TARGETNAME}.zip.md5
+	md5sum ${TARGETNAME}.zip > ${TARGETNAME}.zip.md5
 fi
+cd -
 
