@@ -69,7 +69,7 @@ procedure global_initialization
 	config.speakerData$ = ""
 	config.speakerDataBackup$ = ""
 	config.speakerDataTable = -1
-	config.speakerDataSerial = 0
+	config.speakerSerial = 0
 	config.showFormants = 1
 	
 	pathologicalType = 0
@@ -147,6 +147,15 @@ procedure global_setup
 	call read_preferences ""
 	# Set inital language
 	call set_language 'config.language$'
+	# Set Speaker colo
+	if config.speakerSerial
+		call findLabel 'buttons$' Speaker
+		if findLabel.row > 0 
+			select Table 'buttons$'
+			Set string value... 'findLabel.row' Color Blue
+		endif
+	endif
+	
 endproc
 
 # Initialize

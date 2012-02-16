@@ -390,7 +390,7 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 	select Table '.table$'
 	.helpText$ = Get value... '.row' Helptext
 	clicked = -1
-	while clicked <> 4
+	while not config.speakerSerial and clicked <> 4
 		# The speaker Text
 		.speakerID$ = "ID"
 		.speakerIDDefault$ = speakerID$
@@ -527,6 +527,19 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 			Remove
 		endif
 	endwhile
+	
+	# Just pick next recording
+	if config.speakerSerial
+		call get_nextSpeaker 'speakerID$'
+		speakerID$ = get_nextSpeaker.id$
+		speakerInfo$ = get_nextSpeaker.text$
+		speakerComments$ = get_nextSpeaker.description$
+		te.currentFileName$ = get_nextSpeaker.audio$
+		pathologicalType = 'get_nextSpeaker.ast$'
+		call load_audio_file 'te.currentFileName$'
+		call autoSetPathType
+	endif
+	
 	call Draw_button '.table$' '.label$' 0
 endproc
 

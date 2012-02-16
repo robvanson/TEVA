@@ -19,7 +19,8 @@ $Speaker	35	45	96	100	Black	DrawNull
 SpeakerData	35	45	91	96	Black	DrawNull
 SaveSpeaker	35	45	85	90	Black	DrawNull
 CloseSpeaker	35	45	79	84	Black	DrawNull
-RecordingTime	35	45	72	77	Black	DrawNull
+SpeakerSerial	35	45	73	78	Black	DrawNull
+RecordingTime	35	45	66	71	Black	DrawNull
 ShowBackground	60	75	95	100	Black	DrawNull
 Input_Microphone	60	75	87	92	Black	DrawNull
 Input_Line	60	75	81	86	Black	DrawNull

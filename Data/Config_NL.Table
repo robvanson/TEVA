@@ -24,6 +24,7 @@ $Speaker	Sprekers	!	Tabel met spreker gegevens
 SpeakerData	Data	D	Lees tabel met sprekergegevens
 SaveSpeaker	Bewaar	B	Bewaar huidige tabel met sprekergegevens
 CloseSpeaker	Sluit	S	Sluit huidige tabel en open een nieuwe, lege tabel
+SpeakerSerial	Serieel	r	Verwerk alle opnamen in volgorde (Spreker knop leest volgende opname)
 RecordingTime	Opname <	,<	Opnametijd in seconden
 Logging	Log aan	L	Start logging spraak
 OpenLog	Kies	K	Kies map voor logboek
