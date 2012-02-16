@@ -60,6 +60,12 @@ and see how this affects the acoustic parameters. "
 %%1-4%, and the type is recorded. The type will be displayed in the window and in the title bar. Push %%0% to remove 
 the type."
 
+<entry> "Speeding up evaluations in long lists"
+<normal> "In case you need to examine a large number of recordings in sequence, a simplification exists. Select the 
+%Serial button on the @@Overview of Configuration page|Configuration page@. When you go back to the @@Overview of Main page|Main page@, 
+the %Speaker button has turned blue. Clicking on the Speaker button now automatically reads and displays 
+the next recording in the list. Just click on the %Serial button again to reset EVA to the default behavior."
+
 <entry> "Saving your work"
 <normal> "After evaluating the sounds, the pathological types and remarks added to the Speaker Info table should be saved 
 to disk. Go to the @@Overview of Configuration page|Configuration page@ and click on %Save. Fill in the name you want the file 
