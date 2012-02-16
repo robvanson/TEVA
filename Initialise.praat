@@ -69,6 +69,7 @@ procedure global_initialization
 	config.speakerData$ = ""
 	config.speakerDataBackup$ = ""
 	config.speakerDataTable = -1
+	config.speakerDataSerial = 0
 	config.showFormants = 1
 	
 	pathologicalType = 0

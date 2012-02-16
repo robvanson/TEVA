@@ -214,6 +214,25 @@ procedure processConfigCloseSpeaker .clickX .clickY .pressed$
     call Draw_button 'table$' '.label$' 0
 endproc
 
+procedure processConfigSpeakerSerial .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "SpeakerSerial"
+	# Get help text
+	config.speakerDataSerial = not config.speakerDataSerial
+	if config.speakerDataSerial
+		call findLabel 'buttons$' Speaker
+		if findLabel.row > 0
+			select Table 'buttons$'
+			Set string value... 'findLabel.row' Color Blue
+		else
+			select Table 'buttons$'
+			Set string value... 'findLabel.row' Color Black
+		endif
+	endif
+	.displayButton = 2*config.speakerDataSerial
+    call Draw_button 'table$' '.label$' '.displayButton'
+endproc
+
 procedure processConfigRecordingTime .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "RecordingTime"
