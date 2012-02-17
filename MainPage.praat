@@ -1128,10 +1128,12 @@ procedure DrawSuperImposedPraatObject .minimum .maximum .drawObjectCommand$
 			endif			
 	    	demo '.drawObjectCommand$'
 	    	call DrawMarksLeft '.minimum' '.maximum'
-	    	if index(.drawObjectCommand$, "0 'config.frequency'") > 0
+	    	if buttons.draw$ = "Ltas"
 		    	call DrawMarksBottom 0 'config.frequency'
 	    	else
 		    	call DrawMarksBottom 'currentStartTime' 'currentEndTime'
+		    endif
+		    if index(.drawObjectCommand$, "yes") > 0
 		    	if maxTimeHarmonicity > 0
 					call DrawMarkAtTime 'maxTimeHarmonicity' '.minimum' '.maximum' Green
 				endif
