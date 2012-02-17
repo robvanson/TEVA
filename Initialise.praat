@@ -613,6 +613,8 @@ procedure load_audio_file .fileName$
 	if .fileName$ <> "" and fileReadable(.fileName$)
 		call getOpenFile '.fileName$'
 		Rename... Speech
+		recordedSound$ = selected$("Sound")
+		te.openSound = selected("Sound")
 		call post_processing_sound
 		# Draw
 		call init_window
