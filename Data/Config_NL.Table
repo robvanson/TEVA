@@ -10,7 +10,7 @@ Input_Microphone	Microfoon	f	Gebruik de ingebouwde microfoon voor spraakopnamen
 Input_Line	Lijn ingang |	|\+	Gebruik de lijn-ingang voor de spraakopnamen
 Instruction	Pathologie	P	Informatie over pathologische types
 Manual	Handleiding	H	Handleiding van de applicatie
-Credits	Over	ir	Informatie over NKI TE-VOICE ANALYSIS tool
+Credits	Over	iC	Informatie over NKI TE-VOICE ANALYSIS tool
 Help	Help	?/	klik op de knop waar u informatie over wilt hebben, "Help" als u verder wilt
 Test	Test opname	o	Test opname niveau
 $MaxFrequency	Frequentie	!	Hoogste frequentie
@@ -26,6 +26,7 @@ SpeakerData	Data	D	Lees tabel met sprekergegevens
 SaveSpeaker	Bewaar	B	Bewaar huidige tabel met sprekergegevens
 CloseSpeaker	Sluit	S	Sluit huidige tabel en open een nieuwe, lege tabel
 SpeakerSerial	Serieel	r	Verwerk alle opnamen in volgorde (Spreker knop leest volgende opname)
+SpeakerRandomize	Shuffle	e	Randomiseer de lijst met opnamen
 RecordingTime	Opname <	,<	Opnametijd in seconden
 Logging	Log aan	L	Start logging spraak
 OpenLog	Kies	K	Kies map voor logboek

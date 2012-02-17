@@ -12,7 +12,7 @@ LtasValues	Ltas - Max.: MAXFREQUENCY$ Hz, Min.: MINFREQUENCY$ Hz, BED: BED$ dB, 
 TimeValues	Zeitinterval: SELECTEDSTARTTIME$ - SELECTEDENDTIME$ S (SELECTEDINTERVAL$ S)
 Recording	Aufname
 Cancel	Zur\u"ck
-Continue	Fertig
+Continue	Weiter
 Next	>
 Previous	<
 Current	=

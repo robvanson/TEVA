@@ -219,7 +219,7 @@ endproc
 procedure processConfigSpeakerSerial .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "SpeakerSerial"
-	# Get help text
+
 	config.speakerSerial = not config.speakerSerial
 	
 	call findLabel 'buttons$' Speaker
@@ -234,6 +234,25 @@ procedure processConfigSpeakerSerial .clickX .clickY .pressed$
 
 	.displayButton = 2*config.speakerSerial
     call Draw_button 'table$' '.label$' '.displayButton'
+endproc
+
+procedure processConfigSpeakerRandomize .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "SpeakerRandomize"
+	
+	if config.speakerDataTable
+		# Get feedback texts
+		call getLanguageTexts '.table$' '.label$'
+		.inputText$ = getLanguageTexts.inputText$
+		beginPause("")
+			comment(getLanguageTexts.helpText$)
+		clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2)
+		if clicked = 2
+			select config.speakerDataTable
+			Randomize rows
+		endif
+	endif
+    call Draw_button 'table$' '.label$' 0
 endproc
 
 procedure processConfigRecordingTime .clickX .clickY .pressed$
