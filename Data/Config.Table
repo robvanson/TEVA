@@ -14,7 +14,8 @@ Frequency_8k	20	30	85	90	Black	DrawNull
 Frequency_5k	20	30	79	84	Black	DrawNull
 Frequency_4k	20	30	73	78	Black	DrawNull
 Frequency_3k	20	30	67	72	Black	DrawNull
-ShowFormants	20	30	60	65	Black	DrawNull
+Frequency_2k	20	30	61	66	Black	DrawNull
+ShowFormants	20	30	54	59	Black	DrawNull
 $Speaker	35	45	96	100	Black	DrawNull
 SpeakerData	35	45	91	96	Black	DrawNull
 SaveSpeaker	35	45	85	90	Black	DrawNull
