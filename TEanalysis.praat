@@ -71,6 +71,7 @@ wipeFeedbackArea$ = ""
 sampleFrequency = 44100
 config.frequency = 5000
 config.showFormants = 1
+config.speakerSerial = 0
 
 # Parameters for isolating recorded speech from noise
 # Should be mostly left alone unless you are using ultra clean

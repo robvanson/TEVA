@@ -5,6 +5,12 @@ English labels will be used here. The keyboard shortcuts are given between the [
 See also the @@Overview of Configuration page@. 
 ##%%   %#"
 
+<entry> "The display"
+<normal> "In the center of the page is the display area where a graph is drawn with the analysis. Below the time axis (if present), 
+the voiced parts are indicated with blue-gray line segments. A green marker will indicate the point where the ##[Harmonicity]# is 
+maximal (which indicates a potential ""best"" part). These two additional markers will in general appear only after, respectively, 
+the ##[Pitch]# and ##[Harmonicity]# contours have been displayed."
+
 <entry> "General functions"
 <list_item> "\bu #Quit: [Q] Stop TEVA. Will save the current preferences"
 <list_item> "\bu #Settings: [S] Go to %Configuration page"

@@ -390,7 +390,7 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 	select Table '.table$'
 	.helpText$ = Get value... '.row' Helptext
 	clicked = -1
-	while clicked <> 4
+	while not config.speakerSerial and clicked <> 4
 		# The speaker Text
 		.speakerID$ = "ID"
 		.speakerIDDefault$ = speakerID$
@@ -527,6 +527,19 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 			Remove
 		endif
 	endwhile
+	
+	# Just pick next recording
+	if config.speakerSerial
+		call get_nextSpeaker 'speakerID$'
+		speakerID$ = get_nextSpeaker.id$
+		speakerInfo$ = get_nextSpeaker.text$
+		speakerComments$ = get_nextSpeaker.description$
+		te.currentFileName$ = get_nextSpeaker.audio$
+		pathologicalType = 'get_nextSpeaker.ast$'
+		call load_audio_file 'te.currentFileName$'
+		call autoSetPathType
+	endif
+	
 	call Draw_button '.table$' '.label$' 0
 endproc
 
@@ -586,8 +599,13 @@ endproc
 
 # Process Sound Speech
 procedure post_processing_sound
-	# Analyze	
-	
+	# Analyze Pitch in Serial step mode
+	if config.speakerSerial
+		# Supress drawing, but set up Pitch parameters
+		noDrawingOrWriting = 1
+		call DrawPitchObject
+		noDrawingOrWriting = 0
+	endif
 endproc
 
 procedure processMainPageDraw .type$ .clickX .clickY .pressed$
@@ -1110,14 +1128,41 @@ procedure DrawSuperImposedPraatObject .minimum .maximum .drawObjectCommand$
 			endif			
 	    	demo '.drawObjectCommand$'
 	    	call DrawMarksLeft '.minimum' '.maximum'
-	    	if index(.drawObjectCommand$, "0 'config.frequency'") > 0
+	    	if buttons.draw$ = "Ltas"
 		    	call DrawMarksBottom 0 'config.frequency'
 	    	else
 		    	call DrawMarksBottom 'currentStartTime' 'currentEndTime'
+
+		    	if maxTimeHarmonicity > 0
+					call DrawMarkAtTime 'maxTimeHarmonicity' '.minimum' '.maximum' Green
+				endif
+				if voicingTextGrid > 0
+					select voicingTextGrid
+					.numIntervals = Get number of intervals... 1
+					for .interval to .numIntervals
+						.label$ = Get label of interval... 1 '.interval'
+						if .label$ = "V"
+							.start = Get start point... 1 '.interval'
+							.end = Get end point... 1 '.interval'
+							.duration = .end - .start
+							# Interval is in window
+							if .start < currentEndTime and .end > currentStartTime
+							    demo Colour... {0.5, 0.5, 0.8}
+							    demo Line width... 1
+							    .botPoint = .minimum - (.maximum - .minimum)/50
+							    .leftPoint = max(.start, currentStartTime)
+							    .rightPoint = min(.end, currentEndTime)
+								demo Draw line... '.leftPoint' '.botPoint' '.rightPoint' '.botPoint'
+							    demoShow()
+							    demo Colour... Black
+							    demo Line width... 'defaultLineWidth'
+							endif
+						endif
+						
+					endfor
+				endif
+				
 	    	endif
-	    	if maxTimeHarmonicity > 0
-				call DrawMarkAtTime 'maxTimeHarmonicity' '.minimum' '.maximum' Green
-			endif
 
 		endif
 	    demoShow()
@@ -1221,8 +1266,8 @@ procedure DrawMarksBottom .minimum .maximum
 endproc
 
 procedure DrawPitchObject
-	if recordedSound$ <> "" and pitchName$ = ""
-		select Sound Speech
+	if te.openSound > 0 and pitchName$ = ""
+		select te.openSound
 		noprogress To Pitch... 0 60 600
 		pitchName$ = selected$("Pitch")
 		minPitch = Get minimum... 0 0 Hertz Parabolic
@@ -1235,7 +1280,7 @@ procedure DrawPitchObject
 		endif
 		To PointProcess
 		pointProcessName$ = selected$("PointProcess")
-		voicingTextGrid = To TextGrid (vuv)... 0.02 0.01
+		voicingTextGrid = To TextGrid (vuv)... 0.2 0.1
 	endif
 
 	if pitchName$ <> ""
@@ -1834,7 +1879,7 @@ procedure calculatePitchValues
 		.shimmer = Get shimmer (local)... 'selectedStartTime' 'selectedEndTime' 0.0001 0.05 5 5
 	endif
 	if voicingTextGrid > 0
-		select 'voicingTextGrid'
+		select voicingTextGrid
 		.numberOfIntervals = Get number of intervals... 1
 		.maximumVoicingDuration = 0
 		.mvdIntervalNumber = 0

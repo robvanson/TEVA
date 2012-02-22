@@ -101,6 +101,8 @@ endproc
 procedure setConfigMainPage
     #call Draw_button 'config$' Language_'config.language$' 2
     call Draw_button 'config$' Input_'config.input$' 2
+    .displaybutton = 2*config.speakerSerial
+    call Draw_button 'config$' SpeakerSerial '.displaybutton'
 	call setFrequencyButton
     # Handle logging buttons with forced button draw
     if logging
@@ -217,20 +219,40 @@ endproc
 procedure processConfigSpeakerSerial .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "SpeakerSerial"
-	# Get help text
-	config.speakerDataSerial = not config.speakerDataSerial
-	if config.speakerDataSerial
-		call findLabel 'buttons$' Speaker
-		if findLabel.row > 0
-			select Table 'buttons$'
+
+	config.speakerSerial = not config.speakerSerial
+	
+	call findLabel 'buttons$' Speaker
+	if findLabel.row > 0 
+		select Table 'buttons$'
+		if config.speakerSerial
 			Set string value... 'findLabel.row' Color Blue
 		else
-			select Table 'buttons$'
 			Set string value... 'findLabel.row' Color Black
 		endif
 	endif
-	.displayButton = 2*config.speakerDataSerial
+
+	.displayButton = 2*config.speakerSerial
     call Draw_button 'table$' '.label$' '.displayButton'
+endproc
+
+procedure processConfigSpeakerRandomize .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "SpeakerRandomize"
+	
+	if config.speakerDataTable
+		# Get feedback texts
+		call getLanguageTexts '.table$' '.label$'
+		.inputText$ = getLanguageTexts.inputText$
+		beginPause("")
+			comment(getLanguageTexts.helpText$)
+		clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2)
+		if clicked = 2
+			select config.speakerDataTable
+			Randomize rows
+		endif
+	endif
+    call Draw_button 'table$' '.label$' 0
 endproc
 
 procedure processConfigRecordingTime .clickX .clickY .pressed$
