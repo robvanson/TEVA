@@ -5,7 +5,7 @@ ifeq ($(UNAME), Darwin)
 PRAAT = /Applications/Praat.app/Contents/MacOS/Praat
 endif
 
-NKI_TEVA.htm: %.html *.png html_print_order.txt
+NKI_TEVA.htm: %.html html_print_order.txt
 	./ConcatHTMLpages.pl > NKI_TEVA.htm
 
 %.html: ../ManPages/*.man
