@@ -296,27 +296,27 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/dwtools/Intensity_ext
  		double intensityThreshold = intensity_max_db - fabs (silenceThreshold_dB);
  
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus.cpp demo_praat_sources/sys/praat_objectMenus.cpp
---- praat_sources/sys/praat_objectMenus.cpp	2011-09-19 12:26:40.000000000 +0200
-+++ demo_praat_sources/sys/praat_objectMenus.cpp	2011-12-02 14:56:29.000000000 +0100
-@@ -430,8 +430,10 @@ FORM (SearchManual, L"Search manual", L"
+--- praat_sources/sys/praat_objectMenus.cpp	2012-02-22 13:04:43.000000000 +0100
++++ demo_praat_sources/sys/praat_objectMenus.cpp	2012-02-22 13:48:24.000000000 +0100
+@@ -456,8 +456,10 @@ FORM (SearchManual, L"Search manual", L"
+ 	TEXTFIELD (L"query", L"")
  	OK
  DO
- 	Manual manPage;
 +	#ifndef DEMOAPP
  	if (theCurrentPraatApplication -> batch)
  		Melder_throw (L"Cannot view a manual from batch.");
 +	#endif
- 	manPage = Manual_create (theCurrentPraatApplication -> topShell, L"Intro", theCurrentPraatApplication -> manPages);
+ 	Manual manPage = Manual_create (theCurrentPraatApplication -> topShell, L"Intro", theCurrentPraatApplication -> manPages, false);
  	Manual_search (manPage, GET_STRING (L"query"));
  END
-@@ -443,8 +445,10 @@ FORM (GoToManualPage, L"Go to manual pag
+@@ -468,8 +470,10 @@ FORM (GoToManualPage, L"Go to manual pag
+ 	LIST (L"Page", numberOfPages, pages, 1)}
  	OK
  DO
- 	Manual manPage;
 +	#ifndef DEMOAPP
  	if (theCurrentPraatApplication -> batch)
  		Melder_throw (L"Cannot view a manual from batch.");
 +	#endif
- 	manPage = Manual_create (theCurrentPraatApplication -> topShell, L"Intro", theCurrentPraatApplication -> manPages);
+ 	Manual manPage = Manual_create (theCurrentPraatApplication -> topShell, L"Intro", theCurrentPraatApplication -> manPages, false);
  	HyperPage_goToPage_i (manPage, GET_INTEGER (L"Page")); therror
  END

@@ -446,7 +446,7 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 			text (.speakerID$, .speakerIDDefault$)
 			text (.speakerText$, .speakerDefault$)
 			text (.speakerCommentInput$, .speakerCommentDef$)
-		clicked = endPause ("'.prevText$'", "'.currentText$'", "'.nextText$'", "'.continueText$'", 4)
+		clicked = endPause ("'.prevText$'", "'.currentText$'", "'.nextText$'", "'.continueText$'", 4, 1)
 		if clicked = 2 or clicked = 4
 			# The text of the field name equals the name of the variable! That is, an indirection
 			.speakerID$ = replace_regex$(.speakerID$, ".+", "\l&\$", 0)

@@ -783,7 +783,7 @@ procedure record_sound
 		# Display a pause window to flush the graphics buffer
 		beginPause ("DESTROY WINDOW ")
 			comment (" ")
-		endPause ("DESTROY WINDOW ", 1)
+		endPause ("DESTROY WINDOW ", 1, 1)
     	demo Paint circle... Red 'recordingLightX' 'recordingLightY' 2
     	demoShow()
 	endif

@@ -195,7 +195,7 @@ procedure processConfigCloseSpeaker .clickX .clickY .pressed$
 	.inputText$ = getLanguageTexts.inputText$
 	beginPause("")
 		comment(getLanguageTexts.helpText$)
-	clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2)
+	clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2, 1)
 	if clicked = 2
 		if config.speakerDataTable > 0
 			select config.speakerDataTable
@@ -263,7 +263,7 @@ procedure processConfigRecordingTime .clickX .clickY .pressed$
 	.inputText$ = getLanguageTexts.inputText$
 	beginPause(getLanguageTexts.helpText$)
 		positive (.inputText$, config.recordingTime$)
-	clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2)
+	clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2, 1)
 	if clicked = 2
 		# The text of the field name equals the name of the variable! That is, an indirection
 		.inputText$ = replace_regex$(.inputText$, ".+", "\l&\$", 0)
