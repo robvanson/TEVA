@@ -531,6 +531,22 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 	# Just pick next recording
 	if config.speakerSerial
 		call get_nextSpeaker 'speakerID$'
+		# This was the first reference to a speaker, get first empty pos
+		if speakerID$ = "" and config.speakerDataTable > 0
+			select config.speakerDataTable
+			.numRows = Get number of rows
+			.row = 0
+			for .i to .numRows
+				.astValue$ = Get value... '.i' AST
+				if index_regex(.astValue$, "^[1-9]") > 0
+					.row = .i
+				endif
+			endfor
+			if .row > 0
+				speakerID$ = Get value... '.row' ID
+				call get_nextSpeaker 'speakerID$'
+			endif
+		endif
 		speakerID$ = get_nextSpeaker.id$
 		speakerInfo$ = get_nextSpeaker.text$
 		speakerComments$ = get_nextSpeaker.description$

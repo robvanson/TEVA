@@ -221,8 +221,15 @@ procedure init_window
 	pathologicalTypeText$ = "'pathologicalTypeText$' '.typeRoman$'"
 	call autoSetPathType
 	if pathologicalType > 0
+		call get_speakerInfo 'speakerID$'
+		.speakerNumber = get_speakerInfo.row
+		if .speakerNumber > 0
+			.numText$ = "['.speakerNumber']"
+		else
+			.numText$ = ""
+		endif
 		call protect_praat_special_characters 'speakerID$'
-		call write_header_text Blue 'protect_praat_special_characters.text$' 'pathologicalTypeText$'
+		call write_header_text Blue '.numText$' 'protect_praat_special_characters.text$' 'pathologicalTypeText$'
 	endif
 	# Set draw button
 	call set_draw_signal_button
@@ -725,7 +732,14 @@ procedure autoSetPathType
 		endif
 	endif
 	if not noDrawingOrWriting
-		call set_window_title 'buttons$' 'speakerID$' 'pathologicalTypeText$'
+		call get_speakerInfo 'speakerID$'
+		.speakerNumber = get_speakerInfo.row
+		if .speakerNumber > 0
+			.numText$ = "['.speakerNumber']"
+		else
+			.numText$ = ""
+		endif
+		call set_window_title 'buttons$' '.numText$' 'speakerID$' 'pathologicalTypeText$'
 	endif
 endproc
 
