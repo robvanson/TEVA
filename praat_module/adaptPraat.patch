@@ -172,7 +172,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.cpp demo_praat_sources/fon/praat_Sound_init.cpp
 --- praat_sources/fon/praat_Sound_init.cpp	2011-09-12 10:17:12.000000000 +0200
 +++ demo_praat_sources/fon/praat_Sound_init.cpp	2011-09-12 11:03:24.000000000 +0200
-@@ -171,7 +171,9 @@ DO
+@@ -167,7 +167,9 @@ DO
  END
  
  DIRECT (LongSound_view)
@@ -182,7 +182,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  	LOOP {
  		iam (LongSound);
  		autoSoundEditor editor = SoundEditor_create (theCurrentPraatApplication -> topShell, ID_AND_FULL_NAME, me);
-@@ -702,7 +704,9 @@ static void cb_SoundEditor_publication (
+@@ -698,7 +700,9 @@ static void cb_SoundEditor_publication (
  	}
  }
  DIRECT (Sound_edit)
@@ -192,7 +192,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  	LOOP {
  		iam (Sound);
  		autoSoundEditor editor = SoundEditor_create (theCurrentPraatApplication -> topShell, ID_AND_FULL_NAME, me);
-@@ -1366,8 +1370,10 @@ static void cb_SoundRecorder_publication
+@@ -1362,8 +1366,10 @@ static void cb_SoundRecorder_publication
  	praat_updateSelection ();
  }
  static void do_Sound_record (int numberOfChannels) {
