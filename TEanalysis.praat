@@ -192,6 +192,9 @@ endproc
 
 # Intialize buttons
 procedure init_buttons
+	# Set Speaker color
+	call set_speaker_button_color
+
 	call Draw_all_buttons 'buttons$'
 endproc
 
@@ -1221,6 +1224,11 @@ procedure getOpenFile .openDialogue$
 	endif
 	if .filename$ <> "" and fileReadable(.filename$) and index_regex(.filename$, "(?i\.(txt|tsv|table)$)")
 		config.speakerData$ = .filename$
+		.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
+		if fileReadable("'.dataDir$'/.tevarc")
+			call write_preferences ""
+			call read_preferences '.dataDir$'/.tevarc
+		endif
 		if config.speakerDataTable > 0
 			select config.speakerDataTable
 			Remove

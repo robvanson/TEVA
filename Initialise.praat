@@ -147,15 +147,20 @@ procedure global_setup
 	call read_preferences ""
 	# Set inital language
 	call set_language 'config.language$'
-	# Set Speaker colo
-	if config.speakerSerial
-		call findLabel 'buttons$' Speaker
-		if findLabel.row > 0 
-			select Table 'buttons$'
+	# Set Speaker color
+	call set_speaker_button_color
+endproc
+
+procedure set_speaker_button_color
+	call findLabel 'buttons$' Speaker
+	if findLabel.row > 0 
+		select Table 'buttons$'
+		if config.speakerSerial
 			Set string value... 'findLabel.row' Color Blue
+		else
+			Set string value... 'findLabel.row' Color Black
 		endif
 	endif
-	
 endproc
 
 # Initialize
