@@ -1225,10 +1225,7 @@ procedure getOpenFile .openDialogue$
 	if .filename$ <> "" and fileReadable(.filename$) and index_regex(.filename$, "(?i\.(txt|tsv|table)$)")
 		config.speakerData$ = .filename$
 		.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
-		if fileReadable("'.dataDir$'/.tevarc")
-			call write_preferences ""
-			call read_preferences '.dataDir$'/.tevarc
-		endif
+		call load_local_preferences '.dataDir$'
 		if config.speakerDataTable > 0
 			select config.speakerDataTable
 			Remove
@@ -1331,6 +1328,18 @@ procedure runCommandFile .filename$
 		
 	endif
 	runningCommandMode = 0
+endproc
+
+procedure load_local_preferences .dataDir$
+	.dataDir$ = replace_regex$(.dataDir$, "[/:\\]$", "", 0)
+	if fileReadable("'.dataDir$'/.tevarc") or fileReadable("'.dataDir$'/TEVApreferences.tsv")
+		.localPrefs$ = "'.dataDir$'/TEVApreferences.tsv"
+		if fileReadable("'.dataDir$'/.tevarc")
+			.localPrefs$ = "'.dataDir$'/.tevarc"
+		endif
+		call write_preferences ""
+		call read_preferences '.localPrefs$'
+	endif
 endproc
 
 procedure points_to_wc .points

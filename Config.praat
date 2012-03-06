@@ -144,10 +144,7 @@ procedure processConfigSpeakerData .clickX .clickY .pressed$
 	config.speakerData$ = chooseReadFile$ (getLanguageTexts.helpText$)
 	# Set local preferences
 	.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
-	if fileReadable("'.dataDir$'/.tevarc")
-		call write_preferences ""
-		call read_preferences '.dataDir$'/.tevarc
-	endif
+	call load_local_preferences '.dataDir$'
 	# Remove old data table
 	if config.speakerDataTable > 0
 		select config.speakerDataTable
