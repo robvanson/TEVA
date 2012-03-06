@@ -24,7 +24,7 @@ the corresponding speaker from the Info window will be read and displayed in TEV
 completely and replace it with a single dash ##-#, the current record will be removed from the table.
 ##%%    %#"
 
-<normal> "Put a single %%3% in the top field of the Sepaker window to select the third entry in the Table. 
+<normal> "Put a single %%3% in the top field of the Speaker window to select the third entry in the Table. 
 Then Click the %Ready button. You now see a display of the recording of the fourth speaker. You see the ID of this 
 speaker and the @@Acoustic Signal Typing|Pathological Type@ as it was recorded in the Table."
 
@@ -77,3 +77,8 @@ If you accidently forgot to save the table, you can simply open the backup file 
 <normal> "To save the complete analysis of a single recording, use the @@Saving a report|Save@ button on the 
 @@Overview of Main page|Main page@. This will ask for a place and name to save a directory with all the displays and 
 all the analysis data for the current time interval."
+
+<entry> "Advanced topic: Pre-set local preferences"
+<normal> "For some projects, e.g., evaluation of a large corpus by judges or teaching a course, the preferences can be 
+pre-set in a file called %%.tevarc% stored in the same directory as the %%<list>.Table% file. See the global preferences 
+file for the available settings."
