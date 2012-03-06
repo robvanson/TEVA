@@ -13,6 +13,7 @@ TimeValues	Time interval: SELECTEDSTARTTIME$ - SELECTEDENDTIME$ S (SELECTEDINTER
 Recording	Recording
 Cancel	Cancel
 Continue	Continue
+Unsaved	Unsaved changes
 BrokenTable	Incomplete or corrupted table
 Next	>
 Previous	<

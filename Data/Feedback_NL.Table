@@ -13,6 +13,7 @@ TimeValues	Time interval: SELECTEDSTARTTIME$ - SELECTEDENDTIME$ S (SELECTEDINTER
 Recording	Opname
 Cancel	Terug
 Continue	Verder
+Unsaved	Niet bewaarde veranderingen
 BrokenTable	Incomplete of beschadigde tabel
 Next	>
 Previous	<

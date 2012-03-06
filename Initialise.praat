@@ -509,8 +509,9 @@ endproc
 #
 procedure ReadSpeakerData .speakerData$
 	# Create a new table or read the file
-	if .speakerData$ <> "" and fileReadable(.speakerData$) and (.speakerData$ <> config.speakerData$ or config.speakerDataTable <= 0)
+	if .speakerData$ <> "" and fileReadable(.speakerData$) and config.speakerDataTable <= 0
 		# New SpeakerData, forget old backup
+		call regular_save_backup_file
 		config.speakerDataBackup$ = ""
 		if index_regex(.speakerData$, "\.(?itsv|table)")
 			.currentSelected = selected()
@@ -550,12 +551,14 @@ procedure ReadSpeakerData .speakerData$
 			endif
 		else
 			# Reset SpeakerData table
-			config.speakerData$ = .speakerData$
 			if  config.speakerDataTable > 0
+				call regular_save_backup_file
 				select config.speakerDataTable
 				Remove
 				config.speakerDataTable = -1
+				speakerID$ = ""
 			endif
+			config.speakerData$ = .speakerData$
 			# Create new SpeakerData table
 			.rawStrings = Read Strings from raw text file... '.speakerData$'
 			.numStrings = Get number of strings
@@ -689,6 +692,25 @@ procedure WriteSpeakerData
 		endif
 		select config.speakerDataTable
 		Save as tab-separated file... 'config.speakerDataBackup$'
+	endif
+endproc
+
+# Save backup file
+procedure regular_save_backup_file
+	# New SpeakerData, forget old backup
+	if config.speakerDataTable > 0 and config.speakerDataBackup$ <> "" and fileReadable(config.speakerDataBackup$)
+		call get_feedback_text 'config.language$' Unsaved
+		call convert_praat_to_latin1 'get_feedback_text.text$'
+		.unsavedChanges$ = convert_praat_to_latin1.text$
+
+		call getLanguageTexts Config SaveSpeaker
+		.filename$ = chooseWriteFile$ ("'.unsavedChanges$': 'getLanguageTexts.helpText$'", config.speakerData$)
+		if .filename$ <> "" and .filename$ <> config.speakerDataBackup$
+			deleteFile(config.speakerDataBackup$)
+			config.speakerDataBackup$ = ""
+			select config.speakerDataTable
+			Save as tab-separated file... '.filename$'
+		endif
 	endif
 endproc
 

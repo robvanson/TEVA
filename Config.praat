@@ -139,19 +139,22 @@ endproc
 procedure processConfigSpeakerData .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "SpeakerData"
+	# Remove old data table
 	# Get help text
 	call getLanguageTexts '.table$' '.label$'
-	config.speakerData$ = chooseReadFile$ (getLanguageTexts.helpText$)
-	# Set local preferences
-	.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
-	call load_local_preferences '.dataDir$'
-	# Remove old data table
-	if config.speakerDataTable > 0
+	.newFile$ = chooseReadFile$ (getLanguageTexts.helpText$)
+	if config.speakerDataTable > 0 and .newFile$ <> config.speakerData$
+		call regular_save_backup_file
 		select config.speakerDataTable
 		Remove
 	endif
+	config.speakerData$ = .newFile$
+	# Set local preferences
+	.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
+	call load_local_preferences '.dataDir$'
 	# Data table is not yet read!
 	config.speakerDataTable = -1
+	speakerID$ = ""
     call Draw_button 'table$' '.label$' 0
 endproc
 
@@ -185,6 +188,7 @@ procedure processConfigSaveSpeaker .clickX .clickY .pressed$
 			if .deleteBackupFile and config.speakerData$ <> config.speakerDataBackup$ and fileReadable(config.speakerData$)
 				# Note that the backup is ONLY deleted if the saved file actually exists!
 				deleteFile(config.speakerDataBackup$)
+				config.speakerDataBackup$ = ""
 			endif
 		endif
 	endif
@@ -216,6 +220,7 @@ procedure processConfigCloseSpeaker .clickX .clickY .pressed$
 		# Purge all changes and delete the backup file
 		if config.speakerDataBackup$ <> "" and fileReadable(config.speakerDataBackup$)
 			deleteFile(config.speakerDataBackup$)
+			config.speakerDataBackup$ = ""
 		endif
 	endif
     call Draw_button 'table$' '.label$' 0
