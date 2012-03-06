@@ -240,7 +240,10 @@ procedure processConfigSpeakerRandomize .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "SpeakerRandomize"
 	
-	if config.speakerDataTable
+	if config.speakerDataTable <= 0 and config.speakerData$ <> ""
+		call get_speakerInfo 1
+	endif
+	if config.speakerDataTable > 0
 		# Get feedback texts
 		call getLanguageTexts '.table$' '.label$'
 		.inputText$ = getLanguageTexts.inputText$
