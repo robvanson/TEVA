@@ -142,10 +142,18 @@ procedure processConfigSpeakerData .clickX .clickY .pressed$
 	# Get help text
 	call getLanguageTexts '.table$' '.label$'
 	config.speakerData$ = chooseReadFile$ (getLanguageTexts.helpText$)
+	# Set local preferences
+	.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
+	if fileReadable("'.dataDir$'/.tevarc")
+		call write_preferences ""
+		call read_preferences '.dataDir$'/.tevarc
+	endif
+	# Remove old data table
 	if config.speakerDataTable > 0
 		select config.speakerDataTable
 		Remove
 	endif
+	# Data table is not yet read!
 	config.speakerDataTable = -1
     call Draw_button 'table$' '.label$' 0
 endproc
