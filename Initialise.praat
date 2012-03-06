@@ -513,27 +513,40 @@ procedure ReadSpeakerData .speakerData$
 		# New SpeakerData, forget old backup
 		config.speakerDataBackup$ = ""
 		if index_regex(.speakerData$, "\.(?itsv|table)")
-			config.speakerDataTable = Read from file... '.speakerData$'
-			# Complete columns
-			.col = Get column index... ID
-			if .col <= 0
-				Append column... ID
-			endif
-			.col = Get column index... Text
-			if .col <= 0
-				Append column... Text
-			endif
-			.col = Get column index... Description
-			if .col <= 0
-				Append column... Description
-			endif
-			.col = Get column index... Audio
-			if .col <= 0
-				Append column... Audio
-			endif
-			.col = Get column index... AST
-			if .col <= 0
-				Append column... AST
+			.currentSelected = selected()
+			config.speakerDataTable = nocheck Read from file... '.speakerData$'
+			if config.speakerDataTable <= 0 or .currentSelected = config.speakerDataTable
+				config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST
+				call get_feedback_text 'config.language$' BrokenTable
+				call convert_praat_to_latin1 'get_feedback_text.text$'
+				.brokenTableText$ = convert_praat_to_latin1.text$
+				call getLanguageTexts Config SpeakerData
+				.inputText$ = getLanguageTexts.inputText$
+				beginPause(".inputText$")
+					comment("'getLanguageTexts.helpText$': '.brokenTableText$'")
+				clicked = endPause ("'getLanguageTexts.continueText$'", 1, 1)
+			else
+				# Complete columns
+				.col = Get column index... ID
+				if .col <= 0
+					Append column... ID
+				endif
+				.col = Get column index... Text
+				if .col <= 0
+					Append column... Text
+				endif
+				.col = Get column index... Description
+				if .col <= 0
+					Append column... Description
+				endif
+				.col = Get column index... Audio
+				if .col <= 0
+					Append column... Audio
+				endif
+				.col = Get column index... AST
+				if .col <= 0
+					Append column... AST
+				endif
 			endif
 		else
 			# Reset SpeakerData table

@@ -13,6 +13,7 @@ TimeValues	Zeitinterval: SELECTEDSTARTTIME$ - SELECTEDENDTIME$ S (SELECTEDINTERV
 Recording	Aufname
 Cancel	Zur\u"ck
 Continue	Weiter
+BrokenTable	Nicht verwendbare Tabelle
 Next	>
 Previous	<
 Current	=

@@ -520,6 +520,7 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 			else
 				.tmpDataTable = Create Table with column names... Speaker_Data 1 ID Text Description Audio AST
 			endif
+			select .tmpDataTable
 			View & Edit
 			demoWaitForInput()
 			# Table can not be edited in List, so discard it
