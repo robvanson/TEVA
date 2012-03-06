@@ -150,28 +150,28 @@ endproc
 
 procedure draw_signal
 	# Draw
-	if buttons.draw$ = "Sound"
+	if mainPage.draw$ = "Sound"
 		# Draw Sound
 		call DrawSoundObject
-	elsif buttons.draw$ = "Pitch"
+	elsif mainPage.draw$ = "Pitch"
 		# Draw Pitch
 		call DrawPitchObject
-	elsif buttons.draw$ = "Harmonicity"
+	elsif mainPage.draw$ = "Harmonicity"
 		# Draw Harmonicity
 		call DrawHarmonicityObject
-	elsif buttons.draw$ = "GNE"
+	elsif mainPage.draw$ = "GNE"
 		# Draw GNE
 		call DrawGNEObject
-	elsif buttons.draw$ = "PitchTier"
+	elsif mainPage.draw$ = "PitchTier"
 		# Draw PitchTier
 		call DrawPitchTierObject
-	elsif buttons.draw$ = "Spectrogram"
+	elsif mainPage.draw$ = "Spectrogram"
 		# Draw Spectrogram
 		call DrawSpectrogramObject
-	elsif buttons.draw$ = "Ltas"
+	elsif mainPage.draw$ = "Ltas"
 		# Draw Ltas
 		call DrawLtasObject
-	elsif buttons.draw$ = "Intensity"
+	elsif mainPage.draw$ = "Intensity"
 		# Draw Intensity
 		call DrawIntensityObject
 	endif
@@ -309,8 +309,8 @@ procedure print_signal .outFileName$
 endproc
 
 procedure set_draw_signal_button
-	call Draw_button 'buttons$' Draw_'buttons.draw$' 2
-	if buttons.draw$ = "Ltas"
+	call Draw_button 'buttons$' Draw_'mainPage.draw$' 2
+	if mainPage.draw$ = "Ltas"
 		call Draw_button 'buttons$' Select 1
 		call Draw_button 'buttons$' ToSelection 1
 		call Draw_button 'buttons$' ZoomOut 1
@@ -627,7 +627,7 @@ endproc
 procedure processMainPageDraw .type$ .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "Draw_'.type$'"
-	buttons.draw$ = .type$
+	mainPage.draw$ = .type$
 	call init_window
 endproc
 
@@ -638,7 +638,7 @@ procedure processMainPageToSelection .clickX .clickY .pressed$
     	call Draw_button '.table$' '.label$' 0
 		goto ENDOFTOSELECTION
 	endif
-	if buttons.draw$ = "Ltas"
+	if mainPage.draw$ = "Ltas"
 		call Draw_button 'buttons$' '.label$' 1
 		goto ENDOFTOSELECTION
 	endif
@@ -665,7 +665,7 @@ procedure processMainPageSelect .clickX .clickY .pressed$
     	call Draw_button '.table$' '.label$' 0
 		goto ENDOFSELECT
 	endif
-	if buttons.draw$ = "Ltas"
+	if mainPage.draw$ = "Ltas"
 		call Draw_button 'buttons$' Select 1
 		goto ESCAPESELECT
 	endif
@@ -750,7 +750,7 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 		goto ESCAPEDISPLAYSELECT
 	elsif .clickY < canvasYL or .clickX > canvasYH
 		goto ESCAPEDISPLAYSELECT
-	elsif buttons.draw$ = "Ltas"
+	elsif mainPage.draw$ = "Ltas"
 		goto ESCAPEDISPLAYSELECT
 	endif
 	# Redraw window if there is an old selection
@@ -847,7 +847,7 @@ procedure processMainPageZoomOut .clickX .clickY .pressed$
     	call Draw_button '.table$' '.label$' 0
 		goto ZOOMOUTESCAPE
 	endif
-	if buttons.draw$ = "Ltas"
+	if mainPage.draw$ = "Ltas"
 		call Draw_button 'buttons$' ZoomOut 1
 		goto ZOOMOUTESCAPE
 	endif
@@ -883,7 +883,7 @@ procedure processMainPageZoomIn .clickX .clickY .pressed$
     	call Draw_button '.table$' '.label$' 0
 		goto ZOOMINESCAPE
 	endif
-	if buttons.draw$ = "Ltas"
+	if mainPage.draw$ = "Ltas"
 		call Draw_button 'buttons$' ZoomIn 1
 		goto ZOOMINESCAPE
 	endif
@@ -910,7 +910,7 @@ procedure processMainPageNext .clickX .clickY .pressed$
     	call Draw_button '.table$' '.label$' 0
 		goto NEXTESCAPE
 	endif
-	if buttons.draw$ = "Ltas"
+	if mainPage.draw$ = "Ltas"
 		call Draw_button 'buttons$' Next 1
 		goto NEXTESCAPE
 	endif
@@ -966,7 +966,7 @@ procedure processMainPagePrevious .clickX .clickY .pressed$
     	call Draw_button '.table$' '.label$' 0
 		goto PREVESCAPE
 	endif
-	if buttons.draw$ = "Ltas"
+	if mainPage.draw$ = "Ltas"
 		call Draw_button 'buttons$' Previous 1
 		goto PREVESCAPE
 	endif
@@ -1144,7 +1144,7 @@ procedure DrawSuperImposedPraatObject .minimum .maximum .drawObjectCommand$
 			endif			
 	    	demo '.drawObjectCommand$'
 	    	call DrawMarksLeft '.minimum' '.maximum'
-	    	if buttons.draw$ = "Ltas"
+	    	if mainPage.draw$ = "Ltas"
 		    	call DrawMarksBottom 0 'config.frequency'
 	    	else
 		    	call DrawMarksBottom 'currentStartTime' 'currentEndTime'
@@ -1254,7 +1254,7 @@ procedure DrawCurrentSelection .minimum .maximum
 		    demo Colour... Black
 		    demo Line width... 'defaultLineWidth'
 	    endif
-	    call writeAnalysisValues 'buttons.draw$'
+	    call writeAnalysisValues 'mainPage.draw$'
 	endif
 endproc
 
@@ -1481,7 +1481,7 @@ procedure DrawSpectrogramObject
 			endif
 		endif
 		call 'mainPage.outputPraatObject$'CurrentSelection 0 'config.frequency'
-		call writeAnalysisValues 'buttons.draw$'
+		call writeAnalysisValues 'mainPage.draw$'
 	endif
 endproc
 
@@ -1502,7 +1502,7 @@ procedure DrawLtasObject
 		.maximum = Get maximum... 0 0 None
 		call 'mainPage.outputPraatObject$'PraatObject '.minimum' '.maximum' Draw... 0 'config.frequency' '.minimum' '.maximum' yes Curve
 		
-		call writeAnalysisValues 'buttons.draw$'
+		call writeAnalysisValues 'mainPage.draw$'
 		
 		select .tmpPartID
 		plus .tmpSpecID

@@ -83,7 +83,7 @@ procedure global_initialization
 	Set value... 1 1 -1
 	
 	# What signal to draw
-	buttons.draw$ = "Sound"
+	mainPage.draw$ = "Sound"
 	pitchName$ = ""
 	pitchTierName$ = ""
 	ltasName$ = ""
