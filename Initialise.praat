@@ -152,25 +152,14 @@ procedure global_setup
 endproc
 
 procedure switch_speaker_next_button .set_next
-	call nowarn_findLabel 'buttons$' Speaker
-	.speakerButtonRow = nowarn_findLabel.row
-	call nowarn_findLabel 'buttons$' !Speaker
-	.noSpeakerButtonRow = nowarn_findLabel.row
-	call nowarn_findLabel 'buttons$' Next
-	.nextButtonRow = nowarn_findLabel.row
-	call nowarn_findLabel 'buttons$' !Next
-	.noNextButtonRow = nowarn_findLabel.row
-	
 	# Speaker & !Next -> !Speaker & Next
-	if .set_next and .speakerButtonRow > 0 and .noNextButtonRow > 0
-		select Table 'buttons$'
-		Set string value... '.speakerButtonRow' Label !Speaker
-		Set string value... '.noNextButtonRow' Label Next
+	if .set_next
+		call hide_button 'buttons$' Speaker
+		call unhide_button 'buttons$' !Next
 	# !Speaker & Next -> Speaker & !Next
-	elsif not .set_next and .noSpeakerButtonRow > 0 and .nextButtonRow > 0
-		select Table 'buttons$'
-		Set string value... '.noSpeakerButtonRow' Label Speaker
-		Set string value... '.nextButtonRow' Label !Next
+	elsif not .set_next
+		call unhide_button 'buttons$' !Speaker
+		call hide_button 'buttons$' Next
 	endif
 endproc
 
@@ -186,6 +175,32 @@ call init_window
 # Miscelaneous supporting code
 #
 ###############################################################
+
+procedure hide_button .table$ .label$
+	if startsWith(.label$, "!")
+		.cleanLabel = length(.label$) - 1
+		.label$ = right$(.label$, .cleanLabel)
+	endif
+	call nowarn_findLabel '.table$' '.label$'
+	if nowarn_findLabel.row > 0
+		select Table '.table$'
+		Set string value... 'nowarn_findLabel.row' Label !'.label$'
+	endif
+endproc
+
+procedure unhide_button .table$ .label$
+	if not startsWith(.label$, "!")
+		.label$ = "!"+.label$
+	endif
+	call nowarn_findLabel '.table$' '.label$'
+	if nowarn_findLabel.row > 0
+		.cleanLabel = length(.label$) - 1
+		.label$ = right$(.label$, .cleanLabel)
+		select Table '.table$'
+		Set string value... 'nowarn_findLabel.row' Label '.label$'
+	endif
+endproc
+
 
 ###############################################################
 #
