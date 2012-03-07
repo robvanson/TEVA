@@ -528,34 +528,37 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 			Remove
 		endif
 	endwhile
-	
-	# Just pick next recording
-	if config.speakerSerial
-		call get_nextSpeaker 'speakerID$'
-		# This was the first reference to a speaker, get first empty pos
-		if speakerID$ = "" and config.speakerDataTable > 0
-			select config.speakerDataTable
-			.numRows = Get number of rows
-			.row = 0
-			for .i to .numRows
-				.astValue$ = Get value... '.i' AST
-				if index_regex(.astValue$, "^[1-9]") > 0
-					.row = .i
-				endif
-			endfor
-			if .row > 0
-				speakerID$ = Get value... '.row' ID
-				call get_nextSpeaker 'speakerID$'
+	call Draw_button '.table$' '.label$' 0
+endproc
+
+procedure processMainPageNext .clickX .clickY .pressed$
+	.table$ = "MainPage"
+	.label$ = "Next"
+
+	call get_nextSpeaker 'speakerID$'
+	# This was the first reference to a speaker, get first empty pos
+	if speakerID$ = "" and config.speakerDataTable > 0
+		select config.speakerDataTable
+		.numRows = Get number of rows
+		.row = 0
+		for .i to .numRows
+			.astValue$ = Get value... '.i' AST
+			if index_regex(.astValue$, "^[1-9]") > 0
+				.row = .i
 			endif
+		endfor
+		if .row > 0
+			speakerID$ = Get value... '.row' ID
+			call get_nextSpeaker 'speakerID$'
 		endif
-		speakerID$ = get_nextSpeaker.id$
-		speakerInfo$ = get_nextSpeaker.text$
-		speakerComments$ = get_nextSpeaker.description$
-		te.currentFileName$ = get_nextSpeaker.audio$
-		pathologicalType = 'get_nextSpeaker.ast$'
-		call load_audio_file 'te.currentFileName$'
-		call autoSetPathType
 	endif
+	speakerID$ = get_nextSpeaker.id$
+	speakerInfo$ = get_nextSpeaker.text$
+	speakerComments$ = get_nextSpeaker.description$
+	te.currentFileName$ = get_nextSpeaker.audio$
+	pathologicalType = 'get_nextSpeaker.ast$'
+	call load_audio_file 'te.currentFileName$'
+	call autoSetPathType
 	
 	call Draw_button '.table$' '.label$' 0
 endproc

@@ -231,16 +231,7 @@ procedure processConfigSpeakerSerial .clickX .clickY .pressed$
 	.label$ = "SpeakerSerial"
 
 	config.speakerSerial = not config.speakerSerial
-	
-	call findLabel 'buttons$' Speaker
-	if findLabel.row > 0 
-		select Table 'buttons$'
-		if config.speakerSerial
-			Set string value... 'findLabel.row' Color Blue
-		else
-			Set string value... 'findLabel.row' Color Black
-		endif
-	endif
+	call switch_speaker_next_button 'config.speakerSerial'
 
 	.displayButton = 2*config.speakerSerial
     call Draw_button 'table$' '.label$' '.displayButton'

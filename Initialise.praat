@@ -148,18 +148,29 @@ procedure global_setup
 	# Set inital language
 	call set_language 'config.language$'
 	# Set Speaker color
-	call set_speaker_button_color
+	call switch_speaker_next_button 'config.speakerSerial'
 endproc
 
-procedure set_speaker_button_color
-	call findLabel 'buttons$' Speaker
-	if findLabel.row > 0 
+procedure switch_speaker_next_button .set_next
+	call nowarn_findLabel 'buttons$' Speaker
+	.speakerButtonRow = nowarn_findLabel.row
+	call nowarn_findLabel 'buttons$' !Speaker
+	.noSpeakerButtonRow = nowarn_findLabel.row
+	call nowarn_findLabel 'buttons$' Next
+	.nextButtonRow = nowarn_findLabel.row
+	call nowarn_findLabel 'buttons$' !Next
+	.noNextButtonRow = nowarn_findLabel.row
+	
+	# Speaker & !Next -> !Speaker & Next
+	if .set_next and .speakerButtonRow > 0 and .noNextButtonRow > 0
 		select Table 'buttons$'
-		if config.speakerSerial
-			Set string value... 'findLabel.row' Color Blue
-		else
-			Set string value... 'findLabel.row' Color Black
-		endif
+		Set string value... '.speakerButtonRow' Label !Speaker
+		Set string value... '.noNextButtonRow' Label Next
+	# !Speaker & Next -> Speaker & !Next
+	elsif not .set_next and .noSpeakerButtonRow > 0 and .nextButtonRow > 0
+		select Table 'buttons$'
+		Set string value... '.noSpeakerButtonRow' Label Speaker
+		Set string value... '.nextButtonRow' Label !Next
 	endif
 endproc
 

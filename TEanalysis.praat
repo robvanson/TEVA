@@ -193,7 +193,7 @@ endproc
 # Intialize buttons
 procedure init_buttons
 	# Set Speaker color
-	call set_speaker_button_color
+	call switch_speaker_next_button 'config.speakerSerial'
 
 	call Draw_all_buttons 'buttons$'
 endproc
@@ -676,6 +676,14 @@ procedure findKey .table$ .label$
 endproc
 
 procedure findLabel .table$ .label$
+	call nowarn_findLabel '.table$' '.label$'
+	.row = nowarn_findLabel.row
+	if .row <= 0 and index(.label$, "_") <= 0
+		exit "'.label$'" is not a key in '.table$'
+	endif
+endproc
+
+procedure nowarn_findLabel .table$ .label$
 	.row = 0
 	select Table '.table$'
 	.to$ = selected$("Table")
@@ -689,8 +697,8 @@ procedure findLabel .table$ .label$
 		endif
 	endfor
 	label LABELFOUND
-	if .row <= 0 and index(.label$, "_") <= 0
-		exit "'.label$'" is not a key in '.table$'
+	if .row > .numRows
+		.row = 0
 	endif
 endproc
 
@@ -721,7 +729,7 @@ procedure buttonClicked table$ .x .y
 	.bo$ = "Table_"+.bo$
 	.numRows = Get number of rows
 	for .i to .numRows
-		if .label$ = ""
+		if .label$ = "" or startsWith(.label$, "!")
 			.leftX = '.bo$'[.i, "LeftX"]
 			.rightX = '.bo$'[.i, "RightX"]
 			.lowY = '.bo$'[.i, "LowY"]
