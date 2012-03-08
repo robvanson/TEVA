@@ -1157,6 +1157,14 @@ procedure DrawSuperImposedPraatObject .minimum .maximum .drawObjectCommand$
 					call DrawMarkAtTime 'maxTimeHarmonicity' '.minimum' '.maximum' Green
 				endif
 				if voicingTextGrid > 0
+					call get_feedback_text 'config.language$' VoicingMarker
+					.voicingText$ = get_feedback_text.text$
+					.voiceMarkerPositionX = -(currentEndTime - currentStartTime)/50
+					.voiceMarkerPositionY = .minimum - (.maximum - .minimum)/50
+					demo Colour... 'te.voicingcolor$'
+					demo Text special... '.voiceMarkerPositionX' Right '.voiceMarkerPositionY' Top Helvetica 10 0 '.voicingText$'
+				    demoShow()
+				    demo Colour... Black
 					select voicingTextGrid
 					.numIntervals = Get number of intervals... 1
 					for .interval to .numIntervals

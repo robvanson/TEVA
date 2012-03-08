@@ -51,6 +51,8 @@ te.formant = 0
 # Pop-Up window and other colors
 popUp.bordercolor$ = "{0.5,0.5,1}"
 popUp.backgroundcolor$ = "{0.9,0.9,1}"
+
+# Voicing markers
 te.voicingcolor$ = "{0.3, 0.3, 0.9}"
 
 # If running in a packed script binary

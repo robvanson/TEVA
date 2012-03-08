@@ -22,3 +22,4 @@ SpeakerID	Opname ID of regelnummer
 SpeakerText	Spreker info
 SpeakerDefault	Spreker ID, naam, geslacht en/of leeftijd
 SpeakerComments	Opmerkingen
+VoicingMarker	Stem

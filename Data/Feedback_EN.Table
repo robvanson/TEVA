@@ -22,3 +22,4 @@ SpeakerID	Recording ID or row number
 SpeakerText	Speaker info
 SpeakerDefault	Speaker ID, name, sex, and/or age
 SpeakerComments	Comments
+VoicingMarker	Voice

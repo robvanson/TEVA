@@ -51,6 +51,8 @@ procedure global_initialization
 	# Pop-Up window and other colors
 	popUp.bordercolor$ = "{0.5,0.5,1}"
 	popUp.backgroundcolor$ = "{0.9,0.9,1}"
+	
+	# Voicing markers
 	te.voicingcolor$ = "{0.3, 0.3, 0.9}"
 	
 	# (Re-)Initialize parameters
