@@ -21,9 +21,11 @@ file."
 <entry> "Evaluate a recording"
 <normal> "Use the %Spectrogram (or another analysis display) to determine the @@Acoustic Signal Typing|Acoustic Signal Type@. You can 
 click inside the display to indicate a window of interest and use the %Zoom and %Select panel to navigate through the recording. 
-Help about signal typing can be found in the man pages (@@Acoustic Signal Typing@) or in the %Pathology window on the 
-@@Overview of Configuration page|Configuration page@. After you have decided which pathological type you want to assign, just 
-press the number key (one of 1-4). Press 0 to remove your choice. After that, you can press %Nxt to go to the next recording."
+Note that every (time) display will have a bar below it indicating the parts considered %voice by Praat (http://www.praat.org) 
+voicing detection (##[Pitch]#). Help about signal typing can be found in the man pages (@@Acoustic Signal Typing@) or in the 
+%Pathology window on the @@Overview of Configuration page|Configuration page@. After you have decided which pathological type you 
+want to assign, just press the number key (one of 1-4). Press 0 to remove your choice. After that, you can press %Nxt to go to the next 
+recording."
 
 <entry> "Saving your work"
 <normal> "To save your evaluations, click on the %Settings button to go to the 
