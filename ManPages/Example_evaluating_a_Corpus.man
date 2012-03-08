@@ -8,6 +8,7 @@ Open TEVA and then click the %Open button on the @@Overview of Main page|Main pa
 open. Navigate into the map you just downloaded and select the assigned table file. Then click %Choose. The 
 @@Overview of Main page|Main page@ now contains a display of an empty sound."
 
+<entry> "Stepping through the Corpus"
 <normal> "You will notice that after opening the Table file, some settings of TEVA have changed. The display type has changed to 
 %Spectrogram, with a range from 0-2kHz. The %Speaker button at the bottom left has changed to a blue %Nxt button. When you click 
 on the %Nxt button, a file will be loaded. If you just started, this will be the first file ([1] in the window title). 
@@ -17,6 +18,19 @@ to go to the @@Overview of Configuration page|Configuration page@ and click the 
 After that change, the %Speaker button will reappear on the @@Overview of Main page|Main page@. Use this button to display the required 
 file."
 
+<entry> "Evaluate a recording"
 <normal> "Use the %Spectrogram (or another analysis display) to determine the @@Acoustic Signal Typing|Acoustic Signal Type@. You can 
-click inside the display to indicate a window of interest and use the %Zoom and %Select panel to navigate through the recording. "
+click inside the display to indicate a window of interest and use the %Zoom and %Select panel to navigate through the recording. 
+Help about signal typing can be found in the man pages (@@Acoustic Signal Typing@) or in the %Pathology window on the 
+@@Overview of Configuration page|Configuration page@. After you have decided which pathological type you want to assign, just 
+press the number key (one of 1-4). Press 0 to remove your choice. After that, you can press %Nxt to go to the next recording."
 
+<entry> "Saving your work"
+<normal> "To save your evaluations, click on the %Settings button to go to the 
+@@Overview of Configuration page|Configuration page@ and click the %Save button (%%not the% Save %button on the 
+@@Overview of Main page|Main page@%). A window will open which asks you where to save the Table. Select the file you opened 
+before to replace the original Table. If you forget to save your work, TEVA will prompt you to save your work if you 
+%Quit or open another Table. If you ever leave TEVA without saving the Table file, you will find a %%recovery file% next 
+to the original file. This file has the same name as the original, but with a ~ added. Open this file and save it to replace the 
+original to recover the "lost" work. Note that this recovery file will be removed if you open the original file and either 
+change something, %Save it again, or %Close it."
