@@ -6,7 +6,7 @@ Label	Text	Key	Helptext
 !CANVAS	Fenster	¤	Zeichenbereich
 !PathologicalType	- Pathologischer Typos:	01234	Pathologischer Typos in \U"berschrift I-IV
 Speaker	!90!Sprecher	p	Eingabe Sprecher daten
-!Next	!90!N\a"chste	N	N\a"chste Aufname w\a"hrend seriele Eingabe
+!NextItem	!90!N\a"chste	N	N\a"chste Aufname w\a"hrend seriele Eingabe
 File	\O"ffnen	f	Laden einer Audio-Datei
 Record	Aufnahme	A	Machen Sie eine Sprachaufnahme. Sie haben 4 Sekunden bevor die Aufnahme beginnt; achten Sie auf das rote Licht.
 Play	Wiedergabe	W	Abspielen der Aufnahme

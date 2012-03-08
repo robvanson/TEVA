@@ -531,7 +531,7 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 	call Draw_button '.table$' '.label$' 0
 endproc
 
-procedure processMainPageNext .clickX .clickY .pressed$
+procedure processMainPageNextItem .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "Next"
 

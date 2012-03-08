@@ -649,11 +649,38 @@ procedure DrawSave .color$ .x .y .size
 	demo Text... '.x' Centre '.y' Bottom \# 
 	call set_font_size 'defaultFontSize'
 endproc
+
 ###############################################################
 #
 # Button Processing Routines
 #
 ###############################################################
+
+# Hide and UnHide buttons by manipulating the ! marker in the table
+procedure hide_button .table$ .label$
+	if startsWith(.label$, "!")
+		.cleanLabel = length(.label$) - 1
+		.label$ = right$(.label$, .cleanLabel)
+	endif
+	call nowarn_findLabel '.table$' '.label$'
+	if nowarn_findLabel.row > 0
+		select Table '.table$'
+		Set string value... 'nowarn_findLabel.row' Label !'.label$'
+	endif
+endproc
+
+procedure unhide_button .table$ .label$
+	if not startsWith(.label$, "!")
+		.label$ = "!"+.label$
+	endif
+	call nowarn_findLabel '.table$' '.label$'
+	if nowarn_findLabel.row > 0
+		.cleanLabel = length(.label$) - 1
+		.label$ = right$(.label$, .cleanLabel)
+		select Table '.table$'
+		Set string value... 'nowarn_findLabel.row' Label '.label$'
+	endif
+endproc
 
 # Search row in table on label
 procedure findKey .table$ .label$

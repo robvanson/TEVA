@@ -6,7 +6,7 @@ Label	Text	Key	Helptext
 !CANVAS	Venster	¤	Tekenvenster
 !PathologicalType	- Pathologisch type:	01234	Pathologisch type in venstertitel I-IV
 Speaker	!90!Spreker	r	Invoer spreker gegevens
-!Next	!90!Volgende	V	Volgende opname bij %%seri\e"le% verwerking
+!NextItem	!90!Volgende	V	Volgende opname bij %%seri\e"le% verwerking
 File	Open	p	Open geluids bestand
 Record	Opnemen	O	Neem spraak op. U hebt 4 seconden, let op het rode "lampje"
 Play	Afspelen	A	Speel je opgenomen uitspraak af

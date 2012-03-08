@@ -151,15 +151,15 @@ procedure global_setup
 	call switch_speaker_next_button 'config.speakerSerial'
 endproc
 
-procedure switch_speaker_next_button .set_next
-	# Speaker & !Next -> !Speaker & Next
-	if .set_next
+procedure switch_speaker_next_button .set_nextItem
+	# Speaker & !NextItem -> !Speaker & NextItem
+	if .set_nextItem
 		call hide_button 'buttons$' Speaker
-		call unhide_button 'buttons$' !Next
-	# !Speaker & Next -> Speaker & !Next
-	elsif not .set_next
+		call unhide_button 'buttons$' !NextItem
+	# !Speaker & Next -> Speaker & !NextItem
+	elsif not .set_nextItem
 		call unhide_button 'buttons$' !Speaker
-		call hide_button 'buttons$' Next
+		call hide_button 'buttons$' NextItem
 	endif
 endproc
 
@@ -175,32 +175,6 @@ call init_window
 # Miscelaneous supporting code
 #
 ###############################################################
-
-procedure hide_button .table$ .label$
-	if startsWith(.label$, "!")
-		.cleanLabel = length(.label$) - 1
-		.label$ = right$(.label$, .cleanLabel)
-	endif
-	call nowarn_findLabel '.table$' '.label$'
-	if nowarn_findLabel.row > 0
-		select Table '.table$'
-		Set string value... 'nowarn_findLabel.row' Label !'.label$'
-	endif
-endproc
-
-procedure unhide_button .table$ .label$
-	if not startsWith(.label$, "!")
-		.label$ = "!"+.label$
-	endif
-	call nowarn_findLabel '.table$' '.label$'
-	if nowarn_findLabel.row > 0
-		.cleanLabel = length(.label$) - 1
-		.label$ = right$(.label$, .cleanLabel)
-		select Table '.table$'
-		Set string value... 'nowarn_findLabel.row' Label '.label$'
-	endif
-endproc
-
 
 ###############################################################
 #
