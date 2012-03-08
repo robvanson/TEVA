@@ -11,6 +11,7 @@ Selecting_stable_sounds.html
 Determine_pathological_type.html
 Saving_a_report.html
 Example_evaluating_AST.html
+Example_evaluating_a_Corpus.html
 Analysis.html
 Acoustic_Signal_Typing.html
 AST_categories.html
