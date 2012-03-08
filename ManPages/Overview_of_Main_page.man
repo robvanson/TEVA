@@ -21,7 +21,7 @@ the ##[Pitch]# and ##[Harmonicity]# contours have been displayed."
 <list_item> "\bu ##Speaker#: [k] Input speaker data. Speakers from a table can be selected by ID, row number, 
 or by stepping to the next, ##>#, or previous , ##<#, speaker. Click ##Ready# to complete"
 <list_item> "    ##Nxt#: [x|] Alternative to %Speaker button in %Serial mode, steps through a list of recordings 
-one by one
+one by one"
 <list_item> "\bu ##Open#: [O] Open sound file (or a list of sound files)"
 <list_item> "\bu ##Record#: [R] Record your speech. You have 4 seconds, watch the recording ""light"" on the top left"
 <list_item> "\bu ##Play#: [P] Play back of recording"
