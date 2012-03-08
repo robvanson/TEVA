@@ -48,9 +48,10 @@ procedure global_initialization
 	canvasCorrection = 0
 	wipeCanvasArea$ = "demo Paint rectangle... White 'canvasXL' 'canvasXR' 'canvasYL' 'canvasYH'"
 	
-	# Pop-Up window colors
+	# Pop-Up window and other colors
 	popUp.bordercolor$ = "{0.5,0.5,1}"
 	popUp.backgroundcolor$ = "{0.9,0.9,1}"
+	te.voicingcolor$ = "{0.3, 0.3, 0.9}"
 	
 	# (Re-)Initialize parameters
 	runningCommandMode = 0

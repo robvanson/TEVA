@@ -48,9 +48,10 @@ te.spectrogram = 0
 te.harmonicity = 0
 te.formant = 0
 
-# Pop-Up window colors
+# Pop-Up window and other colors
 popUp.bordercolor$ = "{0.5,0.5,1}"
 popUp.backgroundcolor$ = "{0.9,0.9,1}"
+te.voicingcolor$ = "{0.3, 0.3, 0.9}"
 
 # If running in a packed script binary
 if index_regex(preferencesDirectory$, "(?i'demoAppName$')$")

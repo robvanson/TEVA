@@ -1167,7 +1167,7 @@ procedure DrawSuperImposedPraatObject .minimum .maximum .drawObjectCommand$
 							.duration = .end - .start
 							# Interval is in window
 							if .start < currentEndTime and .end > currentStartTime
-							    demo Colour... {0.5, 0.5, 0.8}
+							    demo Colour... 'te.voicingcolor$'
 							    demo Line width... 1
 							    .botPoint = .minimum - (.maximum - .minimum)/50
 							    .leftPoint = max(.start, currentStartTime)
