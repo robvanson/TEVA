@@ -36,7 +36,7 @@ judged according to following statements as %Good, %Mediocre, or %Bad. See also 
 <list_item> "\bu There is at least one stable harmonic for longer than 2 seconds"
 <list_item> "\bu There are harmonics in part of the sample, for longer than 1 second"
 
-<normal> "With these statments in mind, pick an interval where the vowel is most stable. You can use 
+<normal> "With these statements in mind, pick an interval where the vowel is most stable. You can use 
 the %%Zoom in% and %%Zoom out% buttons as well as the %%Previous% (move left) and %%Next% (move right) buttons 
 to navigate around."
 
@@ -79,7 +79,7 @@ If you accidently forgot to save the table, you can simply open the backup file 
 all the analysis data for the current time interval."
 
 <entry> "Advanced topic: Pre-set local preferences"
-<normal> "For some projects, e.g., evaluation of a large corpus by judges or teaching a course, each user must start TEVA 
+<normal> "For some projects, e.g., evaluation of a large corpus by judges or teaching a course, each user should start TEVA 
 using the same preferences settings. For that purpose, the preferences can be pre-set in a file called %%TEVApreferences.tsv% 
 or %%.tevarc% stored in the same directory as the %%<list>.Table% file (the former file is visible, the latter is hidden). 
 When the %%<list>.Table% file is opened, the settings file is read. See the global preferences file for the available settings."
