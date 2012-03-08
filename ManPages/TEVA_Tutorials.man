@@ -8,6 +8,6 @@ ManPagesTextFile
 <list_item> "\bu @@Determine pathological type@"
 <list_item> "\bu @@Saving a report@"
 
-<list_item> "\bu ExampleS: 
+<list_item> "\bu Examples:"
 <list_item> "\bu @@Example evaluating AST|Evaluating AST@"
 <list_item> "\bu @@Example evaluating a Corpus|Evaluating a Corpus@"

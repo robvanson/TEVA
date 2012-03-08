@@ -1,6 +1,6 @@
 ManPagesTextFile
 "Example evaluating a Corpus" "R.J.J.H. van Son" 20120308 0
-<intro> "A tutorial example of how to evaluate the Acoustic Signal Typing on a sample of recordings"
+<intro> "A tutorial example of how to evaluate the Acoustic Signal Typing in a corpus"
 
 <entry> "Download and open the corpus"
 <normal> "Download the corpus .zip file from [To be announced] and extract it to a convenient location. 
@@ -32,5 +32,5 @@ press the number key (one of 1-4). Press 0 to remove your choice. After that, yo
 before to replace the original Table. If you forget to save your work, TEVA will prompt you to save your work if you 
 %Quit or open another Table. If you ever leave TEVA without saving the Table file, you will find a %%recovery file% next 
 to the original file. This file has the same name as the original, but with a ~ added. Open this file and save it to replace the 
-original to recover the "lost" work. Note that this recovery file will be removed if you open the original file and either 
+original to recover the ""lost"" work. Note that this recovery file will be removed if you open the original file and either 
 change something, %Save it again, or %Close it."
