@@ -1032,7 +1032,7 @@ procedure PrintPraatObject .minimum .maximum .printObjectCommand$
 		call PrintSuperImposedPraatObject '.minimum' '.maximum' '.printObjectCommand$'
 
 	    call PrintMarksLeft .minimum .maximum
-	    if index(.printObjectCommand$, "0 'config.frequency'") > 0
+	    if index(.printObjectCommand$, " 0 'config.frequency' ") > 0
 		    call PrintMarksBottom 0 'config.frequency'
 	    else
 		    call PrintMarksBottom 'currentStartTime' 'currentEndTime'
@@ -1123,13 +1123,13 @@ procedure DrawPraatObject .minimum .maximum .drawObjectCommand$
 	if not noDrawingOrWriting
 	    call reset_viewport
 	    call wipeArea 'wipeCanvasArea$'
-	    call DrawSuperImposedPraatObject '.minimum' '.maximum' '.drawObjectCommand$'
+	    call DrawSuperImposedPraatObject 1 '.minimum' '.maximum' '.drawObjectCommand$'
 
 	    call reset_viewport
 	endif
 endproc
 
-procedure DrawSuperImposedPraatObject .minimum .maximum .drawObjectCommand$
+procedure DrawSuperImposedPraatObject .drawMarks .minimum .maximum .drawObjectCommand$
 	if not noDrawingOrWriting
 	    # convert Canvas to absolute coordinates
 	    .xL = canvasXL + viewportMargin
@@ -1137,7 +1137,7 @@ procedure DrawSuperImposedPraatObject .minimum .maximum .drawObjectCommand$
 	    .yL = canvasYL + viewportMargin
 	    .yH = canvasYH - viewportMargin
 	    demo Select inner viewport... '.xL' '.xR' '.yL' '.yH'
-	    if not (index(.drawObjectCommand$, "yes") or index(.drawObjectCommand$, "no"))
+	    if .drawMarks and not (index(.drawObjectCommand$, "yes") or index(.drawObjectCommand$, "no"))
 		    demo Draw rectangle...  0 100 0 100
 	    endif
 	    demo Axes... 0 100 0 100
@@ -1145,26 +1145,24 @@ procedure DrawSuperImposedPraatObject .minimum .maximum .drawObjectCommand$
 			if .minimum = .maximum			
 				.minimum -= 1
 				.maximum += 1
-			endif			
+			endif
 	    	demo '.drawObjectCommand$'
-	    	call DrawMarksLeft '.minimum' '.maximum'
+	    	if .drawMarks
+				call DrawMarksLeft '.minimum' '.maximum'
+			endif
 	    	if mainPage.draw$ = "Ltas"
-		    	call DrawMarksBottom 0 'config.frequency'
+		    	if .drawMarks
+			    	call DrawMarksBottom 0 'config.frequency'
+				endif
 	    	else
-		    	call DrawMarksBottom 'currentStartTime' 'currentEndTime'
+		    	if .drawMarks
+					call DrawMarksBottom 'currentStartTime' 'currentEndTime'
+				endif
 
-		    	if maxTimeHarmonicity > 0
+		    	if .drawMarks and maxTimeHarmonicity > 0
 					call DrawMarkAtTime 'maxTimeHarmonicity' '.minimum' '.maximum' Green
 				endif
 				if voicingTextGrid > 0
-					call get_feedback_text 'config.language$' VoicingMarker
-					.voicingText$ = get_feedback_text.text$
-					.voiceMarkerPositionX = -(currentEndTime - currentStartTime)/50
-					.voiceMarkerPositionY = .minimum - (.maximum - .minimum)/50
-					demo Colour... 'te.voicingcolor$'
-					demo Text special... '.voiceMarkerPositionX' Right '.voiceMarkerPositionY' Top Helvetica 10 0 '.voicingText$'
-				    demoShow()
-				    demo Colour... Black
 					select voicingTextGrid
 					.numIntervals = Get number of intervals... 1
 					for .interval to .numIntervals
@@ -1188,6 +1186,14 @@ procedure DrawSuperImposedPraatObject .minimum .maximum .drawObjectCommand$
 						endif
 						
 					endfor
+					call get_feedback_text 'config.language$' VoicingMarker
+					.voicingText$ = get_feedback_text.text$
+					.voiceMarkerPositionX = currentStartTime -(currentEndTime - currentStartTime)/30
+					.voiceMarkerPositionY = .minimum - (.maximum - .minimum)/50
+					demo Colour... 'te.voicingcolor$'
+					demo Text special... '.voiceMarkerPositionX' Right '.voiceMarkerPositionY' Top Helvetica 11 0 '.voicingText$'
+				    demoShow()
+				    demo Colour... Black
 				endif
 				
 	    	endif
@@ -1285,10 +1291,13 @@ procedure DrawMarksBottom .minimum .maximum
 	if .distance > abs(.maximum - .minimum)/2
 		.distance /= 10
 	endif
-	while  .distance > 0 and abs(.maximum - .minimum) / 40 > .distance
+	if .distance <= 0
+		.distance = abs('.maximum' - '.minimum')
+	endif
+	while .distance > 0 and abs(.maximum - .minimum) / 40 > .distance
 		.distance *= 10
 	endwhile
-	if .distance <> undefined
+	if .distance <> undefined and abs(.maximum - .minimum) > .distance
 		demo Marks bottom every... 1 '.distance' yes yes no
 	endif
 endproc
@@ -1485,7 +1494,7 @@ procedure DrawSpectrogramObject
 				Colour... Maroon
 			endif
 			select te.formant
-			call 'mainPage.outputPraatObject$'SuperImposedPraatObject 0 'config.frequency' Speckle... 'currentStartTime' 'currentEndTime' 'config.frequency' 25 no
+			call 'mainPage.outputPraatObject$'SuperImposedPraatObject 0 0 'config.frequency' Speckle... 'currentStartTime' 'currentEndTime' 'config.frequency' 25 no
 			if mainPage.outputPraatObject$ = "Draw"
 				demo Colour... Black
 			else
