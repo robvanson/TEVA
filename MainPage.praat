@@ -67,7 +67,7 @@ procedure drawTriangle .direction .x .y .size
 endproc
 
 procedure DrawPrevious .color$ .x .y .size
-	demo '.color$'
+	demo Colour... '.color$'
 	.y += .size / 2
 	.size *= 2/3
 	call drawTriangle -1 .x .y .size
@@ -79,7 +79,7 @@ procedure DrawPrevious .color$ .x .y .size
 endproc
 
 procedure DrawNext .color$ .x .y .size
-	demo '.color$'
+	demo Colour... '.color$'
 	.y += .size / 2
 	.size *= 2/3
 	call drawTriangle 1 .x .y .size
@@ -105,7 +105,7 @@ procedure DrawRecord .color$ .x .y .size
 endproc
 
 procedure DrawPlay .color$ .x .y .size
-	demo '.color$'
+	demo Colour... '.color$'
 	call drawTriangle 1 .x .y .size
 endproc
 
