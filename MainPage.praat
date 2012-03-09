@@ -390,7 +390,7 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 	select Table '.table$'
 	.helpText$ = Get value... '.row' Helptext
 	clicked = -1
-	while not config.speakerSerial and clicked <> 4
+	while clicked <> 4
 		# The speaker Text
 		.speakerID$ = "ID"
 		.speakerIDDefault$ = speakerID$
@@ -541,16 +541,21 @@ procedure processMainPageNextItem .clickX .clickY .pressed$
 		select config.speakerDataTable
 		.numRows = Get number of rows
 		.row = 0
-		for .i to .numRows
+		.i = 1
+		# Iterate over all 
+		while .i <= .numRows
 			.astValue$ = Get value... '.i' AST
 			if index_regex(.astValue$, "^[1-9]") > 0
 				.row = .i
+			else
+				.i = .numRows
 			endif
-		endfor
+			.i += 1
+		endwhile
 		if .row > 0
 			speakerID$ = Get value... '.row' ID
-			call get_nextSpeaker 'speakerID$'
 		endif
+		call get_nextSpeaker 'speakerID$'
 	endif
 	speakerID$ = get_nextSpeaker.id$
 	speakerInfo$ = get_nextSpeaker.text$
