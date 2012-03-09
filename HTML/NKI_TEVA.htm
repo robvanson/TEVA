@@ -1003,14 +1003,19 @@ When the <i>&lt;list&gt;.Table</i> file is opened, the settings file is read. Se
 Example evaluating a Corpus
 </b></font></table></table>
 <p>
-A tutorial example of how to evaluate the Acoustic Signal Typing in a corpus</p>
+A tutorial example of how to evaluate the Acoustic Signal Typing in a corpus
+</p> <p align=center>
+<a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/TEVA/HTML/Main_page_serial_screenshot.png" target="_blank"><img width="50%" src="Main_page_serial_screenshot.png" VSPACE=10></a></p>
+
 <h3>
 Download and open the corpus</h3>
 <p>
 Download the corpus .zip file from [To be announced] and extract it to a convenient location. 
 Open TEVA and then click the <i>Open</i> button on the <a href="#Overview_of_Main_page">Main page</a>. A file selection window will 
 open. Navigate into the map you just downloaded and select the assigned table file. Then click <i>Choose</i>. The 
-<a href="#Overview_of_Main_page">Main page</a> now contains a display of an empty sound.</p>
+<a href="#Overview_of_Main_page">Main page</a> now contains a display of an empty sound.
+</p> <p align=center>
+<a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/TEVA/HTML/Main_page_serial_detail_Nxt.png" target="_blank"><img width="25%" src="Main_page_serial_detail_Nxt.png" VSPACE=10></a></p>
 <h3>
 Stepping through the Corpus</h3>
 <p>
@@ -1021,7 +1026,9 @@ If you already have worked on this project, the next file without an AST label w
 clicked, the next file will be loaded. If you ever have to go to a different file than the next in the list, click on the <i>Settings</i> button 
 to go to the <a href="#Overview_of_Configuration_page">Configuration page</a> and click the <i>Serial</i> button (which should change from <i>red</i> to <i>black</i>). 
 After that change, the <i>Speaker</i> button will reappear on the <a href="#Overview_of_Main_page">Main page</a>. Use this button to display the required 
-file.</p>
+file.
+</p> <p align=center>
+<a href="http://www.fon.hum.uva.nl/IFA-SpokenLanguageCorpora/NKIcorpora/NKI_TEVA/TEVA/HTML/Configure_page_serial_detail.png" target="_blank"><img width="25%" src="Configure_page_serial_detail.png" VSPACE=10></a></p>
 <h3>
 Evaluate a recording</h3>
 <p>
@@ -1032,6 +1039,10 @@ voicing detection (<a href="http://www.fon.hum.uva.nl/praat/manual/Pitch.html" t
 <i>Pathology</i> window on the <a href="#Overview_of_Configuration_page">Configuration page</a>. After you have decided which pathological type you 
 want to assign, just press the number key (one of 1-4). Press 0 to remove your choice. After that, you can press <i>Nxt</i> to go to the next 
 recording.</p>
+<p>
+You can also use TEVA (almost) completely by using keyboard keys, pressing shortcut keys instead of using the buttons. 
+The sequence <i>Open</i> -&gt; <i>Nxt</i> -&gt; <i>Play</i> -&gt; <i>3</i> -&gt; <i>Nxt</i> can be entered as  <i>o</i>, <i>x</i>, <i>p</i>, <i>3</i>, <i>x</i>. You will obviously have to choose the 
+Table file after pressing <i>o</i>(pen).</p>
 <h3>
 Saving your work</h3>
 <p>
@@ -1039,10 +1050,49 @@ To save your evaluations, click on the <i>Settings</i> button to go to the
 <a href="#Overview_of_Configuration_page">Configuration page</a> and click the <i>Save</i> button (<i>not the</i> Save <i>button</i> on the 
 <a href="#Overview_of_Main_page">Main page</a><i></i>). A window will open which asks you where to save the Table. Select the file you opened 
 before to replace the original Table. If you forget to save your work, TEVA will prompt you to save your work if you 
-<i>Quit</i> or open another Table. If you ever leave TEVA without saving the Table file, you will find a <i>recovery file</i> next 
-to the original file. This file has the same name as the original, but with a ~ added. Open this file and save it to replace the 
-original to recover the "lost" work. Note that this recovery file will be removed if you open the original file and either 
-change something, <i>Save</i> it again, or <i>Close</i> it.</p>
+<i>Quit</i> or open another Table. Selecting <i>Cancel</i> will let you leave without saving your work. If you ever leave TEVA without saving 
+the Table file, you will find a <i>recovery file</i> next to the original file. This file has the same name as the original, but with 
+a ~ added. Open this file and save it to replace the original to recover the "lost" work. Note that this recovery file will be 
+removed if you open the original file and either change something, <i>Save</i> it again, or <i>Close</i> it.</p>
+<h3>
+Advanced: Setting local preferences</h3>
+<p>
+To set up local preferences for a project, create a file called <i>TEVApreferences.tsv</i> or <i>.tevarc</i> and store it in the same
+directory as the Table with the list of recordings. For example, the preferences for this example read (white-space is tabs):</p>
+<code>
+Key                     Value<br></code>
+<code>
+config.frequency        2000<br></code>
+<code>
+config.showFormants     0<br></code>
+<code>
+config.speakerSerial    1<br></code>
+<code>
+mainPage.draw           Spectrogram<br></code>
+<p>
+A complete preferences file as created by TEVA (e.g., <i>~/Library/Preferences/TEanalysis/Teanalysisrc.txt</i>) could look like:</p>
+<code>
+Key                     Value<br></code>
+<code>
+config.language         EN<br></code>
+<code>
+config.frequency        2000<br></code>
+<code>
+config.showFormants     0<br></code>
+<code>
+config.speakerData      /Users/guest/Examples/SignaltypeVoiceSamples.Table<br></code>
+<code>
+config.speakerSerial    1<br></code>
+<code>
+config.recordingTime    4<br></code>
+<code>
+config.showBackground   1<br></code>
+<code>
+config.input            Microphone<br></code>
+<code>
+config.openLog          /Users/gues/Library/Preferences/TEanalysis/log<br></code>
+<code>
+mainPage.draw           Spectrogram<br></code>
 <h3>Links to this page</h3>
 <ul>
 <li><a href="#TEVA_Tutorials">TEVA Tutorials</a>

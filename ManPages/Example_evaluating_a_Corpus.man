@@ -31,7 +31,8 @@ want to assign, just press the number key (one of 1-4). Press 0 to remove your c
 recording."
 
 <normal> "You can also use TEVA (almost) completely by using keyboard keys, pressing shortcut keys instead of using the buttons. 
-The sequence %Open -> %Nxt -> %Play -> %3 -> %Nxt can be entered as  %o, %x, %p, %3, %x." 
+The sequence %Open -> %Nxt -> %Play -> %3 -> %Nxt can be entered as  %o, %x, %p, %3, %x. You will obviously have to choose the 
+Table file after pressing %o(pen)." 
 
 <entry> "Saving your work"
 <normal> "To save your evaluations, click on the %Settings button to go to the 
@@ -45,14 +46,15 @@ removed if you open the original file and either change something, %Save it agai
 
 <entry> "Advanced: Setting local preferences"
 <normal> "To set up local preferences for a project, create a file called %%TEVApreferences.tsv% or %%.tevarc% and store it in the same
-directory as the Table with the list of recordings. For example, the preferences for this example read (white-space is tabs):"
+directory as the Table with the list of recordings. For example, the preferences for this example read (white-space is single tabs):"
 <code> "Key                     Value"
 <code> "config.frequency        2000"
 <code> "config.showFormants     0"
 <code> "config.speakerSerial    1"
 <code> "mainPage.draw           Spectrogram"
 
-<normal> "A complete preferences file as created by TEVA (e.g., %%~/Library/Preferences/TEanalysis/Teanalysisrc.txt%) could look like:"
+<normal> "A complete preferences file as created by TEVA, e.g., %%~/Library/Preferences/TEanalysis/Teanalysisrc.txt%, could look like 
+(again, use single tabs to separate the fields):"
 <code> "Key                     Value"
 <code> "config.language         EN"
 <code> "config.frequency        2000"
