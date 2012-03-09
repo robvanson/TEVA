@@ -22,8 +22,8 @@ file. To get back to the earlier state with the blue %Nxt button, click again on
 @@Overview of Configuration page|Configuration page@ and click the %Serial button (which should change from %black to %red).
 ##%%     %#"
 
-<normal> "TEVA will keep the last file with speaker and recording data in the preferences file. Next time you open TEVA and want to continue 
-work on the same list, you just have to click on the %Nxt button to get to the next recording."
+<normal> "TEVA will keep the name of the last used file with speaker and recording data in the preferences file. Next time TEVA 
+is opened, you just have to click on the %Nxt button to continue where you left off and get to the next recording."
 
 <entry> "Evaluate a recording"
 <normal> "Use the %Spectrogram (or another analysis display) to determine the @@Acoustic Signal Typing|Acoustic Signal Type@. You can 
