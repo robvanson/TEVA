@@ -48,9 +48,9 @@ for file in $(ls -1 ${@:-*.html}); do
 	if [[ "${file}" == "Example_evaluating_a_Corpus.html" ]]; then
 		perl -i'' -ne 's!(\Q<b><i>   </i></b>\E)\s*</p>!</p> <p align=center>\n<a href="Main_page_serial_screenshot.png" target="_blank"><img width="50%" src="Main_page_serial_screenshot.png" VSPACE=10></a></p>\n!g;print $_' \
 			${file}
-		perl -i'' -ne 's!(\Q<b><i>    </i></b>\E)\s*</p>\s*$!</p> <p align=center>\n<a href="Main_page_serial_detail_Nxt.png" target="_blank"><img width="25%" src="Main_page_serial_detail_Nxt.png" VSPACE=10></a></p>\n!g;print $_' \
-			${file}
-		perl -i'' -ne 's!(\Q<b><i>     </i></b>\E)\s*</p>\s*$!</p> <p align=center>\n<a href="Configure_page_serial_detail.png" target="_blank"><img width="25%" src="Configure_page_serial_detail.png" VSPACE=10></a></p>\n!g;print $_' \
+		perl -i'' -ne 's!(\Q<b><i>    </i></b>\E)\s*</p>\s*$!</p> <p align=center>\n<table>\
+		<tr valign=top align=center><td><a href="Main_page_serial_detail_Nxt.png" target="_blank"><img width="50%" src="Main_page_serial_detail_Nxt.png" VSPACE=10></a></td><td>&nbsp;</td><td><a href="Configure_page_serial_detail.png" target="_blank"><img width="50%" src="Configure_page_serial_detail.png" VSPACE=10></a></td></tr>\
+		<tr align=center><td>The <i><font color=blue>Nxt</font></i> button and <i><font color=\"4d,4d,e5\">Voice</font></i> bar</td><td>&nbsp;</td><td>the <i><font color=red>Serial</font></i> button</td></tr></table></p>\n!g;print $_' \
 			${file}
 	fi
 done

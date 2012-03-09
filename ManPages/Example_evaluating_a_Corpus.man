@@ -7,20 +7,21 @@ ManPagesTextFile
 <normal> "Download the corpus .zip file from [To be announced] and extract it to a convenient location. 
 Open TEVA and then click the %Open button on the @@Overview of Main page|Main page@. A file selection window will 
 open. Navigate into the map you just downloaded and select the assigned table file. Then click %Choose. The 
-@@Overview of Main page|Main page@ now contains a display of an empty sound.
-##%%    %#"
+@@Overview of Main page|Main page@ now contains a display of an empty sound."
 
 <entry> "Stepping through the Corpus"
 <normal> "You will notice that after opening the Table file, some settings of TEVA have changed. The display type has changed to 
 %Spectrogram, with a range from 0-2kHz. The %Speaker button at the bottom left has changed to a blue %Nxt button. When you click 
 on the %Nxt button, a file will be loaded. If you just started, this will be the first file ([1] in the window title). 
 If you already have worked on this project, the next file without an AST label will be displayed. Every time the %Nxt button is 
-clicked, the next file will be loaded. If you ever have to go to a different file than the next in the list, click on the %Settings button 
+clicked, the next file will be loaded.
+##%%    %#"
+
+<normal> "If you ever have to go to a different file than the next in the list, click on the %Settings button 
 to go to the @@Overview of Configuration page|Configuration page@ and click the %Serial button (which should change from %red to %black). 
 After that change, the %Speaker button will reappear on the @@Overview of Main page|Main page@. Use this button to display the required 
 file. To get back to the earlier state with the blue %Nxt button, click again on the %Settings button to go to the 
-@@Overview of Configuration page|Configuration page@ and click the %Serial button (which should change from %black to %red).
-##%%     %#"
+@@Overview of Configuration page|Configuration page@ and click the %Serial button (which should change from %black to %red)."
 
 <normal> "TEVA will keep the name of the last used file with speaker and recording data in the preferences file. Next time TEVA 
 is opened, you just have to click on the %Nxt button to continue where you left off and get to the next recording."
