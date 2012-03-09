@@ -24,7 +24,7 @@ file. To get back to the earlier state with the blue %Nxt button, click again on
 
 <entry> "Evaluate a recording"
 <normal> "Use the %Spectrogram (or another analysis display) to determine the @@Acoustic Signal Typing|Acoustic Signal Type@. You can 
-click inside the display to indicate a window of interest and use the %%Zoom%Select% panel to navigate through the recording. 
+click inside the display to indicate a window of interest and use the %%Zoom&Select% panel to navigate through the recording. 
 Note that every (time) display will have a bar below it indicating the parts considered %Voiced by Praat (http://www.praat.org) 
 voicing detection (##[Pitch]#). Help about signal typing can be found in the man pages (@@Acoustic Signal Typing@) or in the 
 %Pathology window on the @@Overview of Configuration page|Configuration page@. After you have decided which pathological type you 
