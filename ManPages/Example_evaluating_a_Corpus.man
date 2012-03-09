@@ -30,7 +30,7 @@ voicing detection (##[Pitch]#). Help about signal typing can be found in the man
 want to assign, just press the number key (one of 1-4). Press 0 to remove your choice. After that, you can press %Nxt to go to the next 
 recording."
 
-<normal> "You can also use TEVA (almost) completely by using keyboard keys, pressing shortcut keys instead of using the buttons. 
+<normal> "You can also operate TEVA (almost) completely by using keyboard keys, pressing shortcut keys instead of using the buttons. 
 The sequence %Open -> %Nxt -> %Play -> %3 -> %Nxt can be entered as  %o, %x, %p, %3, %x. You will obviously have to choose the 
 Table file after pressing %o(pen)." 
 
