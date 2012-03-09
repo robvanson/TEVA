@@ -18,7 +18,8 @@ If you already have worked on this project, the next file without an AST label w
 clicked, the next file will be loaded. If you ever have to go to a different file than the next in the list, click on the %Settings button 
 to go to the @@Overview of Configuration page|Configuration page@ and click the %Serial button (which should change from %red to %black). 
 After that change, the %Speaker button will reappear on the @@Overview of Main page|Main page@. Use this button to display the required 
-file.
+file. To get back to the earlier state with the blue %Nxt button, click again on the %Settings button to go to the 
+@@Overview of Configuration page|Configuration page@ and click the %Serial button (which should change from %black to %red).
 ##%%     %#"
 
 <entry> "Evaluate a recording"
