@@ -36,7 +36,7 @@ Table file after pressing %o(pen)."
 
 <entry> "Saving your work"
 <normal> "To save your evaluations, click on the %Settings button to go to the 
-@@Overview of Configuration page|Configuration page@ and click the %Save button (%%not the% Save %button on the 
+@@Overview of Configuration page|Configuration page@ and click the %Save button (%%not the% Save %%button on the% 
 @@Overview of Main page|Main page@%). A window will open which asks you where to save the Table. Select the file you opened 
 before to replace the original Table. If you forget to save your work, TEVA will prompt you to save your work if you 
 %Quit or open another Table. Selecting %Cancel will let you leave without saving your work. If you ever leave TEVA without saving 
