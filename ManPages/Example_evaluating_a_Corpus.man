@@ -1,12 +1,14 @@
 ManPagesTextFile
 "Example evaluating a Corpus" "R.J.J.H. van Son" 20120308 0
-<intro> "A tutorial example of how to evaluate the Acoustic Signal Typing in a corpus"
+<intro> "A tutorial example of how to evaluate the Acoustic Signal Typing in a corpus
+##%%   %#"
 
 <entry> "Download and open the corpus"
 <normal> "Download the corpus .zip file from [To be announced] and extract it to a convenient location. 
 Open TEVA and then click the %Open button on the @@Overview of Main page|Main page@. A file selection window will 
 open. Navigate into the map you just downloaded and select the assigned table file. Then click %Choose. The 
-@@Overview of Main page|Main page@ now contains a display of an empty sound."
+@@Overview of Main page|Main page@ now contains a display of an empty sound.
+##%%    %#"
 
 <entry> "Stepping through the Corpus"
 <normal> "You will notice that after opening the Table file, some settings of TEVA have changed. The display type has changed to 
@@ -16,7 +18,8 @@ If you already have worked on this project, the next file without an AST label w
 clicked, the next file will be loaded. If you ever have to go to a different file than the next in the list, click on the %Settings button 
 to go to the @@Overview of Configuration page|Configuration page@ and click the %Serial button (which should change from %red to %black). 
 After that change, the %Speaker button will reappear on the @@Overview of Main page|Main page@. Use this button to display the required 
-file."
+file.
+##%%     %#"
 
 <entry> "Evaluate a recording"
 <normal> "Use the %Spectrogram (or another analysis display) to determine the @@Acoustic Signal Typing|Acoustic Signal Type@. You can 
@@ -27,12 +30,38 @@ voicing detection (##[Pitch]#). Help about signal typing can be found in the man
 want to assign, just press the number key (one of 1-4). Press 0 to remove your choice. After that, you can press %Nxt to go to the next 
 recording."
 
+<normal> "You can also use TEVA (almost) completely by using keyboard keys, pressing shortcut keys instead of using the buttons. 
+The sequence %Open -> %Nxt -> %Play -> %3 -> %Nxt can be entered as  %o, %x, %p, %3, %x." 
+
 <entry> "Saving your work"
 <normal> "To save your evaluations, click on the %Settings button to go to the 
 @@Overview of Configuration page|Configuration page@ and click the %Save button (%%not the% Save %button on the 
 @@Overview of Main page|Main page@%). A window will open which asks you where to save the Table. Select the file you opened 
 before to replace the original Table. If you forget to save your work, TEVA will prompt you to save your work if you 
-%Quit or open another Table. If you ever leave TEVA without saving the Table file, you will find a %%recovery file% next 
-to the original file. This file has the same name as the original, but with a ~ added. Open this file and save it to replace the 
-original to recover the ""lost"" work. Note that this recovery file will be removed if you open the original file and either 
-change something, %Save it again, or %Close it."
+%Quit or open another Table. Selecting %Cancel will let you leave without saving your work. If you ever leave TEVA without saving 
+the Table file, you will find a %%recovery file% next to the original file. This file has the same name as the original, but with 
+a ~ added. Open this file and save it to replace the original to recover the ""lost"" work. Note that this recovery file will be 
+removed if you open the original file and either change something, %Save it again, or %Close it."
+
+<entry> "Advanced: Setting local preferences"
+<normal> "To set up local preferences for a project, create a file called %%TEVApreferences.tsv% or %%.tevarc% and store it in the same
+directory as the Table with the list of recordings. For example, the preferences for this example read (white-space is tabs):"
+<code> "Key                     Value"
+<code> "config.frequency        2000"
+<code> "config.showFormants     0"
+<code> "config.speakerSerial    1"
+<code> "mainPage.draw           Spectrogram"
+
+<normal> "A complete preferences file as created by TEVA (e.g., %%~/Library/Preferences/TEanalysis/Teanalysisrc.txt%) could look like:"
+<code> "Key                     Value"
+<code> "config.language         EN"
+<code> "config.frequency        2000"
+<code> "config.showFormants     0"
+<code> "config.speakerData      /Users/guest/Examples/SignaltypeVoiceSamples.Table"
+<code> "config.speakerSerial    1"
+<code> "config.recordingTime    4"
+<code> "config.showBackground   1"
+<code> "config.input            Microphone"
+<code> "config.openLog          /Users/gues/Library/Preferences/TEanalysis/log"
+<code> "mainPage.draw           Spectrogram"
+

@@ -45,4 +45,12 @@ for file in $(ls -1 ${@:-*.html}); do
 		perl -i'' -ne 's!(\Q<b><i>    </i></b>\E)\s*</p>\s*$!</p> <p align=center>\n<a href="SpeakerInfo_screenshot.png" target="_blank"><img width="50%" src="SpeakerInfo_screenshot.png" VSPACE=10></a></p>\n!g;print $_' \
 			${file}
 	fi
+	if [[ "${file}" == "Example_evaluating_a_Corpus.html" ]]; then
+		perl -i'' -ne 's!(\Q<b><i>   </i></b>\E)\s*</p>!</p> <p align=center>\n<a href="Main_page_serial_screenshot.png" target="_blank"><img width="25%" src="Main_page_serial_screenshot.png" VSPACE=10></a></p>\n!g;print $_' \
+			${file}
+		perl -i'' -ne 's!(\Q<b><i>    </i></b>\E)\s*</p>\s*$!</p> <p align=center>\n<a href="Main_page_serial_detail_Nxt.png" target="_blank"><img width="50%" src="Main_page_serial_detail_Nxt.png" VSPACE=10></a></p>\n!g;print $_' \
+			${file}
+		perl -i'' -ne 's!(\Q<b><i>     </i></b>\E)\s*</p>\s*$!</p> <p align=center>\n<a href="Configure_page_serial_detail.png" target="_blank"><img width="50%" src="Configure_page_serial_detail.png" VSPACE=10></a></p>\n!g;print $_' \
+			${file}
+	fi
 done
