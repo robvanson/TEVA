@@ -29,8 +29,10 @@ Then Click the %Ready button. You now see a display of the recording of the four
 speaker and the @@Acoustic Signal Typing|Pathological Type@ as it was recorded in the Table."
 
 <entry> "Find a stable interval"
-<normal> "Inspect the recording using the %Sound and %Spectrogram windows. Then decide how the speech can be 
-judged according to following statements as %Good, %Mediocre, or %Bad. See also @@Acoustic Signal Typing@"
+<normal> "Inspect the recording using the %Sound and %Spectrogram windows. You can change the frequency range of the %Spectrogram 
+by selecting the desired top frequency in the @@Overview of Configuration page|Configuration page@. After selecting the most stable 
+part of the speech, decide how the speech can be judged according to following statements as %Good, %Mediocre, or %Bad. See also 
+@@Acoustic Signal Typing@"
 <list_item> "\bu The speaker can keep a stable /a/ sound over more than 2 seconds"
 <list_item> "\bu There are clear harmonics up to 1000Hz"
 <list_item> "\bu There is at least one stable harmonic for longer than 2 seconds"
