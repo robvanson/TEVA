@@ -53,7 +53,7 @@ directory as the Table with the list of recordings. For example, the preferences
 <code> "config.speakerSerial    1"
 <code> "mainPage.draw           Spectrogram"
 
-<normal> "A complete preferences file as created by TEVA, e.g., %%~/Library/Preferences/TEanalysis/Teanalysisrc.txt%, could look like 
+<normal> "A complete preferences file as created by TEVA, e.g., %%~/Library/Preferences/TEanalysis/Teanalysisrc.tsv%, could look like 
 (again, use single tabs to separate the fields):"
 <code> "Key                     Value"
 <code> "config.language         EN"

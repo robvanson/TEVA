@@ -114,7 +114,7 @@ procedure global_initialization
 	config.language$ = "EN"
 	logging = 0
 	# preferencesAppDir$ must have been defined, which happens in the App file
-	preferencesAppFile$ = preferencesAppDir$+"/'demoAppName$'rc.txt"
+	preferencesAppFile$ = preferencesAppDir$+"/'demoAppName$'rc.tsv"
 	preferencesTableDir$ = "'preferencesAppDir$'/Data"
 	config.openLog$ = "'preferencesAppDir$'/log"
 	preferencesScriptsDir$ = "'preferencesAppDir$'/scripts"
