@@ -25,8 +25,7 @@ sed -i '' 's/Example_evaluating_a_Corpus_3.png/Configure_page_serial_detail.png/
 rm Example_evaluating_a_Corpus_3.png
 sed -i '' 's/NKI_TE-VOICE_ANALYSIS_tool__EN__1.png/Main_page_screenshot.png/g' NKI_TE-VOICE_ANALYSIS_tool__EN_.html
 rm NKI_TE-VOICE_ANALYSIS_tool__EN__1.png
-perl -i'' -ne 's!((<a href=\")(Main_page_screenshot.png)(\"[^>]*><img [^>]+)(Main_page_screenshot.png)([^>]*></a>))\
-!\1&nbsp;\2Configure_page_screenshot.png\4Configure_page_screenshot.png\6!g; print $_' NKI_TE-VOICE_ANALYSIS_tool__EN_.html
+perl -i'' -ne 's!((<a href=\")(Main_page_screenshot.png)(\"[^>]*><img [^>]+)(Main_page_screenshot.png)([^>]*></a>))!\1&nbsp;\2Configure_page_screenshot.png\4Configure_page_screenshot.png\6!g; print $_' NKI_TE-VOICE_ANALYSIS_tool__EN_.html
 
 sed -i '' 's/Opening_an_existing_recording_1.png/Main_page_screenshot.png/g' Opening_an_existing_recording.html
 rm Opening_an_existing_recording_1.png
