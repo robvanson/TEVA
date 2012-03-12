@@ -1,12 +1,21 @@
 ManPagesTextFile
 "Adding speaker information" "R.J.J.H. van Son" 20111220 0
-<intro> "How to add information about a speaker to TEVA. 
-##%%   %#"
+<intro> "How to add information about a speaker to TEVA."
+
+<script> 4.5 4 "
+	Axes... 0 100 0 100
+	Insert picture from file... Main_page_screenshot.png 50 50 0 100
+"
 
 <normal> "Record or Open an /a/ sound, select a stable part of the recording:"
 <list_item> "\bu @@Recording your own voice@"
 <list_item> "\bu @@Opening an existing recording@"
 <list_item> "\bu @@Selecting stable sounds@"
+
+<script> 4.5 2.5 "
+	Axes... 0 100 0 100
+	Insert picture from file... Speaker_screenshot.png 50 50 0 100
+"
 
 <entry> "Adding information about a recording"
 <normal> "TEVA can keep a record of recordings. Click the %Speaker button at the bottom 
@@ -36,6 +45,11 @@ as the original file, but with a tilde (~) added to the name (e.g., %%example.Ta
 This backup file will be kept until the table is saved to file using the %Save button or all changes are purged 
 with the %Close button, after which the backup will be removed. 
 The backup file will be overwritten the next time the table is opened from file and a change is made."
+
+<script> 4.5 2.5 "
+	Axes... 0 100 0 100
+	Insert picture from file... SpeakerInfo_screenshot.png 50 50 0 100
+"
 
 <entry> "Format of the speaker info table (%%.tsv% or %%.Table%)"
 <normal> "Speaker Info tables are tab delimited (tsv) lists with five fields, starting with a line 

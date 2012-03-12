@@ -705,8 +705,9 @@ procedure regular_save_backup_file
 		call get_feedback_text 'config.language$' Unsaved
 		call convert_praat_to_latin1 'get_feedback_text.text$'
 		.unsavedChanges$ = convert_praat_to_latin1.text$
-
 		call getLanguageTexts Config SaveSpeaker
+		# Get extra pop-up to warn for unsaved changes!
+		call write_text_popup Helvetica 18 '.unsavedChanges$': 'getLanguageTexts.helpText$'
 		.filename$ = chooseWriteFile$ ("'.unsavedChanges$': 'getLanguageTexts.helpText$'", config.speakerData$)
 		if .filename$ <> "" and .filename$ <> config.speakerDataBackup$
 			deleteFile(config.speakerDataBackup$)

@@ -4,8 +4,12 @@ ManPagesTextFile
 description of their use. English labels will be used here. The keyboard shortcuts are given between the []-brackets (might depend on language).
 See also the @@Overview of Main page@."
 <normal> "Man buttons are radio type push buttons. When clicked, they remain ""pushed down"" until another button is pushed. The state 
-of these button is remembered between invocations of TEVA. 
-##%%   %#"
+of these button is remembered between invocations of TEVA. "
+
+<script> 4.5 4 "
+	Axes... 0 100 0 100
+	Insert picture from file... Configure_page_screenshot.png 50 50 0 100
+"
 
 <entry> "General functions"
 <list_item> "\bu #Help: [?] Press the button you want information on, press %%Help% again to continue"

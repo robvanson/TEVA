@@ -1,7 +1,11 @@
 ManPagesTextFile
 "Saving a report" "R.J.J.H. van Son" 20111220 0
-<intro> "Generate a printable report. 
-##%%   %#"
+<intro> "Generate a printable report. "
+
+<script> 4.5 4 "
+	Axes... 0 100 0 100
+	Insert picture from file... Main_page_screenshot.png 50 50 0 100
+"
 
 <normal> "Record or Open an /a/ sound, select a stable part of the recording and add information 
 about the speaker and recording:"
@@ -30,6 +34,12 @@ three files and two directories. The files are %%Sample3%.odt and %%Speaker3%.ht
 There is also a copy of the recording in the directory. The two subdirectories contain the graphics, one is 
 called %eps and contains the graphics in %eps format, the other is called either %wmf (Windows) or %pdf (OSX) 
 and contains the graphics in %wmf or %pdf format."
+
+<script> 4.5 2.5 "
+	Axes... 0 100 0 100
+	Insert picture from file... Save_screenshotTop.png 10 10 0 100
+	Insert picture from file... Save_screenshotBottom.png 90 90 0 100
+"
 
 <entry> "Next:"
 <list_item> "\bu @@Example evaluating AST@"

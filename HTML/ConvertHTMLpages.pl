@@ -26,5 +26,7 @@ while(m!\[\[\[\"([^\s\.\:\,\(\)\[\]\"]+)[\s\.\:\,\(\)\[\]]!)
 s!\[\[\[\"!"http://www.fon.hum.uva.nl/praat/manual/!g;
 s!\"\]\]\]!.html" target="_blank"!ig;
 
+# Convert <img to <a href=""><img
+s!\<(img[^\>]+src=[\"\']?([^\"\']+\.png)[\"\']?[^>]*)\>!<a href="\2" target="_blank"><\1></a>!ig;
 # Ready, output line
 print $_;

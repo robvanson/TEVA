@@ -1,7 +1,11 @@
 ManPagesTextFile
 "Recording your own voice" "R.J.J.H. van Son" 20111220 0
-<intro> "How to record and analyze a voice. 
-##%%   %#"
+<intro> "How to record and analyze a voice."
+
+<script> 4.5 4 "
+	Axes... 0 100 0 100
+	Insert picture from file... Main_page_screenshot.png 50 50 0 100
+"
 
 <entry> "Record your voice"
 <normal> "First set up your computer for voice recording. You should use a microphone of a reasonable 

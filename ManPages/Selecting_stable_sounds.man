@@ -1,7 +1,11 @@
 ManPagesTextFile
 "Selecting stable sounds" "R.J.J.H. van Son" 20111220 0
-<intro> "How to select a stable part of the voice. 
-##%%   %#"
+<intro> "How to select a stable part of the voice."
+
+<script> 4.5 4 "
+	Axes... 0 100 0 100
+	Insert picture from file... Main_page_screenshot.png 50 50 0 100
+"
 
 <normal> "Record or Open an /a/ sound and add information about the speaker and recording:"
 <list_item> "\bu @@Recording your own voice@"
