@@ -26,6 +26,7 @@ rm Example_evaluating_a_Corpus_3.png
 sed -i '' 's/NKI_TE-VOICE_ANALYSIS_tool__EN__1.png/Main_page_screenshot.png/g' NKI_TE-VOICE_ANALYSIS_tool__EN_.html
 rm NKI_TE-VOICE_ANALYSIS_tool__EN__1.png
 perl -i'' -ne 's!((<a href=\")(Main_page_screenshot.png)(\"[^>]*><img [^>]+)(Main_page_screenshot.png)([^>]*></a>))!\1&nbsp;\2Configure_page_screenshot.png\4Configure_page_screenshot.png\6!g; print $_' NKI_TE-VOICE_ANALYSIS_tool__EN_.html
+perl -i'' -ne 's! height\=\d+ ! !ig; s! width\=\d+ ! width=45% !ig; print $_' NKI_TE-VOICE_ANALYSIS_tool__EN_.html
 
 sed -i '' 's/Opening_an_existing_recording_1.png/Main_page_screenshot.png/g' Opening_an_existing_recording.html
 rm Opening_an_existing_recording_1.png
@@ -40,6 +41,7 @@ rm Saving_a_report_1.png
 sed -i '' 's/Saving_a_report_2.png/Save_screenshotTop.png/g' Saving_a_report.html
 rm Saving_a_report_2.png
 perl -i'' -ne 's!((<a href=\")(Save_screenshotTop.png)(\"[^>]*><img [^>]+)(Save_screenshotTop.png)([^>]*></a>))!\1&nbsp;\2Save_screenshotBottom.png\4Save_screenshotBottom.png\6!g; print $_' Saving_a_report.html
+perl -i'' -ne 's! height\=\d+ ! !ig; s! width\=\d+ ! width=45% !ig; print $_' Saving_a_report.html
 
 sed -i '' 's/Selecting_stable_sounds_1.png/Main_page_screenshot.png/g' Selecting_stable_sounds.html
 rm Selecting_stable_sounds_1.png
