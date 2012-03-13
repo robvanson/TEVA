@@ -69,44 +69,68 @@ while (my $SourceFile = shift(@ARGV))
 
 	# Create output text
 	my $ManPageText = "";
+	my $skipScript = 0;
+	my $isScript = 0;
 	while(<FILEIN>)
 	{
+		$skipScript = 0 unless $isScript;
 		# Skip empty lines
 		next unless /\S/;
 		chomp;
 		my $Macro = "\t";
 		my $Text = "";
 		my ($Startmarker, $Endmarker) = ("\"", "\"");
-		if(/^\s*\<([^\>]+)\>\s+(\".*)$/)
+		my $CanvasParam = "";
+		# Strip all <script> blocks, they are not used in the life manual
+		# Any script with a character (e.g., #) following the " will be included 
+		if(/^\s*\<(script)\>\s+([\d\.]+)\s+([\d\.]+)\s+(\".*)$/i)
 		{
+			$skipScript = 1;
+			$isScript = 1;
+			$Macro = uc($1);
+			$CanvasParam = "$2, $3, ";
+			$Text = $4;
+			$skipScript = 0 if $Text =~ /[^\" ]/;
+			$Text .= "\\n";
+		}
+		elsif(/^\s*\<([^\>]+)\>\s+(\".*)$/)
+		{
+			$skipScript = 0;
+			$isScript = 0;
 			$Macro = uc($1);
 			$Text = $2;
 		}
 		else
 		{
 			$Text = $_;
+			$Text .= "\\n" if !/\"/ && $isScript;
 		};
 		
-		$Text =~ s/\\/\\\\/g;
-		# Insert links to standard Praat pages
-		$Text =~ s/\#\#\[/\@\@/g;
-		$Text =~ s/\]\#/\@/g;
+		unless($isScript)
+		{
+			$Text =~ s/\\/\\\\/g;
+			# Insert links to standard Praat pages
+			$Text =~ s/\#\#\[/\@\@/g;
+			$Text =~ s/\]\#/\@/g;
+		};
+		
 		# Handle start quotes
 		if($Text =~ /^\s*\"[^\"]/)
 		{
-			$Startmarker = "(L\"";
+			$Startmarker = "(${CanvasParam}L\"";
 			$Text =~ s/^\s*\"//g;
 		};
 		# Handle end quotes	
-		if($Text =~ /[^\"]\"\s*$/)
+		if($Text =~ /(^\s*|[^\"])\"\s*$/)
 		{
+			$isScript = 0;
 			$Endmarker = "\")";
 			$Text =~ s/\"\s*$//g;
 		};
 		# Handle Praat double quotes
 		$Text =~ s/\"\"/\\"/g;
 
-		$ManPageText .= "$Macro $Startmarker$Text$Endmarker\n";
+		$ManPageText .= "$Macro $Startmarker$Text$Endmarker\n" unless $skipScript;
 	};
 
 	print FILEOUT "MAN_BEGIN (L\"$Title\", L\"$Author\", $Date)\n";
