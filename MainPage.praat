@@ -661,87 +661,7 @@ endproc
 procedure processMainPageSelect .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "Select"
-	.firstT = -1
-	.secondT = -1
-	if runningCommandMode = 1
-		# Do nothing
-		call Draw_button 'buttons$' Select 1
-		skipNextStep = 1
-
-		goto ENDOFSELECT
-	endif
-	if currentStartTime <= 0 and currentEndTime <= 0
-    	call Draw_button '.table$' '.label$' 0
-		goto ENDOFSELECT
-	endif
-	if mainPage.draw$ = "Ltas"
-		call Draw_button 'buttons$' Select 1
-		goto ESCAPESELECT
-	endif
-	# Redraw window if there is an old selection
-	if selectedStartTime > currentStartTime or selectedEndTime < currentEndTime
-		selectedStartTime = currentStartTime
-		selectedEndTime = currentEndTime
-		call init_window
-	endif
-	# Get feedback text
-	call get_feedback_text 'config.language$' Select1
-	.feedback1$ = get_feedback_text.text$
-	call get_feedback_text 'config.language$' Select2
-	.feedback2$ = get_feedback_text.text$
-	call reset_viewport
-	call Draw_button 'buttons$' Select 2
-	call write_feedback_text Blue '.feedback1$'
-	while demoWaitForInput()
-		.clickX = -1
-		.clickY = -1
-		if demoClicked()
-			.clickX = demoX()
-			.clickY = demoY()
-			if demoClickedIn (canvasXL, canvasXR, canvasYL, canvasYH)
-				.selectedTime = currentStartTime + (currentEndTime - currentStartTime)*(.clickX - canvasXL + canvasCorrection)/(canvasXR - canvasXL)
-				demo Colour... Blue
-				demo Line width... 2
-				demo Draw line... '.clickX' 'canvasYH' '.clickX' 'canvasYL'
-				demo Text special... '.clickX' Centre 'canvasYH' Bottom Helvetica 9 0 '.selectedTime:4'
-				demoShow()
-				demo Colour... Black
-				demo Line width... 'defaultLineWidth'
-				if .firstT < 0 and .secondT < 0
-					.firstT = .selectedTime
-					call write_feedback_text Blue '.feedback2$'
-				else
-					.secondT = .selectedTime
-					call wipeArea 'wipeFeedbackArea$'
-					goto ENDOFSELECT
-				endif
-			else
-		    	call buttonClicked 'buttons$' '.clickX' '.clickY'
-		    	if buttonClicked.label$ = "Select"
-					call init_window
-					goto ENDOFSELECT
-				endif
-			endif
-		elsif demoKeyPressed()
-			call wipeArea 'wipeFeedbackArea$'
-			goto ENDOFSELECT
-		endif
-
-	endwhile
-	call Draw_button 'buttons$' Select 0
-	
-	label ENDOFSELECT
-	# Do things
-	if .firstT >= 0 and .secondT >= 0
-		selectedStartTime = min(.firstT, .secondT)
-		selectedEndTime = max(.firstT, .secondT)
-		call DrawCurrentSelection 0 1
-		call log_command MainPage SetSelection 'selectedStartTime' 'selectedEndTime' --
-	endif
-	call reset_viewport
-	call Draw_button 'buttons$' Select 0
-	
-	label ESCAPESELECT
+	call processMainPageCANVAS '.clickX' '.clickY' '.label$'
 endproc
 
 procedure processMainPageCANVAS .clickX .clickY .pressed$
@@ -749,6 +669,7 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 	.label$ = "CANVAS"
 	.firstT = -1
 	.secondT = -1
+	call Draw_button '.table$' Select 2
 	if runningCommandMode = 1
 		# Do nothing
 		skipNextStep = 1
@@ -787,6 +708,7 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 		.firstT = .selectedTime
 	endif
 	
+	call Draw_button '.table$' Select 2
 	# Set second border
 	while demoWaitForInput()
 		.clickX = -1
@@ -815,12 +737,27 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 		    	call buttonClicked 'buttons$' '.clickX' '.clickY'
 		    	if buttonClicked.label$ = "Select"
 					call init_window
+					call Draw_button '.table$' Select 2
 					goto ENDOFDISPLAYSELECT
 				endif
 			endif
 		elsif demoKeyPressed()
-			call wipeArea 'wipeFeedbackArea$'
-			goto ENDOFDISPLAYSELECT
+			.pressed$ = demoKey$()
+			if index_regex(.pressed$, "[-=_+]") > 0
+				.windowSize = 2
+				if index_regex(.pressed$, "[-_]") > 0
+					.windowSize = 1
+				endif
+				# Remove line
+				call init_window
+				call Draw_button '.table$' Select 2
+				.firstT -= .windowSize / 2
+				.secondT = .firstT + .windowSize
+				goto ENDOFDISPLAYSELECT
+			else
+				call wipeArea 'wipeFeedbackArea$'
+				goto ENDOFDISPLAYSELECT
+			endif
 		endif
 
 	endwhile
@@ -831,9 +768,11 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 		selectedStartTime = min(.firstT, .secondT)
 		selectedEndTime = max(.firstT, .secondT)
 		call DrawCurrentSelection 0 1
+		call Draw_button '.table$' Select 2
 		call log_command MainPage SetSelection 'selectedStartTime' 'selectedEndTime' --
 	endif
 	call reset_viewport
+	call Draw_button '.table$' Select 0
 	
 	label ESCAPEDISPLAYSELECT
 endproc
