@@ -667,6 +667,10 @@ endproc
 procedure processMainPageCANVAS .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "CANVAS"
+    .xL = canvasXL
+    .xR = canvasXR
+    .yL = canvasYL
+    .yH = canvasYH
 	.firstT = -1
 	.secondT = -1
 	call Draw_button '.table$' Select 2
@@ -676,9 +680,9 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 		goto ENDOFDISPLAYSELECT
 	elsif currentStartTime <= 0 and currentEndTime <= 0
 		goto ENDOFDISPLAYSELECT
-	elsif .clickX < canvasXL or .clickX > canvasXR
+	elsif .clickX < .xL or .clickX > .xR
 		goto ESCAPEDISPLAYSELECT
-	elsif .clickY < canvasYL or .clickX > canvasYH
+	elsif .clickY < .yL or .clickX > .yH
 		goto ESCAPEDISPLAYSELECT
 	elsif mainPage.draw$ = "Ltas"
 		goto ESCAPEDISPLAYSELECT
@@ -696,11 +700,11 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 	call write_feedback_text Blue '.feedback2$'
 	
 	# Set first border
-	.selectedTime = currentStartTime + (currentEndTime - currentStartTime)*(.clickX - canvasXL + canvasCorrection)/(canvasXR - canvasXL)
+	.selectedTime = currentStartTime + (currentEndTime - currentStartTime)*(.clickX - .xL + canvasCorrection)/(.xR - .xL)
 	demo Colour... Blue
 	demo Line width... 2
-	demo Draw line... '.clickX' 'canvasYH' '.clickX' 'canvasYL'
-	demo Text special... '.clickX' Centre 'canvasYH' Bottom Helvetica 9 0 '.selectedTime:4'
+	demo Draw line... '.clickX' '.yH' '.clickX' '.yL'
+	demo Text special... '.clickX' Centre '.yH' Bottom Helvetica 9 0 '.selectedTime:4'
 	demoShow()
 	demo Colour... Black
 	demo Line width... 'defaultLineWidth'
@@ -716,12 +720,12 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 		if demoClicked()
 			.clickX = demoX()
 			.clickY = demoY()
-			if demoClickedIn (canvasXL, canvasXR, canvasYL, canvasYH)
-				.selectedTime = currentStartTime + (currentEndTime - currentStartTime)*(.clickX - canvasXL + canvasCorrection)/(canvasXR - canvasXL)
+			if demoClickedIn (.xL, .xR, .yL, .yH)
+				.selectedTime = currentStartTime + (currentEndTime - currentStartTime)*(.clickX - .xL + canvasCorrection)/(.xR - .xL)
 				demo Colour... Blue
 				demo Line width... 2
-				demo Draw line... '.clickX' 'canvasYH' '.clickX' 'canvasYL'
-				demo Text special... '.clickX' Centre 'canvasYH' Bottom Helvetica 9 0 '.selectedTime:4'
+				demo Draw line... '.clickX' '.yH' '.clickX' '.yL'
+				demo Text special... '.clickX' Centre '.yH' Bottom Helvetica 9 0 '.selectedTime:4'
 				demoShow()
 				demo Colour... Black
 				demo Line width... 'defaultLineWidth'
@@ -765,8 +769,16 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 	label ENDOFDISPLAYSELECT
 	# Do things
 	if .firstT >= 0 and .secondT >= 0
+    	select te.openSound
+		.soundLength = Get total duration
 		selectedStartTime = min(.firstT, .secondT)
+		if selectedStartTime < 0
+			selectedStartTime = 0
+		endif
 		selectedEndTime = max(.firstT, .secondT)
+		if selectedEndTime > .soundLength
+			selectedEndTime = .soundLength
+		endif
 		call DrawCurrentSelection 0 1
 		call Draw_button '.table$' Select 2
 		call log_command MainPage SetSelection 'selectedStartTime' 'selectedEndTime' --
@@ -1168,14 +1180,18 @@ endproc
 
 procedure DrawCurrentSelection .minimum .maximum
 	if not noDrawingOrWriting
+	    .xL = canvasXL
+	    .xR = canvasXR
+	    .yL = canvasYL
+	    .yH = canvasYH
 	    # Mark current selection	
 	    .selectXstart = -1
 	    .selectXend = -1
 	    if (selectedStartTime > currentStartTime and selectedStartTime < currentEndTime)
-		    .selectXstart = canvasXL+(selectedStartTime-currentStartTime)/(currentEndTime - currentStartTime) * (canvasXR - canvasXL) - canvasCorrection
+		    .selectXstart = .xL+(selectedStartTime-currentStartTime)/(currentEndTime - currentStartTime) * (.xR - .xL) - canvasCorrection
 	    endif
 	    if (selectedEndTime > currentStartTime and selectedEndTime < currentEndTime)
-		    .selectXend = canvasXL+(selectedEndTime-currentStartTime)/(currentEndTime - currentStartTime) * (canvasXR - canvasXL) - canvasCorrection
+		    .selectXend = .xL+(selectedEndTime-currentStartTime)/(currentEndTime - currentStartTime) * (.xR - .xL) - canvasCorrection
 	    endif
 	    if .selectXstart > 0 or .selectXend > 0
 		    demo Colour... Blue
@@ -1185,19 +1201,19 @@ procedure DrawCurrentSelection .minimum .maximum
 		    .startTextWidth = 0
 		    .endTextWidth = 0
 		    if .selectXstart > 0
-			    demo Draw line... '.selectXstart' 'canvasYH' '.selectXstart' 'canvasYL'
-			    demo Text special... '.selectXstart' Centre 'canvasYH' Bottom Helvetica 9 0 'selectedStartTime:4'
+			    demo Draw line... '.selectXstart' '.yH' '.selectXstart' '.yL'
+			    demo Text special... '.selectXstart' Centre '.yH' Bottom Helvetica 9 0 'selectedStartTime:4'
 			    .startTextWidth = demo Text width (wc)... 'selectedStartTime:4'
 		    endif
 		    if .selectXend > 0
-			    demo Draw line... '.selectXend' 'canvasYH' '.selectXend' 'canvasYL'
-			    demo Text special... '.selectXend' Centre 'canvasYH' Bottom Helvetica 9 0 'selectedEndTime:4'
+			    demo Draw line... '.selectXend' '.yH' '.selectXend' '.yL'
+			    demo Text special... '.selectXend' Centre '.yH' Bottom Helvetica 9 0 'selectedEndTime:4'
 			    .endTextWidth = demo Text width (wc)... 'selectedEndTime:4'
 		    endif
 		    # Write intervalduration
 		    .intervalDuration = selectedEndTime - selectedStartTime
-		    .minPos = max(.selectXstart, canvasXL)
-		    .maxPos = min(.selectXend, canvasXR)
+		    .minPos = max(.selectXstart, .xL)
+		    .maxPos = min(.selectXend, .xR)
 		    .spaceAvailable = (.maxPos - .minPos) - (.startTextWidth+.endTextWidth)/2
 		    .textPosition = (.minPos + .maxPos)/2
 		    .intervalDurationText$ = "['.intervalDuration:4']"
@@ -1207,7 +1223,7 @@ procedure DrawCurrentSelection .minimum .maximum
 				.textWidth = demo Text width (wc)... '.intervalDurationText$'
 		    endwhile
 		    if index_regex(.intervalDurationText$, "[1-9]")
-				demo Text special... '.textPosition' Centre 'canvasYH' Bottom Helvetica 9 0 '.intervalDurationText$'
+				demo Text special... '.textPosition' Centre '.yH' Bottom Helvetica 9 0 '.intervalDurationText$'
 		    endif
 		    
 		    demoShow()
@@ -1231,18 +1247,21 @@ procedure DrawMarksLeft .minimum .maximum
 endproc
 
 procedure DrawMarksBottom .minimum .maximum
-	.distance = 10^(ceiling(log10(abs(.maximum - .minimum)))-1)
-	if .distance > abs(.maximum - .minimum)/2
-		.distance /= 10
-	endif
-	if .distance <= 0
-		.distance = abs('.maximum' - '.minimum')
-	endif
-	while .distance > 0 and abs(.maximum - .minimum) / 40 > .distance
-		.distance *= 10
-	endwhile
-	if .distance <> undefined and abs(.maximum - .minimum) > .distance
-		demo Marks bottom every... 1 '.distance' yes yes no
+	# There is a bug that hangs the Marks bottom for very small values
+	if abs(.maximum - .minimum) > 0.000001
+		.distance = 10^(ceiling(log10(abs(.maximum - .minimum)))-1)
+		if .distance > abs(.maximum - .minimum)/2
+			.distance /= 10
+		endif
+		if .distance <= 0
+			.distance = abs('.maximum' - '.minimum')
+		endif
+		while .distance > 0 and abs(.maximum - .minimum) / 40 > .distance
+			.distance *= 10
+		endwhile
+		if .distance <> undefined and abs(.maximum - .minimum) > .distance
+			demo Marks bottom every... 1 '.distance' yes yes no
+		endif
 	endif
 endproc
 

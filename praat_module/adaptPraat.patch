@@ -129,7 +129,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_init.cpp demo_praat_sources/fon/praat_TextGrid_init.cpp
 --- praat_sources/fon/praat_TextGrid_init.cpp	2011-09-12 10:17:12.000000000 +0200
 +++ demo_praat_sources/fon/praat_TextGrid_init.cpp	2011-09-12 10:59:25.000000000 +0200
-@@ -829,7 +829,9 @@ static void cb_TextGridEditor_publicatio
+@@ -825,7 +825,9 @@ static void cb_TextGridEditor_publicatio
  	}
  }
  DIRECT (TextGrid_edit)
@@ -139,7 +139,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
  	Sound sound = NULL;
  	LOOP {
  		if (CLASS == classSound) sound = (Sound) OBJECT;   // may stay NULL
-@@ -843,7 +845,9 @@ DIRECT (TextGrid_edit)
+@@ -839,7 +841,9 @@ DIRECT (TextGrid_edit)
  END
  
  DIRECT (TextGrid_LongSound_edit)
@@ -149,7 +149,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
  	LongSound longSound = NULL;
  	int ilongSound = 0;
  	LOOP {
-@@ -859,7 +863,9 @@ DIRECT (TextGrid_LongSound_edit)
+@@ -855,7 +859,9 @@ DIRECT (TextGrid_LongSound_edit)
  END
  
  DIRECT (TextGrid_SpellingChecker_edit)
@@ -159,7 +159,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
  	SpellingChecker spellingChecker = NULL;
  	int ispellingChecker = 0;
  	Sound sound = NULL;
-@@ -876,7 +882,9 @@ DIRECT (TextGrid_SpellingChecker_edit)
+@@ -872,7 +878,9 @@ DIRECT (TextGrid_SpellingChecker_edit)
  END
  
  DIRECT (TextGrid_LongSound_SpellingChecker_edit)
