@@ -661,22 +661,43 @@ endproc
 procedure processMainPageSelect .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "Select"
-	call processMainPageCANVAS '.clickX' '.clickY' '.label$'
+	call get_feedback_text 'config.language$' Select1
+	.feedback2$ = get_feedback_text.text$
+	call reset_viewport
+	call write_feedback_text Blue '.feedback2$'
+	demoWaitForInput()
+	.clickX = -1
+	.clickY = -1
+	.pressed$ = ""
+	if demoClicked()
+		.clickX = demoX()
+		.clickY = demoY()
+	elsif demoKeyPressed()
+		.pressed$ = demoKey$()
+	endif
+	call processMainPageCANVAS '.clickX' '.clickY' '.pressed$'
 endproc
 
 procedure processMainPageCANVAS .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "CANVAS"
-    .xL = canvasXL
-    .xR = canvasXR
+    .xL = canvasXL + canvasLeftCorrection
+    .xR = canvasXR + canvasRightCorrection
     .yL = canvasYL
     .yH = canvasYH
 	.firstT = -1
 	.secondT = -1
 	call Draw_button '.table$' Select 2
+	call buttonClicked '.table$' '.clickX' '.clickY'
 	if runningCommandMode = 1
 		# Do nothing
 		skipNextStep = 1
+		goto ENDOFDISPLAYSELECT
+	elsif demoKeyPressed() or buttonClicked.label$ = "Select"
+		.firstT = -1
+		.secondT = -1
+		call init_window
+		call Draw_button '.table$' Select 2
 		goto ENDOFDISPLAYSELECT
 	elsif currentStartTime <= 0 and currentEndTime <= 0
 		goto ENDOFDISPLAYSELECT
@@ -700,7 +721,7 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 	call write_feedback_text Blue '.feedback2$'
 	
 	# Set first border
-	.selectedTime = currentStartTime + (currentEndTime - currentStartTime)*(.clickX - .xL + canvasCorrection)/(.xR - .xL)
+	.selectedTime = currentStartTime + (currentEndTime - currentStartTime)*(.clickX - .xL)/(.xR - .xL)
 	demo Colour... Blue
 	demo Line width... 2
 	demo Draw line... '.clickX' '.yH' '.clickX' '.yL'
@@ -721,7 +742,7 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 			.clickX = demoX()
 			.clickY = demoY()
 			if demoClickedIn (.xL, .xR, .yL, .yH)
-				.selectedTime = currentStartTime + (currentEndTime - currentStartTime)*(.clickX - .xL + canvasCorrection)/(.xR - .xL)
+				.selectedTime = currentStartTime + (currentEndTime - currentStartTime)*(.clickX - .xL)/(.xR - .xL)
 				demo Colour... Blue
 				demo Line width... 2
 				demo Draw line... '.clickX' '.yH' '.clickX' '.yL'
@@ -740,6 +761,8 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 			else
 		    	call buttonClicked 'buttons$' '.clickX' '.clickY'
 		    	if buttonClicked.label$ = "Select"
+					.firstT = -1
+					.secondT = -1
 					call init_window
 					call Draw_button '.table$' Select 2
 					goto ENDOFDISPLAYSELECT
@@ -759,7 +782,11 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 				.secondT = .firstT + .windowSize
 				goto ENDOFDISPLAYSELECT
 			else
-				call wipeArea 'wipeFeedbackArea$'
+				.firstT = -1
+				.secondT = -1
+				call init_window
+				call Draw_button '.table$' Select 2
+				
 				goto ENDOFDISPLAYSELECT
 			endif
 		endif
@@ -1180,18 +1207,18 @@ endproc
 
 procedure DrawCurrentSelection .minimum .maximum
 	if not noDrawingOrWriting
-	    .xL = canvasXL
-	    .xR = canvasXR
+	    .xL = canvasXL + canvasLeftCorrection
+	    .xR = canvasXR + canvasRightCorrection
 	    .yL = canvasYL
 	    .yH = canvasYH
 	    # Mark current selection	
 	    .selectXstart = -1
 	    .selectXend = -1
 	    if (selectedStartTime > currentStartTime and selectedStartTime < currentEndTime)
-		    .selectXstart = .xL+(selectedStartTime-currentStartTime)/(currentEndTime - currentStartTime) * (.xR - .xL) - canvasCorrection
+		    .selectXstart = .xL+(selectedStartTime-currentStartTime)/(currentEndTime - currentStartTime) * (.xR - .xL)
 	    endif
 	    if (selectedEndTime > currentStartTime and selectedEndTime < currentEndTime)
-		    .selectXend = .xL+(selectedEndTime-currentStartTime)/(currentEndTime - currentStartTime) * (.xR - .xL) - canvasCorrection
+		    .selectXend = .xL+(selectedEndTime-currentStartTime)/(currentEndTime - currentStartTime) * (.xR - .xL)
 	    endif
 	    if .selectXstart > 0 or .selectXend > 0
 		    demo Colour... Blue

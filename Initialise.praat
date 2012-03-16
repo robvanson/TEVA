@@ -45,7 +45,8 @@ procedure global_initialization
 	canvasXR = 85
 	canvasYL = 25
 	canvasYH = 95
-	canvasCorrection = 0
+	canvasLeftCorrection = 0.5
+	canvasRightCorrection = -1.5
 	wipeCanvasArea$ = "demo Paint rectangle... White 'canvasXL' 'canvasXR' 'canvasYL' 'canvasYH'"
 	
 	# Pop-Up window and other colors

@@ -3,7 +3,7 @@ Key	Text
 !Copyright	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
 !License	License GNU GPL version 2 or later
 Select1	Select new start time (or press Select or a key to continue)
-Select2	Select new end time (or press a Select or key to continue)
+Select2	Select new end time, #- or #+ for a 1 or 2 sec window (cancel with %%Select% or another key)
 SpectrumValues	Formants - QF_1: QUALITYF1$ , QF_2: QUALITYF2$ , QF_3: QUALITYF3$ , QF_4: QUALITYF4$ [Median(F_i)/Median(B_i)]
 PitchValues	Pitch - MVD: MAXIMUMVOICINGDUR$ , Voiced: VOICEDFRACTIONS$ , Jitter: JITTER$ , Shimmer: SHIMMER$ , Mean: MEANPITCH$ Hz, SD: SDPITCH$ Hz, Median: MEDIANPITCH$ Hz
 HarmonicityValues	Harmonicity - Max.: MAXHARMONICITY$ dB, Min.: MINHARMONICITY$ dB, Mean: MEANHARMONICITY$ dB, SD: SDHARMONICITY$ dB, GNE: GNEVALUE$
