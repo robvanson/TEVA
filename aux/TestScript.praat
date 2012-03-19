@@ -11,13 +11,15 @@ noDrawingOrWriting = 1
 mainPage.outputPraatObject$ = "Draw"
 
 form Give table file
-	sentence tablefile ../../../Publications/AutomaticAST2012/Speech/NKI98N96Vox_a/a_TLE.Table
+	sentence tablefile ../../../ASTevaluation/ASTeval_full_a/a_full_TLE.Table
 	positive interval_length 0.250
 endform
 .intervalLength = interval_length
 
 call getOpenFile 'tablefile$'
 #call getOpenFile Select a speaker table
+mainPage.draw$ = "Sound"
+config.showFormants = 1
 
 clearinfo
 printline i'tab$'ID'tab$'start'tab$'end'tab$'MVD'tab$'QF3'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'HNR'tab$'GNE'tab$'BED'tab$'AST
@@ -86,6 +88,7 @@ for .i to .numSpeakers
 			.ast = 0
 		endif
 	endif
+	
 	# Calculate values
 	call DrawPitchObject
 	call calculatePitchValues

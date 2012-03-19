@@ -627,9 +627,10 @@ procedure post_processing_sound
 	# Analyze Pitch in Serial step mode
 	if config.speakerSerial
 		# Supress drawing, but set up Pitch parameters
+		.tmp = noDrawingOrWriting
 		noDrawingOrWriting = 1
 		call DrawPitchObject
-		noDrawingOrWriting = 0
+		noDrawingOrWriting = .tmp
 	endif
 endproc
 
@@ -1637,6 +1638,7 @@ procedure saveSound .table$ .label$
 	   createDirectory(.dirname$)
 	   .outFileName$ = replace_regex$(.filename$, "\.[a-z0-9A-Z]+$","",0)
 		# Supress drawing
+		.tmp = noDrawingOrWriting
 		noDrawingOrWriting = 1
 		# Create new filename if sound is recorded
 		if currentSoundName$ <> ""
@@ -1789,7 +1791,7 @@ procedure saveSound .table$ .label$
 		.htmlText$ = .htmlText$ + .footerText$
 		
 		# Enable drawing
-		noDrawingOrWriting = 0
+		noDrawingOrWriting = .tmp
 		
 		# Now save the pictures
 		call print_signal '.filename$'
