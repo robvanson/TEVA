@@ -33,6 +33,9 @@ for .i to .numSpeakers
 	select te.openSound
 	call DrawHarmonicityObject
 	call calculateHarmonicityValues
+	if maxTimeHarmonicity = undefined
+		maxTimeHarmonicity = Get time of maximum... 0 0 Sinc70
+	endif
 	selectedStartTime = maxTimeHarmonicity - .intervalLength/2
 	if selectedStartTime < 0
 		selectedStartTime = 0
