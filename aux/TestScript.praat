@@ -22,7 +22,7 @@ mainPage.draw$ = "Sound"
 config.showFormants = 1
 
 clearinfo
-printline i'tab$'ID'tab$'start'tab$'end'tab$'MVD'tab$'QF3'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'HNR'tab$'GNE'tab$'BED'tab$'AST
+printline i'tab$'ID'tab$'start'tab$'end'tab$'Duration'tab$'MVD'tab$'QF3'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'HNR'tab$'GNE'tab$'BED'tab$'AST
 
 call get_speakerInfo 1
 .numSpeakers = get_speakerInfo.numEntries
@@ -31,6 +31,7 @@ for .i to .numSpeakers
 
 	call loadSpeaker 'get_speakerInfo.id$'
 	select te.openSound
+	.total_duration = Get total duration
 	call DrawHarmonicityObject
 	call calculateHarmonicityValues
 	if maxTimeHarmonicity = undefined
@@ -115,7 +116,7 @@ for .i to .numSpeakers
 
 	# Print output
 	print '.i''tab$''get_speakerInfo.id$'
-	print 'tab$''selectedStartTime:3''tab$''selectedEndTime:3'
+	print 'tab$''selectedStartTime:3''tab$''selectedEndTime:3''tab$''total_duration:1'
 	print 'tab$''.calcMVD:3'
 	print 'tab$''.calcQF3:1'
 	print 'tab$''.calcVF:3'
