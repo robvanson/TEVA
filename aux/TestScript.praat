@@ -116,7 +116,7 @@ for .i to .numSpeakers
 
 	# Print output
 	print '.i''tab$''get_speakerInfo.id$'
-	print 'tab$''selectedStartTime:3''tab$''selectedEndTime:3''tab$''total_duration:1'
+	print 'tab$''selectedStartTime:3''tab$''selectedEndTime:3''tab$''.total_duration:1'
 	print 'tab$''.calcMVD:3'
 	print 'tab$''.calcQF3:1'
 	print 'tab$''.calcVF:3'
