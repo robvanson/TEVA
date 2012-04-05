@@ -121,14 +121,14 @@ endif
 call reset_viewport
 
 # Load supporting scripts
+# Include tables in script format
+include CreateTables.praat
 # Set up system and load preferences
 include Initialise.praat
 # Include the main page buttons and procedures
 include MainPage.praat
 # Include the configuration page buttons and procedures
 include Config.praat
-# Include tables in script format
-include CreateTables.praat
 
 # Start instruction loop
 while demoWaitForInput()
@@ -284,7 +284,7 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
     select Table '.table$'
     .row = Search column... Label '.label$'
 	if .row < 1
-		exit Button Table '.table$' does not have a row with label '.label$'
+		call emergency_table_exit Button Table '.table$' does not have a row with label '.label$'
 	endif
 	
 	# Perspective shift sizes
@@ -473,7 +473,7 @@ procedure set_window_title .table$ .addedText$
     select Table '.table$'
     .row = Search column... Label !WindowTitle
 	if .row < 1
-		exit Button Table '.table$' does not have a row with label !WindowTitle
+		call emergency_table_exit Button Table '.table$' does not have a row with label !WindowTitle
 	endif
 	.windowText$ = Get value... '.row' Text
 	call convert_praat_to_latin1 '.windowText$'
@@ -510,7 +510,12 @@ procedure set_language .lang$
     endif
     
     # Set language
-    config.language$ = .lang$
+	call checkTable 'buttonsTableName$'_'.lang$'
+	if checkTable.available
+		config.language$ = .lang$
+	else
+		config.language$ = "EN"
+	endif
     
     # Load buttons tables
 	call loadTable 'buttonsTableName$'
@@ -551,12 +556,12 @@ procedure set_language .lang$
         		Set string value... '.row' Key '.valueKey$'
         		Set string value... '.row' Helptext '.valueHelp$'
         	else
-            	exit Cannot find Label: '.otherbuttonsLang$' '.label$'
+            	call emergency_table_exit Cannot find Label: '.otherbuttonsLang$' '.label$'
         	endif
 			select Table '.otherbuttonsLang$'
 			Remove
         else
-            exit Cannot find Label: '.buttonsLang$' '.label$'
+            call emergency_table_exit Cannot find Label: '.buttonsLang$' '.label$'
         endif
     endfor
     select Table '.buttonsLang$'
@@ -601,12 +606,12 @@ procedure set_language .lang$
         		Set string value... '.row' Key '.valueKey$'
         		Set string value... '.row' Helptext '.valueHelp$'
         	else
-            	exit Cannot find Label: '.otherconfigLang$' '.label$'
+            	call emergency_table_exit Cannot find Label: '.otherconfigLang$' '.label$'
         	endif
 			select Table '.otherconfigLang$'
 			Remove
         else
-            exit Cannot find Label: '.configLang$' '.label$'
+            call emergency_table_exit Cannot find Label: '.configLang$' '.label$'
         endif
     endfor
     select Table '.configLang$'
@@ -709,7 +714,7 @@ procedure findLabel .table$ .label$
 	call nowarn_findLabel '.table$' '.label$'
 	.row = nowarn_findLabel.row
 	if .row <= 0 and index(.label$, "_") <= 0
-		exit "'.label$'" is not a key in '.table$'
+		call emergency_table_exit "'.label$'" is not a key in '.table$'
 	endif
 endproc
 
@@ -1467,9 +1472,27 @@ procedure loadTable .tableName$
 		.tableID = '.tableName$'
 		select .tableID
 	# Load them from script
-	else
+	elsif variableExists("procCreate'.tableName$'$")
 		call Create'.tableName$'
+	else
+		call emergency_table_exit '.tableName$' cannot be found
 	endif
+endproc
+
+procedure checkTable .tableName$
+	.available = 0
+	if fileReadable("'localTableDir$'/'.tableName$'.Table")
+    	.available = 1
+	elsif fileReadable("'preferencesTableDir$'/'.tableName$'.Table")
+    	.available = 1
+	elsif fileReadable("'globaltablelists$'/'.tableName$'.Table")
+    	.available = 1
+	# Load them from script
+	elsif variableExists("procCreate'.tableName$'$")
+    	.available = 1
+	else
+    	.available = 0
+    endif
 endproc
 
 # Create a pop-up window with text from a Text Table
@@ -2038,4 +2061,13 @@ procedure reset_analysis
 		maxTimeIntensity = 0
 		maxTimeHarmonicity = 0
     endif
+endproc
+
+# A table error, can be insiduously caused by an outdate preferences file!
+procedure emergency_table_exit .message$
+	# If you come here as a user, your preferences file is borked
+	if preferencesAppFile$ <> "" and fileReadable(preferencesAppFile$)
+		deleteFile(preferencesAppFile$)
+	endif
+	exit '.message$'
 endproc

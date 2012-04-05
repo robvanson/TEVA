@@ -115,7 +115,10 @@ procedure table2procedure .tableName$ .targetFile$
 	# Collect information
 	.numberOfColumns = Get number of columns
 	.numberOfRows = Get number of rows
-		
+	
+	# Set name of procedure as variable
+	fileappend '.targetFile$' 'newline$'procCreate'.tableName$'$ = "'.tableName$'"'newline$'
+	
 	# Start output
 	fileappend '.targetFile$' procedure Create'.tableName$''newline$'
 	# Create table with columns
@@ -144,7 +147,7 @@ endproc
 # .listName$ is name of table to recieve all file names
 # Labels are Name and Directory
 # Who says you cannot do recursion in Praat?
-# This is earily fragile code.
+# This is eerily fragile code.
 recursion = 0
 procedure createListOfTables .listName$ .topDirectory$
 	recursion += 1
