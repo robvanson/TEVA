@@ -3,6 +3,7 @@
 # Convert HTML pages as created by Praat -> Manual -> Save manual to HTML directory...
 # And correct links to Praat manual
 #
+UNAME=$(uname -s)
 if [[ ${UNAME} == "Darwin" ]]; then
 	SEDCMD="sed -i ''"
 else
