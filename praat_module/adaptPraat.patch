@@ -111,7 +111,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  }
  
  static void executeStartUpFile (MelderDir startUpDirectory, const wchar_t *fileNameTemplate) {
-@@ -1504,6 +1520,14 @@ void praat_run (void) {
+@@ -1541,6 +1557,14 @@ void praat_run (void) {
  						Melder_flushError (NULL);
  					}
  				}
