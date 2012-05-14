@@ -25,7 +25,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_script.cpp 
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Graphics_text.cpp demo_praat_sources/sys/Graphics_text.cpp
 --- praat_sources/sys/Graphics_text.cpp	2011-09-29 12:27:01.000000000 +0200
 +++ demo_praat_sources/sys/Graphics_text.cpp	2011-10-27 09:14:57.000000000 +0200
-@@ -138,7 +138,7 @@ static HFONT loadFont (GraphicsScreen me
+@@ -135,7 +135,7 @@ static HFONT loadFont (GraphicsScreen me
  		ipaInited = TRUE;
  		if (! charisAvailable && ! doulosAvailable) {
  			/* BUG: The next warning may cause reentry of drawing (on window exposure) and lead to crash. Some code must be non-reentrant !! */
@@ -37,7 +37,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Graphics_text.cpp
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_picture.cpp demo_praat_sources/sys/praat_picture.cpp
 --- praat_sources/sys/praat_picture.cpp	2011-09-02 13:53:33.000000000 +0200
 +++ demo_praat_sources/sys/praat_picture.cpp	2011-09-16 08:12:59.000000000 +0200
-@@ -1758,8 +1758,10 @@ void praat_picture_init (void) {
+@@ -1702,8 +1702,10 @@ void praat_picture_init (void) {
  		#elif motif
  			drawingArea = GuiDrawingArea_createShown (scrollWindow, 0, width, 0, height, NULL, NULL, NULL, NULL, NULL, 0);
  		#endif
@@ -260,15 +260,15 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.de
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.mingw32 demo_praat_sources/makefiles/makefile.defs.mingw32
 --- praat_sources/makefiles/makefile.defs.mingw32	2011-09-19 12:26:39.000000000 +0200
 +++ demo_praat_sources/makefiles/makefile.defs.mingw32	2011-09-19 15:33:55.000000000 +0200
-@@ -8,7 +8,7 @@ CC = /mingw32/bin/gcc -std=gnu99 -isyste
- CXX = /mingw32/bin/g++ -isystem /mingw32/include/c++/4.7.0 -isystem /mingw32/include -Wshadow
- #CXX = /mingw32/bin/g++ -isystem /mingw32/include/c++/4.7.0 -isystem /mingw32/include -isystem /mingw32/include/QuickTime
+@@ -7,7 +7,7 @@ CC = /mingw32/bin/gcc -std=gnu99 -isyste
  
--CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -DDONT_INCLUDE_QUICKTIME -Dmain=wingwmain -O2
-+CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -DDONT_INCLUDE_QUICKTIME -Dmain=wingwmain -DDEMOAPP
- #CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -Dmain=wingwmain -O2
+ CXX = /mingw32/bin/g++ -isystem /mingw32/include/c++/4.7.0 -isystem /mingw32/include -Wshadow
+ 
+-CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -Dmain=wingwmain -O2
++CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -Dmain=wingwmain -DDEMOAPP
  
  CXXFLAGS = $(CFLAGS)
+ 
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.mingw64 demo_praat_sources/makefiles/makefile.defs.mingw64--- praat_sources/makefiles/makefile.defs.mingw32	2011-09-19 12:26:39.000000000 +0200
 --- praat_sources/makefiles/makefile.defs.mingw64	2011-09-19 12:26:39.000000000 +0200
 +++ demo_praat_sources/makefiles/makefile.defs.mingw64	2011-09-19 15:33:37.000000000 +0200
@@ -276,8 +276,8 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.de
  
  CXX = /mingw64/bin/g++ -isystem /mingw64/include/c++/4.7.0 -isystem /mingw64/include -Wshadow -m64
  
--CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -DDONT_INCLUDE_QUICKTIME -Dmain=wingwmain -O2
-+CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -DDONT_INCLUDE_QUICKTIME -Dmain=wingwmain -DDEMOAPP
+-CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -Dmain=wingwmain -O2
++CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -Dmain=wingwmain -DDEMOAPP -O2
  
  CXXFLAGS = $(CFLAGS)
  
