@@ -22,4 +22,4 @@ TEanalysisManPages.cpp: ../ManPages/*.man
 clean:
 	rm -f *expanded.h
 	rm -f *expanded.praat
-	rm -f TEanalysisManPages.cpp
+	rm -f *ManPages.cpp
