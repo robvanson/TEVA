@@ -1361,23 +1361,35 @@ procedure DrawHarmonicityObject
 			minHarmonicity = 0
 			maxHarmonicity = 30
 		endif
-		# Get smoothed maximum harmonicity
-		select te.harmonicity
-		.tmpMatrix = To Matrix
-		select .tmpMatrix
-		.tmpSound = To Sound (slice)... 1
-		.tmpFiltered = Filter (pass Hann band)... 0 5 5
-		maxTimeHarmonicity = Get time of maximum... 0 0 Parabolic
-		# Remove temporary files
-		select .tmpMatrix
-		plus .tmpSound
-		plus .tmpFiltered
-		Remove
 
 		select te.harmonicity
 		call 'mainPage.outputPraatObject$'PraatObject 'minHarmonicity' 'maxHarmonicity' Draw... 'currentStartTime' 'currentEndTime' 'minHarmonicity' 'maxHarmonicity'
 		call 'mainPage.outputPraatObject$'CurrentSelection 'minHarmonicity' 'maxHarmonicity'
 		
+	endif
+endproc
+
+# Calculate the MaxHarmonicity time
+procedure calcMaxHarmonicity .soundfile
+	if .soundfile > 0
+		select .soundfile
+		.tmpHarmonicity = noprogress To Harmonicity (cc)... 0.1 60 0.1 1.0
+		# Arbitrarily put a floor of 0dB on the Harmonicity to Noise ratio
+		Formula... if self < 0 then 0 else self fi
+		# Get smoothed maximum harmonicity
+		select .tmpHarmonicity
+		.tmpMatrix = To Matrix
+		select .tmpMatrix
+		.tmpSound = To Sound (slice)... 1
+		.tmpFiltered = Filter (pass Hann band)... 0 4 4
+		.time = Get time of maximum... 0 0 Parabolic
+		.value = Get maximum... 0 0 Parabolic
+		# Remove temporary files
+		select .tmpMatrix
+		plus .tmpHarmonicity
+		plus .tmpSound
+		plus .tmpFiltered
+		Remove
 	endif
 endproc
 

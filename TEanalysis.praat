@@ -871,6 +871,11 @@ procedure record_sound
 	
 	# A sound is recorded, wipe file name
 	currentSoundName$ = "RECORDED SOUND"
+	
+	call calcMaxHarmonicity te.openSound
+	maxTimeHarmonicity = calcMaxHarmonicity.time
+	
+	select te.openSound
 endproc
 
 procedure draw_recording_level
@@ -1293,7 +1298,7 @@ procedure getOpenFile .openDialogue$
 		# Get only the filename
 		.startName = rindex_regex(.filename$, "[/\\:]") + 1
 		.nameLength = rindex(.filename$, ".") - .startName
-		currentSoundName$ = mid$(.filename$, .startName, .nameLength) 
+		currentSoundName$ = mid$(.filename$, .startName, .nameLength)
 	else
 		Create Sound from formula... Speech Mono 0 1 44100 0
 	endif
@@ -1306,6 +1311,11 @@ procedure getOpenFile .openDialogue$
 	# Reset selected window
 	selectedStartTime = currentStartTime
 	selectedEndTime = currentEndTime
+	
+	call calcMaxHarmonicity te.openSound
+	maxTimeHarmonicity = calcMaxHarmonicity.time
+	
+	select te.openSound
 endproc
 
 procedure readFromFile .filename$
