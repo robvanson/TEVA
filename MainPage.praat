@@ -1373,7 +1373,7 @@ endproc
 procedure calcMaxHarmonicity .soundfile
 	if .soundfile > 0
 		select .soundfile
-		.tmpHarmonicity = noprogress To Harmonicity (cc)... 0.1 60 0.1 1.0
+		.tmpHarmonicity = noprogress To Harmonicity (cc)... 0.1 60 0.1 4.5
 		# Arbitrarily put a floor of 0dB on the Harmonicity to Noise ratio
 		Formula... if self < 0 then 0 else self fi
 		# Get smoothed maximum harmonicity
