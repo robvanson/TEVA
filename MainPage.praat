@@ -1054,14 +1054,14 @@ procedure PrintCurrentSelection .minimum .maximum
 		.selectXstart = selectedStartTime
 		.selectXend = selectedEndTime
 
-	    if (.selectXstart > currentStartTime and .selectXstart < currentEndTime) or (.selectXend > currentStartTime and .selectXend < currentEndTime)
+	    if (.selectXstart >= currentStartTime and .selectXstart <= currentEndTime) or (.selectXend >= currentStartTime and .selectXend <= currentEndTime)
 		    Colour... Blue
 		    Line width... 2
-		    if .selectXstart > currentStartTime and .selectXstart < currentEndTime
+		    if .selectXstart >= currentStartTime and .selectXstart <= currentEndTime
 			    Draw line... '.selectXstart' '.yH' '.selectXstart' '.yL'
 			    Text special... '.selectXstart' Centre '.yH' Bottom Helvetica 9 0 'selectedStartTime:4'
 		    endif
-		    if .selectXend > currentStartTime and .selectXend < currentEndTime
+		    if .selectXend >= currentStartTime and .selectXend <= currentEndTime
 			    Draw line... '.selectXend' '.yH' '.selectXend' '.yL'
 			    Text special... '.selectXend' Centre '.yH' Bottom Helvetica 9 0 'selectedEndTime:4'
 		    endif
@@ -1215,10 +1215,10 @@ procedure DrawCurrentSelection .minimum .maximum
 	    # Mark current selection	
 	    .selectXstart = -1
 	    .selectXend = -1
-	    if (selectedStartTime > currentStartTime and selectedStartTime < currentEndTime)
+	    if (selectedStartTime >= currentStartTime and selectedStartTime <= currentEndTime)
 		    .selectXstart = .xL+(selectedStartTime-currentStartTime)/(currentEndTime - currentStartTime) * (.xR - .xL)
 	    endif
-	    if (selectedEndTime > currentStartTime and selectedEndTime < currentEndTime)
+	    if (selectedEndTime >= currentStartTime and selectedEndTime <= currentEndTime)
 		    .selectXend = .xL+(selectedEndTime-currentStartTime)/(currentEndTime - currentStartTime) * (.xR - .xL)
 	    endif
 	    if .selectXstart > 0 or .selectXend > 0
