@@ -63,7 +63,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#elif defined (_WIN32)
  			swprintf (name, 256, L"%ls", Melder_utf8ToWcs (praatP.title));   /* For example MyProg */
  		#endif
-@@ -1191,6 +1191,12 @@ void praat_init (const char *title, unsi
+@@ -1197,6 +1197,12 @@ void praat_init (const char *title, unsi
  
  	GuiObject raam = NULL;
  	if (Melder_batch) {
@@ -76,7 +76,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#if defined (UNIX) || defined (macintosh) || defined (_WIN32) && defined (CONSOLE_APPLICATION)
  			MelderString_empty (& theCurrentPraatApplication -> batchName);
  			for (unsigned int i = iarg_batchName; i < argc; i ++) {
-@@ -1237,6 +1243,9 @@ void praat_init (const char *title, unsi
+@@ -1253,6 +1259,9 @@ void praat_init (const char *title, unsi
  		praat_addMenus (NULL);
  		praat_addFixedButtons (NULL);
  	} else {
@@ -86,7 +86,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		GuiObject Raam = NULL;
  		#if gtk
  			GuiObject raHoriz, raLeft; /* I want to have more possibilities for GTK widgets */
-@@ -1283,7 +1292,9 @@ void praat_init (const char *title, unsi
+@@ -1299,7 +1308,9 @@ void praat_init (const char *title, unsi
  			GuiObject_show (raLeft);
  			GuiObject_show (raHoriz);
  		#endif
@@ -97,7 +97,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#ifdef UNIX
  			try {
  				autofile f = Melder_fopen (& pidFile, "a");
-@@ -1308,7 +1319,12 @@ void praat_init (const char *title, unsi
+@@ -1324,7 +1335,12 @@ void praat_init (const char *title, unsi
  	Melder_setPublishProc (publishProc);
  	theCurrentPraatApplication -> manPages = ManPages_create ();
  
@@ -111,7 +111,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  }
  
  static void executeStartUpFile (MelderDir startUpDirectory, const wchar_t *fileNameTemplate) {
-@@ -1541,6 +1557,14 @@ void praat_run (void) {
+@@ -1557,6 +1573,14 @@ void praat_run (void) {
  						Melder_flushError (NULL);
  					}
  				}
