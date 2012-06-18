@@ -318,5 +318,5 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
  		Melder_throw (L"Cannot view a manual from batch.");
 +	#endif
  	Manual manPage = Manual_create (theCurrentPraatApplication -> topShell, L"Intro", theCurrentPraatApplication -> manPages, false);
- 	HyperPage_goToPage_i (manPage, GET_INTEGER (L"Page")); therror
+ 	HyperPage_goToPage_i (manPage, GET_INTEGER (L"Page"));
  END
