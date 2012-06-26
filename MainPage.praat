@@ -318,6 +318,9 @@ procedure set_draw_signal_button
 		call Draw_button 'buttons$' Next 1
 		call Draw_button 'buttons$' Previous 1
 	endif
+	if config.muteOutput
+		call Draw_button 'buttons$' Play 1
+	endif
 endproc
 
 ###############################################################
@@ -378,7 +381,7 @@ procedure processMainPagePlay .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "Play"
 	call play_sound 'te.openSound'
-	call Draw_button '.table$' '.label$' 0
+	call Draw_button '.table$' '.label$' config.muteOutput
 endproc
 
 procedure processMainPageSpeaker .clickX .clickY .pressed$

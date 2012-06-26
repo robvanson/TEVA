@@ -12,6 +12,7 @@ Instruction	Pathologie	P	Beschreibung pathologischer Typen
 Manual	Handbuch	u	Handbuch zum Programm
 Credits	\u"ber	bi	Informationen zur NKI TE-VOICE ANALYSIS tool
 Help	Hilfe	?/	Dr\u"cken Sie auf den Knopf \u"ber den Sie Informationen m\o"chten. Dr\u"cken Sie danach auf "Hilfe".
+MuteOutput	Stumm [x]	x	Stummschalten, keine wiedergabe
 Test	Aufnahme testen	A	Testen Sie die Aufnahmeeinstellungen
 $MaxFrequency	Frequenz	!	H\o"chstfrequenz im Spektrogramm
 Frequency_10k	10kHz	10	Wiedergabe bis 10 kHz

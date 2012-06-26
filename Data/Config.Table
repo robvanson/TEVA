@@ -26,10 +26,11 @@ RecordingTime	35	45	60	65	Black	DrawNull
 ShowBackground	60	75	95	100	Black	DrawNull
 Input_Microphone	60	75	87	92	Black	DrawNull
 Input_Line	60	75	81	86	Black	DrawNull
+MuteOutput	60	75	75	80	Black	DrawNull
+Test	60	75	67	72	Black	DrawTest
 Instruction	90	100	65	75	Black	DrawInstruction
 Manual	90	100	52.5	62.5	Black	DrawManual
 Credits	90	100	40	50	Black	DrawCredits
-Test	60	75	73	78	Black	DrawTest
 Logging	90	100	0	5	Blue	DrawLogging
 OpenLog	78	88	0	5	Blue	DrawNull
 Run	66	76	0	5	Blue	DrawNull

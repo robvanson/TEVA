@@ -302,6 +302,14 @@ procedure processConfigTest .clickX .clickY .pressed$
     call Draw_button '.table$' '.label$' 0
 endproc
 
+procedure processConfigMuteOutput .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "MuteOutput"
+	config.muteOutput = not config.muteOutput;
+	.displayButton = 2*config.muteOutput
+    call Draw_button '.table$' '.label$' '.displayButton'
+endproc
+
 procedure processConfigFrequency .frequencyK$ .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "Frequency"

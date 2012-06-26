@@ -12,6 +12,7 @@ Instruction	Pathologie	P	Informatie over pathologische types
 Manual	Handleiding	H	Handleiding van de applicatie
 Credits	Over	iC	Informatie over NKI TE-VOICE ANALYSIS tool
 Help	Help	?/	klik op de knop waar u informatie over wilt hebben, "Help" als u verder wilt
+MuteOutput	Mute [x]	x	Geen geluidsweergave
 Test	Test opname	o	Test opname niveau
 $MaxFrequency	Frequentie	!	Hoogste frequentie
 Frequency_10k	10kHz	10	Ga tot 10 kHz

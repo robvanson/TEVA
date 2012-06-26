@@ -75,6 +75,7 @@ procedure global_initialization
 	config.speakerDataTable = -1
 	config.speakerSerial = 0
 	config.showFormants = 1
+	config.muteOutput = 0
 	
 	pathologicalType = 0
 	pathologicalTypeText$ = "- Pathological type = 'pathologicalType'"

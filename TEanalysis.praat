@@ -75,6 +75,7 @@ sampleFrequency = 44100
 config.frequency = 5000
 config.showFormants = 1
 config.speakerSerial = 0
+config.muteOutput = 0
 
 # Parameters for isolating recorded speech from noise
 # Should be mostly left alone unless you are using ultra clean
@@ -799,7 +800,7 @@ procedure keyPressed table$ .pressed$
 endproc
 
 procedure play_sound .sound
-    if .sound
+    if .sound and not config.muteOutput
     	select '.sound'
 		if not currentStartTime and not currentEndTime
     		Play
