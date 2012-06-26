@@ -95,6 +95,7 @@ directory as the Table with the list of recordings. For example, the preferences
 <code> "config.recordingTime    4"
 <code> "config.showBackground   1"
 <code> "config.input            Microphone"
+<code> "config.muteOutput       0"
 <code> "config.openLog          /Users/gues/Library/Preferences/TEanalysis/log"
 <code> "mainPage.draw           Spectrogram"
 <normal> "Note that the last Table used is stored in the preferences file (here it is %%SignaltypeVoiceSamples.Table%)."
