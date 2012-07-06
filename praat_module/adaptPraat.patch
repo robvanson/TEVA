@@ -51,7 +51,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_picture.cpp
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_praat_sources/sys/praat.cpp
 --- praat_sources/sys/praat.cpp	2011-09-14 14:37:55.000000000 +0200
 +++ demo_praat_sources/sys/praat.cpp	2011-09-16 10:04:34.000000000 +0200
-@@ -1121,9 +1121,9 @@ void praat_init (const char *title, unsi
+@@ -1128,9 +1128,9 @@ void praat_init (const char *title, unsi
  		 * Make sure that the program's private directory exists.
  		 */
  		#if defined (UNIX)
@@ -63,7 +63,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#elif defined (_WIN32)
  			swprintf (name, 256, L"%ls", Melder_utf8ToWcs (praatP.title));   /* For example MyProg */
  		#endif
-@@ -1197,6 +1197,12 @@ void praat_init (const char *title, unsi
+@@ -1204,6 +1204,12 @@ void praat_init (const char *title, unsi
  
  	GuiObject raam = NULL;
  	if (Melder_batch) {
@@ -76,7 +76,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#if defined (UNIX) || defined (macintosh) || defined (_WIN32) && defined (CONSOLE_APPLICATION)
  			MelderString_empty (& theCurrentPraatApplication -> batchName);
  			for (unsigned int i = iarg_batchName; i < argc; i ++) {
-@@ -1253,6 +1259,9 @@ void praat_init (const char *title, unsi
+@@ -1260,6 +1266,9 @@ void praat_init (const char *title, unsi
  		praat_addMenus (NULL);
  		praat_addFixedButtons (NULL);
  	} else {
@@ -86,7 +86,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		GuiObject Raam = NULL;
  		#if gtk
  			GuiObject raHoriz, raLeft; /* I want to have more possibilities for GTK widgets */
-@@ -1299,7 +1308,9 @@ void praat_init (const char *title, unsi
+@@ -1306,7 +1315,9 @@ void praat_init (const char *title, unsi
  			GuiObject_show (raLeft);
  			GuiObject_show (raHoriz);
  		#endif
@@ -97,7 +97,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#ifdef UNIX
  			try {
  				autofile f = Melder_fopen (& pidFile, "a");
-@@ -1324,7 +1335,12 @@ void praat_init (const char *title, unsi
+@@ -1331,7 +1342,12 @@ void praat_init (const char *title, unsi
  	Melder_setPublishProc (publishProc);
  	theCurrentPraatApplication -> manPages = ManPages_create ();
  
@@ -111,7 +111,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  }
  
  static void executeStartUpFile (MelderDir startUpDirectory, const wchar_t *fileNameTemplate) {
-@@ -1557,6 +1573,14 @@ void praat_run (void) {
+@@ -1564,6 +1580,14 @@ void praat_run (void) {
  						Melder_flushError (NULL);
  					}
  				}
