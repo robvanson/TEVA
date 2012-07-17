@@ -48,12 +48,6 @@ procedure global_initialization
 	canvasLeftCorrection = 0.5
 	canvasRightCorrection = -1.5
 	wipeCanvasArea$ = "demo Paint rectangle... White 'canvasXL' 'canvasXR' 'canvasYL' 'canvasYH'"
-
-	.graphScriptsLeft = canvasXL - 5
-	.graphScriptsRight = canvasXR + 5
-	.graphScriptsTop = canvasYH + 5
-	.graphScriptsBot = canvasYH
-	wipeTopGraphArea$ = "demo Paint rectangle... White '.graphScriptsLeft' '.graphScriptsRight' '.graphScriptsBot' '.graphScriptsTop'"
 	
 	# Pop-Up window and other colors
 	popUp.bordercolor$ = "{0.5,0.5,1}"
@@ -213,9 +207,6 @@ procedure init_window
 		canvasYH = Get value... '.row' HighY
 		wipeCanvasArea$ = "demo Paint rectangle... White 'canvasXL' 'canvasXR' 'canvasYL' 'canvasYH'"
 
-		.canvasYHbot = canvasYH
-		.canvasYHtop = canvasYH + 5
-		wipeTopGraphArea$ = "demo Paint rectangle... White 'canvasXL' 'canvasXR' '.canvasYHbot' '.canvasYHtop'"
 	endif
 	
 	# Draw background

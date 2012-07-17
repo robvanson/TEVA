@@ -728,7 +728,6 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 	call write_feedback_text Blue '.feedback2$'
 	
 	# Set first border
-	call wipeArea 'wipeTopGraphArea$'
 	.selectedTime = currentStartTime + (currentEndTime - currentStartTime)*(.clickX - .xL)/(.xR - .xL)
 	demo Colour... Blue
 	demo Line width... 2
@@ -1228,9 +1227,7 @@ procedure DrawCurrentSelection .minimum .maximum
 	    if (selectedEndTime >= currentStartTime and selectedEndTime <= currentEndTime)
 		    .selectXend = .xL+(selectedEndTime-currentStartTime)/(currentEndTime - currentStartTime) * (.xR - .xL)
 	    endif
-	    if .selectXstart > 0 or .selectXend > 0
-			call wipeArea 'wipeTopGraphArea$'
-		    
+	    if .selectXstart > 0 or .selectXend > 0		    
 		    demo Colour... Blue
 		    demo Line width... 2
 		    call set_font_size 9
