@@ -26,7 +26,9 @@ $Speaker	Sprecher	!	Tabelle mit den Sprecherdaten
 SpeakerData	Daten	t	Lese Tabelle mit den Sprecherdaten
 SaveSpeaker	Speichern	S	Speichere aktuelle Tabelle mit den Sprecherdaten
 CloseSpeaker	Schlie\ssen	l	Schlie\sse die aktuelle Tabelle und \o"fne eine lehre Tabelle f\u"r die Sprecherdaten
+SpeakerMerge	Kombiniere	K	Kombiniere tabelle mit Sprecherdaten
 SpeakerSerial	Seriell	r	Verarbeite alle Aufnahmen hintereinander (Sprecher Taste liest n\a"chste Aufnahme)
+SpeakerSort	Sortiere	o	Sortiere die Liste mit Aufnahmen
 SpeakerRandomize	Shuffle	h	Randomisiere die Liste mit Aufnahmen
 RecordingTime	Aufnahme	e	Aufnahmezeit in Secunden
 Logging	Log an	L	Starte das Protokollieren aller Aufnahmen (Logbuch)

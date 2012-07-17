@@ -26,7 +26,9 @@ $Speaker	Sprekers	!	Tabel met spreker gegevens
 SpeakerData	Data	D	Lees tabel met sprekergegevens
 SaveSpeaker	Bewaar	B	Bewaar huidige tabel met sprekergegevens
 CloseSpeaker	Sluit	S	Sluit huidige tabel en open een nieuwe, lege tabel
+SpeakerMerge	Merge	M	Combineer nieuwe tabel met huidige sprekergegevens
 SpeakerSerial	Serieel	r	Verwerk alle opnamen in volgorde (Spreker knop leest volgende opname)
+SpeakerSort	Sorteer V	V	Sorteer de lijst met opnamen
 SpeakerRandomize	Shuffle	e	Randomiseer de lijst met opnamen
 RecordingTime	Opname <	,<	Opnametijd in seconden
 Logging	Log aan	L	Start logging spraak

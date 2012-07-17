@@ -716,7 +716,10 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 	if selectedStartTime > currentStartTime or selectedEndTime < currentEndTime
 		selectedStartTime = currentStartTime
 		selectedEndTime = currentEndTime
+		# New selections are entered, do not redraw the old ones
+		noDrawingSelection = 1
 		call init_window
+		noDrawingSelection = 0
 	endif
 	# Get feedback text
 	call get_feedback_text 'config.language$' Select2
@@ -725,11 +728,12 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 	call write_feedback_text Blue '.feedback2$'
 	
 	# Set first border
+	call wipeArea 'wipeTopGraphArea$'
 	.selectedTime = currentStartTime + (currentEndTime - currentStartTime)*(.clickX - .xL)/(.xR - .xL)
 	demo Colour... Blue
 	demo Line width... 2
 	demo Draw line... '.clickX' '.yH' '.clickX' '.yL'
-	demo Text special... '.clickX' Centre '.yH' Bottom Helvetica 9 0 '.selectedTime:4'
+	demo Text special... '.clickX' Centre '.yH' Bottom Helvetica 10 0 '.selectedTime:4'
 	demoShow()
 	demo Colour... Black
 	demo Line width... 'defaultLineWidth'
@@ -750,7 +754,7 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 				demo Colour... Blue
 				demo Line width... 2
 				demo Draw line... '.clickX' '.yH' '.clickX' '.yL'
-				demo Text special... '.clickX' Centre '.yH' Bottom Helvetica 9 0 '.selectedTime:4'
+				demo Text special... '.clickX' Centre '.yH' Bottom Helvetica 10 0 '.selectedTime:4'
 				demoShow()
 				demo Colour... Black
 				demo Line width... 'defaultLineWidth'
@@ -1062,11 +1066,11 @@ procedure PrintCurrentSelection .minimum .maximum
 		    Line width... 2
 		    if .selectXstart >= currentStartTime and .selectXstart <= currentEndTime
 			    Draw line... '.selectXstart' '.yH' '.selectXstart' '.yL'
-			    Text special... '.selectXstart' Centre '.yH' Bottom Helvetica 9 0 'selectedStartTime:4'
+			    Text special... '.selectXstart' Centre '.yH' Bottom Helvetica 10 0 'selectedStartTime:4'
 		    endif
 		    if .selectXend >= currentStartTime and .selectXend <= currentEndTime
 			    Draw line... '.selectXend' '.yH' '.selectXend' '.yL'
-			    Text special... '.selectXend' Centre '.yH' Bottom Helvetica 9 0 'selectedEndTime:4'
+			    Text special... '.selectXend' Centre '.yH' Bottom Helvetica 10 0 'selectedEndTime:4'
 		    endif
 		    Colour... Black
 		    Line width... 'defaultLineWidth'
@@ -1210,7 +1214,7 @@ procedure DrawMarkAtTime .time .minimum .maximum .color$
 endproc
 
 procedure DrawCurrentSelection .minimum .maximum
-	if not noDrawingOrWriting
+	if not (noDrawingOrWriting or noDrawingSelection)
 	    .xL = canvasXL + canvasLeftCorrection
 	    .xR = canvasXR + canvasRightCorrection
 	    .yL = canvasYL
@@ -1225,6 +1229,8 @@ procedure DrawCurrentSelection .minimum .maximum
 		    .selectXend = .xL+(selectedEndTime-currentStartTime)/(currentEndTime - currentStartTime) * (.xR - .xL)
 	    endif
 	    if .selectXstart > 0 or .selectXend > 0
+			call wipeArea 'wipeTopGraphArea$'
+		    
 		    demo Colour... Blue
 		    demo Line width... 2
 		    call set_font_size 9
@@ -1233,12 +1239,12 @@ procedure DrawCurrentSelection .minimum .maximum
 		    .endTextWidth = 0
 		    if .selectXstart > 0
 			    demo Draw line... '.selectXstart' '.yH' '.selectXstart' '.yL'
-			    demo Text special... '.selectXstart' Centre '.yH' Bottom Helvetica 9 0 'selectedStartTime:4'
+			    demo Text special... '.selectXstart' Centre '.yH' Bottom Helvetica 10 0 'selectedStartTime:4'
 			    .startTextWidth = demo Text width (wc)... 'selectedStartTime:4'
 		    endif
 		    if .selectXend > 0
 			    demo Draw line... '.selectXend' '.yH' '.selectXend' '.yL'
-			    demo Text special... '.selectXend' Centre '.yH' Bottom Helvetica 9 0 'selectedEndTime:4'
+			    demo Text special... '.selectXend' Centre '.yH' Bottom Helvetica 10 0 'selectedEndTime:4'
 			    .endTextWidth = demo Text width (wc)... 'selectedEndTime:4'
 		    endif
 		    # Write intervalduration
@@ -1254,7 +1260,7 @@ procedure DrawCurrentSelection .minimum .maximum
 				.textWidth = demo Text width (wc)... '.intervalDurationText$'
 		    endwhile
 		    if index_regex(.intervalDurationText$, "[1-9]")
-				demo Text special... '.textPosition' Centre '.yH' Bottom Helvetica 9 0 '.intervalDurationText$'
+				demo Text special... '.textPosition' Centre '.yH' Bottom Helvetica 10 0 '.intervalDurationText$'
 		    endif
 		    
 		    demoShow()

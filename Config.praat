@@ -158,6 +158,53 @@ procedure processConfigSpeakerData .clickX .clickY .pressed$
     call Draw_button 'table$' '.label$' 0
 endproc
 
+procedure processConfigSpeakerMerge .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "SpeakerMerge"
+	# Get help text
+	call getLanguageTexts '.table$' '.label$'
+	.newFile$ = chooseReadFile$ (getLanguageTexts.helpText$)
+	if config.speakerDataTable > 0 and .newFile$ <> config.speakerData$
+		call regular_save_backup_file
+	endif
+	# Read new file
+	.tmpNewSpeakerData = Read from file... '.newFile$'
+	# Make sure data table is read
+	if config.speakerDataTable <= 0 and config.speakerData$ <> ""
+		call get_speakerInfo 1
+	endif
+	if config.speakerDataTable > 0
+		select config.speakerDataTable
+		.numCols = Get number of columns
+		.astNum = .numCols - 4 + 1
+		.lastColumn$ = Get column label... .numCols
+		.lastColumn$ = replace_regex$(.lastColumn$, "\d+$", "", 0)
+		.lastColumn$ = .lastColumn$+"'.astNum'"
+		Append column... '.lastColumn$'
+		.numRows = Get number of rows
+		for .row to .numRows
+			# Find new row corresponding to current row
+			select config.speakerDataTable
+			.id$ = Get value... .row ID
+			select .tmpNewSpeakerData
+			.tmpRow = Search column... ID '.id$'
+			if .tmpRow > 0
+				# Get new value
+				.astValue$ = Get value... .tmpRow AST
+				
+				# Add value
+				select config.speakerDataTable
+				Set string value... .row '.lastColumn$' '.astValue$'
+			endif
+		endfor
+	endif
+	
+	select .tmpNewSpeakerData
+	Remove
+	
+    call Draw_button 'table$' '.label$' 0
+endproc
+
 procedure processConfigSaveSpeaker .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "SaveSpeaker"
@@ -254,6 +301,28 @@ procedure processConfigSpeakerRandomize .clickX .clickY .pressed$
 		if clicked = 2
 			select config.speakerDataTable
 			Randomize rows
+		endif
+	endif
+    call Draw_button 'table$' '.label$' 0
+endproc
+
+procedure processConfigSpeakerSort .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "SpeakerSort"
+	
+	if config.speakerDataTable <= 0 and config.speakerData$ <> ""
+		call get_speakerInfo 1
+	endif
+	if config.speakerDataTable > 0
+		# Get feedback texts
+		call getLanguageTexts '.table$' '.label$'
+		.inputText$ = getLanguageTexts.inputText$
+		beginPause("")
+			comment(getLanguageTexts.helpText$)
+		clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2)
+		if clicked = 2
+			select config.speakerDataTable
+			Sort rows... ID Audio Text Description
 		endif
 	endif
     call Draw_button 'table$' '.label$' 0

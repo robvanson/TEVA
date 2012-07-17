@@ -26,7 +26,9 @@ $Speaker	Speakers	!	Table with speaker data
 SpeakerData	Data	D	Read table with speaker data
 SaveSpeaker	Save	v	Write current table with speaker data
 CloseSpeaker	Close	o	Close current table and open a new, empty table
+SpeakerMerge	Merge	g	Merge new table with current speaker data
 SpeakerSerial	Serial	i	Step through all recordings in sequence (Speaker button reads next recording)
+SpeakerSort	Sort V	V	Sort the list of recordings
 SpeakerRandomize	Shuffle	u	Randomize the list of recordings
 RecordingTime	Recording	c	Time of recording in seconds
 Logging	Log on	L	Start logging sounds
