@@ -129,6 +129,8 @@ procedure global_initialization
 	speakerComments$ = ""
 	noDrawingOrWriting = 0
 	noDrawingSelection = 0
+	selectionIsDrawn = 0
+
 	
 	globaltablelists$ = ""
 	if unix
@@ -250,6 +252,7 @@ procedure init_window
 	# Logging light
 	call paint_logging_light
 	# Draw something (do it last so the axes do not get erased)
+	selectionIsDrawn = 0
 	call draw_signal
 endproc
 

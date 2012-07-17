@@ -713,13 +713,15 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 		goto ESCAPEDISPLAYSELECT
 	endif
 	# Redraw window if there is an old selection
-	if selectedStartTime > currentStartTime or selectedEndTime < currentEndTime
+	if selectionIsDrawn or selectedStartTime > currentStartTime or selectedEndTime < currentEndTime
 		selectedStartTime = currentStartTime
 		selectedEndTime = currentEndTime
+		# Clean up de screen
 		# New selections are entered, do not redraw the old ones
 		noDrawingSelection = 1
 		call init_window
 		noDrawingSelection = 0
+		selectionIsDrawn = 0
 	endif
 	# Get feedback text
 	call get_feedback_text 'config.language$' Select2
@@ -757,6 +759,7 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 				demoShow()
 				demo Colour... Black
 				demo Line width... 'defaultLineWidth'
+				selectionIsDrawn = 1
 				if .firstT < 0 and .secondT < 0
 					.firstT = .selectedTime
 					call write_feedback_text Blue '.feedback2$'
@@ -1227,10 +1230,10 @@ procedure DrawCurrentSelection .minimum .maximum
 	    if (selectedEndTime >= currentStartTime and selectedEndTime <= currentEndTime)
 		    .selectXend = .xL+(selectedEndTime-currentStartTime)/(currentEndTime - currentStartTime) * (.xR - .xL)
 	    endif
-	    if .selectXstart > 0 or .selectXend > 0		    
+	    if .selectXstart > 0 or .selectXend > 0		    			
 		    demo Colour... Blue
 		    demo Line width... 2
-		    call set_font_size 9
+		    call set_font_size 10
 		    demo Helvetica
 		    .startTextWidth = 0
 		    .endTextWidth = 0
@@ -1265,6 +1268,7 @@ procedure DrawCurrentSelection .minimum .maximum
 			demo 'defaultFont$'
 		    demo Colour... Black
 		    demo Line width... 'defaultLineWidth'
+		    selectionIsDrawn = 1
 	    endif
 	    call writeAnalysisValues 'mainPage.draw$'
 	endif
