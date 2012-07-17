@@ -2,6 +2,9 @@ ManPagesTextFile
 "What's new?" "R.J.J.H. van Son" 20120215 0
 <intro> "Latest changes in TEVA."
 
+<normal> "##17 July 2012#"
+<list_item> "\bu Better usage for blind AST evaluation experiments. Among others, shuffle of speaker data, 
+merging of AST lists, and mute of sound."
 <normal> "##17 February 2012#"
 <list_item> "\bu Voiced parts of the signal are indicated by a blue-gray line below the time axis"
 <list_item> "\bu A %Serial mode to step through a all items in a Speaker Data list"
