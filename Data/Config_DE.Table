@@ -28,6 +28,7 @@ SaveSpeaker	Speichern	S	Speichere aktuelle Tabelle mit den Sprecherdaten
 CloseSpeaker	Schlie\ssen	l	Schlie\sse die aktuelle Tabelle und \o"fne eine lehre Tabelle f\u"r die Sprecherdaten
 SpeakerMerge	Kombiniere	K	Kombiniere tabelle mit Sprecherdaten
 SpeakerSerial	Seriell	r	Verarbeite alle Aufnahmen hintereinander (Sprecher Taste liest n\a"chste Aufnahme)
+!SelectionWindow	SelectionWindow	!	Urspr\u"ngliche Breite des Auswahl-Fenster (Voreinstellungen Serieller modus)
 SpeakerSort	Sortiere	o	Sortiere die Liste mit Aufnahmen
 SpeakerRandomize	Shuffle	h	Randomisiere die Liste mit Aufnahmen
 RecordingTime	Aufnahme	e	Aufnahmezeit in Secunden

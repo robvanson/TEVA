@@ -330,6 +330,7 @@ procedure write_preferences .preferencesFile$
 		for .tablerow to .numTableRows
 			select Table '.table$'
 			.label$ = Get value... '.tablerow' Label
+			.label$ = replace_regex$(.label$, "^[!]", "", 0)
 			.variableName$ = .varPrefix$+"."+(replace_regex$(.label$, "^(.)", "\l\1", 0))
 			.keyName$ = .variableName$
 			.value$ = ""
@@ -523,8 +524,17 @@ procedure ReadSpeakerData .speakerData$
 		# New SpeakerData, forget old backup
 		call regular_save_backup_file
 		config.speakerDataBackup$ = ""
+		# Set local preferences
+		.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
+		call load_local_preferences '.dataDir$'
+		# Find the table
 		if index_regex(.speakerData$, "\.(?itsv|table)")
-			.currentSelected = selected()
+			.numSelected = numberOfSelected()
+			if .numSelected > 0
+				.currentSelected = selected()
+			else
+				.currentSelected = -1
+			endif
 			config.speakerDataTable = nocheck Read from file... '.speakerData$'
 			if config.speakerDataTable <= 0 or .currentSelected = config.speakerDataTable
 				config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST
@@ -559,6 +569,9 @@ procedure ReadSpeakerData .speakerData$
 					Append column... AST
 				endif
 			endif
+			# Set local preferences
+			.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
+			call load_local_preferences '.dataDir$'
 		else
 			# Reset SpeakerData table
 			if  config.speakerDataTable > 0

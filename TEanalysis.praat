@@ -75,6 +75,7 @@ sampleFrequency = 44100
 config.frequency = 5000
 config.showFormants = 1
 config.speakerSerial = 0
+config.selectionWindow = 1.75
 config.muteOutput = 0
 
 # Parameters for isolating recorded speech from noise
@@ -876,15 +877,15 @@ procedure record_sound
 	call calcMaxHarmonicity te.openSound
 	maxTimeHarmonicity = calcMaxHarmonicity.time
 	if config.speakerSerial
-		if maxTimeHarmonicity > 1
-			selectedStartTime = maxTimeHarmonicity - 1
+		if maxTimeHarmonicity > config.selectionWindow / 2
+			selectedStartTime = maxTimeHarmonicity - config.selectionWindow / 2
 		else
 			selectedStartTime = 0
 		endif
-		selectedEndTime = selectedStartTime + 2
+		selectedEndTime = selectedStartTime + config.selectionWindow
 		if selectedEndTime > currentEndTime
 			selectedEndTime = currentEndTime
-			selectedStartTime = selectedEndTime - 2
+			selectedStartTime = selectedEndTime - config.selectionWindow
 		endif
 	endif
 	
@@ -1328,15 +1329,15 @@ procedure getOpenFile .openDialogue$
 	call calcMaxHarmonicity te.openSound
 	maxTimeHarmonicity = calcMaxHarmonicity.time
 	if config.speakerSerial
-		if maxTimeHarmonicity > 1
-			selectedStartTime = maxTimeHarmonicity - 1
+		if maxTimeHarmonicity > config.selectionWindow / 2
+			selectedStartTime = maxTimeHarmonicity - config.selectionWindow / 2
 		else
 			selectedStartTime = 0
 		endif
-		selectedEndTime = selectedStartTime + 2
+		selectedEndTime = selectedStartTime + config.selectionWindow
 		if selectedEndTime > currentEndTime
 			selectedEndTime = currentEndTime
-			selectedStartTime = selectedEndTime - 2
+			selectedStartTime = selectedEndTime - config.selectionWindow
 		endif
 	endif
 	

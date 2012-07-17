@@ -28,6 +28,7 @@ SaveSpeaker	Bewaar	B	Bewaar huidige tabel met sprekergegevens
 CloseSpeaker	Sluit	S	Sluit huidige tabel en open een nieuwe, lege tabel
 SpeakerMerge	Merge	M	Combineer nieuwe tabel met huidige sprekergegevens
 SpeakerSerial	Serieel	r	Verwerk alle opnamen in volgorde (Spreker knop leest volgende opname)
+!SelectionWindow	SelectionWindow	!	Beginlengte van het selectie venster (Voorkeursinstelling Serieel mode)
 SpeakerSort	Sorteer V	V	Sorteer de lijst met opnamen
 SpeakerRandomize	Shuffle	e	Randomiseer de lijst met opnamen
 RecordingTime	Opname <	,<	Opnametijd in seconden
