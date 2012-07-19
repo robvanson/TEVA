@@ -538,7 +538,22 @@ procedure processMainPageNextItem .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "Next"
 
+	# Check whether this is the last speaker in the list
+	call get_speakerInfo 'speakerID$'
+	.previousRow = get_speakerInfo.row
+	
 	call get_nextSpeaker 'speakerID$'
+	.currentRow = get_nextSpeaker.row
+	
+	# If currentRow < previousRow, you start over. Show a message
+	if .currentRow < .previousRow
+		call get_feedback_text 'config.language$' Ready
+		call convert_praat_to_latin1 'get_feedback_text.text$'
+		.readyText$ = convert_praat_to_latin1.text$
+		call write_text_popup Helvetica 20 '.readyText$'
+		demoWaitForInput()
+	endif
+	
 	# This was the first reference to a speaker, get first empty pos
 	if speakerID$ = "" and config.speakerDataTable > 0
 		select config.speakerDataTable
@@ -781,15 +796,18 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 		elsif demoKeyPressed()
 			.pressed$ = demoKey$()
 			if index_regex(.pressed$, "[-=_+]") > 0
-				.windowSize = 2
+				.windowSize = config.selectionWindow
 				if index_regex(.pressed$, "[-_]") > 0
 					.windowSize = 1
 				endif
 				# Remove line
+				noDrawingSelection = 1
 				call init_window
+				noDrawingSelection = 0
 				call Draw_button '.table$' Select 2
 				.firstT -= .windowSize / 2
 				.secondT = .firstT + .windowSize
+				selectionIsDrawn = 1
 				goto ENDOFDISPLAYSELECT
 			else
 				.firstT = -1
