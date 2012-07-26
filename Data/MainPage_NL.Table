@@ -14,7 +14,7 @@ Quit	Stop	S	Stop NKI TE-VOICE ANALYSIS tool
 Config	Instellingen	I	Ga naar de pagina met instellingen
 Refresh	Ververs	r	Ververs de huidige pagina, de spatiebalk ververst altijd de pagina
 Help	Help	?/	Druk op de knop waar u informatie over wilt hebben, "Help" als u verder wilt
-Save	Bewaar \# 	#	Bewaar metingen en opname
+Save	Print \# 	#	Bewaar metingen en opname in een formaat voor printen
 Draw_Sound	Geluid	G	Teken de geluidsfile
 Draw_Pitch	Toon	T	Teken de toonhoogte
 Draw_Harmonicity	Harmoniciteit	H	Teken de Harmonicity to Noise ratio

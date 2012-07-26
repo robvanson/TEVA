@@ -72,6 +72,7 @@ procedure global_initialization
 	config.recordingTime$ = "4"
 	config.speakerData$ = ""
 	config.speakerDataBackup$ = ""
+	config.freshBackup = 0
 	config.speakerDataTable = -1
 	config.speakerSerial = 0
 	config.showFormants = 1
@@ -525,6 +526,8 @@ procedure ReadSpeakerData .speakerData$
 		# New SpeakerData, forget old backup
 		call regular_save_backup_file
 		config.speakerDataBackup$ = ""
+		config.freshBackup = 1
+		
 		# Set local preferences
 		.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
 		call load_local_preferences '.dataDir$'
@@ -733,6 +736,7 @@ procedure regular_save_backup_file
 		if .filename$ <> "" and .filename$ <> config.speakerDataBackup$
 			deleteFile(config.speakerDataBackup$)
 			config.speakerDataBackup$ = ""
+			config.freshBackup = 1
 			select config.speakerDataTable
 			Save as tab-separated file... '.filename$'
 		endif
