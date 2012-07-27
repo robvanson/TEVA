@@ -31,13 +31,14 @@ Set the maximal frequency to a frequency that just includes all the relevant fea
 
 <entry> "Speaker data tables and recording duration"
 <normal> "It is useful to have a list of speaker data available. TEVA can read and write Tab delimited tables (tsv) 
-with speaker data."
+with speaker data. A backup of this file, with a tilde '~' appended to the name, is created if the data are changed."
 <list_item> "\bu ##Data#: [D] Read table with speaker data"
 <list_item> "\bu ##Save#: [v] Write current table with speaker data"
 <list_item> "\bu ##Close#: [o] Close current table and open a new, empty one"
 <list_item> "\bu ##Merge#: [g] Merge new table with current speaker data"
 <list_item> "\bu ##Sort#: [V] Sort the list of recordings"
 <list_item> "\bu ##Shuffle#: [u] Randomize the list of recordings"
+<list_item> "\bu ##Revert#: [c] Revert speaker data to saved version"
 <list_item> "\bu ##Serial#: [i] Step through all recordings in sequence (%Speaker button changes to blue %Nxt, next recording)"
 <normal> "Each row in the speaker table contains five fields separated by tabs:"
 <list_item> "[1] Speaker, or Recording, ID (must be unique)"
