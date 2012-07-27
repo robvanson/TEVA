@@ -221,22 +221,37 @@ procedure init_window
     call init_buttons
 	# Handle window title
 	.typeRoman$ = "-"
-	if pathologicalType = 1
-		.typeRoman$ = "I"
-	elsif pathologicalType = 2
-		.typeRoman$ = "II"
-	elsif pathologicalType = 3
-		.typeRoman$ = "III"
-	elsif pathologicalType = 4
-		.typeRoman$ = "IV"
+	if pathologicalType > 0
+		call toRoman pathologicalType
+		.typeRoman$ = toRoman.roman$
 	endif
 	call findLabel 'buttons$' !PathologicalType
 	.row = findLabel.row
 	select Table 'buttons$'
 	pathologicalTypeText$ = Get value... '.row' Text
 	pathologicalTypeText$ = "'pathologicalTypeText$' '.typeRoman$'"
+	# If present, get other path type entries
+	otherASTentries$ = ""
+	call get_speakerInfo 'speakerID$'
+	if get_speakerInfo.row > 0
+		select config.speakerDataTable
+		.iColl = 2
+		.column = Get column index... AST'.iColl'
+		while .column > 0
+			.pathType$ = Get value... get_speakerInfo.row AST'.iColl'
+			if index_regex(.pathType$, "[^0-9]") <= 0
+				call toRoman '.pathType$'
+				.pathType$ = toRoman.roman$
+			endif
+			otherASTentries$ = otherASTentries$+" "+.pathType$
+			# Next round
+			.iColl += 1
+			.column = Get column index... AST'.iColl'
+		endwhile
+	endif
+	# Set automatic Pathological type and write header
 	call autoSetPathType
-	if pathologicalType > 0
+	if pathologicalType > 0 or otherASTentries$ <> ""
 		call get_speakerInfo 'speakerID$'
 		.speakerNumber = get_speakerInfo.row
 		if .speakerNumber > 0
@@ -245,7 +260,11 @@ procedure init_window
 			.numText$ = ""
 		endif
 		call protect_praat_special_characters 'speakerID$'
-		call write_header_text Blue '.numText$' 'protect_praat_special_characters.text$' 'pathologicalTypeText$'
+		if pathologicalType > 0
+			call write_header_text Blue '.numText$' 'protect_praat_special_characters.text$' 'pathologicalTypeText$' 'otherASTentries$'
+		else
+			call write_header_text Blue '.numText$' 'protect_praat_special_characters.text$' - 'otherASTentries$'
+		endif
 	endif
 	# Set draw button
 	call set_draw_signal_button
@@ -845,4 +864,38 @@ procedure getPathParameter .table .paramName$
 	if .rowIndex > 0
 		.value = Get value... '.rowIndex' 1
 	endif
+endproc
+
+procedure toRoman .arabic
+	.roman$ = ""
+	while .arabic > 0
+		if .arabic >= 1000
+			.roman$ = .roman$+"M"
+			.arabic -= 1000
+		elsif .arabic >= 500
+			.roman$ = .roman$+"D"
+			.arabic -= 500
+		elsif .arabic >= 100
+			.roman$ = .roman$+"C"
+			.arabic -= 100
+		elsif .arabic >= 50
+			.roman$ = .roman$+"L"
+			.arabic -= 50
+		elsif .arabic >= 10
+			.roman$ = .roman$+"X"
+			.arabic -= 10
+		elsif .arabic >= 5
+			.roman$ = .roman$+"V"
+			.arabic -= 5
+		elsif .arabic >= 1
+			.roman$ = .roman$+"I"
+			.arabic -= 1
+		endif
+	endwhile
+	.roman$ = replace$(.roman$, "VIIII", "IX", 0)
+	.roman$ = replace$(.roman$, "IIII", "IV", 0)
+	.roman$ = replace$(.roman$, "LXXXX", "XC", 0)
+	.roman$ = replace$(.roman$, "XXXX", "XL", 0)
+	.roman$ = replace$(.roman$, "DCCCC", "CM", 0)
+	.roman$ = replace$(.roman$, "CCCC", "CD", 0)
 endproc
