@@ -45,6 +45,9 @@ with speaker data."
 <list_item> "[3] Comments"
 <list_item> "[4] File name of a recording with path relative to the table"
 <list_item> "[5] @@Acoustic Signal Typing|Acoustic Signal Type@ (%%1-4%)"
+<list_item> "[6] ASTstart Start of the window used for AST (optional)"
+<list_item> "[7] ASTend End of the window used for AST (optional)"
+<list_item> "[8] Prepared columns with @@Acoustic Signal Typing|Acoustic Signal Type@ (%%1-4%) (optional)"
 <normal> "If given, the recording will be automatically loaded if this speaker is selected 
 in the main page."
 

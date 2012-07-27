@@ -414,6 +414,8 @@ procedure get_nextSpeaker .speakerID$
    .description$ = get_speakerInfo.description$
    .audio$ = get_speakerInfo.audio$
    .ast$ = get_speakerInfo.ast$
+   .astStart = get_speakerInfo.astStart
+   .astEnd = get_speakerInfo.astEnd
 endproc
 
 procedure get_previousSpeaker .speakerID$
@@ -437,6 +439,8 @@ procedure get_previousSpeaker .speakerID$
    .description$ = get_speakerInfo.description$
    .audio$ = get_speakerInfo.audio$
    .ast$ = get_speakerInfo.ast$
+   .astStart = get_speakerInfo.astStart
+   .astEnd = get_speakerInfo.astEnd
 endproc
 
 procedure get_speakerInfo .speakerID$
@@ -446,6 +450,9 @@ procedure get_speakerInfo .speakerID$
 	.audio$ = te.currentFileName$
 	.ast$ = "'pathologicalType'"
 	.row = 0
+	.astStart = -1
+	.astEnd = -1
+	
 	if .speakerID$ <> "" and config.speakerData$ <> "" and fileReadable (config.speakerData$)
 		call ReadSpeakerData 'config.speakerData$'
 		if config.speakerDataTable > 0
@@ -499,6 +506,12 @@ procedure get_speakerInfo .speakerID$
 					else
 						.ast$ = "0"
 					endif
+				endif
+				.astStart = Get value... '.row' ASTstart
+				.astEnd = Get value... '.row' ASTend
+				if .astStart = undefined or .astEnd = undefined
+					.astStart = -1
+					.astEnd = -1
 				endif
 			endif
 		endif
@@ -560,7 +573,7 @@ procedure ReadSpeakerData .speakerData$
 			endif
 			config.speakerDataTable = nocheck Read from file... '.speakerData$'
 			if config.speakerDataTable <= 0 or .currentSelected = config.speakerDataTable
-				config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST
+				config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST ASTstart ASTend
 				call get_feedback_text 'config.language$' BrokenTable
 				call convert_praat_to_latin1 'get_feedback_text.text$'
 				.brokenTableText$ = convert_praat_to_latin1.text$
@@ -591,6 +604,14 @@ procedure ReadSpeakerData .speakerData$
 				if .col <= 0
 					Append column... AST
 				endif
+				.col = Get column index... ASTstart
+				if .col <= 0
+					Append column... ASTstart
+				endif
+				.col = Get column index... ASTend
+				if .col <= 0
+					Append column... ASTend
+				endif
 			endif
 			# Set local preferences
 			.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
@@ -609,7 +630,7 @@ procedure ReadSpeakerData .speakerData$
 			.rawStrings = Read Strings from raw text file... '.speakerData$'
 			.numStrings = Get number of strings
 			if .numStrings > 0
-				config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST
+				config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST ASTstart ASTend
 				.currentText$ = ""
 				.currentDescription$ = ""
 
@@ -837,8 +858,12 @@ procedure setPathType .pathType
 	if get_speakerInfo.row > 0
 		if pathologicalType > 0
 			Set string value... 'get_speakerInfo.row' AST 'pathologicalType'
+			Set string value... 'get_speakerInfo.row' ASTstart 'selectedStartTime:4'
+			Set string value... 'get_speakerInfo.row' ASTend 'selectedEndTime:4'
 		else
 			Set string value... 'get_speakerInfo.row' AST -
+			Set string value... 'get_speakerInfo.row' ASTstart -
+			Set string value... 'get_speakerInfo.row' ASTend -
 		endif
 		call WriteSpeakerData
 	endif

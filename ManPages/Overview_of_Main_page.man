@@ -47,7 +47,7 @@ keys will position a %1 or %2 second window around the (first) selection point, 
 %Select button again will cancel the selection."
 
 <entry> "Saving and printing a report"
-<list_item> "\bu #Save [\# ] Save recording and a report of the analysis"
+<list_item> "\bu #Print [\# ] Save recording and a report of the analysis in printer format"
 <normal> "The current sound, and a report with all graphs and the analysis results can be saved into a seperate map (or directory). 
 The analysis windows are calculated and pictures are stored. A web page (.html and .odt) is created for printing on Apple OSX and
 Microsoft Windows systems. On Apple OSX the pictures are saved as PDF graphics, on Microsoft Windows as WMF graphics. On these 
