@@ -1007,7 +1007,6 @@ endproc
 
 procedure end_program
 	call write_preferences ""
-	call regular_save_backup_file
 	demo Erase all
 	select all
 	Remove
@@ -1290,7 +1289,6 @@ procedure getOpenFile .openDialogue$
 		.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
 		call load_local_preferences '.dataDir$'
 		if config.speakerDataTable > 0
-			call regular_save_backup_file
 			select config.speakerDataTable
 			Remove
 		endif

@@ -23,7 +23,8 @@ CloseSpeaker	35	45	79	84	Black	DrawNull
 SpeakerMerge	35	45	73	78	Black	DrawNull
 SpeakerSort	35	45	66	71	Black	DrawNull
 SpeakerRandomize	35	45	60	65	Black	DrawNull
-SpeakerSerial	35	45	53	58	Black	DrawNull
+SpeakerRevert	35	45	53	58	Black	DrawNull
+SpeakerSerial	35	45	46	51	Black	DrawNull
 !SelectionWindow	0	0	0	0	Black	DrawNull
 ShowBackground	60	75	95	100	Black	DrawNull
 Input_Microphone	60	75	87	92	Black	DrawNull

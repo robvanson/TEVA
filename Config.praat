@@ -144,7 +144,6 @@ procedure processConfigSpeakerData .clickX .clickY .pressed$
 	call getLanguageTexts '.table$' '.label$'
 	.newFile$ = chooseReadFile$ (getLanguageTexts.helpText$)
 	if config.speakerDataTable > 0 and .newFile$ <> config.speakerData$
-		call regular_save_backup_file
 		select config.speakerDataTable
 		Remove
 	endif
@@ -164,9 +163,6 @@ procedure processConfigSpeakerMerge .clickX .clickY .pressed$
 	# Get help text
 	call getLanguageTexts '.table$' '.label$'
 	.newFile$ = chooseReadFile$ (getLanguageTexts.helpText$)
-	if config.speakerDataTable > 0 and .newFile$ <> config.speakerData$
-		call regular_save_backup_file
-	endif
 	# Read new file
 	.tmpNewSpeakerData = Read from file... '.newFile$'
 	# Make sure data table is read
@@ -198,9 +194,40 @@ procedure processConfigSpeakerMerge .clickX .clickY .pressed$
 			endif
 		endfor
 	endif
+	# Save result
+	call WriteSpeakerData
 	
 	select .tmpNewSpeakerData
 	Remove
+	
+    call Draw_button 'table$' '.label$' 0
+endproc
+
+procedure processConfigSpeakerRevert .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "SpeakerRevert"
+	if config.speakerData$ <> "" and fileReadable(config.speakerData$) 
+...    and config.speakerDataBackup$ <> "" and fileReadable(config.speakerDataBackup$)
+		if config.speakerDataTable > 0
+			# Get feedback texts
+			call getLanguageTexts '.table$' '.label$'
+			.inputText$ = getLanguageTexts.inputText$
+			beginPause("")
+				comment(getLanguageTexts.helpText$)
+			clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2)
+			if clicked = 2
+				select config.speakerDataTable
+				Remove
+				config.speakerDataTable = -1
+			endif
+		endif
+		if config.speakerDataTable <= 0 and config.speakerDataBackup$ <> "" and fileReadable(config.speakerDataBackup$)
+			config.speakerDataTable = Read from file... 'config.speakerDataBackup$'
+			config.createBackup = 1
+			select config.speakerDataTable
+			Save as tab-separated file... 'config.speakerData$'
+		endif
+	endif
 	
     call Draw_button 'table$' '.label$' 0
 endproc
@@ -222,21 +249,9 @@ procedure processConfigSaveSpeaker .clickX .clickY .pressed$
 		call getLanguageTexts '.table$' '.label$'
 		.filename$ = chooseWriteFile$ (getLanguageTexts.helpText$, .newFileName$)
 		if .filename$ <> ""
-			# Clean up backup file, if there is one
-			.deleteBackupFile = 1
-			# Do NOT delete the speakerDataBackup file if it is the current open file
-			if config.speakerDataBackup$ = "" or config.speakerData$ = config.speakerDataBackup$
-				.deleteBackupFile = 0
-			endif
 			config.speakerData$ = .filename$
 			select config.speakerDataTable
 			Save as tab-separated file... 'config.speakerData$'
-			# Remove SpeakerData Backup file, but only if it is not the file just saved!
-			if .deleteBackupFile and config.speakerData$ <> config.speakerDataBackup$ and fileReadable(config.speakerData$)
-				# Note that the backup is ONLY deleted if the saved file actually exists!
-				deleteFile(config.speakerDataBackup$)
-				config.speakerDataBackup$ = ""
-			endif
 		endif
 	endif
     call Draw_button 'table$' '.label$' 0
@@ -264,11 +279,7 @@ procedure processConfigCloseSpeaker .clickX .clickY .pressed$
 		speakerInfo$ = ""
 		speakerComments$ = ""
 		pathologicalType = 0
-		# Purge all changes and delete the backup file
-		if config.speakerDataBackup$ <> "" and fileReadable(config.speakerDataBackup$)
-			deleteFile(config.speakerDataBackup$)
-			config.speakerDataBackup$ = ""
-		endif
+		config.speakerDataBackup$ = ""
 	endif
     call Draw_button 'table$' '.label$' 0
 endproc

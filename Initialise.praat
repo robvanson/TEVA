@@ -72,7 +72,7 @@ procedure global_initialization
 	config.recordingTime$ = "4"
 	config.speakerData$ = ""
 	config.speakerDataBackup$ = ""
-	config.freshBackup = 0
+	config.createBackup = 0
 	config.speakerDataTable = -1
 	config.speakerSerial = 0
 	config.showFormants = 1
@@ -556,9 +556,8 @@ procedure ReadSpeakerData .speakerData$
 	# Create a new table or read the file
 	if .speakerData$ <> "" and fileReadable(.speakerData$) and config.speakerDataTable <= 0
 		# New SpeakerData, forget old backup
-		call regular_save_backup_file
 		config.speakerDataBackup$ = ""
-		config.freshBackup = 1
+		config.createBackup = 1
 		
 		# Set local preferences
 		.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
@@ -619,7 +618,6 @@ procedure ReadSpeakerData .speakerData$
 		else
 			# Reset SpeakerData table
 			if  config.speakerDataTable > 0
-				call regular_save_backup_file
 				select config.speakerDataTable
 				Remove
 				config.speakerDataTable = -1
@@ -752,34 +750,21 @@ procedure WriteSpeakerData
 	endif
 	
 	if config.speakerData$ <> "" and fileReadable(config.speakerData$)
-		config.speakerDataBackup$ = replace_regex$(config.speakerData$, "(\.\w+)$", "~\1", 0)
-		# The backup file is a Table, so give it the correct extension
-		if index_regex(config.speakerDataBackup$, "\.(?itsv|table)") <= 0
-			config.speakerDataBackup$ = replace_regex$(config.speakerDataBackup$, "\.\w+$", ".tsv", 0)
+		if config.createBackup
+			config.createBackup = 0
+			config.speakerDataBackup$ = replace_regex$(config.speakerData$, "(\.\w+)$", "~\1", 0)
+
+			# The backup file is a Table, so give it the correct extension
+			if index_regex(config.speakerDataBackup$, "\.(?itsv|table)") <= 0
+				config.speakerDataBackup$ = replace_regex$(config.speakerDataBackup$, "\.\w+$", ".tsv", 0)
+			endif
+			.tmpTable = Read from file... 'config.speakerData$'
+			Save as tab-separated file... 'config.speakerDataBackup$'
+			select .tmpTable
+			Remove
 		endif
 		select config.speakerDataTable
-		Save as tab-separated file... 'config.speakerDataBackup$'
-	endif
-endproc
-
-# Save backup file
-procedure regular_save_backup_file
-	# New SpeakerData, forget old backup
-	if config.speakerDataTable > 0 and config.speakerDataBackup$ <> "" and fileReadable(config.speakerDataBackup$)
-		call get_feedback_text 'config.language$' Unsaved
-		call convert_praat_to_latin1 'get_feedback_text.text$'
-		.unsavedChanges$ = convert_praat_to_latin1.text$
-		call getLanguageTexts Config SaveSpeaker
-		# Get extra pop-up to warn for unsaved changes!
-		call write_text_popup Helvetica 18 '.unsavedChanges$': 'getLanguageTexts.helpText$'
-		.filename$ = chooseWriteFile$ ("'.unsavedChanges$': 'getLanguageTexts.helpText$'", config.speakerData$)
-		if .filename$ <> "" and .filename$ <> config.speakerDataBackup$
-			deleteFile(config.speakerDataBackup$)
-			config.speakerDataBackup$ = ""
-			config.freshBackup = 1
-			select config.speakerDataTable
-			Save as tab-separated file... '.filename$'
-		endif
+		Save as tab-separated file... 'config.speakerData$'
 	endif
 endproc
 

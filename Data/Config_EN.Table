@@ -27,6 +27,7 @@ SpeakerData	Data	D	Read table with speaker data
 SaveSpeaker	Save	v	Write current table with speaker data
 CloseSpeaker	Close	o	Close current table and open a new, empty table
 SpeakerMerge	Merge	g	Merge new table with current speaker data
+SpeakerRevert	Revert	c	Revert speaker data to saved version
 SpeakerSerial	Serial	i	Step through all recordings in sequence (Speaker button reads next recording)
 !SelectionWindow	SelectionWindow	!	Initial width of the selection window (Preferences Serial mode)
 SpeakerSort	Sort V	V	Sort the list of recordings
