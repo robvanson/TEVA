@@ -719,7 +719,7 @@ procedure WriteSpeakerData
 	# Table does not exist
 	if config.speakerDataTable <= 0
 		config.speakerData$ = ""
-		config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST
+		config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST ASTstart ASTend
 		select config.speakerDataTable
 		.row = Get number of rows
 	elsif get_speakerInfo.row > 0

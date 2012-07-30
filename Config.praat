@@ -172,9 +172,9 @@ procedure processConfigSpeakerMerge .clickX .clickY .pressed$
 	if config.speakerDataTable > 0
 		select config.speakerDataTable
 		.numCols = Get number of columns
-		.astNum = .numCols - 4 + 1
+		.astNum = .numCols - 6 + 1
 		.lastColumn$ = Get column label... .numCols
-		.lastColumn$ = replace_regex$(.lastColumn$, "\d+$", "", 0)
+		.lastColumn$ = replace_regex$(.lastColumn$, "(\d+|start|end)$", "", 0)
 		.lastColumn$ = .lastColumn$+"'.astNum'"
 		Append column... '.lastColumn$'
 		.numRows = Get number of rows
