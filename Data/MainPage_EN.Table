@@ -21,6 +21,7 @@ Draw_Harmonicity	Harmonicity	H	Draw the Harmonicity to Noise ratio
 Draw_Spectrogram	Spectrogram	L	Narrow band spectrogram (100 ms) with formants superimposed
 Draw_Ltas	Ltas	L	Long time average spectrum
 Draw_Intensity	Intensity	I	Draw Intensity
+Draw_Rating	Rating	#	Rate the speech on scales 
 Select	Select	e	Select new start and endtime
 ToSelection	To selection	c	Go to selected start and endtime
 ZoomOut	Zoom out -	u\-_	Double the current time window

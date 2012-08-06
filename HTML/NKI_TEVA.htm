@@ -334,7 +334,7 @@ Set the maximal frequency to a frequency that just includes all the relevant fea
 Speaker data tables and recording duration</h3>
 <p>
 It is useful to have a list of speaker data available. TEVA can read and write Tab delimited tables (tsv) 
-with speaker data.</p>
+with speaker data. A backup of this file, with a tilde '~' appended to the name, is created if the data are changed.</p>
 <ul>
 <li>
 &nbsp;<b>Data</b>: [D] Read table with speaker data
@@ -348,6 +348,8 @@ with speaker data.</p>
 &nbsp;<b>Sort</b>: [V] Sort the list of recordings
 <li>
 &nbsp;<b>Shuffle</b>: [u] Randomize the list of recordings
+<li>
+&nbsp;<b>Revert</b>: [c] Revert speaker data to saved version
 <li>
 &nbsp;<b>Serial</b>: [i] Step through all recordings in sequence (<i>Speaker</i> button changes to blue <i>Nxt</i>, next recording)
 </ul>

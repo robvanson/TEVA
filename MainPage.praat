@@ -174,6 +174,9 @@ procedure draw_signal
 	elsif mainPage.draw$ = "Intensity"
 		# Draw Intensity
 		call DrawIntensityObject
+	elsif mainPage.draw$ = "Rating"
+		# Draw Intensity
+		call DrawRatingObject
 	endif
 endproc
 
@@ -309,17 +312,17 @@ procedure print_signal .outFileName$
 endproc
 
 procedure set_draw_signal_button
-	call Draw_button 'buttons$' Draw_'mainPage.draw$' 2
-	if mainPage.draw$ = "Ltas"
-		call Draw_button 'buttons$' Select 1
-		call Draw_button 'buttons$' ToSelection 1
-		call Draw_button 'buttons$' ZoomOut 1
-		call Draw_button 'buttons$' ZoomIn 1
-		call Draw_button 'buttons$' Next 1
-		call Draw_button 'buttons$' Previous 1
+	call Draw_button 'te.buttons$' Draw_'mainPage.draw$' 2
+	if index(" Ltas Rating ", " 'mainPage.draw$' ") > 0 
+		call Draw_button 'te.buttons$' Select 1
+		call Draw_button 'te.buttons$' ToSelection 1
+		call Draw_button 'te.buttons$' ZoomOut 1
+		call Draw_button 'te.buttons$' ZoomIn 1
+		call Draw_button 'te.buttons$' Next 1
+		call Draw_button 'te.buttons$' Previous 1
 	endif
 	if config.muteOutput
-		call Draw_button 'buttons$' Play 1
+		call Draw_button 'te.buttons$' Play 1
 	endif
 endproc
 
@@ -363,7 +366,7 @@ procedure processMainPageHelp .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "Help"
 	if runningCommandMode = 0
-		call help_loop 'buttons$' init_window
+		call help_loop 'te.buttons$' init_window
 	else
 		skipNextStep = 1
 	endif
@@ -667,12 +670,12 @@ procedure processMainPageToSelection .clickX .clickY .pressed$
 		goto ENDOFTOSELECTION
 	endif
 	if mainPage.draw$ = "Ltas"
-		call Draw_button 'buttons$' '.label$' 1
+		call Draw_button 'te.buttons$' '.label$' 1
 		goto ENDOFTOSELECTION
 	endif
 	currentStartTime = selectedStartTime
 	currentEndTime = selectedEndTime
-	call Draw_button 'buttons$' '.label$' 0
+	call Draw_button 'te.buttons$' '.label$' 0
 	call init_window
 	label ENDOFTOSELECTION
 endproc
@@ -784,7 +787,7 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 					goto ENDOFDISPLAYSELECT
 				endif
 			else
-		    	call buttonClicked 'buttons$' '.clickX' '.clickY'
+		    	call buttonClicked 'te.buttons$' '.clickX' '.clickY'
 		    	if buttonClicked.label$ = "Select"
 					.firstT = -1
 					.secondT = -1
@@ -863,7 +866,7 @@ procedure processMainPageZoomOut .clickX .clickY .pressed$
 		goto ZOOMOUTESCAPE
 	endif
 	if mainPage.draw$ = "Ltas"
-		call Draw_button 'buttons$' ZoomOut 1
+		call Draw_button 'te.buttons$' ZoomOut 1
 		goto ZOOMOUTESCAPE
 	endif
 	.lockSelectionToWindow = selectedStartTime <= currentStartTime or selectedEndTime >= currentEndTime
@@ -899,7 +902,7 @@ procedure processMainPageZoomIn .clickX .clickY .pressed$
 		goto ZOOMINESCAPE
 	endif
 	if mainPage.draw$ = "Ltas"
-		call Draw_button 'buttons$' ZoomIn 1
+		call Draw_button 'te.buttons$' ZoomIn 1
 		goto ZOOMINESCAPE
 	endif
 	.currentInterval = currentEndTime - currentStartTime
@@ -926,7 +929,7 @@ procedure processMainPageNext .clickX .clickY .pressed$
 		goto NEXTESCAPE
 	endif
 	if mainPage.draw$ = "Ltas"
-		call Draw_button 'buttons$' Next 1
+		call Draw_button 'te.buttons$' Next 1
 		goto NEXTESCAPE
 	endif
 	.selectedInterval = selectedEndTime - selectedStartTime
@@ -982,7 +985,7 @@ procedure processMainPagePrevious .clickX .clickY .pressed$
 		goto PREVESCAPE
 	endif
 	if mainPage.draw$ = "Ltas"
-		call Draw_button 'buttons$' Previous 1
+		call Draw_button 'te.buttons$' Previous 1
 		goto PREVESCAPE
 	endif
 	.selectedInterval = selectedEndTime - selectedStartTime
@@ -1586,6 +1589,14 @@ procedure DrawIntensityObject
 		select Intensity 'intensityName$'
 		call 'mainPage.outputPraatObject$'PraatObject 'minIntensity' 'maxIntensity' Draw... 'currentStartTime' 'currentEndTime' 'minIntensity' 'maxIntensity' yes
 		call 'mainPage.outputPraatObject$'CurrentSelection 'minIntensity' 'maxIntensity'
+	endif
+endproc
+
+procedure DrawRatingObject
+	if te.ratingTable <= 0
+		call loadLanguageTable Rating 'config.language$'
+		te.ratingTable = loadLanguageTable.tableID
+		
 	endif
 endproc
 

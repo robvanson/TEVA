@@ -21,6 +21,7 @@ Draw_Harmonicity	Harmonizit\a"t	H	Abbildung des Harmonicity-to-Noise Verh\a"ltni
 Draw_Spectrogram	Spektrogramm	S	Abbildung des Schmalband-Spektrogramms (100 ms) mit Formante
 Draw_Ltas	Ltas	L	Abbildung des gemittelten Langzeitspektrums
 Draw_Intensity	Intensit\a"t	I	Abbildung der Intensit\a"t
+Draw_Rating	Wertung	#	Bewerten Sie die Sprache 
 Select	Selektieren	r	Selektieren von Start- und Endzeiten
 ToSelection	Zur Selektion	Z	Gehe zum selektierten Abschnitt
 ZoomOut	Zoom out +	o+=	Verdoppelung der Fenstergr\o"sse / Verkleinern

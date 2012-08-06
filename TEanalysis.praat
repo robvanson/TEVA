@@ -36,8 +36,8 @@ buttonsTableName$ = "MainPage"
 configTableName$ = "Config"
 feedbackTablePrefix$ = "Feedback"
 feedbackTableName$ = ""
-buttons$ = ""
-config$ = ""
+te.buttons$ = ""
+te.config$ = ""
 recordedSound$ = ""
 alertText$ = ""
 config.input$ = "Microphone"
@@ -47,6 +47,7 @@ te.openSound = 0
 te.spectrogram = 0
 te.harmonicity = 0
 te.formant = 0
+te.ratingTable = -1
 
 # Pop-Up window and other colors
 popUp.bordercolor$ = "{0.5,0.5,1}"
@@ -141,11 +142,11 @@ while demoWaitForInput()
 	if demoClicked()
 		.clickX = demoX()
 		.clickY = demoY()
-		call buttonClicked 'buttons$' '.clickX' '.clickY'
+		call buttonClicked 'te.buttons$' '.clickX' '.clickY'
 		.label$ = buttonClicked.label$
 	elsif demoKeyPressed()
 		.pressed$ = demoKey$()
-		call keyPressed 'buttons$' '.pressed$'
+		call keyPressed 'te.buttons$' '.pressed$'
 		.label$ = keyPressed.label$
 	endif
 	
@@ -157,7 +158,7 @@ while demoWaitForInput()
 	# Do things
 	if .label$ != ""
 		# Push button down
-		call Draw_button 'buttons$' '.label$' 1
+		call Draw_button 'te.buttons$' '.label$' 1
 		call process_label '.label$' '.clickX' '.clickY' '.pressed$'
 		# push button up should be done by process_label
 	endif
@@ -182,16 +183,16 @@ label NON_INTERACTIVE
 # Do what is asked
 procedure process_label .label$ .clickX .clickY .pressed$
 	# Log raw commands to replay in file
-	call log_command 'buttons$' '.label$' '.clickX' '.clickY' '.pressed$'
+	call log_command 'te.buttons$' '.label$' '.clickX' '.clickY' '.pressed$'
 	
 	# Process the command
 	if .label$ <> "" and not startsWith(.label$,"!")
 		.label$ = replace$(.label$, "_", " ", 0)
-		call process'buttons$''.label$' '.clickX' '.clickY' '.pressed$'
+		call process'te.buttons$''.label$' '.clickX' '.clickY' '.pressed$'
 	elsif .label$ <> "" and startsWith(.label$,"!")
 		.label$ = right$(.label$, length(.label$)-1)
 		.label$ = replace$(.label$, "_", " ", 0)
-		call process'buttons$''.label$' '.clickX' '.clickY' '.pressed$'
+		call process'te.buttons$''.label$' '.clickX' '.clickY' '.pressed$'
 	endif
 endproc
 
@@ -200,7 +201,7 @@ procedure init_buttons
 	# Set Speaker color
 	call switch_speaker_next_button 'config.speakerSerial'
 
-	call Draw_all_buttons 'buttons$'
+	call Draw_all_buttons 'te.buttons$'
 endproc
 
 # Draw all buttons
@@ -487,8 +488,8 @@ endproc
 # Handle language setting 
 procedure processLanguageCodes .table$ .label$
 	.table$ = "Config"
-    call Draw_button 'config$' Language_'config.language$' 0
-    call Draw_button 'config$' '.label$' 2
+    call Draw_button 'te.config$' Language_'config.language$' 0
+    call Draw_button 'te.config$' '.label$' 2
     # Someone might have to use more than 2 chars for the language code
     .numChars = length(.label$) - length("Language_")
 	.lang$ = right$(.label$, .numChars)
@@ -500,15 +501,20 @@ endproc
 procedure set_language .lang$
 	.redraw_config = 0
     # Remove old tables
-    if buttons$ <> ""
-        select Table 'buttons$'
+    if te.buttons$ <> ""
+        select Table 'te.buttons$'
         Remove
 		.redraw_config = 1
     endif
-    if config$ <> ""
-        select Table 'config$'
+    if te.config$ <> ""
+        select Table 'te.config$'
         Remove
 		.redraw_config = 1
+    endif
+    if te.ratingTable > 0
+		select te.ratingTable
+		Remove
+		te.ratingTable = -1
     endif
     
     # Set language
@@ -520,110 +526,19 @@ procedure set_language .lang$
 	endif
     
     # Load buttons tables
-	call loadTable 'buttonsTableName$'
-    buttons$ = selected$("Table")
-    Append column... Text
-    Append column... Key
-    Append column... Helptext
-    .numLabels = Get number of rows
-	call loadTable 'buttonsTableName$'_'config.language$'
-    .buttonsLang$ = selected$("Table")
-    for .row to .numLabels
-		select Table 'buttons$'
-		.label$ = Get value... '.row' Label
-        call findLabel '.buttonsLang$' '.label$'
-	    if findLabel.row > 0
-            select Table '.buttonsLang$'
-        	.valueText$ = Get value... 'findLabel.row' Text
-        	.valueKey$ = Get value... 'findLabel.row' Key
-        	.valueHelp$ = Get value... 'findLabel.row' Helptext
-        	select Table 'buttons$'
-        	Set string value... '.row' Text '.valueText$'
-        	Set string value... '.row' Key '.valueKey$'
-        	Set string value... '.row' Helptext '.valueHelp$'
-		elsif index(.label$, "_")
-			# Load alternative language table
-			.startChar = rindex(.label$, "_")
-			.otherLanguage$ = right$(.label$, length(.label$) - .startChar)
-			call loadTable 'buttonsTableName$'_'.otherLanguage$'
-    		.otherbuttonsLang$ = selected$("Table")
-        	call findLabel '.otherbuttonsLang$' '.label$'
-	    	if findLabel.row > 0
-            	select Table '.buttonsLang$'
-        		.valueText$ = Get value... 'findLabel.row' Text
-        		.valueKey$ = Get value... 'findLabel.row' Key
-        		.valueHelp$ = Get value... 'findLabel.row' Helptext
-        		select Table 'buttons$'
-        		Set string value... '.row' Text '.valueText$'
-        		Set string value... '.row' Key '.valueKey$'
-        		Set string value... '.row' Helptext '.valueHelp$'
-        	else
-            	call emergency_table_exit Cannot find Label: '.otherbuttonsLang$' '.label$'
-        	endif
-			select Table '.otherbuttonsLang$'
-			Remove
-        else
-            call emergency_table_exit Cannot find Label: '.buttonsLang$' '.label$'
-        endif
-    endfor
-    select Table '.buttonsLang$'
-    Remove
-    
+    call loadLanguageTable 'buttonsTableName$' 'config.language$'
+    select loadLanguageTable.tableID
+    te.buttons$ = selected$("Table")
     # Load configuration table
-	call loadTable 'configTableName$'
-    config$ = selected$("Table")
-    Append column... Text
-    Append column... Key
-    Append column... Helptext
-    .numLabels = Get number of rows
-    call loadTable 'configTableName$'_'config.language$'
-    .configLang$ = selected$("Table")
-    for .row to .numLabels
-		select Table 'config$'
-		.label$ = Get value... '.row' Label
-        call findLabel '.configLang$' '.label$'
-	    if findLabel.row > 0
-            select Table '.configLang$'
-        	.valueText$ = Get value... 'findLabel.row' Text
-        	.valueKey$ = Get value... 'findLabel.row' Key
-        	.valueHelp$ = Get value... 'findLabel.row' Helptext
-        	select Table 'config$'
-        	Set string value... '.row' Text '.valueText$'
-        	Set string value... '.row' Key '.valueKey$'
-        	Set string value... '.row' Helptext '.valueHelp$'
-		elsif index(.label$, "_")
-			.startChar = rindex(.label$, "_")
-			.otherLanguage$ = right$(.label$, length(.label$) - .startChar)
-			.otherLabel$ = left$(.label$, .startChar)
-			call loadTable 'configTableName$'_'.otherLanguage$'
-    		.otherconfigLang$ = selected$("Table")
-        	call findLabel '.otherconfigLang$' '.label$'
-	    	if findLabel.row > 0
-            	select Table '.otherconfigLang$'
-        		.valueText$ = Get value... 'findLabel.row' Text
-        		.valueKey$ = Get value... 'findLabel.row' Key
-        		.valueHelp$ = Get value... 'findLabel.row' Helptext
-        		select Table 'config$'
-        		Set string value... '.row' Text '.valueText$'
-        		Set string value... '.row' Key '.valueKey$'
-        		Set string value... '.row' Helptext '.valueHelp$'
-        	else
-            	call emergency_table_exit Cannot find Label: '.otherconfigLang$' '.label$'
-        	endif
-			select Table '.otherconfigLang$'
-			Remove
-        else
-            call emergency_table_exit Cannot find Label: '.configLang$' '.label$'
-        endif
-    endfor
-    select Table '.configLang$'
-    Remove
+    call loadLanguageTable 'configTableName$' 'config.language$'
+    select loadLanguageTable.tableID
+    te.config$ = selected$("Table")
+   
 
 	# Make language change visible
 	if .redraw_config
 		call Draw_config_page
 	endif
-
 endproc
 
 ###############################################################
@@ -1032,11 +947,11 @@ procedure config_page
 	    if demoClicked()
 		    .clickX = demoX()
 		    .clickY = demoY()
-		    call buttonClicked 'config$' '.clickX' '.clickY'
+		    call buttonClicked 'te.config$' '.clickX' '.clickY'
 		    .label$ = buttonClicked.label$
 	    elsif demoKeyPressed()
 		    .pressed$ = demoKey$()
-		    call keyPressed 'config$' '.pressed$'
+		    call keyPressed 'te.config$' '.pressed$'
 		    .label$ = keyPressed.label$
 	    endif
 
@@ -1048,7 +963,7 @@ procedure config_page
 	    # Do things
 	    if .label$ != ""
 		    # Handle push button in process_config
-			call Draw_button 'config$' '.label$' 1
+			call Draw_button 'te.config$' '.label$' 1
 		    call process_config '.label$' '.clickX' '.clickY' '.pressed$'
 	    endif
         
@@ -1069,8 +984,8 @@ procedure Draw_config_page
 		call draw_background Background
 	endif
 	# Draw buttons
-    call Draw_all_buttons 'config$'
-	call set_window_title 'config$'  
+    call Draw_all_buttons 'te.config$'
+	call set_window_title 'te.config$'  
     # Set correct buttons (alert)
 	call setConfigMainPage
 endproc
@@ -1078,11 +993,11 @@ endproc
 # Do what is asked
 procedure process_config .label$ .clickX .clickY .pressed$
 	# Log raw commands to replay in file
-	call log_command 'config$' '.label$' '.clickX' '.clickY' '.pressed$'
+	call log_command 'te.config$' '.label$' '.clickX' '.clickY' '.pressed$'
 	
 	if .label$ <> "" and not startsWith(.label$,"!")
 		.label$ = replace$(.label$, "_", " ", 0)
-		call process'config$''.label$' '.clickX' '.clickY' '.pressed$'
+		call process'te.config$''.label$' '.clickX' '.clickY' '.pressed$'
 	endif
 endproc
 
@@ -2111,4 +2026,58 @@ procedure emergency_table_exit .message$
 		deleteFile(preferencesAppFile$)
 	endif
 	exit '.message$'
+endproc
+
+procedure loadLanguageTable .tableName$ .language$
+	call loadTable '.tableName$'
+    .table$ = selected$("Table")
+    .tableID = selected("Table")
+    Append column... Text
+    Append column... Key
+    Append column... Helptext
+    .numLabels = Get number of rows
+	call loadTable '.tableName$'_'.language$'
+    .tableLang$ = selected$("Table")
+    .tableLangID = selected("Table")
+    for .row to .numLabels
+		select .tableID
+		.label$ = Get value... '.row' Label
+        call findLabel '.tableLang$' '.label$'
+	    if findLabel.row > 0
+            select .tableLangID
+        	.valueText$ = Get value... 'findLabel.row' Text
+        	.valueKey$ = Get value... 'findLabel.row' Key
+        	.valueHelp$ = Get value... 'findLabel.row' Helptext
+        	select .tableID
+        	Set string value... '.row' Text '.valueText$'
+        	Set string value... '.row' Key '.valueKey$'
+        	Set string value... '.row' Helptext '.valueHelp$'
+		elsif index(.label$, "_")
+			# Load alternative language table
+			.startChar = rindex(.label$, "_")
+			.otherLanguage$ = right$(.label$, length(.label$) - .startChar)
+			call loadTable '.tableName$'_'.otherLanguage$'
+    		.otherLang$ = selected$("Table")
+    		.otherLangID = selected("Table")
+        	call findLabel '.otherLang$' '.label$'
+	    	if findLabel.row > 0
+            	select .otherLangID
+        		.valueText$ = Get value... 'findLabel.row' Text
+        		.valueKey$ = Get value... 'findLabel.row' Key
+        		.valueHelp$ = Get value... 'findLabel.row' Helptext
+        		select .tableID
+        		Set string value... '.row' Text '.valueText$'
+        		Set string value... '.row' Key '.valueKey$'
+        		Set string value... '.row' Helptext '.valueHelp$'
+        	else
+            	call emergency_table_exit Cannot find Label: '.otherLang$' '.label$'
+        	endif
+			select .otherLangID
+			Remove
+        else
+            call emergency_table_exit Cannot find Label: '.tableLang$' '.label$'
+        endif
+    endfor
+    select .tableLangID
+    Remove
 endproc

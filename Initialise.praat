@@ -65,8 +65,8 @@ procedure global_initialization
 	configLangFilePath$ = left$(configFilePath$, rindex(configFilePath$, ".Table")-1)
 	feedbackFilePath$ = "Data/Feedback_"
 	instructionTable$ = "Instruction"
-	buttons$ = ""
-	config$ = ""
+	te.buttons$ = ""
+	te.config$ = ""
 	config.input$ = "Microphone"
 	config.showBackground = 1
 	config.recordingTime$ = "4"
@@ -164,12 +164,12 @@ endproc
 procedure switch_speaker_next_button .set_nextItem
 	# Speaker & !NextItem -> !Speaker & NextItem
 	if .set_nextItem
-		call hide_button 'buttons$' Speaker
-		call unhide_button 'buttons$' !NextItem
+		call hide_button 'te.buttons$' Speaker
+		call unhide_button 'te.buttons$' !NextItem
 	# !Speaker & Next -> Speaker & !NextItem
 	elsif not .set_nextItem
-		call unhide_button 'buttons$' !Speaker
-		call hide_button 'buttons$' NextItem
+		call unhide_button 'te.buttons$' !Speaker
+		call hide_button 'te.buttons$' NextItem
 	endif
 endproc
 
@@ -201,10 +201,10 @@ procedure init_window
 	demo Black
 	call reset_viewport
 	# Set canvas (if available)
-	call findLabel 'buttons$' !CANVAS
+	call findLabel 'te.buttons$' !CANVAS
 	.row = findLabel.row
 	if .row > 0
-		select Table 'buttons$'
+		select Table 'te.buttons$'
 		canvasXL = Get value... '.row' LeftX
 		canvasXR = Get value... '.row' RightX
 		canvasYL = Get value... '.row' LowY
@@ -225,9 +225,9 @@ procedure init_window
 		call toRoman pathologicalType
 		.typeRoman$ = toRoman.roman$
 	endif
-	call findLabel 'buttons$' !PathologicalType
+	call findLabel 'te.buttons$' !PathologicalType
 	.row = findLabel.row
-	select Table 'buttons$'
+	select Table 'te.buttons$'
 	pathologicalTypeText$ = Get value... '.row' Text
 	pathologicalTypeText$ = "'pathologicalTypeText$' '.typeRoman$'"
 	# If present, get other path type entries
@@ -833,7 +833,7 @@ procedure autoSetPathType
 		else
 			.numText$ = ""
 		endif
-		call set_window_title 'buttons$' '.numText$' 'speakerID$' 'pathologicalTypeText$'
+		call set_window_title 'te.buttons$' '.numText$' 'speakerID$' 'pathologicalTypeText$'
 	endif
 endproc
 

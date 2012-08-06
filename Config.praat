@@ -99,29 +99,29 @@ endproc
 
 # Set the correct button states after redrawing the window
 procedure setConfigMainPage
-    #call Draw_button 'config$' Language_'config.language$' 2
-    call Draw_button 'config$' Input_'config.input$' 2
+    #call Draw_button 'te.config$' Language_'config.language$' 2
+    call Draw_button 'te.config$' Input_'config.input$' 2
     .displaybutton = 2*config.speakerSerial
-    call Draw_button 'config$' SpeakerSerial '.displaybutton'
+    call Draw_button 'te.config$' SpeakerSerial '.displaybutton'
 	call setFrequencyButton
     # Handle logging buttons with forced button draw
     if logging
-    	call Draw_button 'config$' Logging 'logging'
+    	call Draw_button 'te.config$' Logging 'logging'
     endif
 endproc
 
 procedure setFrequencyButton
-	select Table 'config$'
+	select Table 'te.config$'
 	.numLabels = Get number of rows
 	for .i to .numLabels
 		.currentLabel$ = Get value... '.i' Label
 		if startsWith(.currentLabel$, "Frequency_")
-			call Draw_button 'config$' '.currentLabel$' 0
+			call Draw_button 'te.config$' '.currentLabel$' 0
 		endif
 	endfor
 	
 	.freqkHz = config.frequency / 1000
-	call Draw_button 'config$' Frequency_'.freqkHz'k 2
+	call Draw_button 'te.config$' Frequency_'.freqkHz'k 2
 endproc
 
 ###############################################################
@@ -508,7 +508,7 @@ procedure processConfigLogging .clickX .clickY .pressed$
 	if runningCommandMode = 0
 		logging = not logging
 		.displayButton = logging
-    	call Draw_button 'config$' '.label$' '.displayButton'
+    	call Draw_button 'te.config$' '.label$' '.displayButton'
     	if logging
         	call start_logging
     	endif

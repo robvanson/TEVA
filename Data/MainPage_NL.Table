@@ -21,6 +21,7 @@ Draw_Harmonicity	Harmoniciteit	H	Teken de Harmonicity to Noise ratio
 Draw_Spectrogram	Spectrogram	L	Smalband spectrogram (100 ms) met formanten
 Draw_Ltas	Ltas	L	Long time average spectrum
 Draw_Intensity	Intensiteit	I	Teken de intensiteit
+Draw_Rating	Beoordeel	#	Geef schaaloordelen van de spraak 
 Select	Selecteer	e	Selecteer nieuwe start en eindtijd
 ToSelection	Naar selectie	c	Ga naar geselecteerde start and eindtijd
 ZoomOut	Zoom uit -	u\-_	Verdubbel het huidige tijdsvenster
