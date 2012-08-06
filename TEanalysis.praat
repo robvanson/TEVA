@@ -207,12 +207,20 @@ endproc
 # Draw all buttons
 procedure Draw_all_buttons .table$
 	.varPrefix$ = replace_regex$(.table$, "^(.)", "\l\1", 0)
-	select Table '.table$'
+	if index_regex(.table$, "[^0-9]") > 0
+		select Table '.table$'
+	else
+		select '.table$'
+		.table$ = selected$("Table")
+	endif
 	.numRows = Get number of rows
 	
 	for .row to .numRows
 		.label$ = Get value... '.row' Label
-        if not startsWith(.label$, "!") 
+		if startsWith(.label$, ">")
+		    call Draw_button_internal 1 '.table$' '.label$' 0
+			
+        elsif not startsWith(.label$, "!") 
 			.pressed = 0
 			# Determine the "pressed" state of a button
 			# A variable with the same name as the button will act as a
@@ -461,7 +469,12 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 		.anchorY = .lowY + 0.5*(.highY-.lowY)
 		.verticalAlignment$ = "Half"
 	endif
-    demo Text special... '.centerX' Centre '.anchorY' '.verticalAlignment$' 'defaultFont$' '.buttonFontSize' '.rotation' '.newText$'
+	# Handle VAScale bars
+    if startsWith(.label$, ">")
+		demo Text special... '.leftX' Left '.highY' Bottom 'defaultFont$' '.buttonFontSize' '.rotation' '.newText$'
+    else
+		demo Text special... '.centerX' Centre '.anchorY' '.verticalAlignment$' 'defaultFont$' '.buttonFontSize' '.rotation' '.newText$'
+	endif
 	demoShow()
 
 	# Reset

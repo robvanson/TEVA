@@ -1596,8 +1596,8 @@ procedure DrawRatingObject
 	if te.ratingTable <= 0
 		call loadLanguageTable Rating 'config.language$'
 		te.ratingTable = loadLanguageTable.tableID
-		
 	endif
+	call Draw_all_buttons 'te.ratingTable'
 endproc
 
 procedure DrawSoundObject
