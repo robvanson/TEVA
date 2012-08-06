@@ -1,0 +1,8 @@
+Label	LeftX	RightX	LowY	HighY	Color	Draw
+!Author	0	0	0	0	Black	DrawNull
+!Copyright	0	0	0	0	Black	DrawNull
+!License	0	0	0	0	Black	DrawNull
+!CANVAS	5	85	25	95	Black	DrawNull
+>Grade	10	75	85	90	Black	DrawNull
+>Noise	10	75	70	75	Black	DrawNull
+>Voice	10	75	55	60	Black	DrawNull

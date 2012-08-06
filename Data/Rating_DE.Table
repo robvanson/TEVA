@@ -1,0 +1,8 @@
+Label	Text	Key	Helptext
+!Author	Author	!	R.J.J.H. van Son
+!Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
+!License	License	!	GNU GPL version 2 or later
+!CANVAS	Display	¤	Zeichenbereich
+>Grade	Grade	#	Grade (GRBAS)
+>Noise	Noise	#	Additive noise
+>Voice	Voice	#	Vocing
