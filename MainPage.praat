@@ -729,6 +729,17 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 		goto ESCAPEDISPLAYSELECT
 	elsif mainPage.draw$ = "Ltas"
 		goto ESCAPEDISPLAYSELECT
+	elsif mainPage.draw$ = "Rating"
+		if te.ratingTable
+			select te.ratingTable
+			te.rating$ = selected$("Table")
+			call buttonClicked 'te.rating$' '.clickX' '.clickY'
+			.labelRating$ = replace_regex$(buttonClicked.label$, "^[^a-zA-Z]+([A-Za-z])", "\l\1", 0)
+			'.labelRating$' = buttonClicked.fractionX
+			.fractionYRating = buttonClicked.fractionY
+			call Draw_button_internal 1 'te.rating$' 'buttonClicked.label$' 0
+		endif
+		goto ESCAPEDISPLAYSELECT
 	endif
 	# Redraw window if there is an old selection
 	if selectionIsDrawn or selectedStartTime > currentStartTime or selectedEndTime < currentEndTime
@@ -1596,6 +1607,8 @@ procedure DrawRatingObject
 	if te.ratingTable <= 0
 		call loadLanguageTable Rating 'config.language$'
 		te.ratingTable = loadLanguageTable.tableID
+		select te.ratingTable
+		te.rating$ = selected$("Table")
 	endif
 	call Draw_all_buttons 'te.ratingTable'
 endproc

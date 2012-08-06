@@ -48,6 +48,7 @@ te.spectrogram = 0
 te.harmonicity = 0
 te.formant = 0
 te.ratingTable = -1
+te.rating$ = ""
 
 # Pop-Up window and other colors
 popUp.bordercolor$ = "{0.5,0.5,1}"
@@ -427,6 +428,8 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
     		demo Line width... '.topLineWidthDown'
 		endif
     	demo Draw rounded rectangle... '.leftX' '.rightX' '.lowY' '.highY' '.mm'
+    	
+    	
 	endif
     # The button text and symbol
 	.horWC = demo Horizontal mm to wc... 10.0
@@ -472,6 +475,15 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 	# Handle VAScale bars
     if startsWith(.label$, ">")
 		demo Text special... '.leftX' Left '.highY' Bottom 'defaultFont$' '.buttonFontSize' '.rotation' '.newText$'
+		.varName$ = replace_regex$(.label$, "^[^a-zA-Z]+([a-zA-Z])", "\l\1", 0)
+		.fraction = 0.5
+		if variableExists(.varName$)
+			.fraction = '.varName$'
+		endif
+		.midpoint = .leftX + .fraction * (.rightX - .leftX)
+		demo Colour... Red
+		demo Draw line... '.midpoint' '.lowY' '.midpoint' '.highY'
+		demo Colour... Black
     else
 		demo Text special... '.centerX' Centre '.anchorY' '.verticalAlignment$' 'defaultFont$' '.buttonFontSize' '.rotation' '.newText$'
 	endif
@@ -528,6 +540,7 @@ procedure set_language .lang$
 		select te.ratingTable
 		Remove
 		te.ratingTable = -1
+		te.rating$ = ""
     endif
     
     # Set language
@@ -701,6 +714,14 @@ procedure buttonClicked table$ .x .y
 			.highY = '.bo$'[.i, "HighY"]
 			if .x > .leftX and .x < .rightX and .y > .lowY and .y < .highY
 				.label$ = '.bo$'$[.i, "Label"]
+				.fractionX = 0.5
+				.fractionY = 0.5
+				if (.rightX - .leftX) > 0
+					.fractionX = (.x - .leftX)/(.rightX - .leftX)
+				endif
+				if (.highY - .lowY) > 0
+					.fractionY = (.y - .lowY)/(.highY - .lowY)
+				endif
 			endif
 		endif
 	endfor
