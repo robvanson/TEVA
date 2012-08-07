@@ -474,16 +474,33 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 	endif
 	# Handle VAScale bars
     if startsWith(.label$, ">")
+		# Wipe previous Text
+		.eraseLeft = .leftX
+		.textLength = demo Text width (wc)... '.newText$'
+		.eraseRight = .eraseLeft + .textLength
+		.eraseBottom = .highY + 1
+		.eraseTop = .eraseBottom + adjustFontSizeOnHeight.lineHeight
+		demo Paint rectangle... White .eraseLeft .eraseRight .eraseBottom .eraseTop
+		
+		# Write new label
 		demo Text special... '.leftX' Left '.highY' Bottom 'defaultFont$' '.buttonFontSize' '.rotation' '.newText$'
+		
+		# Draw current position tick
 		.varName$ = replace_regex$(.label$, "^[^a-zA-Z]+([a-zA-Z])", "\l\1", 0)
-		.fraction = 0.5
+		.fraction = -1
+		.vasColor$ = "Red"
 		if variableExists(.varName$)
 			.fraction = '.varName$'
+			.vasColor$ = "Red"
+		endif
+		if .fraction < 0
+			.fraction = 0.5
+			.vasColor$ = "Grey"
 		endif
 		.midpoint = .leftX + .fraction * (.rightX - .leftX)
-		demo Colour... Red
+		demo Colour... '.vasColor$'
+		demo Line width... 1.5
 		demo Draw line... '.midpoint' '.lowY' '.midpoint' '.highY'
-		demo Colour... Black
     else
 		demo Text special... '.centerX' Centre '.anchorY' '.verticalAlignment$' 'defaultFont$' '.buttonFontSize' '.rotation' '.newText$'
 	endif

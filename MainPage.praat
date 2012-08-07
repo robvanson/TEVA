@@ -736,6 +736,7 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 			call buttonClicked 'te.rating$' '.clickX' '.clickY'
 			.labelRating$ = replace_regex$(buttonClicked.label$, "^[^a-zA-Z]+([A-Za-z])", "\l\1", 0)
 			'.labelRating$' = buttonClicked.fractionX
+			call set_RatingValues config.speakerDataTable Rating.'.labelRating$' 'buttonClicked.fractionX'
 			.fractionYRating = buttonClicked.fractionY
 			call Draw_button_internal 1 'te.rating$' 'buttonClicked.label$' 0
 		endif
@@ -1610,6 +1611,7 @@ procedure DrawRatingObject
 		select te.ratingTable
 		te.rating$ = selected$("Table")
 	endif
+	call get_RatingValues 'config.speakerDataTable' 'te.ratingTable'
 	call Draw_all_buttons 'te.ratingTable'
 endproc
 
@@ -2367,3 +2369,40 @@ procedure calculateSpectrogramValues
 	.text$ = .spectrumValues$
 endproc
 
+procedure get_RatingValues .speakerDataTable .ratingTable
+	if .speakerDataTable > 0 and .ratingTable > 0
+		select .ratingTable
+		.numRatingRows = Get number of rows
+		for .ratingRow to .numRatingRows
+			select .ratingTable
+			.ratingKey$ = Get value... .ratingRow Label
+			if startsWith(.ratingKey$, ">")
+				.variableName$ = replace_regex$(.ratingKey$, "^[^a-zA-Z]+([A-Za-z])", "\l\1", 0)
+				call get_speakerInfo 'speakerID$'
+				.row = get_speakerInfo.row
+				select .speakerDataTable
+				.column = Get column index... Rating.'.variableName$'
+				'.variableName$' = -1
+				if .column > 0
+					.value = Get value... .row Rating.'.variableName$'
+					if not .value = undefined
+						'.variableName$' = (.value - 1)/999
+					endif
+				else
+					select .speakerDataTable
+					Append column... Rating.'.variableName$'
+				endif
+			endif
+		endfor
+	endif
+endproc
+
+procedure set_RatingValues .speakerDataTable .variable$ .value$
+	if .speakerDataTable > 0
+		call get_speakerInfo 'speakerID$'
+		.row = get_speakerInfo.row
+		.tableValue = ('.value$'*999) + 1
+		select .speakerDataTable
+		Set numeric value... .row '.variable$' '.tableValue:0'
+	endif
+endproc
