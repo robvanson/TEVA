@@ -30,7 +30,11 @@ if [[  -e ${PRAATSOURCES}/makefile.defs && -n `grep -l mingw32 ${PRAATSOURCES}/m
 	fi
 	UNAME=MinGW
 elif [[ ${UNAME} == "Darwin" ]]; then
-	MAKECMD="xcodebuild -project praat.xcodeproj -sdk `ls -1d /Developer/SDKs/*|tail -1`"
+	SDK=`ls -1d /Developer/SDKs/*|tail -1`
+	MAKECMD="xcodebuild -project praat.xcodeproj"
+	if [[ -n ${SDK} ]]; then
+		MAKECMD="xcodebuild -project praat.xcodeproj -sdk ${SDK}"
+	fi
 	EXECPATH="./build/Configuration1/Praat.app"
 	TARGETNAME=${APPLICATIONNAME}.app
 fi
