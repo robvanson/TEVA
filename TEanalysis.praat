@@ -333,6 +333,7 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
     .lowY = Get value... '.row' LowY
     .highY = Get value... '.row' HighY
     .buttonText$ = Get value... '.row' Text
+    .buttonKey$ = Get value... '.row' Key
     .buttonColor$ = Get value... '.row' Color
     .buttonDraw$ = Get value... '.row' Draw
     .buttonKey$ = Get value... '.row' Key
@@ -483,7 +484,22 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 		demo Paint rectangle... White .eraseLeft .eraseRight .eraseBottom .eraseTop
 		
 		# Write new label
-		demo Text special... '.leftX' Left '.highY' Bottom 'defaultFont$' '.buttonFontSize' '.rotation' '.newText$'
+		demo Text special... '.leftX' Left '.highY' Bottom 'defaultFont$' '.buttonFontSize' '.rotation' '.buttonText$'
+		# Write other texts
+		.leftMark$ = ""
+		.rightMark$ = ""
+		if index(.buttonKey$, ";") > 0
+			.leftMark$ = left$(.buttonKey$, index(.buttonKey$, ";")-1)
+			.rightMark$ = extractLine$(.buttonKey$, ";")
+		endif
+		if index_regex(.leftMark$, "\S")
+			.textX = .leftX - 5
+			demo Text special... '.textX' Left '.lowY' Bottom 'defaultFont$' '.buttonFontSize' '.rotation' '.leftMark$'
+		endif
+		if index_regex(.rightMark$, "\S")
+			.textX = .rightX
+			demo Text special... '.textX' Left '.lowY' Bottom 'defaultFont$' '.buttonFontSize' '.rotation' '.rightMark$'
+		endif
 		
 		# Draw current position tick
 		.varName$ = replace_regex$(.label$, "^[^a-zA-Z]+([a-zA-Z])", "\l\1", 0)

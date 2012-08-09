@@ -744,11 +744,19 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 			select te.ratingTable
 			te.rating$ = selected$("Table")
 			call buttonClicked 'te.rating$' '.clickX' '.clickY'
-			.labelRating$ = replace_regex$(buttonClicked.label$, "^[^a-zA-Z]+([A-Za-z])", "\l\1", 0)
-			'.labelRating$' = buttonClicked.fractionX
-			call set_RatingValues config.speakerDataTable Rating.'.labelRating$' 'buttonClicked.fractionX'
-			.fractionYRating = buttonClicked.fractionY
-			call Draw_button_internal 1 'te.rating$' 'buttonClicked.label$' 0
+			if buttonClicked.label$ = "Help"
+				call Draw_button 'te.rating$' 'buttonClicked.label$' 1
+				if runningCommandMode = 0
+					call help_loop 'te.rating$' init_window
+				endif
+				call Draw_button 'te.rating$' 'buttonClicked.label$' 0
+			else
+				.labelRating$ = replace_regex$(buttonClicked.label$, "^[^a-zA-Z]+([A-Za-z])", "\l\1", 0)
+				'.labelRating$' = buttonClicked.fractionX
+				call set_RatingValues config.speakerDataTable Rating.'.labelRating$' 'buttonClicked.fractionX'
+				.fractionYRating = buttonClicked.fractionY
+				call Draw_button_internal 1 'te.rating$' 'buttonClicked.label$' 0
+			endif
 		endif
 		goto ESCAPEDISPLAYSELECT
 	endif
@@ -2414,5 +2422,6 @@ procedure set_RatingValues .speakerDataTable .variable$ .value$
 		.tableValue = ('.value$'*999) + 1
 		select .speakerDataTable
 		Set numeric value... .row '.variable$' '.tableValue:0'
+		call WriteSpeakerData
 	endif
 endproc
