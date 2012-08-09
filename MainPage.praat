@@ -406,7 +406,11 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 			.speakerIDDefault$ = convert_praat_to_latin1.text$
 		else
 			call get_speakerInfo 'speakerID$'
-			.speakerIDDefault$ = "['get_speakerInfo.row'] '.speakerIDDefault$'"
+			.currentRow = get_speakerInfo.row
+			if .currentRow <= 0
+				.currentRow = 1
+			endif
+			.speakerIDDefault$ = "['.currentRow'] '.speakerIDDefault$'"
 		endif
 		.speakerText$ = "Speaker"
 		.speakerDefault$ = speakerInfo$
@@ -461,10 +465,10 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 			.newSpeakerID$ = '.speakerID$'
 			.newSpeakerInfo$ = '.speakerText$'
 			.newSpeakerComments$ = '.speakerCommentInput$'
-			if .newSpeakerInfo$ = .speakerDefault$
+			if .newSpeakerInfo$ = .speakerDefault$ and .newSpeakerInfo$ <> speakerInfo$
 				.newSpeakerInfo$ = ""
 			endif
-			if .newSpeakerComments$ = .speakerCommentDef$
+			if .newSpeakerComments$ = .speakerCommentDef$ and .newSpeakerComments$ <> speakerComments$
 				.newSpeakerComments$ = ""
 			endif
 			.change_speakerdata = 0
@@ -477,13 +481,19 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 				.newSpeakerID$ = replace_regex$(.newSpeakerID$, "^\[\d+\]\s+", "", 0)
 				speakerID$ = .newSpeakerID$
 				call get_speakerInfo 'speakerID$'
-				speakerID$ = get_speakerInfo.id$
-				speakerInfo$ = get_speakerInfo.text$
-				speakerComments$ = get_speakerInfo.description$
-				pathologicalType = 'get_speakerInfo.ast$'
-				te.currentFileName$ = get_speakerInfo.audio$
-				call load_audio_file 'te.currentFileName$'
-				call autoSetPathType
+				if get_speakerInfo.row > 0
+					speakerID$ = get_speakerInfo.id$
+					speakerInfo$ = get_speakerInfo.text$
+					speakerComments$ = get_speakerInfo.description$
+					pathologicalType = 'get_speakerInfo.ast$'
+					te.currentFileName$ = get_speakerInfo.audio$
+					call load_audio_file 'te.currentFileName$'
+					call autoSetPathType
+				else
+					speakerID$ = .newSpeakerID$
+					speakerInfo$ = .newSpeakerInfo$
+					speakerComments$ = .newSpeakerComments$
+				endif
 				.change_speakerdata = 1
 			else
 				if index_regex(.newSpeakerInfo$, "\S")

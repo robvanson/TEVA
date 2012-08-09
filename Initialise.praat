@@ -455,6 +455,9 @@ procedure get_speakerInfo .speakerID$
 	
 	if .speakerID$ <> "" and config.speakerData$ <> "" and fileReadable (config.speakerData$)
 		call ReadSpeakerData 'config.speakerData$'
+	endif
+	
+	if .speakerID$ <> ""
 		if config.speakerDataTable > 0
 			select config.speakerDataTable
 			.numRows = Get number of rows
