@@ -719,25 +719,10 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
     .yH = canvasYH
 	.firstT = -1
 	.secondT = -1
-	call Draw_button '.table$' Select 2
+	
+	# Handle stuff that should be done before the button is set
 	call buttonClicked '.table$' '.clickX' '.clickY'
-	if runningCommandMode = 1
-		# Do nothing
-		skipNextStep = 1
-		goto ENDOFDISPLAYSELECT
-	elsif demoKeyPressed() or buttonClicked.label$ = "Select"
-		.firstT = -1
-		.secondT = -1
-		call init_window
-		call Draw_button '.table$' Select 2
-		goto ENDOFDISPLAYSELECT
-	elsif currentStartTime <= 0 and currentEndTime <= 0
-		goto ENDOFDISPLAYSELECT
-	elsif .clickX < .xL or .clickX > .xR
-		goto ESCAPEDISPLAYSELECT
-	elsif .clickY < .yL or .clickX > .yH
-		goto ESCAPEDISPLAYSELECT
-	elsif mainPage.draw$ = "Ltas"
+	if mainPage.draw$ = "Ltas"
 		goto ESCAPEDISPLAYSELECT
 	elsif mainPage.draw$ = "Rating"
 		if te.ratingTable
@@ -767,6 +752,26 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 				call Draw_button_internal 1 'te.rating$' 'buttonClicked.label$' 0
 			endif
 		endif
+		goto ESCAPEDISPLAYSELECT
+	endif
+	
+	# Set button 
+	call Draw_button '.table$' Select 2
+	if runningCommandMode = 1
+		# Do nothing
+		skipNextStep = 1
+		goto ENDOFDISPLAYSELECT
+	elsif demoKeyPressed() or buttonClicked.label$ = "Select"
+		.firstT = -1
+		.secondT = -1
+		call init_window
+		call Draw_button '.table$' Select 2
+		goto ENDOFDISPLAYSELECT
+	elsif currentStartTime <= 0 and currentEndTime <= 0
+		goto ENDOFDISPLAYSELECT
+	elsif .clickX < .xL or .clickX > .xR
+		goto ESCAPEDISPLAYSELECT
+	elsif .clickY < .yL or .clickX > .yH
 		goto ESCAPEDISPLAYSELECT
 	endif
 	# Redraw window if there is an old selection
