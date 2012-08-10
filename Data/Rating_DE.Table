@@ -3,7 +3,8 @@ Label	Text	Key	Helptext
 !Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
 !License	License	!	GNU GPL version 2 or later
 !CANVAS	Display	¤	Zeichenbereich
+$Scales	Scales run from %%Least% like normal speech (bad) to %%Most% like normal speech (good)	#	Visual Analogue rating Scales
 >Grade	Grade	Least;Most	Grade from the GRBAS scale: Overall grade of voice deviancy or pathology.
 >Noise	Noise	Least;Most	Noise: The amount of annoyance caused by unintended additive noise.
 >Voice	Voice	Least;Most	Voice: Voicing is voiced or unvoiced where it is supposed to be voiced or unvoiced.
-Help	Scale Hilfe ?	?/	Dr\u"cken Sie auf die Scale \u"ber den Sie Informationen m\o"chten. Dr\u"cken Sie danach auf "Hilfe".
+Help	Scale Hilfe	#	Dr\u"cken Sie auf die Scale \u"ber den Sie Informationen m\o"chten. Dr\u"cken Sie danach auf "Hilfe".

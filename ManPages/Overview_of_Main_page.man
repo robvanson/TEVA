@@ -64,3 +64,4 @@ and printing. Both OpenOffice.org and LibreOffice.org are Free and Open Source w
 <list_item> "\bu ##Ltas#: [L] Long time average spectrum"
 <list_item> "\bu ##Intensity#: [I] Intensity"
 <list_item> "\bu ##Harmonicity#: [H] The Harmonicity to Noise ratio"
+<list_item> "\bu ##Rating#: [] Subset of ##[INFVo rating scales (EN)|INFVo VAS rating]#"

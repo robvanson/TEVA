@@ -1,0 +1,53 @@
+ManPagesTextFile
+"INFVo rating scales (NL)" "R.J.J.H. van Son" 20120810 0
+<intro> "Impression, Intelligibility, Noise, Fluency, and Voice (INFVo) Visual Analogue rating Scales."
+
+<normal> "##(I)INFV0# is a standard for rating voices used in Speech Therapy. TEVA will primarily be used to 
+study voicing in sustained vowels. In these circumstances, the standard %Impression, %Intelligibility, and %Fluency 
+scales of ##(I)INFVo# would be of little use. Therefore, TEVA Rating screen includes only a subset of the scales: 
+%Noise and %Voice. Instead of the (overall) %Impression scale, the %Grade scale of ##GRBAS# is included."
+
+<entry> "Visual Analogue Scale (VAS) rating"
+<normal> "In VAS rating, the judges have to indicate the severety of some condition as a mark on a line. 
+Each parameter has to be scored on a Visual Analogue Scale (VAS) that takes the form of an undivided horizontal bar, 
+where a position has to be marked. The extreme right concurs with a very good score for this parameter. In (I)INFVo 
+rating this is a substitute voice %Most like a normal voice. The extreme left concurs with a very bad score for this 
+parameter, that is, %Least like a normal voice. The words %Least and %Most are printed at the end of the bars."
+
+<normal> "When a parameter has not yet been marked, a vertical gray line will appear in the center of the scale. 
+When a parameter has been marked, a vertical red line will appear on that position."
+
+<entry> "Scales"
+
+<entry> "Grade"
+<normal> "Grade from the GRBAS scale: Overall grade of voice deviancy or pathology."
+
+<entry> "Noise"
+<normal> "Noise: Unintended additive noise reflects the amount of annoyance caused by the audibility of all 
+sorts of uncontrolled noises, such as bubbly noise, breathy noise, clicks, etc., produced during speech."
+
+<entry> "Voice"
+<normal> "Voice: Quality of voicing means that voicing is voiced or unvoiced where it is supposed to be voiced or 
+unvoiced. As such, voices that produce a lot of breathy noise and contain little or no voiced segments score badly. 
+Voices that produce a lot of hesitations (e.g., because of spasms) and cannot produce prolonged voiced segments score 
+in the middle of the VAS"
+
+<entry> "Other scales"
+<normal> "For completeness, the other (I)INFVo scales are also given."
+
+<entry> "Impression"
+<normal> "Impression: The overall voice quality. This parameter is the combined impression caused by all the properties 
+of the voice such as pleasant/unpleasant to listen to, ﬂuent or cut, good volume or not, intelligible or not, etc."
+
+<entry> "Intelligibility"
+<normal> "Intelligibility: The impression of intelligibility. It is an answer to the question ‘how much effort do you 
+think it would take to understand this person when he or she was trying to make a conversation with you?’"
+
+<entry> "Fluency"
+<normal> "Fluency: The perceived smoothness of the sound production. Samples containing a lot of hesitations between 
+successive sounds and within continuant sounds (e.g., vowels and some consonants) score badly. "
+
+<entry> "References"
+<list_item> "M. B. J. Moerman, J. P. Martens, M. J. Van der Borgt, M. Peleman, M. Gillis, P. H. Dejonckere (2006).
+'Perceptual evaluation of substitution voices: development and evaluation of the (I)INFVo rating scale', 
+%%Eur Arch Otorhinolaryngol%, 263: 183–187."
