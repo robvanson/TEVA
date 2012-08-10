@@ -414,8 +414,8 @@ procedure get_nextSpeaker .speakerID$
    .description$ = get_speakerInfo.description$
    .audio$ = get_speakerInfo.audio$
    .ast$ = get_speakerInfo.ast$
-   .astStart = get_speakerInfo.astStart
-   .astEnd = get_speakerInfo.astEnd
+   .startTime = get_speakerInfo.startTime
+   .endTime = get_speakerInfo.endTime
 endproc
 
 procedure get_previousSpeaker .speakerID$
@@ -439,8 +439,8 @@ procedure get_previousSpeaker .speakerID$
    .description$ = get_speakerInfo.description$
    .audio$ = get_speakerInfo.audio$
    .ast$ = get_speakerInfo.ast$
-   .astStart = get_speakerInfo.astStart
-   .astEnd = get_speakerInfo.astEnd
+   .startTime = get_speakerInfo.startTime
+   .endTime = get_speakerInfo.endTime
 endproc
 
 procedure get_speakerInfo .speakerID$
@@ -450,8 +450,8 @@ procedure get_speakerInfo .speakerID$
 	.audio$ = te.currentFileName$
 	.ast$ = "'pathologicalType'"
 	.row = 0
-	.astStart = -1
-	.astEnd = -1
+	.startTime = -1
+	.endTime = -1
 	
 	if .speakerID$ <> "" and config.speakerData$ <> "" and fileReadable (config.speakerData$)
 		call ReadSpeakerData 'config.speakerData$'
@@ -510,11 +510,11 @@ procedure get_speakerInfo .speakerID$
 						.ast$ = "0"
 					endif
 				endif
-				.astStart = Get value... '.row' ASTstart
-				.astEnd = Get value... '.row' ASTend
-				if .astStart = undefined or .astEnd = undefined
-					.astStart = -1
-					.astEnd = -1
+				.startTime = Get value... '.row' StartTime
+				.endTime = Get value... '.row' EndTime
+				if .startTime = undefined or .endTime = undefined
+					.startTime = -1
+					.endTime = -1
 				endif
 			endif
 		endif
@@ -575,7 +575,7 @@ procedure ReadSpeakerData .speakerData$
 			endif
 			config.speakerDataTable = nocheck Read from file... '.speakerData$'
 			if config.speakerDataTable <= 0 or .currentSelected = config.speakerDataTable
-				config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST ASTstart ASTend
+				config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST StartTime EndTime
 				call get_feedback_text 'config.language$' BrokenTable
 				call convert_praat_to_latin1 'get_feedback_text.text$'
 				.brokenTableText$ = convert_praat_to_latin1.text$
@@ -606,13 +606,13 @@ procedure ReadSpeakerData .speakerData$
 				if .col <= 0
 					Append column... AST
 				endif
-				.col = Get column index... ASTstart
+				.col = Get column index... StartTime
 				if .col <= 0
-					Append column... ASTstart
+					Append column... StartTime
 				endif
-				.col = Get column index... ASTend
+				.col = Get column index... EndTime
 				if .col <= 0
-					Append column... ASTend
+					Append column... EndTime
 				endif
 			endif
 			# Set local preferences
@@ -631,7 +631,7 @@ procedure ReadSpeakerData .speakerData$
 			.rawStrings = Read Strings from raw text file... '.speakerData$'
 			.numStrings = Get number of strings
 			if .numStrings > 0
-				config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST ASTstart ASTend
+				config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST StartTime EndTime
 				.currentText$ = ""
 				.currentDescription$ = ""
 
@@ -722,7 +722,7 @@ procedure WriteSpeakerData
 	# Table does not exist
 	if config.speakerDataTable <= 0
 		config.speakerData$ = ""
-		config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST ASTstart ASTend
+		config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST StartTime EndTime
 		select config.speakerDataTable
 		.row = Get number of rows
 	elsif get_speakerInfo.row > 0
@@ -846,12 +846,12 @@ procedure setPathType .pathType
 	if get_speakerInfo.row > 0
 		if pathologicalType > 0
 			Set string value... 'get_speakerInfo.row' AST 'pathologicalType'
-			Set string value... 'get_speakerInfo.row' ASTstart 'selectedStartTime:4'
-			Set string value... 'get_speakerInfo.row' ASTend 'selectedEndTime:4'
+			Set string value... 'get_speakerInfo.row' StartTime 'selectedStartTime:4'
+			Set string value... 'get_speakerInfo.row' EndTime 'selectedEndTime:4'
 		else
 			Set string value... 'get_speakerInfo.row' AST -
-			Set string value... 'get_speakerInfo.row' ASTstart -
-			Set string value... 'get_speakerInfo.row' ASTend -
+			Set string value... 'get_speakerInfo.row' StartTime -
+			Set string value... 'get_speakerInfo.row' EndTime -
 		endif
 		call WriteSpeakerData
 	endif

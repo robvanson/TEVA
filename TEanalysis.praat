@@ -1323,9 +1323,9 @@ procedure getOpenFile .openDialogue$
 	
 	# If this was loaded from a Speaker Data file, set the Select Window
 	call get_speakerInfo 'speakerID$'
-	if get_speakerInfo.astEnd > 0 
-		selectedStartTime = get_speakerInfo.astStart
-		selectedEndTime = get_speakerInfo.astEnd
+	if get_speakerInfo.endTime > 0 
+		selectedStartTime = get_speakerInfo.startTime
+		selectedEndTime = get_speakerInfo.endTime
 	endif
 
 	select te.openSound
