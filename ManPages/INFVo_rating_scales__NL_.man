@@ -19,15 +19,17 @@ When a parameter has been marked, a vertical red line will appear on that positi
 
 <entry> "Scales"
 
-<entry> "Grade"
-<normal> "Grade from the GRBAS scale: Overall grade of voice deviancy or pathology."
+<entry> "Voice Quality (similarity to normal speech)"
+<normal> "Is a judgment of the overall voice quality. Comparable to Grade from the GRBAS scale: Overall grade of 
+voice deviancy or pathology."
 
 <entry> "Noise"
 <normal> "Noise: Unintended additive noise reflects the amount of annoyance caused by the audibility of all 
 sorts of uncontrolled noises, such as bubbly noise, breathy noise, clicks, etc., produced during speech."
 
-<entry> "Voice"
-<normal> "Voice: Quality of voicing means that voicing is voiced or unvoiced where it is supposed to be voiced or 
+<entry> "Voice (proportion of vowel)"
+<normal> "Voice: For vowels, this scale refers to the stability of phonation/voicing (i.e. proportion of vowel that is voiced). 
+In general speech, quality of voicing means that voicing is voiced or unvoiced where it is supposed to be voiced or 
 unvoiced. As such, voices that produce a lot of breathy noise and contain little or no voiced segments score badly. 
 Voices that produce a lot of hesitations (e.g., because of spasms) and cannot produce prolonged voiced segments score 
 in the middle of the VAS"
