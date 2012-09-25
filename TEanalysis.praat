@@ -107,6 +107,10 @@ printerPresets$ = "Standard"
 # 
 ##########################################################
 
+# Load supporting scripts
+# Include tables in script format (always needed)
+include CreateTables.praat
+
 # When using this script as a library in "include <script>", 
 # suppress the execution of actual code but DO run the 
 # non-interactive initialisation
@@ -125,8 +129,6 @@ endif
 call reset_viewport
 
 # Load supporting scripts
-# Include tables in script format
-include CreateTables.praat
 # Set up system and load preferences
 include Initialise.praat
 # Include the main page buttons and procedures
