@@ -2378,27 +2378,29 @@ procedure calculateSpectrogramValues
 	.text$ = ""
 	.shorttextAST$ = ""
 	
-	select te.formant
-	.medianF1 = Get quantile... 1 'selectedStartTime' 'selectedEndTime' Hertz 0.50
-	.medianB1 = Get quantile of bandwidth... 1 'selectedStartTime' 'selectedEndTime' Hertz 0.50
-	.qualityF1 = .medianF1 / .medianB1
-	.medianF2 = Get quantile... 2 'selectedStartTime' 'selectedEndTime' Hertz 0.50
-	.medianB2 = Get quantile of bandwidth... 2 'selectedStartTime' 'selectedEndTime' Hertz 0.50
-	.qualityF2 = .medianF2 / .medianB2
-	.medianF3 = Get quantile... 3 'selectedStartTime' 'selectedEndTime' Hertz 0.50
-	.medianB3 = Get quantile of bandwidth... 3 'selectedStartTime' 'selectedEndTime' Hertz 0.50
-	.qualityF3 = .medianF3 / .medianB3
-	.medianF4 = Get quantile... 4 'selectedStartTime' 'selectedEndTime' Hertz 0.50
-	.medianB4 = Get quantile of bandwidth... 4 'selectedStartTime' 'selectedEndTime' Hertz 0.50
-	.qualityF4 = .medianF4 / .medianB4
-	
-	call get_feedback_text 'config.language$' SpectrumValues
-	.spectrumValues$ = get_feedback_text.text$
-	.spectrumValues$ = replace$(.spectrumValues$, "QUALITYF1$", "'.qualityF1:0'", 0)
-	.spectrumValues$ = replace$(.spectrumValues$, "QUALITYF2$", "'.qualityF2:0'", 0)
-	.spectrumValues$ = replace$(.spectrumValues$, "QUALITYF3$", "'.qualityF3:0'", 0)
-	.spectrumValues$ = replace$(.spectrumValues$, "QUALITYF4$", "'.qualityF4:0'", 0)
-	.text$ = .spectrumValues$
+	if te.formant > 0
+		select te.formant
+		.medianF1 = Get quantile... 1 'selectedStartTime' 'selectedEndTime' Hertz 0.50
+		.medianB1 = Get quantile of bandwidth... 1 'selectedStartTime' 'selectedEndTime' Hertz 0.50
+		.qualityF1 = .medianF1 / .medianB1
+		.medianF2 = Get quantile... 2 'selectedStartTime' 'selectedEndTime' Hertz 0.50
+		.medianB2 = Get quantile of bandwidth... 2 'selectedStartTime' 'selectedEndTime' Hertz 0.50
+		.qualityF2 = .medianF2 / .medianB2
+		.medianF3 = Get quantile... 3 'selectedStartTime' 'selectedEndTime' Hertz 0.50
+		.medianB3 = Get quantile of bandwidth... 3 'selectedStartTime' 'selectedEndTime' Hertz 0.50
+		.qualityF3 = .medianF3 / .medianB3
+		.medianF4 = Get quantile... 4 'selectedStartTime' 'selectedEndTime' Hertz 0.50
+		.medianB4 = Get quantile of bandwidth... 4 'selectedStartTime' 'selectedEndTime' Hertz 0.50
+		.qualityF4 = .medianF4 / .medianB4
+		
+		call get_feedback_text 'config.language$' SpectrumValues
+		.spectrumValues$ = get_feedback_text.text$
+		.spectrumValues$ = replace$(.spectrumValues$, "QUALITYF1$", "'.qualityF1:0'", 0)
+		.spectrumValues$ = replace$(.spectrumValues$, "QUALITYF2$", "'.qualityF2:0'", 0)
+		.spectrumValues$ = replace$(.spectrumValues$, "QUALITYF3$", "'.qualityF3:0'", 0)
+		.spectrumValues$ = replace$(.spectrumValues$, "QUALITYF4$", "'.qualityF4:0'", 0)
+		.text$ = .spectrumValues$
+	endif
 endproc
 
 procedure get_RatingValues .speakerDataTable .ratingTable
