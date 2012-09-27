@@ -34,20 +34,6 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Graphics_text.cpp
  		} else {
  			ipaAvailable = true;
  		}
-diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_picture.cpp demo_praat_sources/sys/praat_picture.cpp
---- praat_sources/sys/praat_picture.cpp	2011-09-02 13:53:33.000000000 +0200
-+++ demo_praat_sources/sys/praat_picture.cpp	2011-09-16 08:12:59.000000000 +0200
-@@ -1702,8 +1702,10 @@ void praat_picture_init (void) {
- 		#elif motif
- 			drawingArea = GuiDrawingArea_createShown (scrollWindow, 0, width, 0, height, NULL, NULL, NULL, NULL, NULL, 0);
- 		#endif
-+		#if defined (_W32) && defined (DEMOAPP)
- 		GuiObject_show (scrollWindow);
- 		GuiObject_show (dialog);
-+		#endif
- 	}
- 
- 	// TODO: Paul: deze moet VOOR de update functies anders krijgen die void_me 0x0
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_praat_sources/sys/praat.cpp
 --- praat_sources/sys/praat.cpp	2011-09-14 14:37:55.000000000 +0200
 +++ demo_praat_sources/sys/praat.cpp	2011-09-16 10:04:34.000000000 +0200
