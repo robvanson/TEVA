@@ -62,8 +62,8 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#if defined (UNIX) || defined (macintosh) || defined (_WIN32) && defined (CONSOLE_APPLICATION)
  			MelderString_empty (& theCurrentPraatApplication -> batchName);
  			for (unsigned int i = iarg_batchName; i < argc; i ++) {
-@@ -1219,6 +1225,9 @@ void praat_init (const char *title, unsi
- 		praat_addMenus (NULL);
+@@ -1221,6 +1227,9 @@ void praat_init (const char *title, unsi
+ 		trace ("adding fixed buttons without GUI");
  		praat_addFixedButtons (NULL);
  	} else {
 +		#ifdef DEMOAPP
@@ -72,7 +72,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
 
  		#ifdef macintosh
  			MelderGui_create (raam);   /* BUG: default Melder_assert would call printf recursively!!! */
-@@ -1265,7 +1274,12 @@ void praat_init (const char *title, unsi
+@@ -1267,7 +1276,12 @@ void praat_init (const char *title, unsi
  	theCurrentPraatApplication -> manPages = ManPages_create ();
  
  	trace ("creating the Picture window");
@@ -86,7 +86,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  }
  
  static void executeStartUpFile (MelderDir startUpDirectory, const wchar_t *fileNameTemplate) {
-@@ -1505,6 +1519,14 @@ void praat_run (void) {
+@@ -1507,6 +1521,14 @@ void praat_run (void) {
  						Melder_flushError (NULL);
  					}
  				}
