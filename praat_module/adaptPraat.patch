@@ -76,31 +76,20 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#if defined (UNIX) || defined (macintosh) || defined (_WIN32) && defined (CONSOLE_APPLICATION)
  			MelderString_empty (& theCurrentPraatApplication -> batchName);
  			for (unsigned int i = iarg_batchName; i < argc; i ++) {
-@@ -1260,6 +1266,9 @@ void praat_init (const char *title, unsi
+@@ -1219,6 +1225,9 @@ void praat_init (const char *title, unsi
  		praat_addMenus (NULL);
  		praat_addFixedButtons (NULL);
  	} else {
 +		#ifdef DEMOAPP
 +			Melder_backgrounding = true;
 +		#endif
- 		GuiObject Raam = NULL;
- 		#if gtk
- 			GuiObject raHoriz, raLeft; /* I want to have more possibilities for GTK widgets */
-@@ -1306,7 +1315,9 @@ void praat_init (const char *title, unsi
- 			GuiObject_show (raLeft);
- 			GuiObject_show (raHoriz);
- 		#endif
--		GuiObject_show (Raam);
-+		#ifndef DEMOAPP
-+			GuiObject_show (Raam);
-+		#endif
- 		#ifdef UNIX
- 			try {
- 				autofile f = Melder_fopen (& pidFile, "a");
-@@ -1331,7 +1342,12 @@ void praat_init (const char *title, unsi
- 	Melder_setPublishProc (publishProc);
+
+ 		#ifdef macintosh
+ 			MelderGui_create (raam);   /* BUG: default Melder_assert would call printf recursively!!! */
+@@ -1265,7 +1274,12 @@ void praat_init (const char *title, unsi
  	theCurrentPraatApplication -> manPages = ManPages_create ();
  
+ 	trace ("creating the Picture window");
 -	if (! praatP.dontUsePictureWindow) praat_picture_init ();
 +	#ifdef DEMOAPP
 +		praat_picture_init ();
@@ -111,7 +100,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  }
  
  static void executeStartUpFile (MelderDir startUpDirectory, const wchar_t *fileNameTemplate) {
-@@ -1564,6 +1580,14 @@ void praat_run (void) {
+@@ -1505,6 +1519,14 @@ void praat_run (void) {
  						Melder_flushError (NULL);
  					}
  				}
@@ -204,8 +193,8 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  		if (numberOfChannels == thePreviousNumberOfChannels) {
  			theSoundRecorder -> raise ();
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/UiPause.cpp demo_praat_sources/sys/UiPause.cpp
---- praat_sources/sys/UiPause.cpp	2011-09-20 11:40:48.000000000 +0200
-+++ demo_praat_sources/sys/UiPause.cpp	2011-10-25 14:01:49.000000000 +0200
+--- praat_sources/sys/UiPause.cpp	2012-09-27 09:10:50.000000000 +0200
++++ demo_praat_sources/sys/UiPause.cpp	2012-09-27 13:25:18.000000000 +0200
 @@ -159,6 +159,7 @@ int UiPause_end (int numberOfContinueBut
  		{ // scope
  			autoMelderSaveDefaultDir saveDir;
@@ -214,10 +203,10 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/UiPause.cpp demo_
  			Melder_assert (theEventLoopDepth == 0);
  			theEventLoopDepth ++;
  			try {
-@@ -167,24 +168,28 @@ int UiPause_end (int numberOfContinueBut
- 						gtk_main_iteration ();
+@@ -168,24 +169,28 @@ int UiPause_end (int numberOfContinueBut
  					} while (! thePauseForm_clicked);
- 				#else
+ 				#elif cocoa
+ 				#elif motif
 +					if(wcsnequ(continueText1, L"DESTROY WINDOW ", 15) == 0){
  					do {
  						XEvent event;
@@ -252,8 +241,8 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.de
  
  CXX = g++
  
--CFLAGS = -DUNIX -Dlinux `pkg-config --cflags gtk+-2.0` -Werror=missing-prototypes -Werror=implicit -Wreturn-type -Wunused -Wunused-parameter -Wuninitialized -O
-+CFLAGS = -DUNIX -Dlinux `pkg-config --cflags gtk+-2.0` -Werror=missing-prototypes -Werror=implicit -Wreturn-type -Wunused -Wunused-parameter -Wuninitialized -DDEMOAPP -O
+-CFLAGS = -DUNIX -Dlinux `pkg-config --cflags gtk+-2.0` -Werror=missing-prototypes -Werror=implicit -Wreturn-type -Wunused -Wunused-parameter -Wuninitialized -O1
++CFLAGS = -DUNIX -Dlinux `pkg-config --cflags gtk+-2.0` -Werror=missing-prototypes -Werror=implicit -Wreturn-type -Wunused -Wunused-parameter -Wuninitialized -DDEMOAPP -O1
  
  CXXFLAGS = $(CFLAGS) -Wshadow
  
@@ -264,8 +253,8 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.de
  
  CXX = /mingw32/bin/g++ -isystem /mingw32/include/c++/4.7.0 -isystem /mingw32/include -Wshadow
  
--CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -Dmain=wingwmain -O2
-+CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -Dmain=wingwmain -O2 -DDEMOAPP
+-CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -Dmain=wingwmain -O1
++CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -Dmain=wingwmain -O1 -DDEMOAPP
  
  CXXFLAGS = $(CFLAGS)
  
@@ -276,8 +265,8 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.de
  
  CXX = /mingw64/bin/g++ -isystem /mingw64/include/c++/4.7.0 -isystem /mingw64/include -Wshadow -m64
  
--CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -Dmain=wingwmain -O2
-+CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -Dmain=wingwmain -O2 -DDEMOAPP
+-CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -Dmain=wingwmain -O1
++CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -Dmain=wingwmain -O1 -DDEMOAPP
  
  CXXFLAGS = $(CFLAGS)
  
@@ -298,7 +287,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/dwtools/Intensity_ext
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus.cpp demo_praat_sources/sys/praat_objectMenus.cpp
 --- praat_sources/sys/praat_objectMenus.cpp	2012-02-22 13:04:43.000000000 +0100
 +++ demo_praat_sources/sys/praat_objectMenus.cpp	2012-02-22 13:48:24.000000000 +0100
-@@ -456,8 +456,10 @@ FORM (SearchManual, L"Search manual", L"
+@@ -461,8 +461,10 @@ FORM (SearchManual, L"Search manual", L"
  	TEXTFIELD (L"query", L"")
  	OK
  DO
@@ -306,10 +295,10 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
  	if (theCurrentPraatApplication -> batch)
  		Melder_throw (L"Cannot view a manual from batch.");
 +	#endif
- 	Manual manPage = Manual_create (theCurrentPraatApplication -> topShell, L"Intro", theCurrentPraatApplication -> manPages, false);
+ 	Manual manPage = Manual_create (L"Intro", theCurrentPraatApplication -> manPages, false);
  	Manual_search (manPage, GET_STRING (L"query"));
  END
-@@ -468,8 +470,10 @@ FORM (GoToManualPage, L"Go to manual pag
+@@ -473,8 +475,10 @@ FORM (GoToManualPage, L"Go to manual pag
  	LIST (L"Page", numberOfPages, pages, 1)}
  	OK
  DO
@@ -317,6 +306,6 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
  	if (theCurrentPraatApplication -> batch)
  		Melder_throw (L"Cannot view a manual from batch.");
 +	#endif
- 	Manual manPage = Manual_create (theCurrentPraatApplication -> topShell, L"Intro", theCurrentPraatApplication -> manPages, false);
+ 	Manual manPage = Manual_create (L"Intro", theCurrentPraatApplication -> manPages, false);
  	HyperPage_goToPage_i (manPage, GET_INTEGER (L"Page"));
  END
