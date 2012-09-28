@@ -57,7 +57,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
 +			char objectWindowTitle [100];
 +			Machine_initLookAndFeel (argc, argv);
 +			sprintf (objectWindowTitle, "%s Objects", praatP.title);
-+			GuiWindow_create (NULL, -1, Gui_AUTOMATIC, -1, 600, Melder_peekUtf8ToWcs (objectWindowTitle), gui_cb_quit_gtk, NULL, 0);
++			GuiWindow_create (0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,Melder_peekUtf8ToWcs (objectWindowTitle), gui_cb_quit, NULL, 0);
 +		#endif
  		#if defined (UNIX) || defined (macintosh) || defined (_WIN32) && defined (CONSOLE_APPLICATION)
  			MelderString_empty (& theCurrentPraatApplication -> batchName);
