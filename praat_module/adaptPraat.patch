@@ -37,7 +37,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Graphics_text.cpp
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_praat_sources/sys/praat.cpp
 --- praat_sources/sys/praat.cpp	2011-09-14 14:37:55.000000000 +0200
 +++ demo_praat_sources/sys/praat.cpp	2011-09-16 10:04:34.000000000 +0200
-@@ -1092,9 +1092,9 @@ void praat_init (const char *title, unsi
+@@ -1085,9 +1085,9 @@ void praat_init (const char *title, unsi
  		 * Make sure that the program's private directory exists.
  		 */
  		#if defined (UNIX)
@@ -49,7 +49,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#elif defined (_WIN32)
  			swprintf (name, 256, L"%ls", Melder_utf8ToWcs (praatP.title));   /* For example MyProg */
  		#endif
-@@ -1171,6 +1171,12 @@ void praat_init (const char *title, unsi
+@@ -1164,6 +1164,12 @@ void praat_init (const char *title, unsi
  
  	GuiWindow raam = NULL;
  	if (Melder_batch) {
@@ -72,10 +72,10 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
 
  		#ifdef macintosh
  			MelderGui_create (raam);   /* BUG: default Melder_assert would call printf recursively!!! */
-@@ -1267,7 +1276,12 @@ void praat_init (const char *title, unsi
- 	theCurrentPraatApplication -> manPages = ManPages_create ();
+@@ -1269,7 +1278,12 @@ void praat_init (const char *title, unsi
  
  	trace ("creating the Picture window");
+ 	trace ("before picture window shows: locale is %s", setlocale (LC_ALL, NULL));
 -	if (! praatP.dontUsePictureWindow) praat_picture_init ();
 +	#ifdef DEMOAPP
 +		praat_picture_init ();
@@ -83,10 +83,10 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
 +	#else
 +		if (! praatP.dontUsePictureWindow) praat_picture_init ();
 +	#endif
+ 	trace ("after picture window shows: locale is %s", setlocale (LC_ALL, NULL));
  }
  
- static void executeStartUpFile (MelderDir startUpDirectory, const wchar_t *fileNameTemplate) {
-@@ -1507,6 +1521,14 @@ void praat_run (void) {
+@@ -1515,6 +1529,14 @@ void praat_run (void) {
  						Melder_flushError (NULL);
  					}
  				}
@@ -227,7 +227,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.de
  
  CXX = g++
  
--CFLAGS = -DUNIX -Dlinux `pkg-config --cflags gtk+-2.0` -Werror=missing-prototypes -Werror=implicit -Wreturn-type -Wunused -Wunused-parameter -Wuninitialized -O1
+-CFLAGS = -DUNIX -Dlinux `pkg-config --cflags gtk+-2.0` -Werror=missing-prototypes -Werror=implicit -Wreturn-type -Wunused -Wunused-parameter -Wuninitialized -O1 -g1
 +CFLAGS = -DUNIX -Dlinux `pkg-config --cflags gtk+-2.0` -Werror=missing-prototypes -Werror=implicit -Wreturn-type -Wunused -Wunused-parameter -Wuninitialized -DDEMOAPP -O1
  
  CXXFLAGS = $(CFLAGS) -Wshadow
@@ -273,7 +273,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/dwtools/Intensity_ext
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus.cpp demo_praat_sources/sys/praat_objectMenus.cpp
 --- praat_sources/sys/praat_objectMenus.cpp	2012-02-22 13:04:43.000000000 +0100
 +++ demo_praat_sources/sys/praat_objectMenus.cpp	2012-02-22 13:48:24.000000000 +0100
-@@ -461,8 +461,10 @@ FORM (SearchManual, L"Search manual", L"
+@@ -465,8 +465,10 @@ FORM (SearchManual, L"Search manual", L"
  	TEXTFIELD (L"query", L"")
  	OK
  DO
@@ -284,7 +284,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
  	Manual manPage = Manual_create (L"Intro", theCurrentPraatApplication -> manPages, false);
  	Manual_search (manPage, GET_STRING (L"query"));
  END
-@@ -473,8 +475,10 @@ FORM (GoToManualPage, L"Go to manual pag
+@@ -477,8 +479,10 @@ FORM (GoToManualPage, L"Go to manual pag
  	LIST (L"Page", numberOfPages, pages, 1)}
  	OK
  DO
