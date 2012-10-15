@@ -35,8 +35,8 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Graphics_text.cpp
  			ipaAvailable = true;
  		}
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_praat_sources/sys/praat.cpp
---- praat_sources/sys/praat.cpp	2011-09-14 14:37:55.000000000 +0200
-+++ demo_praat_sources/sys/praat.cpp	2011-09-16 10:04:34.000000000 +0200
+--- praat_sources/sys/praat.cpp	2012-10-15 10:41:10.000000000 +0200
++++ demo_praat_sources/sys/praat.cpp	2012-10-15 13:47:24.000000000 +0200
 @@ -1085,9 +1085,9 @@ void praat_init (const char *title, unsi
  		 * Make sure that the program's private directory exists.
  		 */
@@ -62,17 +62,39 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#if defined (UNIX) || defined (macintosh) || defined (_WIN32) && defined (CONSOLE_APPLICATION)
  			MelderString_empty (& theCurrentPraatApplication -> batchName);
  			for (unsigned int i = iarg_batchName; i < argc; i ++) {
-@@ -1221,6 +1227,9 @@ void praat_init (const char *title, unsi
+@@ -1209,9 +1215,11 @@ void praat_init (const char *title, unsi
+ 		#if motif
+ 			GuiApp_setApplicationShell (theCurrentPraatApplication -> topShell -> d_xmShell);
+ 		#endif
++#ifndef DEMOAPP
+ 		trace ("before objects window shows locale %s", setlocale (LC_ALL, NULL));
+ 		raam -> f_show ();
+ 		trace ("after objects window shows locale %s", setlocale (LC_ALL, NULL));
++#endif
+ 	}
+ 	Thing_recognizeClassesByName (classCollection, classStrings, classManPages, classSortedSetOfString, NULL);
+ 	if (Melder_batch) {
+@@ -1221,6 +1229,9 @@ void praat_init (const char *title, unsi
  		trace ("adding fixed buttons without GUI");
  		praat_addFixedButtons (NULL);
  	} else {
 +		#ifdef DEMOAPP
 +			Melder_backgrounding = true;
 +		#endif
-
+ 
  		#ifdef macintosh
  			MelderGui_create (raam);   /* BUG: default Melder_assert would call printf recursively!!! */
-@@ -1269,7 +1278,12 @@ void praat_init (const char *title, unsi
+@@ -1244,7 +1255,9 @@ void praat_init (const char *title, unsi
+ 		trace ("creating the dynamic menu in the Objects window");
+ 		praat_actions_createDynamicMenu (raam, 250);
+ 		trace ("showing the Objects window");
++#ifndef DEMOAPP
+ 		raam -> f_show ();
++#endif
+ 	//Melder_fatal ("stop");
+ 		#ifdef UNIX
+ 			try {
+@@ -1269,7 +1282,12 @@ void praat_init (const char *title, unsi
  
  	trace ("creating the Picture window");
  	trace ("before picture window shows: locale is %s", setlocale (LC_ALL, NULL));
@@ -86,7 +108,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	trace ("after picture window shows: locale is %s", setlocale (LC_ALL, NULL));
  }
  
-@@ -1515,6 +1529,14 @@ void praat_run (void) {
+@@ -1515,6 +1533,14 @@ void praat_run (void) {
  						Melder_flushError (NULL);
  					}
  				}
@@ -101,6 +123,19 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  			#endif
  			for (;;) {
  				XEvent event;
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_picture.cpp demo_praat_sources/sys/praat_picture.cpp
+--- praat_sources/sys/praat_picture.cpp	2012-09-27 09:10:50.000000000 +0200
++++ demo_praat_sources/sys/praat_picture.cpp	2012-10-15 13:47:43.000000000 +0200
+@@ -1669,7 +1669,9 @@ void praat_picture_init (void) {
+ 		width = height = resolution * 12;
+ 		scrollWindow = GuiScrolledWindow_createShown (dialog, margin, 0, Machine_getMenuBarHeight () + margin, 0, 1, 1, 0);
+ 		drawingArea = GuiDrawingArea_createShown (scrollWindow, width, height, NULL, NULL, NULL, NULL, NULL, 0);
++#ifndef DEMOAPP
+ 		dialog -> f_show ();
++#endif
+ 	}
+ 
+ 	// TODO: Paul: deze moet VOOR de update functies anders krijgen die void_me 0x0
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_init.cpp demo_praat_sources/fon/praat_TextGrid_init.cpp
 --- praat_sources/fon/praat_TextGrid_init.cpp	2011-09-12 10:17:12.000000000 +0200
 +++ demo_praat_sources/fon/praat_TextGrid_init.cpp	2011-09-12 10:59:25.000000000 +0200
