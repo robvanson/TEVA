@@ -180,8 +180,8 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
  	SpellingChecker spellingChecker = NULL;
  	int ilongSound = 0, ispellingChecker = 0;
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.cpp demo_praat_sources/fon/praat_Sound_init.cpp
---- praat_sources/fon/praat_Sound_init.cpp	2011-09-12 10:17:12.000000000 +0200
-+++ demo_praat_sources/fon/praat_Sound_init.cpp	2011-09-12 11:03:24.000000000 +0200
+--- praat_sources/fon/praat_Sound_init.cpp	2012-10-11 10:39:47.000000000 +0200
++++ demo_praat_sources/fon/praat_Sound_init.cpp	2012-10-18 15:09:22.000000000 +0200
 @@ -172,7 +172,9 @@ DO
  END
  
@@ -191,7 +191,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
 +#endif
  	LOOP {
  		iam (LongSound);
-		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
+ 		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
 @@ -703,7 +705,9 @@ static void cb_SoundEditor_publication (
  	}
  }
@@ -201,7 +201,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
 +#endif
  	LOOP {
  		iam (Sound);
-		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
+ 		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
 @@ -1367,8 +1371,10 @@ static void cb_SoundRecorder_publication
  	praat_updateSelection ();
  }
@@ -213,6 +213,28 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  	if (theSoundRecorder) {
  		if (numberOfChannels == thePreviousNumberOfChannels) {
  			theSoundRecorder -> raise ();
+@@ -1418,10 +1424,21 @@ FORM (Sound_recordFixedTime, L"Record So
+ 	POSITIVE (L"Duration (seconds)", L"1.0")
+ 	OK
+ DO
++#if defined (_WIN32) && defined (DEMOAPP)
++	UINT numberOfDevices = waveInGetNumDevs (), i;
++	if(numberOfDevices > 0) {
++#endif
+ 	autoSound me = Sound_recordFixedTime (GET_INTEGER (L"Input source"),
+ 		GET_REAL (L"Gain"), GET_REAL (L"Balance"),
+ 		wcstod (GET_STRING (L"Sampling frequency"), NULL), GET_REAL (L"Duration"));
+ 	praat_new (me.transfer(), L"untitled");
++#if defined (_WIN32) && defined (DEMOAPP)
++	} else {
++	// Create an empty sound if no input is available
++	autoSound me = Sound_createSimple (1, GET_REAL (L"Duration"), wcstod (GET_STRING (L"Sampling frequency"), NULL));
++	praat_new (me.transfer(), L"untitled");	
++	};
++#endif
+ END
+ 
+ FORM (Sound_resample, L"Sound: Resample", L"Sound: Resample...")
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/UiPause.cpp demo_praat_sources/sys/UiPause.cpp
 --- praat_sources/sys/UiPause.cpp	2012-09-27 09:10:50.000000000 +0200
 +++ demo_praat_sources/sys/UiPause.cpp	2012-09-27 13:25:18.000000000 +0200

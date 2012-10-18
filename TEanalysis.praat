@@ -919,6 +919,9 @@ procedure sound_detection .sound$ .margin
 
 	select TextGrid Input'.sound$'
 	.numberofIntervals = Get number of intervals... 1
+	if .numberofIntervals < 2
+		.numberofIntervals = 0
+	endif
 
 	# Remove buzzing and other obnoxious sounds (if switched on)
 	for .i from 1 to .numberofIntervals
