@@ -495,8 +495,8 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 			.rightMark$ = extractLine$(.buttonKey$, ";")
 		endif
 		if index_regex(.leftMark$, "\S")
-			.textX = .leftX - 5
-			demo Text special... '.textX' Left '.lowY' Bottom 'defaultFont$' '.buttonFontSize' '.rotation' '.leftMark$'
+			.textX = .leftX - 1
+			demo Text special... '.textX' Right '.lowY' Bottom 'defaultFont$' '.buttonFontSize' '.rotation' '.leftMark$'
 		endif
 		if index_regex(.rightMark$, "\S")
 			.textX = .rightX

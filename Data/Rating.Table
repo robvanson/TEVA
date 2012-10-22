@@ -4,7 +4,10 @@ Label	LeftX	RightX	LowY	HighY	Color	Draw
 !License	0	0	0	0	Black	DrawNull
 !CANVAS	5	85	25	95	Black	DrawNull
 $Scales	5	80	90	95	Black	DrawNull
->Grade	5	80	80	85	Black	DrawNull
->Voice	5	80	65	70	Black	DrawNull
->Noise	5	80	50	55	Black	DrawNull
-Help	70	85	25	30	Black	DrawNull
+>Quality	5	80	80	84	Black	DrawNull
+>Continuity	5	80	70	74	Black	DrawNull
+>Stability	5	80	60	64	Black	DrawNull
+>Hypertonicity	5	80	50	54	Black	DrawNull
+>Hypotonicity	5	80	40	44	Black	DrawNull
+>Noise	5	80	30	34	Black	DrawNull
+Help	70	85	20	25	Black	DrawNull
