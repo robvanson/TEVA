@@ -9,5 +9,5 @@ $Scales	Chose a grade on the line between left (poor) and right (good) descripto
 >Stability	Phonation stability	  Unsteady ;Steady 	Refers to the stability of phonation/voicing, i.e., is voicing steady or unsteady
 >Hypertonicity	%%Hyper%tonicity	%%Hyper%tonic;Not hyper	Hypertonic vs Hypotonic: Scale is split into two with %%Hyper%tonic (left) - Normal (right) on this scale
 >Hypotonicity	%%Hypo%tonicity	%%Hypo%tonic;Not hypo	Hypertonic vs Hypotonic: Scale is split into two with %%Hypo%tonic (left) - Normal (right) on this scale
->Noise	Noise	Noise;No noise	Noise: Unintended additive noise reflects the amount of annoyance caused by the audibility of all sorts of uncontrolled noises, such as bubbly noise, breathy noise, clicks, etc., produced during speech.
+>Noise	Noise	Noise;No noise	Noise: Reflects the amount of annoyance caused by the audibility of uncontrolled noises produced during speech
 Help	Scale Hilfe	#	Dr\u"cken Sie auf die Scale \u"ber den Sie Informationen m\o"chten. Dr\u"cken Sie danach auf "Hilfe".

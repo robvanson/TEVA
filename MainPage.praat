@@ -732,14 +732,7 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 			if buttonClicked.label$ = "Help"
 				call Draw_button 'te.rating$' 'buttonClicked.label$' 1
 				if runningCommandMode = 0
-					# call help_loop 'te.rating$' init_window
-					if fileReadable("ManPages/INFVo_rating_scales__'config.language$'_.man")
-						Read from file... ManPages/INFVo_rating_scales__'config.language$'_.man
-					else
-						Go to manual page... INFVo rating scales ('config.language$')
-					endif
-					# Wait until the manual is put to the background
-					demoWaitForInput()
+					call help_loop 'te.rating$' init_window
 				endif
 				call Draw_button 'te.rating$' 'buttonClicked.label$' 0
 			elsif buttonClicked.label$ = "!CANVAS"
