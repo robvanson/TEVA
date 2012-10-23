@@ -41,6 +41,7 @@ te.config$ = ""
 recordedSound$ = ""
 alertText$ = ""
 config.input$ = "Microphone"
+config.ratingForm$ = "A"
 te.recordingTimeStamp$ = ""
 te.currentFileName$ = ""
 te.openSound = 0

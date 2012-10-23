@@ -1631,7 +1631,7 @@ endproc
 
 procedure DrawRatingObject
 	if te.ratingTable <= 0
-		call loadLanguageTable RatingA 'config.language$'
+		call loadLanguageTable Rating'ratingForm$'' 'config.language$'
 		te.ratingTable = loadLanguageTable.tableID
 		select te.ratingTable
 		te.rating$ = selected$("Table")

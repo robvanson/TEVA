@@ -78,6 +78,7 @@ procedure global_initialization
 	config.showFormants = 1
 	config.muteOutput = 0
 	config.selectionWindow = 1.75
+	config.ratingForm$ = "A"
 	
 	pathologicalType = 0
 	pathologicalTypeText$ = "- Pathological type = 'pathologicalType'"
