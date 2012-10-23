@@ -33,6 +33,9 @@ SpeakerSerial	Serieel	r	Verwerk alle opnamen in volgorde (Spreker knop leest vol
 SpeakerSort	Sorteer V	V	Sorteer de lijst met opnamen
 SpeakerRandomize	Shuffle	e	Randomiseer de lijst met opnamen
 RecordingTime	Opname <	,<	Opnametijd in seconden
+$Rating	Beoordeling		Menselijke beoordeling van spraak
+RatingForm_A	Klinkers		Beoordelingsformulier voor klinkers
+RatingForm_INFVo	INFVo		INFVo beoordelingsformulier voor woorden en lopende spraak
 Logging	Log aan	L	Start logging spraak
 OpenLog	Kies	K	Kies map voor logboek
 Run	Uitvoeren	U	Voer commandobestand uit (of logboekbestand)

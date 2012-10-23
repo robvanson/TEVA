@@ -394,6 +394,19 @@ procedure processConfigMuteOutput .clickX .clickY .pressed$
     call Draw_button '.table$' '.label$' '.displayButton'
 endproc
 
+procedure processConfigRatingForm .input$ .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "RatingForm_'.input$'"
+    call Draw_button '.table$' RatingForm_'config.ratingForm$' 0
+	config.ratingForm$ = .input$
+	if te.ratingTable > 0
+		select te.ratingTable
+		Remove
+		te.ratingTable = -1
+	endif
+    call Draw_button '.table$' RatingForm_'config.ratingForm$' 2
+endproc
+
 procedure processConfigFrequency .frequencyK$ .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "Frequency"

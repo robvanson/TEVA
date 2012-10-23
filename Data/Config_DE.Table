@@ -33,6 +33,9 @@ SpeakerSerial	Seriell	r	Verarbeite alle Aufnahmen hintereinander (Sprecher Taste
 SpeakerSort	Sortiere	o	Sortiere die Liste mit Aufnahmen
 SpeakerRandomize	Shuffle	h	Randomisiere die Liste mit Aufnahmen
 RecordingTime	Aufnahme	e	Aufnahmezeit in Secunden
+$Rating	Beurteilung		Menschliche Beurteilung de Sprache
+RatingForm_A	Vokallaut		Beurteilungsformular f\u"r Vokallaute
+RatingForm_INFVo	INFVo		INFVo Beurteilungsformular f\u"r W\o"rter und S\a"tze
 Logging	Log an	L	Starte das Protokollieren aller Aufnahmen (Logbuch)
 OpenLog	W\a"hlen	W	Selectiere Verzeichnis f\u"r die Logbuchdatei
 Run	Ausf\u"hren	n	Befehlsdatei oder Logbuchdatei ausf\u"hren

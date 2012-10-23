@@ -32,6 +32,9 @@ Input_Line	60	75	81	86	Black	DrawNull
 RecordingTime	60	75	75	80	Black	DrawNull
 MuteOutput	60	75	69	74	Black	DrawNull
 Test	60	75	61	66	Black	DrawTest
+$Rating	60	75	53	58	Black	DrawNull
+RatingForm_A	60	75	47	52	Black	DrawNull
+RatingForm_INFVo	60	75	41	46	Black	DrawNull
 Instruction	90	100	65	75	Black	DrawInstruction
 Manual	90	100	52.5	62.5	Black	DrawManual
 Credits	90	100	40	50	Black	DrawCredits
