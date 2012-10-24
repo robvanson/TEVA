@@ -407,6 +407,14 @@ procedure processConfigRatingForm .input$ .clickX .clickY .pressed$
     call Draw_button '.table$' RatingForm_'config.ratingForm$' 2
 endproc
 
+procedure processConfigVasScaleTicks .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "VasScaleTicks"
+	config.vasScaleTicks = not config.vasScaleTicks
+	.displayButton = 2*config.vasScaleTicks
+    call Draw_button 'table$' '.label$' '.displayButton'
+endproc
+
 procedure processConfigFrequency .frequencyK$ .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "Frequency"

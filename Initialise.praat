@@ -79,6 +79,7 @@ procedure global_initialization
 	config.muteOutput = 0
 	config.selectionWindow = 1.75
 	config.ratingForm$ = "A"
+	config.vasScaleTicks = 0
 	
 	pathologicalType = 0
 	pathologicalTypeText$ = "- Pathological type = 'pathologicalType'"

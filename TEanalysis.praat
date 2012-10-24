@@ -42,6 +42,7 @@ recordedSound$ = ""
 alertText$ = ""
 config.input$ = "Microphone"
 config.ratingForm$ = "A"
+config.vasScaleTicks = 0
 te.recordingTimeStamp$ = ""
 te.currentFileName$ = ""
 te.openSound = 0
@@ -502,6 +503,32 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 		if index_regex(.rightMark$, "\S")
 			.textX = .rightX
 			demo Text special... '.textX' Left '.lowY' Bottom 'defaultFont$' '.buttonFontSize' '.rotation' '.rightMark$'
+		endif
+		# Draw ticks
+		if config.vasScaleTicks
+			.deltaSmallTick = (.rightX - .leftX)/20
+			.deltaLargeTick = (.rightX - .leftX)/10
+			demo Colour... {0.6,0.6,0.8}
+			demo Line width... 1
+	 		# Small scale ticks
+	 		.tickhighY = .highY - (.highY-.lowY)/3
+	 		.ticklowY = .lowY + (.highY-.lowY)/3
+			.scaleTick = .leftX + .deltaSmallTick
+			while .scaleTick < .rightX
+				demo Draw line... '.scaleTick' '.ticklowY' '.scaleTick' '.tickhighY'
+				.scaleTick +=  .deltaLargeTick
+			endwhile
+	 		# Big scale ticks
+	 		.tickhighY = .highY - (.highY-.lowY)/5
+	 		.ticklowY = .lowY + (.highY-.lowY)/5
+			.scaleTick = .leftX + .deltaLargeTick
+			.tickTexts = 10
+			while .scaleTick < .rightX
+				demo Text special... '.scaleTick' Centre '.lowY' Top 'defaultFont$' 7 0 '.tickTexts'
+				demo Draw line... '.scaleTick' '.ticklowY' '.scaleTick' '.tickhighY'
+				.scaleTick +=  .deltaLargeTick
+				.tickTexts += 10
+			endwhile
 		endif
 		
 		# Draw current position tick
