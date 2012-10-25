@@ -352,3 +352,32 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
  	Manual manPage = Manual_create (L"Intro", theCurrentPraatApplication -> manPages, false);
  	HyperPage_goToPage_i (manPage, GET_INTEGER (L"Page"));
  END
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_praat_sources/sys/GuiMenu.cpp
+--- praat_sources/sys/GuiMenu.cpp	2012-09-27 09:10:50.000000000 +0200
++++ demo_praat_sources/sys/GuiMenu.cpp	2012-10-25 09:55:23.000000000 +0200
+@@ -206,7 +206,9 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+ 			[my d_nsMenuButton   setTitle: (NSString *) Melder_peekWcsToCfstring (title)];
+ 		}
+ 	#elif motif
++		#ifndef DEMOAPP
+ 		if (window == NULL) {
++		#endif
+ 			my d_xmMenuTitle = XmCreateCascadeButton (theGuiTopMenuBar, Melder_peekWcsToUtf8 (title), NULL, 0);
+ 			if (wcsequ (title, L"Help"))
+ 				XtVaSetValues (theGuiTopMenuBar, XmNmenuHelpWidget, my d_xmMenuTitle, NULL);
+@@ -215,6 +217,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+ 				XtSetSensitive (my d_xmMenuTitle, False);
+ 			XtVaSetValues (my d_xmMenuTitle, XmNsubMenuId, my d_widget, NULL);
+ 			XtManageChild (my d_xmMenuTitle);
++		#ifndef DEMOAPP
+ 		} else {
+ 			my d_xmMenuTitle = XmCreateCascadeButton (window -> d_xmMenuBar, Melder_peekWcsToUtf8 (title), NULL, 0);
+ 			if (wcsequ (title, L"Help"))
+@@ -225,6 +228,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+ 			XtVaSetValues (my d_xmMenuTitle, XmNsubMenuId, my d_widget, NULL);
+ 			XtManageChild (my d_xmMenuTitle);
+ 		}
++		#endif
+ 		_GuiObject_setUserData (my d_widget, me);
+ 	#endif
+ 
