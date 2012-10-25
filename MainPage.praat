@@ -322,6 +322,7 @@ procedure set_draw_signal_button
 		call Draw_button 'te.buttons$' Previous 1
 	endif
 	if config.muteOutput
+		call Draw_button 'te.buttons$' Record 1
 		call Draw_button 'te.buttons$' Play 1
 	endif
 endproc
@@ -632,16 +633,18 @@ procedure processMainPageRecord .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "Record"
 	
-	if runningCommandMode = 0
-    	call record_sound
-		call post_processing_sound
-	else
-		skipNextStep = 1
+	if not config.muteOutput	
+		if runningCommandMode = 0 and not config.muteOutput
+	    	call record_sound
+			call post_processing_sound
+		else
+			skipNextStep = 1
+		endif
+		# Reset button
+		call Draw_button '.table$' '.label$' 0
+		# Draw
+		call init_window
 	endif
-	# Reset button
-	call Draw_button '.table$' '.label$' 0
-	# Draw
-	call init_window
 endproc
 
 procedure processMainPagePathologicalType .clickX .clickY .pressed$
