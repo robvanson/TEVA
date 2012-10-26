@@ -52,6 +52,12 @@ with speaker data. A backup of this file, with a tilde '~' appended to the name,
 <normal> "If given, the recording will be automatically loaded if this speaker is selected 
 in the main page."
 
+<entry> "Rating screens"
+<list_item> "\bu ##Vowels#: Use ##@@INFVo rating scales (EN)|VAS rating@# for long vowel realizations"
+<list_item> "\bu ##INFVo#: Use ##@@INFVo rating scales (EN)|VAS rating@# for running speech"
+<list_item> "\bu ##Markers#: ##@@INFVo rating scales (EN)|VAS@# scale markers display On/Off"
+
+
 <entry> "Miscelaneous"
 <list_item> "\bu ##Background#: [B] Show background or not"
 <list_item> "\bu ##Microphone#: [h] Use the built-in microphone for recording"

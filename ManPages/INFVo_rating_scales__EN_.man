@@ -2,10 +2,14 @@ ManPagesTextFile
 "INFVo rating scales (EN)" "R.J.J.H. van Son" 20120810 0
 <intro> "Impression, Intelligibility, Noise, Fluency, and Voice (INFVo) Visual Analogue rating Scales."
 
+<script> 4.5 4 "
+	Axes... 0 100 0 100
+	Insert picture from file... VAS_display.png 50 50 0 100
+"
 <normal> "##(I)INFV0# is a standard for rating voices used in Speech Therapy. TEVA will primarily be used to 
 study voicing in sustained vowels. In these circumstances, the standard %Impression, %Intelligibility, and %Fluency 
-scales of ##(I)INFVo# would be of little use. Therefore, TEVA Rating screen includes only a subset of the scales: 
-%Noise and %Voice. Instead of the (overall) %Impression scale, the %Grade scale of ##GRBAS# is included."
+scales of ##(I)INFVo# would be of little use. Therefore, the TEVA Rating screen includes also a derived set of the scales 
+optimized for vowels."
 
 <entry> "Visual Analogue Scale (VAS) rating"
 <normal> "In VAS rating, the judges have to indicate the severety of some condition as a mark on a line. 
@@ -27,15 +31,21 @@ voice deviancy or pathology."
 <normal> "Noise: Unintended additive noise reflects the amount of annoyance caused by the audibility of all 
 sorts of uncontrolled noises, such as bubbly noise, breathy noise, clicks, etc., produced during speech."
 
-<entry> "Voice (proportion of vowel)"
+<entry> "Phonation continuity (proportion of vowel)"
 <normal> "Voice: For vowels, this scale refers to the stability of phonation/voicing (i.e. proportion of vowel that is voiced). 
 In general speech, quality of voicing means that voicing is voiced or unvoiced where it is supposed to be voiced or 
 unvoiced. As such, voices that produce a lot of breathy noise and contain little or no voiced segments score badly. 
 Voices that produce a lot of hesitations (e.g., because of spasms) and cannot produce prolonged voiced segments score 
 in the middle of the VAS"
 
+<entry> "Phonation stability (Unsteady to Steady)"
+<normal> "Voice: Is voicing steady or does the pitch change uncontrollable."
+
+<entry> "%%Hyper%- and %%Hypo%tonicity"
+<normal> "Two scales: From %%Hyper%tone to normal and from %%Hypo%tone to normal."
+
 <entry> "Other scales"
-<normal> "For completeness, the other (I)INFVo scales are also given."
+<normal> "The other (I)INFVo scales are:"
 
 <entry> "Impression"
 <normal> "Impression: The overall voice quality. This parameter is the combined impression caused by all the properties 
