@@ -596,8 +596,9 @@ procedure processMainPageNextItem .clickX .clickY .pressed$
 	pathologicalType = 'get_nextSpeaker.ast$'
 	call load_audio_file 'te.currentFileName$'
 	call autoSetPathType
-	
-	call Draw_button '.table$' '.label$' 0
+	if config.speakerSerial
+		call Draw_button '.table$' '.label$' 0
+	endif
 endproc
 
 procedure processMainPageFile .clickX .clickY .pressed$
@@ -616,8 +617,9 @@ procedure processMainPageFile .clickX .clickY .pressed$
 	
 	# Reset button
 	call Draw_button '.table$' '.label$' 0
-	# Draw
-	call init_window
+
+	# Get first item and Draw using the NextItem button
+	call processMainPageNextItem 0 0 x
 endproc	
 
 procedure processMainPageReadFromFile .filename$
@@ -2413,14 +2415,16 @@ procedure get_RatingValues .speakerDataTable .ratingTable
 				select .speakerDataTable
 				.column = Get column index... Rating.'.variableName$'
 				'.variableName$' = -1
-				if .column > 0
-					.value = Get value... .row Rating.'.variableName$'
-					if not .value = undefined
-						'.variableName$' = (.value - 1)/999
+				if .row > 0
+					if .column > 0
+						.value = Get value... .row Rating.'.variableName$'
+						if not .value = undefined
+							'.variableName$' = (.value - 1)/999
+						endif
+					else
+						select .speakerDataTable
+						Append column... Rating.'.variableName$'
 					endif
-				else
-					select .speakerDataTable
-					Append column... Rating.'.variableName$'
 				endif
 			endif
 		endfor
