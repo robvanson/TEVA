@@ -175,7 +175,7 @@ procedure draw_signal
 		# Draw Intensity
 		call DrawIntensityObject
 	elsif mainPage.draw$ = "Rating"
-		# Draw Intensity
+		# Draw Rating scales
 		call DrawRatingObject
 	endif
 endproc
@@ -550,7 +550,7 @@ endproc
 
 procedure processMainPageNextItem .clickX .clickY .pressed$
 	.table$ = "MainPage"
-	.label$ = "Next"
+	.label$ = "NextItem"
 
 	# Check whether this is the last speaker in the list
 	call get_speakerInfo 'speakerID$'
@@ -680,12 +680,12 @@ endproc
 procedure processMainPageToSelection .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "ToSelection"
-	if currentStartTime <= 0 and currentEndTime <= 0
-    	call Draw_button '.table$' '.label$' 0
+	if index(" Ltas Rating ", " 'mainPage.draw$' ") > 0
+		call Draw_button 'te.buttons$' '.label$' 1
 		goto ENDOFTOSELECTION
 	endif
-	if mainPage.draw$ = "Ltas"
-		call Draw_button 'te.buttons$' '.label$' 1
+	if currentStartTime <= 0 and currentEndTime <= 0
+    	call Draw_button '.table$' '.label$' 0
 		goto ENDOFTOSELECTION
 	endif
 	currentStartTime = selectedStartTime
@@ -698,6 +698,12 @@ endproc
 procedure processMainPageSelect .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "Select"
+	
+	if index(" Ltas Rating ", " 'mainPage.draw$' ") > 0
+		call Draw_button 'te.buttons$' '.label$' 1
+		goto ENDOFSELECT
+	endif
+	
 	call get_feedback_text 'config.language$' Select1
 	.feedback2$ = get_feedback_text.text$
 	call reset_viewport
@@ -713,6 +719,7 @@ procedure processMainPageSelect .clickX .clickY .pressed$
 		.pressed$ = demoKey$()
 	endif
 	call processMainPageCANVAS '.clickX' '.clickY' '.pressed$'
+	label ENDOFSELECT
 endproc
 
 procedure processMainPageCANVAS .clickX .clickY .pressed$
@@ -903,12 +910,12 @@ endproc
 procedure processMainPageZoomOut .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "ZoomOut"
-	if currentStartTime <= 0 and currentEndTime <= 0
-    	call Draw_button '.table$' '.label$' 0
+	if index(" Ltas Rating ", " 'mainPage.draw$' ") > 0
+		call Draw_button 'te.buttons$' ZoomOut 1
 		goto ZOOMOUTESCAPE
 	endif
-	if mainPage.draw$ = "Ltas"
-		call Draw_button 'te.buttons$' ZoomOut 1
+	if currentStartTime <= 0 and currentEndTime <= 0
+    	call Draw_button '.table$' '.label$' 0
 		goto ZOOMOUTESCAPE
 	endif
 	.lockSelectionToWindow = selectedStartTime <= currentStartTime or selectedEndTime >= currentEndTime
@@ -939,12 +946,12 @@ endproc
 procedure processMainPageZoomIn .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "ZoomIn"
-	if currentStartTime <= 0 and currentEndTime <= 0
-    	call Draw_button '.table$' '.label$' 0
+	if index(" Ltas Rating ", " 'mainPage.draw$' ") > 0
+		call Draw_button 'te.buttons$' ZoomIn 1
 		goto ZOOMINESCAPE
 	endif
-	if mainPage.draw$ = "Ltas"
-		call Draw_button 'te.buttons$' ZoomIn 1
+	if currentStartTime <= 0 and currentEndTime <= 0
+    	call Draw_button '.table$' '.label$' 0
 		goto ZOOMINESCAPE
 	endif
 	.currentInterval = currentEndTime - currentStartTime
@@ -966,12 +973,12 @@ endproc
 procedure processMainPageNext .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "Next"
-	if currentStartTime <= 0 and currentEndTime <= 0
-    	call Draw_button '.table$' '.label$' 0
+	if index(" Ltas Rating ", " 'mainPage.draw$' ") > 0
+		call Draw_button 'te.buttons$' Next 1
 		goto NEXTESCAPE
 	endif
-	if mainPage.draw$ = "Ltas"
-		call Draw_button 'te.buttons$' Next 1
+	if currentStartTime <= 0 and currentEndTime <= 0
+    	call Draw_button '.table$' '.label$' 0
 		goto NEXTESCAPE
 	endif
 	.selectedInterval = selectedEndTime - selectedStartTime
@@ -1022,12 +1029,12 @@ endproc
 procedure processMainPagePrevious .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "Previous"
-	if currentStartTime <= 0 and currentEndTime <= 0
-    	call Draw_button '.table$' '.label$' 0
+	if index(" Ltas Rating ", " 'mainPage.draw$' ") > 0
+		call Draw_button 'te.buttons$' Previous 1
 		goto PREVESCAPE
 	endif
-	if mainPage.draw$ = "Ltas"
-		call Draw_button 'te.buttons$' Previous 1
+	if currentStartTime <= 0 and currentEndTime <= 0
+    	call Draw_button '.table$' '.label$' 0
 		goto PREVESCAPE
 	endif
 	.selectedInterval = selectedEndTime - selectedStartTime

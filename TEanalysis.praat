@@ -388,8 +388,8 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
     .shiftHighY = .highY
 	if .erase_button_area
 		# Make erase area minutely larger
-		.eraseLeft = .shiftLeftX - 0.01
-		.eraseRight = .shiftRightX + 0.01
+		.eraseLeft = .shiftLeftX - 0.1
+		.eraseRight = .shiftRightX + 0.1
 		.eraseBottom = .shiftLowY - 0.01
 		.eraseTop = .shiftHighY + 0.01
 		demo Paint rectangle... White .eraseLeft .eraseRight .eraseBottom .eraseTop
@@ -498,10 +498,29 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 		endif
 		if index_regex(.leftMark$, "\S")
 			.textX = .leftX - 1
+			# Wipe area
+			.eraseRight = .textX
+			.textLength = demo Text width (wc)... '.leftMark$'
+			call points_to_wc '.buttonFontSize'
+			.textHeight = points_to_wc.wc
+			.eraseLeft = .eraseRight - .textLength - 1
+			.eraseBottom = .lowY
+			.eraseTop = .eraseBottom + .textHeight + 1
+			demo Paint rectangle... White .eraseLeft .eraseRight .eraseBottom .eraseTop
+			# Write left mark
 			demo Text special... '.textX' Right '.lowY' Bottom 'defaultFont$' '.buttonFontSize' '.rotation' '.leftMark$'
 		endif
 		if index_regex(.rightMark$, "\S")
-			.textX = .rightX
+			.textX = .rightX + 0.5
+			# Wipe area
+			.eraseLeft = .textX
+			.textLength = demo Text width (wc)... '.rightMark$'
+			call points_to_wc '.buttonFontSize'
+			.textHeight = points_to_wc.wc
+			.eraseRight = .eraseLeft + .textLength + 1
+			.eraseBottom = .lowY
+			.eraseTop = .eraseBottom + .textHeight + 1
+			demo Paint rectangle... White .eraseLeft .eraseRight .eraseBottom .eraseTop
 			demo Text special... '.textX' Left '.lowY' Bottom 'defaultFont$' '.buttonFontSize' '.rotation' '.rightMark$'
 		endif
 		# Draw ticks
