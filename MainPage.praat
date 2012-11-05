@@ -755,6 +755,7 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 				call set_RatingValues config.speakerDataTable Rating.'.labelRating$' 'buttonClicked.fractionX'
 				.fractionYRating = buttonClicked.fractionY
 				call Draw_button_internal 1 'te.rating$' 'buttonClicked.label$' 0
+				call link_RatingValues 'te.ratingTable' 'config.speakerDataTable' 'buttonClicked.label$'
 			endif
 		endif
 		goto ESCAPEDISPLAYSELECT
@@ -2445,6 +2446,55 @@ procedure set_RatingValues .speakerDataTable .variable$ .value$
 		.tableValue = ('.value$'*999) + 1
 		select .speakerDataTable
 		Set numeric value... .row '.variable$' '.tableValue:0'
+		
 		call WriteSpeakerData
 	endif
+endproc
+
+# Rating scales can be "linked", or rather "shackled".
+# If columns "Link" and "Value" exist in a Rating table, they are read 
+# for each button clicked. Other buttons with the same "Link" entry
+# as the button clicked will be set to the numeric "Value" given for 
+# that button.
+# Example (white-space is tab):
+# >Hypertonicity	5	80	51	55	Black	DrawNull	Tonicity	1000
+# >Hypotonicity	5	80	41	45	Black	DrawNull	Tonicity	1000
+#
+# The above example results in Hypotonicity being set to 1000 whenever
+# Hypertonicity is clicked. If the second line had ended in "0",
+# Hypotonicity would be set to zero when Hypertonicity was clicked,
+# but clicking Hypotonicity would have set Hypertonicity to 1000.
+# 
+procedure link_RatingValues .ratingTable .speakerTable .buttonLabel$
+		if .ratingTable
+			select .ratingTable
+			.rating$ = selected$("Table")
+			.numRows = Get number of rows
+			# Set linked rating values
+			.linkCol = Get column index... Link
+			.rownum = Search column... Label '.buttonLabel$'
+			if .linkCol > 0 and .rownum > 0
+				.linkValue$ = Get value... '.rownum' Link
+				if .linkValue$ <> "" and index_regex(.linkValue$, "[a-zA-Z0-9]") > 0
+					for .r to .numRows
+						select .ratingTable
+						.value$ = Get value... '.r' Link
+						if .r <> .rownum and .value$ = .linkValue$
+							.newValueText$ = Get value... '.r' Value
+							.newValue = 0
+							if index_regex(.newValueText$, "[0-9]")
+								.newValue = extractNumber(.newValueText$, "")
+							endif 
+							.newValue = .newValue / 1000
+							.variableLabel$ = Get value... '.r' Label
+							.variable$ = replace_regex$(.variableLabel$, "^\>(.)", "\l\1", 0)
+							.labelRating$ = replace_regex$(.variable$, "^[^a-zA-Z]+([A-Za-z])", "\l\1", 0)
+							'.labelRating$' = .newValue
+							call set_RatingValues '.speakerTable' Rating.'.variable$' '.newValue'
+							call Draw_button_internal 1 '.rating$' '.variableLabel$' 0
+						endif
+					endfor
+				endif 
+			endif
+		endif
 endproc
