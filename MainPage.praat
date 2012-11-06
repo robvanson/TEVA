@@ -2485,7 +2485,6 @@ procedure link_RatingValues .ratingTable .speakerTable .buttonLabel$
 							if index_regex(.newValueText$, "[0-9]")
 								.newValue = extractNumber(.newValueText$, "")
 							endif 
-							.newValue = .newValue / 1000
 							.variableLabel$ = Get value... '.r' Label
 							.variable$ = replace_regex$(.variableLabel$, "^\>(.)", "\l\1", 0)
 							.labelRating$ = replace_regex$(.variable$, "^[^a-zA-Z]+([A-Za-z])", "\l\1", 0)
