@@ -1301,6 +1301,12 @@ procedure DrawCurrentSelection .minimum .maximum
 	    if (selectedEndTime >= currentStartTime and selectedEndTime <= currentEndTime)
 		    .selectXend = .xL+(selectedEndTime-currentStartTime)/(currentEndTime - currentStartTime) * (.xR - .xL)
 	    endif
+	    # Do not draw selection if it equals to the current window
+	    if (selectedStartTime = currentStartTime and selectedEndTime = currentEndTime)
+		    .selectXstart = -1
+		    .selectXend = -1			
+	    endif
+	    
 	    if .selectXstart > 0 or .selectXend > 0		    			
 		    demo Colour... Blue
 		    demo Line width... 2
@@ -2457,13 +2463,15 @@ endproc
 # as the button clicked will be set to the numeric "Value" given for 
 # that button.
 # Example (white-space is tab):
-# >Hypertonicity	5	80	51	55	Black	DrawNull	Tonicity	1000
-# >Hypotonicity	5	80	41	45	Black	DrawNull	Tonicity	1000
+# >Hypertonicity	5	80	51	55	Black	DrawNull	Tonicity	1
+# >Hypotonicity	5	80	41	45	Black	DrawNull	Tonicity	1
 #
-# The above example results in Hypotonicity being set to 1000 whenever
+# The above example results in Hypotonicity being set to a fraction of 1
+# of the scale, i.e., the rightmost value, whenever
 # Hypertonicity is clicked. If the second line had ended in "0",
 # Hypotonicity would be set to zero when Hypertonicity was clicked,
-# but clicking Hypotonicity would have set Hypertonicity to 1000.
+# but clicking Hypotonicity would have set Hypertonicity to its maximal
+# value, e.g., 1000 if that is the value of full scale.
 # 
 procedure link_RatingValues .ratingTable .speakerTable .buttonLabel$
 		if .ratingTable
