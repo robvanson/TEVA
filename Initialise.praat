@@ -75,6 +75,7 @@ procedure global_initialization
 	config.createBackup = 0
 	config.speakerDataTable = -1
 	config.speakerSerial = 0
+	config.autoSelect = 0
 	config.showFormants = 1
 	config.muteOutput = 0
 	config.selectionWindow = 1.75

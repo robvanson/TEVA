@@ -299,6 +299,16 @@ procedure processConfigSpeakerSerial .clickX .clickY .pressed$
     call Draw_button 'table$' '.label$' '.displayButton'
 endproc
 
+procedure processConfigAutoSelect .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "AutoSelect"
+
+	config.autoSelect = not config.autoSelect
+
+	.displayButton = 2*config.autoSelect
+    call Draw_button 'table$' '.label$' '.displayButton'
+endproc
+
 procedure processConfigSpeakerRandomize .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "SpeakerRandomize"

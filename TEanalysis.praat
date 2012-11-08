@@ -79,6 +79,7 @@ sampleFrequency = 44100
 config.frequency = 5000
 config.showFormants = 1
 config.speakerSerial = 0
+config.autoSelect = 0
 config.selectionWindow = 1.75
 config.muteOutput = 0
 
@@ -907,7 +908,7 @@ procedure record_sound
 	
 	call calcMaxHarmonicity te.openSound
 	maxTimeHarmonicity = calcMaxHarmonicity.time
-	if config.speakerSerial
+	if config.autoSelect
 		if maxTimeHarmonicity > config.selectionWindow / 2
 			selectedStartTime = maxTimeHarmonicity - config.selectionWindow / 2
 		else
@@ -1360,7 +1361,7 @@ procedure getOpenFile .openDialogue$
 	
 	call calcMaxHarmonicity te.openSound
 	maxTimeHarmonicity = calcMaxHarmonicity.time
-	if config.speakerSerial
+	if config.autoSelect
 		if maxTimeHarmonicity > config.selectionWindow / 2
 			selectedStartTime = maxTimeHarmonicity - config.selectionWindow / 2
 		else
