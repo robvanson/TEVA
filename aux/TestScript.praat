@@ -11,8 +11,8 @@ noDrawingOrWriting = 1
 mainPage.outputPraatObject$ = "Draw"
 
 form Give table file
-	sentence tablefile ../../../ASTevaluation/ASTeval_full_a/a_full_TLE.Table
-	positive interval_length 0.250
+	sentence tablefile ../../../NKIcorpora/NKI_a_corpus/Evaluation/Experiments/Exp0512TEVA/Corina_Renee_consensus.Table
+	real interval_length 0
 endform
 .intervalLength = interval_length
 
@@ -37,49 +37,53 @@ for .i to .numSpeakers
 	if maxTimeHarmonicity = undefined
 		maxTimeHarmonicity = Get time of maximum... 0 0 Sinc70
 	endif
-	selectedStartTime = maxTimeHarmonicity - .intervalLength/2
-	if selectedStartTime < 0
-		selectedStartTime = 0
-	endif
-	selectedEndTime = selectedStartTime + .intervalLength
-	if selectedEndTime > loadSpeaker.duration
-		selectedEndTime = loadSpeaker.duration
-		selectedStartTime = selectedEndTime - .intervalLength
-	endif
-	
-	# Shift measuring interval to fit in voiced interval
-	call DrawPitchObject
-	call calculatePitchValues
-	select 'voicingTextGrid'
-	.interval = Get interval at time... 1 'maxTimeHarmonicity'
-	.label$ = Get label of interval... 1 '.interval'
-	if .label$ = "V"
-		.intStartPoint = Get start point... 1 '.interval'
-		.intEndPoint = Get end point... 1 '.interval'
-		if .intEndPoint - .intStartPoint <= .intervalLength
-			selectedStartTime = max(0, (.intStartPoint + .intEndPoint - .intervalLength)/2)
-			selectedEndTime = selectedStartTime + .intervalLength
-		elsif selectedStartTime < .intStartPoint
-			selectedStartTime = .intStartPoint
-			selectedEndTime = selectedStartTime + .intervalLength
-		elsif selectedEndTime > .intEndPoint
-			selectedEndTime = .intEndPoint
-			selectedStartTime = selectedEndTime - .intervalLength
-		endif
+	if .intervalLength > 0
+		# Shift measuring interval to fit in voiced interval
+		selectedStartTime = maxTimeHarmonicity - .intervalLength/2
 		if selectedStartTime < 0
 			selectedStartTime = 0
-			selectedEndTime = selectedStartTime + .intervalLength
-		elsif selectedEndTime > loadSpeaker.duration
+		endif
+		selectedEndTime = selectedStartTime + .intervalLength
+		if selectedEndTime > loadSpeaker.duration
 			selectedEndTime = loadSpeaker.duration
 			selectedStartTime = selectedEndTime - .intervalLength
+		endif
+		
+		call DrawPitchObject
+		call calculatePitchValues
+		select 'voicingTextGrid'
+		.interval = Get interval at time... 1 'maxTimeHarmonicity'
+		.label$ = Get label of interval... 1 '.interval'
+		if .label$ = "V"
+			.intStartPoint = Get start point... 1 '.interval'
+			.intEndPoint = Get end point... 1 '.interval'
+			if .intEndPoint - .intStartPoint <= .intervalLength
+				selectedStartTime = max(0, (.intStartPoint + .intEndPoint - .intervalLength)/2)
+				selectedEndTime = selectedStartTime + .intervalLength
+			elsif selectedStartTime < .intStartPoint
+				selectedStartTime = .intStartPoint
+				selectedEndTime = selectedStartTime + .intervalLength
+			elsif selectedEndTime > .intEndPoint
+				selectedEndTime = .intEndPoint
+				selectedStartTime = selectedEndTime - .intervalLength
+			endif
+			if selectedStartTime < 0
+				selectedStartTime = 0
+				selectedEndTime = selectedStartTime + .intervalLength
+			elsif selectedEndTime > loadSpeaker.duration
+				selectedEndTime = loadSpeaker.duration
+				selectedStartTime = selectedEndTime - .intervalLength
+			endif
 		endif
 	endif
 	currentStartTime = selectedStartTime
 	currentEndTime = selectedEndTime
 
+	.tmp = currentEndTime - currentStartTime
+	
 	# Get pathological type
-	.ast = 0
-	if index_regex(get_speakerInfo.text$, "Type ")
+	.ast = 'get_speakerInfo.ast$'
+	if .ast <= 0 and index_regex(get_speakerInfo.text$, "Type ")
 		if index_regex(get_speakerInfo.text$, "Type IV($|[^A-Z])")
 			.ast = 4
 		elsif index_regex(get_speakerInfo.text$, "Type III($|[^A-Z])")
