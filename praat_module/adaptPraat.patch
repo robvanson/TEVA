@@ -86,7 +86,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  			MelderGui_create (raam);   /* BUG: default Melder_assert would call printf recursively!!! */
 @@ -1244,7 +1255,9 @@ void praat_init (const char *title, unsi
  		trace ("creating the dynamic menu in the Objects window");
- 		praat_actions_createDynamicMenu (raam, 250);
+ 		praat_actions_createDynamicMenu (raam);
  		trace ("showing the Objects window");
 +#ifndef DEMOAPP
  		raam -> f_show ();
@@ -192,7 +192,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  	LOOP {
  		iam (LongSound);
  		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
-@@ -703,7 +705,9 @@ static void cb_SoundEditor_publication (
+@@ -699,7 +701,9 @@ static void cb_SoundEditor_publication (
  	}
  }
  DIRECT (Sound_edit)
@@ -202,7 +202,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  	LOOP {
  		iam (Sound);
  		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
-@@ -1367,8 +1371,10 @@ static void cb_SoundRecorder_publication
+@@ -1363,8 +1367,10 @@ static void cb_SoundRecorder_publication
  	praat_updateSelection ();
  }
  static void do_Sound_record (int numberOfChannels) {
@@ -213,7 +213,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  	if (theSoundRecorder) {
  		if (numberOfChannels == thePreviousNumberOfChannels) {
  			theSoundRecorder -> raise ();
-@@ -1418,10 +1424,21 @@ FORM (Sound_recordFixedTime, L"Record So
+@@ -1414,10 +1420,21 @@ FORM (Sound_recordFixedTime, L"Record So
  	POSITIVE (L"Duration (seconds)", L"1.0")
  	OK
  DO
@@ -355,7 +355,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_praat_sources/sys/GuiMenu.cpp
 --- praat_sources/sys/GuiMenu.cpp	2012-09-27 09:10:50.000000000 +0200
 +++ demo_praat_sources/sys/GuiMenu.cpp	2012-10-25 09:55:23.000000000 +0200
-@@ -206,7 +206,9 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+@@ -216,7 +216,9 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
  			[my d_nsMenuButton   setTitle: (NSString *) Melder_peekWcsToCfstring (title)];
  		}
  	#elif motif
@@ -365,7 +365,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_
  			my d_xmMenuTitle = XmCreateCascadeButton (theGuiTopMenuBar, Melder_peekWcsToUtf8 (title), NULL, 0);
  			if (wcsequ (title, L"Help"))
  				XtVaSetValues (theGuiTopMenuBar, XmNmenuHelpWidget, my d_xmMenuTitle, NULL);
-@@ -215,6 +217,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+@@ -225,6 +227,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
  				XtSetSensitive (my d_xmMenuTitle, False);
  			XtVaSetValues (my d_xmMenuTitle, XmNsubMenuId, my d_widget, NULL);
  			XtManageChild (my d_xmMenuTitle);
@@ -373,7 +373,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_
  		} else {
  			my d_xmMenuTitle = XmCreateCascadeButton (window -> d_xmMenuBar, Melder_peekWcsToUtf8 (title), NULL, 0);
  			if (wcsequ (title, L"Help"))
-@@ -225,6 +228,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+@@ -235,6 +238,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
  			XtVaSetValues (my d_xmMenuTitle, XmNsubMenuId, my d_widget, NULL);
  			XtManageChild (my d_xmMenuTitle);
  		}
