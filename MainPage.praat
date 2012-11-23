@@ -2520,6 +2520,31 @@ procedure predictASTvalue
 	.ast = .astLM
 endproc
 
+# Get best selection to predict AST. This will set a new selection
+procedure argMinASTselection
+	.originalStartTime = selectedStartTime
+	.originalEndTime = selectedEndTime
+	.intervalLength = config.selectionWindow
+	.bestStartTime = selectedStartTime
+	.bestEndTime = selectedEndTime
+	.currentASTMinimum = 10**10
+	
+	selectedStartTime = currentStartTime
+	selectedEndTime = selectedStartTime + .intervalLength
+	# Step through sound
+	while selectedEndTime <= currentEndTime
+		selectedStartTime += .intervalLength
+		selectedEndTime = selectedStartTime + .intervalLength
+		call predictASTvalue
+		if .currentASTMinimum > predictASTvalue.ast
+			.currentASTMinimum = predictASTvalue.ast
+			.bestStartTime = selectedStartTime
+			.bestEndTime = selectedEndTime
+		endif
+	endwhile
+endproc
+
+# Procedures involved in the Rating screen
 procedure get_RatingValues .speakerDataTable .ratingTable
 	if .speakerDataTable > 0 and .ratingTable > 0
 		select .ratingTable
