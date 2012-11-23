@@ -2415,6 +2415,111 @@ procedure calculateSpectrogramValues
 	endif
 endproc
 
+# Predict AST from "learned" formulas
+
+# Linear Model
+procedure predictLM .mvd .qf3 .vf .pitch .jitter .hnr .gne .bed
+  .ast = 0
+  if .vf > 0
+		.ast = 3.437897 + -0.120815*.mvd + 0.001765*.qf3 + -1.131584*.vf + -0.002341*.pitch + -2.909444*.jitter  
+...            + -0.057651*.hnr + 0.238368*.gne + 0.004951*.bed  
+	else
+		.ast = 3.569474 + -0.105350*.mvd + -0.002346*.qf3 + -1.001225*.vf + -0.015657*.hnr 
+...            + -0.182041*.gne + -0.010775 *.bed 
+	endif
+endproc
+
+# Recursive Partitioning
+procedure predictRPart .mvd .qf3 .vf .pitch .jitter .hnr .gne .bed
+	.ast = 0
+	if .vf > 0
+		# With Pitch
+		if .vf >= 0.492
+			if .vf >= 0.9465
+				.ast = 1.353
+			else
+				if .hnr < 2.462
+					.ast = 1.714
+				else
+					if .pitch < 5.736
+						.ast = 1.923
+					else
+						.ast = 2.364
+					endif
+				endif
+			endif
+		else
+			# Without Pitch
+			if .jitter >= 0.00565
+				.ast = 2.462
+			else
+				.ast = 3.909
+			endif
+		endif		
+	else
+		if .vf >= 0.492
+			if .vf >= 0.9465
+				.ast = 1.353
+			else
+				if .hnr < 2.462
+					.ast = 1.714
+				else
+					if .mvd >= 2.645
+						.ast = 1.909
+					else
+						.ast = 2.308
+					endif
+				endif
+			endif
+		else
+			if .bed >= 18.91
+				if .gne < 0.7025
+					.ast = 2.25
+				else
+					.ast = 3.375
+				endif
+			else
+				.ast = 3.474
+			endif
+		endif
+	endif
+endproc
+
+procedure predictASTvalue
+	# Get current values
+	# AST ~ MVD + QF3 + VF + Pitch + Jitter + HNR + GNE + BED
+	
+	# MVD + VF + Pitch + Jitter
+	call calculatePitchValues
+	.mvd = calculatePitchValues.maximumVoicingDuration
+	.vf = calculatePitchValues.voicedFractions
+	.pitch = calculatePitchValues.sdPitch
+	.jitter = calculatePitchValues.jitter 	
+	
+	# QF3
+	call calculateSpectrogramValues
+	.qf3 = calculateSpectrogramValues.qualityF3
+	
+	# HNR + GNE
+	call calculateHarmonicityValues
+	.hnr = calculateHarmonicityValues.meanHarmonicity
+	.gne = calculateHarmonicityValues.gneValue
+		
+	# BED
+	call calculateLtasValues
+	.bed = calculateLtasValues.bed
+	
+	# The Formula
+	.astLM = -1
+	.astRPart = -1
+	call predictLM .mvd .qf3 .vf .pitch .jitter .hnr .gne .bed
+	.astLM = predictLM.ast
+	# call predictRPart .mvd .qf3 .vf .pitch .jitter .hnr .gne .bed
+	#.astRPart = predictRPart.ast
+	
+	.ast = .astLM
+endproc
+
 procedure get_RatingValues .speakerDataTable .ratingTable
 	if .speakerDataTable > 0 and .ratingTable > 0
 		select .ratingTable
