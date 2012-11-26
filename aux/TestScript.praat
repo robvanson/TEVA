@@ -9,9 +9,11 @@ include ../praat_module/TEanalysisexpanded.praat
 # Supress drawing
 noDrawingOrWriting = 1
 mainPage.outputPraatObject$ = "Draw"
+te.useFullASTselection = 1
 
 form Give table file
-	sentence tablefile ../../../NKIcorpora/NKI_a_corpus/Evaluation/Experiments/Exp0512TEVA/Corina_Renee_consensus.Table
+	#sentence tablefile ../../../NKIcorpora/NKI_a_corpus/Evaluation/Experiments/Exp0512TEVA/Corina_Renee_consensus.Table
+	sentence tablefile /Users/robvanson/Desktop/OefenASTteva/PracticeResponses.Table
 	real interval_length 0
 endform
 .intervalLength = interval_length
@@ -22,7 +24,7 @@ mainPage.draw$ = "Sound"
 config.showFormants = 1
 
 clearinfo
-printline i'tab$'ID'tab$'start'tab$'end'tab$'Duration'tab$'MVD'tab$'QF3'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'HNR'tab$'GNE'tab$'BED'tab$'AST
+printline i'tab$'ID'tab$'start'tab$'end'tab$'Duration'tab$'MVD'tab$'QF3'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'HNR'tab$'GNE'tab$'BED'tab$'AST'tab$'predAST
 
 call get_speakerInfo 1
 .numSpeakers = get_speakerInfo.numEntries
@@ -30,93 +32,18 @@ for .i to .numSpeakers
 	call get_speakerInfo '.i'
 
 	call loadSpeaker 'get_speakerInfo.id$'
-	select te.openSound
 	.total_duration = Get total duration
-	call DrawHarmonicityObject
-	call calculateHarmonicityValues
-	if maxTimeHarmonicity = undefined
-		maxTimeHarmonicity = Get time of maximum... 0 0 Sinc70
-	endif
-	if .intervalLength > 0
-		# Shift measuring interval to fit in voiced interval
-		selectedStartTime = maxTimeHarmonicity - .intervalLength/2
-		if selectedStartTime < 0
-			selectedStartTime = 0
-		endif
-		selectedEndTime = selectedStartTime + .intervalLength
-		if selectedEndTime > loadSpeaker.duration
-			selectedEndTime = loadSpeaker.duration
-			selectedStartTime = selectedEndTime - .intervalLength
-		endif
-		
-		call DrawPitchObject
-		call calculatePitchValues
-		select 'voicingTextGrid'
-		.interval = Get interval at time... 1 'maxTimeHarmonicity'
-		.label$ = Get label of interval... 1 '.interval'
-		if .label$ = "V"
-			.intStartPoint = Get start point... 1 '.interval'
-			.intEndPoint = Get end point... 1 '.interval'
-			if .intEndPoint - .intStartPoint <= .intervalLength
-				selectedStartTime = max(0, (.intStartPoint + .intEndPoint - .intervalLength)/2)
-				selectedEndTime = selectedStartTime + .intervalLength
-			elsif selectedStartTime < .intStartPoint
-				selectedStartTime = .intStartPoint
-				selectedEndTime = selectedStartTime + .intervalLength
-			elsif selectedEndTime > .intEndPoint
-				selectedEndTime = .intEndPoint
-				selectedStartTime = selectedEndTime - .intervalLength
-			endif
-			if selectedStartTime < 0
-				selectedStartTime = 0
-				selectedEndTime = selectedStartTime + .intervalLength
-			elsif selectedEndTime > loadSpeaker.duration
-				selectedEndTime = loadSpeaker.duration
-				selectedStartTime = selectedEndTime - .intervalLength
-			endif
-		endif
-	endif
-	currentStartTime = selectedStartTime
-	currentEndTime = selectedEndTime
-
-	.tmp = currentEndTime - currentStartTime
-	
-	# Get pathological type
-	.ast = 'get_speakerInfo.ast$'
-	if .ast <= 0 and index_regex(get_speakerInfo.text$, "Type ")
-		if index_regex(get_speakerInfo.text$, "Type IV($|[^A-Z])")
-			.ast = 4
-		elsif index_regex(get_speakerInfo.text$, "Type III($|[^A-Z])")
-			.ast = 3
-		elsif index_regex(get_speakerInfo.text$, "Type II($|[^A-Z])")
-			.ast = 2
-		elsif index_regex(get_speakerInfo.text$, "Type I($|[^A-Z])")
-			.ast = 1
-		else
-			.ast = 0
-		endif
-	endif
-	
-	# Calculate values
-	call DrawPitchObject
-	call calculatePitchValues
-	.calcMVD = calculatePitchValues.maximumVoicingDuration
-	.calcVF = calculatePitchValues.voicedFractions
-	.calcPitch = calculatePitchValues.sdPitch
-	.calcJitter = calculatePitchValues.jitter 	
-
-	call DrawLtasObject
-	call calculateLtasValues
-	.calcBED = calculateLtasValues.bed
-	
-	call DrawHarmonicityObject
-	call calculateHarmonicityValues
-	.calcHNR = calculateHarmonicityValues.meanHarmonicity
-	.calcGNE = calculateHarmonicityValues.gneValue
-	
-	call DrawSpectrogramObject
-	call calculateSpectrogramValues
-	.calcQF3 = calculateSpectrogramValues.qualityF3
+	.ast = pathologicalType
+	call predictASTvalue
+	.calcMVD = predictASTvalue.mvd
+	.calcVF = predictASTvalue.vf
+	.calcPitch = predictASTvalue.pitch
+	.calcJitter = predictASTvalue.jitter 	
+	.calcBED = predictASTvalue.bed
+	.calcHNR = predictASTvalue.hnr
+	.calcGNE = predictASTvalue.gne
+	.calcQF3 = predictASTvalue.qf3
+	.predAST = predictASTvalue.ast
 
 	# Print output
 	print '.i''tab$''get_speakerInfo.id$'
@@ -130,6 +57,7 @@ for .i to .numSpeakers
 	print 'tab$''.calcGNE:3'
 	print 'tab$''.calcBED:3'
 	print 'tab$''.ast:0'
+	print 'tab$''.predAST:2'
 	printline
-	
+pause 
 endfor

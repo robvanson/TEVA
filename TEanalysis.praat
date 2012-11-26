@@ -1353,15 +1353,15 @@ procedure getOpenFile .openDialogue$
 	
 	call calcMaxHarmonicity te.openSound
 	maxTimeHarmonicity = calcMaxHarmonicity.time
-	if config.autoSelect
-		call argMinASTselection
-	endif
 	
 	# If this was loaded from a Speaker Data file, set the Select Window
 	call get_speakerInfo 'speakerID$'
 	if get_speakerInfo.endTime > 0 
 		selectedStartTime = get_speakerInfo.startTime
 		selectedEndTime = get_speakerInfo.endTime
+	elsif config.autoSelect
+		# If no selection if given, determine it
+		call argMinASTselection
 	endif
 
 	select te.openSound

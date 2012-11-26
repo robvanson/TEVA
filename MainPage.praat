@@ -30,6 +30,7 @@ procedure initializeMainPage
 	# Do not recalculate needlessly
 	calculateHarmonicityValues.previousSelectedGNEStartTime = -1
 	calculateHarmonicityValues.previousSelectedGNEEndTime = -1
+	calculateHarmonicityValues.previousHarmonicity = -1
 	previousHarmonicityStart = -1
 	previousHarmonicityEnd = -1
 	previousGNEstart = -1
@@ -660,8 +661,8 @@ endproc
 
 # Process Sound Speech
 procedure post_processing_sound
-	# Analyze Pitch in Serial step mode
-	if config.speakerSerial
+	# Analyze Pitch in Serial step mode or with config.autoSelect
+	if config.speakerSerial or config.autoSelect
 		# Supress drawing, but set up Pitch parameters
 		.tmp = noDrawingOrWriting
 		noDrawingOrWriting = 1
@@ -1488,7 +1489,7 @@ procedure DrawGNEObject
 	.windowSize = 0.120
 	if gneName$ <> ""
 		if currentStartTime != previousGNEstart or currentEndTime != previousGNEend
-			select Sound 'gneName$'
+			select te.openSound
 			Remove
 			gneName$ = ""
 		endif
@@ -1525,7 +1526,7 @@ procedure DrawGNEObject
 		minGNE = 0
 		maxGNE = 1
 
-		select Sound 'gneName$'
+		select te.openSound
 		call 'mainPage.outputPraatObject$'PraatObject 'minGNE' 'maxGNE' Draw... 'currentStartTime' 'currentEndTime' 0 0 yes Curve
 		call 'mainPage.outputPraatObject$'CurrentSelection 'minGNE' 'maxGNE'
 		
@@ -1538,7 +1539,7 @@ procedure calculateGNEValues
 	.meanGNE = 0
 	.sdGNE = 0
 	if gneName$ <> ""
-		select Sound 'gneName$'
+		select te.openSound
 		.maxGNE = Get maximum... 'selectedStartTime' 'selectedEndTime' Parabolic
 		.minGNE = Get minimum... 'selectedStartTime' 'selectedEndTime' Parabolic
 		.meanGNE = Get mean... 'selectedStartTime' 'selectedEndTime'
@@ -2013,7 +2014,7 @@ procedure calculatePitchValues
 		endif
 		select PointProcess 'pitchName$'
 		.jitter = Get jitter (local)... 'selectedStartTime' 'selectedEndTime' 0.0001 0.05 5
-		select Sound 'pitchName$'
+		select te.openSound
 		plus PointProcess 'pitchName$'
 		.shimmer = Get shimmer (local)... 'selectedStartTime' 'selectedEndTime' 0.0001 0.05 5 5
 	endif
@@ -2140,12 +2141,12 @@ procedure calculatePitchValues
 endproc
 
 # Do not recalculate needlessly
+te.gneValue = 0
 procedure calculateHarmonicityValues
 	.maxHarmonicity = 0
 	.minHarmonicity = 0
 	.meanHarmonicity = 0
 	.sdHarmonicity = 0
-	.gneValue = 0
 	.shorttextAST$ = ""
 
 	if te.harmonicity > 0
@@ -2157,21 +2158,24 @@ procedure calculateHarmonicityValues
 		
 		# Calculate GNE on segment (if segment is larger than 60ms)
 		if selectedEndTime - selectedStartTime > 0.06
-			if .previousSelectedGNEStartTime != selectedStartTime or .previousSelectedGNEEndTime != selectedEndTime
+			if .previousHarmonicity != te.harmonicity or .previousSelectedGNEStartTime != selectedStartTime or .previousSelectedGNEEndTime != selectedEndTime
 				select te.openSound
 				.tmpPartID = Extract part... 'selectedStartTime' 'selectedEndTime' rectangular 1.0 false
 				Rename... TmpPart
 				.gneID = noprogress To Harmonicity (gne)... 500 4500 1000 80
-				.gneValue = Get maximum
+				te.gneValue = Get maximum
 				select .tmpPartID
 				plus .gneID
 				Remove
 				.previousSelectedGNEStartTime = selectedStartTime
 				.previousSelectedGNEEndTime = selectedEndTime
+				.previousHarmonicity = te.harmonicity
 			endif
 		else
-			.gneValue = 0
+			te.gneValue = 0
 		endif
+	else
+		te.gneValue = 0
 	endif
 	
 	call get_feedback_text 'config.language$' HarmonicityValues
@@ -2180,7 +2184,7 @@ procedure calculateHarmonicityValues
 	.pitchValues$ = replace$(.pitchValues$, "MINHARMONICITY$", "'.minHarmonicity:1'", 0)
 	.pitchValues$ = replace$(.pitchValues$, "MEANHARMONICITY$", "'.meanHarmonicity:1'", 0)
 	.pitchValues$ = replace$(.pitchValues$, "SDHARMONICITY$", "'.sdHarmonicity:2'", 0)
-	.pitchValues$ = replace$(.pitchValues$, "GNEVALUE$", "'.gneValue:3'", 0)
+	.pitchValues$ = replace$(.pitchValues$, "GNEVALUE$", "'te.gneValue:3'", 0)
 	.text$ = .pitchValues$
 
 
@@ -2214,14 +2218,14 @@ procedure calculateHarmonicityValues
 	
 	# Calculated from van As, C.J. "Tracheolesophageal Speech", 2001, p88
 	# Acoustic Signal Typing: GNE
-	call setPathParameter 'pathologicalParameters' GNE '.gneValue'
+	call setPathParameter 'pathologicalParameters' GNE 'te.gneValue'
 
 	.astGNE = 0
-	if .gneValue > (0.82 + 0.82) / 2
+	if te.gneValue > (0.82 + 0.82) / 2
 		.astGNE = 1
-	elsif .gneValue > (0.77 + 0.82) / 2
+	elsif te.gneValue > (0.77 + 0.82) / 2
 		.astGNE = 2
-	elsif .gneValue > (0.77 + 0.72) / 2
+	elsif te.gneValue > (0.77 + 0.72) / 2
 		.astGNE = 3
 	else
 		.astGNE = 4
@@ -2241,7 +2245,13 @@ procedure calculateHarmonicityValues
 	Set value... '.rowIndex' 1 '.astGNE'
 	call autoSetPathType
 	
-	#.text$ = "Harmonicity - Max.: '.maxHarmonicity:1' dB, Min.: '.minHarmonicity:1' dB, Mean: '.meanHarmonicity:1' dB, SD: '.sdHarmonicity:2' dB, GNE: '.gneValue:3'"
+	#.text$ = "Harmonicity - Max.: '.maxHarmonicity:1' dB, Min.: '.minHarmonicity:1' dB, Mean: '.meanHarmonicity:1' dB, SD: '.sdHarmonicity:2' dB, GNE: 'te.gneValue:3'"
+endproc
+
+procedure calculateRatingValues
+	.shorttextAST$ = ""
+	.textAST$ = "";
+	.text$ = "";
 endproc
 
 procedure calculateIntensityValues
