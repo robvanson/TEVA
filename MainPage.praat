@@ -1424,7 +1424,7 @@ procedure DrawHarmonicityObject
 			endif
 			.cutStart = 0.9 * currentStartTime
 			.cutEnd = 1.1 * currentEndTime
-			select Sound Speech
+			select te.openSound
 			.tmpPartID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
 			Rename... TmpPart
 			te.harmonicity = noprogress To Harmonicity (cc)... '.timeStep' 60 0.1 1.0
@@ -1498,7 +1498,7 @@ procedure DrawGNEObject
 			.timeStep = 0.01
 			.cutStart = currentStartTime
 			.cutEnd = currentEndTime
-			select Sound Speech
+			select te.openSound
 			.tmpPartID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
 			Rename... TmpPart
 			.gneSoundID = Create Sound from formula... GNE Mono '.cutStart' '.cutEnd' 100 0
@@ -1564,14 +1564,13 @@ endproc
 procedure DrawSpectrogramObject
 
 	if recordedSound$ <> "" and te.spectrogram = 0
-		select Sound Speech
+		select te.openSound
 		.nyquistFrequency = sampleFrequency / 2
 		te.spectrogram = noprogress To Spectrogram... 0.1 '.nyquistFrequency' 0.001 10 Gaussian
 		spectrogramName$ = selected$("Spectrogram")
-		select Sound Speech
+		select te.openSound
 		te.formant = noprogress To Formant (burg)... 0.02 4 4400 0.1 50
 		formantName$ = selected$("Formant")
-		
 	endif
 
 	if te.spectrogram > 0
@@ -1623,7 +1622,7 @@ endproc
 
 procedure DrawIntensityObject
 	if recordedSound$ <> "" and intensityName$ = ""
-		select Sound Speech
+		select te.openSound
 		noprogress To Intensity... 60 0 yes
 		intensityName$ = selected$("Intensity")
 		minIntensity = Get minimum... 0 0 Parabolic
@@ -1989,6 +1988,7 @@ procedure calculatePitchValues
 	.voicedFrames = 0
 	.meanPitch = 0
 	.sdPitch = 0
+	.maximumVoicingDuration = 0
 	.voicedFractions = 0
 	.jitter = 0
 	.shimmer = 0
@@ -2107,6 +2107,7 @@ procedure calculatePitchValues
 	# Calculated from van As, C.J. "Tracheolesophageal Speech", 2001, p88
 	# Acoustic Signal Typing: VoicedFraction
 	call setPathParameter 'pathologicalParameters' VoicedFraction '.voicedFractions'
+	call setPathParameter 'pathologicalParameters' MVD '.maximumVoicingDuration'
 
 	.astVoicedFraction = 0
 	if .voicedFractions < 0.5
@@ -2144,6 +2145,7 @@ procedure calculateHarmonicityValues
 	.minHarmonicity = 0
 	.meanHarmonicity = 0
 	.sdHarmonicity = 0
+	.gneValue = 0
 	.shorttextAST$ = ""
 
 	if te.harmonicity > 0
@@ -2412,6 +2414,7 @@ procedure calculateSpectrogramValues
 		.spectrumValues$ = replace$(.spectrumValues$, "QUALITYF3$", "'.qualityF3:0'", 0)
 		.spectrumValues$ = replace$(.spectrumValues$, "QUALITYF4$", "'.qualityF4:0'", 0)
 		.text$ = .spectrumValues$
+		call setPathParameter 'pathologicalParameters' QF3 '.qualityF3'
 	endif
 endproc
 
@@ -2486,28 +2489,42 @@ procedure predictRPart .mvd .qf3 .vf .pitch .jitter .hnr .gne .bed
 endproc
 
 procedure predictASTvalue
+	.drawingSetting = noDrawingOrWriting
+	noDrawingOrWriting = 1
 	# Get current values
 	# AST ~ MVD + QF3 + VF + Pitch + Jitter + HNR + GNE + BED
-	
+
 	# MVD + VF + Pitch + Jitter
+	call DrawPitchObject
 	call calculatePitchValues
-	.mvd = calculatePitchValues.maximumVoicingDuration
-	.vf = calculatePitchValues.voicedFractions
-	.pitch = calculatePitchValues.sdPitch
-	.jitter = calculatePitchValues.jitter 	
+	call getPathParameter pathologicalParameters MVD
+	.mvd = getPathParameter.value
+	call getPathParameter pathologicalParameters VoicedFraction
+	.vf = getPathParameter.value
+	call getPathParameter pathologicalParameters Pitch
+	.pitch = getPathParameter.value
+	call getPathParameter pathologicalParameters Jitter
+	.jitter = getPathParameter.value
 	
 	# QF3
+	call DrawSpectrogramObject
 	call calculateSpectrogramValues
-	.qf3 = calculateSpectrogramValues.qualityF3
+	call getPathParameter pathologicalParameters QF3
+	.qf3 = getPathParameter.value
 	
 	# HNR + GNE
+	call DrawHarmonicityObject
 	call calculateHarmonicityValues
-	.hnr = calculateHarmonicityValues.meanHarmonicity
-	.gne = calculateHarmonicityValues.gneValue
+	call getPathParameter pathologicalParameters HNR
+	.hnr = getPathParameter.value
+	call getPathParameter pathologicalParameters GNE
+	.gne = getPathParameter.value
 		
 	# BED
+	call DrawLtasObject
 	call calculateLtasValues
-	.bed = calculateLtasValues.bed
+	call getPathParameter pathologicalParameters BED
+	.bed = getPathParameter.value
 	
 	# The Formula
 	.astLM = -1
@@ -2518,30 +2535,77 @@ procedure predictASTvalue
 	#.astRPart = predictRPart.ast
 	
 	.ast = .astLM
+	noDrawingOrWriting = .drawingSetting
+endproc
+
+# Select a window based on maxTimeHaronicity
+procedure selectMaxTimeHarmonicity	
+	# Has maxTimeHaronicity been calculated?
+	if maxTimeHarmonicity <= 0
+		call calcMaxHarmonicity te.openSound
+		maxTimeHarmonicity = calcMaxHarmonicity.time
+	endif
+	
+	# Set selection window around the maxTimeHarmonicity
+	if maxTimeHarmonicity > config.selectionWindow / 2
+		selectedStartTime = maxTimeHarmonicity - config.selectionWindow / 2
+	else
+		selectedStartTime = 0
+	endif
+	selectedEndTime = selectedStartTime + config.selectionWindow
+	if selectedEndTime > currentEndTime
+		selectedEndTime = currentEndTime
+		selectedStartTime = selectedEndTime - config.selectionWindow
+	endif
 endproc
 
 # Get best selection to predict AST. This will set a new selection
 procedure argMinASTselection
-	.originalStartTime = selectedStartTime
-	.originalEndTime = selectedEndTime
-	.intervalLength = config.selectionWindow
-	.bestStartTime = selectedStartTime
-	.bestEndTime = selectedEndTime
-	.currentASTMinimum = 10**10
-	
-	selectedStartTime = currentStartTime
-	selectedEndTime = selectedStartTime + .intervalLength
-	# Step through sound
-	while selectedEndTime <= currentEndTime
-		selectedStartTime += .intervalLength
+	if te.useFullASTselection
+		# Initialization
+		.originalStartTime = selectedStartTime
+		.originalEndTime = selectedEndTime
+		.intervalLength = config.selectionWindow
+		.deltaTime = .intervalLength / 10
+		.bestStartTime = selectedStartTime
+		.bestEndTime = selectedEndTime
+		.currentASTMinimum = 10**10
+		
+		# Set up the first interval
+		selectedStartTime = currentStartTime
 		selectedEndTime = selectedStartTime + .intervalLength
-		call predictASTvalue
-		if .currentASTMinimum > predictASTvalue.ast
-			.currentASTMinimum = predictASTvalue.ast
-			.bestStartTime = selectedStartTime
-			.bestEndTime = selectedEndTime
+		if selectedEndTime > currentEndTime
+			selectedEndTime = currentEndTime
 		endif
-	endwhile
+		.bestStartTime = selectedStartTime
+		.bestEndTime = selectedEndTime
+		call predictASTvalue
+		.currentASTMinimum = predictASTvalue.ast
+		.ast = .currentASTMinimum
+		selectedStartTime += .deltaTime
+		selectedEndTime = selectedStartTime + .intervalLength	
+		
+		# Step through sound
+		while selectedEndTime <= currentEndTime
+			call predictASTvalue
+			if .currentASTMinimum > predictASTvalue.ast
+				.currentASTMinimum = predictASTvalue.ast
+				.bestStartTime = selectedStartTime
+				.bestEndTime = selectedEndTime
+			endif
+			selectedStartTime += .deltaTime
+			selectedEndTime = selectedStartTime + .intervalLength	
+		endwhile
+		
+		# Set up best values
+		selectedStartTime = .bestStartTime
+		selectedEndTime = .bestEndTime
+		.ast = .currentASTMinimum
+		predictedPathType = round(.ast)
+	else
+		# Simple way: Set it up around the maxTimeHarmonicity
+		call selectMaxTimeHarmonicity te.openSound
+	endif
 endproc
 
 # Procedures involved in the Rating screen

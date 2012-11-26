@@ -51,6 +51,7 @@ te.harmonicity = 0
 te.formant = 0
 te.ratingTable = -1
 te.rating$ = ""
+te.useFullASTselection = 0
 
 # Pop-Up window and other colors
 popUp.bordercolor$ = "{0.5,0.5,1}"
@@ -909,16 +910,7 @@ procedure record_sound
 	call calcMaxHarmonicity te.openSound
 	maxTimeHarmonicity = calcMaxHarmonicity.time
 	if config.autoSelect
-		if maxTimeHarmonicity > config.selectionWindow / 2
-			selectedStartTime = maxTimeHarmonicity - config.selectionWindow / 2
-		else
-			selectedStartTime = 0
-		endif
-		selectedEndTime = selectedStartTime + config.selectionWindow
-		if selectedEndTime > currentEndTime
-			selectedEndTime = currentEndTime
-			selectedStartTime = selectedEndTime - config.selectionWindow
-		endif
+		call argMinASTselection
 	endif
 	
 	select te.openSound
@@ -1362,16 +1354,7 @@ procedure getOpenFile .openDialogue$
 	call calcMaxHarmonicity te.openSound
 	maxTimeHarmonicity = calcMaxHarmonicity.time
 	if config.autoSelect
-		if maxTimeHarmonicity > config.selectionWindow / 2
-			selectedStartTime = maxTimeHarmonicity - config.selectionWindow / 2
-		else
-			selectedStartTime = 0
-		endif
-		selectedEndTime = selectedStartTime + config.selectionWindow
-		if selectedEndTime > currentEndTime
-			selectedEndTime = currentEndTime
-			selectedStartTime = selectedEndTime - config.selectionWindow
-		endif
+		call argMinASTselection
 	endif
 	
 	# If this was loaded from a Speaker Data file, set the Select Window

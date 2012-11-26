@@ -84,6 +84,7 @@ procedure global_initialization
 	
 	pathologicalType = 0
 	pathologicalTypeText$ = "- Pathological type = 'pathologicalType'"
+	predictedPathType = 0
 	# Table for CART
 	pathologicalParameters = Create TableOfReal... PathParam 1 1
 	Set row label (index)... 1 AST
@@ -151,6 +152,7 @@ procedure global_initialization
 	drawPitch = 0
 	drawPitchTier = 0
 	drawIntensity = 0
+	te.useFullASTselection = 0
 endproc
 
 procedure global_setup
@@ -775,59 +777,9 @@ procedure WriteSpeakerData
 endproc
 
 procedure autoSetPathType
-	if pathologicalType <= 0
-		call getPathParameter pathologicalParameters VoicedFraction
-		.vf = getPathParameter.value
-		call getPathParameter pathologicalParameters Jitter
-		.jitter = getPathParameter.value
-		call getPathParameter pathologicalParameters Pitch
-		.pitch = getPathParameter.value
-		call getPathParameter pathologicalParameters HNR
-		.hnr = getPathParameter.value
-		call getPathParameter pathologicalParameters GNE
-		.gne = getPathParameter.value
-		call getPathParameter pathologicalParameters BED
-		.bed = getPathParameter.value
-		
-		# Cart (added undefined tests)
-		.pathologicalAutoType = undefined
-		if .vf <> undefined and .vf = 0
-			.pathologicalAutoType = 4
-		elsif .pitch <> undefined and .pitch < 0.9615
-			.pathologicalAutoType = 1
-		else
-			if .hnr <> undefined and .hnr >= 2.12
-				if .hnr <> undefined and .hnr < 10.43
-					if .jitter <> undefined and .jitter < 0.0085
-						.pathologicalAutoType = 2
-					else
-						if .vf <> undefined and .vf >= 0.7885
-							.pathologicalAutoType = 2
-						else
-							if .vf <> undefined and .vf < 0.3235
-								.pathologicalAutoType = 2
-							else
-								.pathologicalAutoType = 3
-							endif
-						endif
-					endif
-				else
-					.pathologicalAutoType = 3
-				endif
-			else
-				if .gne <> undefined and .gne >= 0.837
-					if .gne >= 0.887
-						.pathologicalAutoType = 2
-					else
-						.pathologicalAutoType = 3
-					endif
-				else
-					.pathologicalAutoType = 4
-				endif
-			endif
-		endif
-		
-		if .pathologicalAutoType <> undefined
+	if pathologicalType = undefined or pathologicalType <= 0
+		.pathologicalAutoType = predictedPathType
+		if .pathologicalAutoType <> undefined and .pathologicalAutoType > 0
 			pathologicalTypeText$ = replace_regex$(pathologicalTypeText$, "[\d\-\.]+\s*$", "'.pathologicalAutoType'", 0)
 		endif
 	endif
