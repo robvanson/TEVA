@@ -10,10 +10,11 @@ include ../praat_module/TEanalysisexpanded.praat
 noDrawingOrWriting = 1
 mainPage.outputPraatObject$ = "Draw"
 te.useFullASTselection = 1
+config.autoSelect = 1
 
 form Give table file
-	#sentence tablefile ../../../NKIcorpora/NKI_a_corpus/Evaluation/Experiments/Exp0512TEVA/Corina_Renee_consensus.Table
-	sentence tablefile /Users/robvanson/Desktop/OefenASTteva/PracticeResponses.Table
+	#sentence tablefile ../../../NKIcorpora/NKI_a_corpus/Evaluation/Experiments/Exp0512TEVA/AllAudio.Table
+	sentence tablefile /media/sf_Werk/NKIcorpora/NKI_a_corpus/Evaluation/Experiments/Exp0512TEVA/AllAudio.Table
 	real interval_length 0
 endform
 .intervalLength = interval_length
