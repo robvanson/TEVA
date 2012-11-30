@@ -5,7 +5,7 @@
 #
 # Load for non-interactive use with initialization
 non_interactive_initialize = 1
-include ../praat_module/TEanalysisexpanded.praat
+include TEanalysisexpanded.praat
 # Supress drawing
 noDrawingOrWriting = 1
 mainPage.outputPraatObject$ = "Draw"
@@ -13,7 +13,7 @@ te.useFullASTselection = 1
 config.autoSelect = 1
 
 form Give table file
-	sentence tablefile ../../../NKIcorpora/NKI_a_corpus/Evaluation/Experiments/Exp0512TEVA/AllAudio.Table
+	sentence tablefile AllAudio.Table
 	real interval_length 0
 endform
 .intervalLength = interval_length
