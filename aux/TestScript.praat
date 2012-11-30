@@ -30,9 +30,13 @@ call get_speakerInfo 1
 .numSpeakers = get_speakerInfo.numEntries
 for .i to .numSpeakers
 	call get_speakerInfo '.i'
-
 	call loadSpeaker 'get_speakerInfo.id$'
+	select te.openSound
 	.total_duration = Get total duration
+	.maximum = Get maximum... 0 0 None
+	if .maximum <= 0
+		Goto END
+	endif
 	.ast = pathologicalType
 	call predictASTvalue
 	.calcMVD = predictASTvalue.mvd
@@ -61,5 +65,7 @@ for .i to .numSpeakers
 	print 'tab$''.ast:0'
 	print 'tab$''.predAST:2'
 	printline
+	
+	label END
 pause 
 endfor
