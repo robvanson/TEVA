@@ -2078,8 +2078,9 @@ procedure calculatePitchValues
 	#.textAST$ = .textAST$+"<li>Pitch: '.astPitch'</li>'newline$'"
 	
 	# Calculated from van As, C.J. "Tracheolesophageal Speech", 2001, p88
-	# Acoustic Signal Typing: Jitter
+	# Acoustic Signal Typing: Jitter Shimmer
 	call setPathParameter 'pathologicalParameters' Jitter '.jitter'
+	call setPathParameter 'pathologicalParameters' Shimmer '.shimmer'
 
 	.astJitter = 0
 	if .voicedFractions < 0.5
@@ -2431,7 +2432,7 @@ endproc
 # Predict AST from "learned" formulas
 
 # Linear Model
-procedure predictLM .mvd .qf3 .vf .pitch .jitter .hnr .gne .bed
+procedure predictLM .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .gne .bed
   .ast = 0
   if .vf > 0
 		.ast = 3.437897 + -0.120815*.mvd + 0.001765*.qf3 + -1.131584*.vf + -0.002341*.pitch + -2.909444*.jitter  
@@ -2443,7 +2444,7 @@ procedure predictLM .mvd .qf3 .vf .pitch .jitter .hnr .gne .bed
 endproc
 
 # Recursive Partitioning
-procedure predictRPart .mvd .qf3 .vf .pitch .jitter .hnr .gne .bed
+procedure predictRPart .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .gne .bed
 	.ast = 0
 	if .vf > 0
 		# With Pitch
@@ -2502,9 +2503,9 @@ procedure predictASTvalue
 	.drawingSetting = noDrawingOrWriting
 	noDrawingOrWriting = 1
 	# Get current values
-	# AST ~ MVD + QF3 + VF + Pitch + Jitter + HNR + GNE + BED
+	# AST ~ MVD + QF3 + VF + Pitch + Jitter + Shimmer+ HNR + GNE + BED
 
-	# MVD + VF + Pitch + Jitter
+	# MVD + VF + Pitch + Jitter + Shimmer
 	call DrawPitchObject
 	call calculatePitchValues
 	call getPathParameter pathologicalParameters MVD
@@ -2515,6 +2516,8 @@ procedure predictASTvalue
 	.pitch = getPathParameter.value
 	call getPathParameter pathologicalParameters Jitter
 	.jitter = getPathParameter.value
+	call getPathParameter pathologicalParameters Shimmer
+	.shimmer = getPathParameter.value
 	
 	# QF3
 	call DrawSpectrogramObject
@@ -2539,9 +2542,9 @@ procedure predictASTvalue
 	# The Formula
 	.astLM = -1
 	.astRPart = -1
-	call predictLM .mvd .qf3 .vf .pitch .jitter .hnr .gne .bed
+	call predictLM .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .gne .bed
 	.astLM = predictLM.ast
-	# call predictRPart .mvd .qf3 .vf .pitch .jitter .hnr .gne .bed
+	# call predictRPart .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .gne .bed
 	#.astRPart = predictRPart.ast
 	
 	.ast = .astLM

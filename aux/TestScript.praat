@@ -13,8 +13,7 @@ te.useFullASTselection = 1
 config.autoSelect = 1
 
 form Give table file
-	#sentence tablefile ../../../NKIcorpora/NKI_a_corpus/Evaluation/Experiments/Exp0512TEVA/AllAudio.Table
-	sentence tablefile /media/sf_Werk/NKIcorpora/NKI_a_corpus/Evaluation/Experiments/Exp0512TEVA/AllAudio.Table
+	sentence tablefile ../../../NKIcorpora/NKI_a_corpus/Evaluation/Experiments/Exp0512TEVA/AllAudio.Table
 	real interval_length 0
 endform
 .intervalLength = interval_length
@@ -25,7 +24,7 @@ mainPage.draw$ = "Sound"
 config.showFormants = 1
 
 clearinfo
-printline i'tab$'ID'tab$'start'tab$'end'tab$'Duration'tab$'MVD'tab$'QF3'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'HNR'tab$'GNE'tab$'BED'tab$'AST'tab$'predAST
+printline i'tab$'ID'tab$'start'tab$'end'tab$'Duration'tab$'MVD'tab$'QF3'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'Shimmer'tab$'HNR'tab$'GNE'tab$'BED'tab$'AST'tab$'predAST
 
 call get_speakerInfo 1
 .numSpeakers = get_speakerInfo.numEntries
@@ -40,6 +39,7 @@ for .i to .numSpeakers
 	.calcVF = predictASTvalue.vf
 	.calcPitch = predictASTvalue.pitch
 	.calcJitter = predictASTvalue.jitter 	
+	.calcShimmer = predictASTvalue.shimmer 	
 	.calcBED = predictASTvalue.bed
 	.calcHNR = predictASTvalue.hnr
 	.calcGNE = predictASTvalue.gne
@@ -54,6 +54,7 @@ for .i to .numSpeakers
 	print 'tab$''.calcVF:3'
 	print 'tab$''.calcPitch:3'
 	print 'tab$''.calcJitter:4'
+	print 'tab$''.calcShimmer:4'
 	print 'tab$''.calcHNR:3'
 	print 'tab$''.calcGNE:3'
 	print 'tab$''.calcBED:3'
