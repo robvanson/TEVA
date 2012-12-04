@@ -1578,14 +1578,14 @@ procedure DrawSpectrogramObject
 		select te.spectrogram
 		call 'mainPage.outputPraatObject$'PraatObject 0 'config.frequency' Paint... 'currentStartTime' 'currentEndTime' 0 'config.frequency' 80 yes 70 6 0 yes
 		if config.showFormants > 0
-			if mainPage.outputPraatObject$ = "Draw"
+			if mainPage.outputPraatObject$ = "Draw" and not noDrawingOrWriting
 				demo Colour... Maroon
 			else
 				Colour... Maroon
 			endif
 			select te.formant
 			call 'mainPage.outputPraatObject$'SuperImposedPraatObject 0 0 'config.frequency' Speckle... 'currentStartTime' 'currentEndTime' 'config.frequency' 25 no
-			if mainPage.outputPraatObject$ = "Draw"
+			if mainPage.outputPraatObject$ = "Draw" and not noDrawingOrWriting
 				demo Colour... Black
 			else
 				Colour... Black
