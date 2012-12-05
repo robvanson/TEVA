@@ -81,6 +81,7 @@ procedure global_initialization
 	config.selectionWindow = 1.75
 	config.ratingForm$ = "A"
 	config.vasScaleTicks = 0
+	config.useCache = 0
 	
 	pathologicalType = 0
 	pathologicalTypeText$ = "- Pathological type = 'pathologicalType'"
@@ -124,6 +125,7 @@ procedure global_initialization
 	# preferencesAppDir$ must have been defined, which happens in the App file
 	preferencesAppFile$ = preferencesAppDir$+"/'demoAppName$'rc.tsv"
 	preferencesTableDir$ = "'preferencesAppDir$'/Data"
+	preferencesCacheDir$ = "'preferencesAppDir$'/Cache"
 	config.openLog$ = "'preferencesAppDir$'/log"
 	preferencesScriptsDir$ = "'preferencesAppDir$'/scripts"
 	defaultFontSize = 12

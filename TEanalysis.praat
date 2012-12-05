@@ -1335,9 +1335,11 @@ procedure getOpenFile .openDialogue$
 		te.currentFileName$ = .filename$
 
 		# Get only the filename
-		.startName = rindex_regex(.filename$, "[/\\:]") + 1
+		.endDirectory = rindex_regex(.filename$, "[/\\:]")
+		.startName = .endDirectory + 1
 		.nameLength = rindex(.filename$, ".") - .startName
 		currentSoundName$ = mid$(.filename$, .startName, .nameLength)
+		currentDirectoryName$ = left$(.filename$, .endDirectory)
 	else
 		Create Sound from formula... Speech Mono 0 1 44100 0
 	endif
@@ -2184,3 +2186,24 @@ procedure loadLanguageTable .tableName$ .language$
     select .tableLangID
     Remove
 endproc
+
+# Emulate mkdir -p, use /
+procedure extend_directory_path .root$ .path$
+	.root$ = replace_regex$(.root$, """", "", 0)
+	.path$ = replace_regex$(.path$, """", "", 0)
+
+	if startsWith(.path$, .root$)
+		.path$ = replace_regex$(.path$, "^'.root$'/*", "", 0)
+	endif
+
+	while .path$ <> "" and index_regex(.path$, "[^ \t\n\-\?\!]")
+		.nextDir$ = replace_regex$(.path$, "^([^/]*)(/(.*)|$)", "\1", 0)
+		.path$ = replace_regex$(.path$, "^([^/]*)(/(.*)|$)", "\3", 0)
+		# Disallow things containing only NOPE characters
+		if .nextDir$ <> "" and index_regex(.nextDir$, "[^ \t\n\-\?\!]")
+			.root$ = .root$+"/"+.nextDir$
+			createDirectory(.root$)
+		endif
+	endwhile
+endproc
+

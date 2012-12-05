@@ -1383,8 +1383,19 @@ endproc
 
 procedure DrawPitchObject
 	if te.openSound > 0 and pitchName$ = ""
-		select te.openSound
-		noprogress To Pitch... 0 60 600
+		# Check for cached analysis file
+		if config.useCache and fileReadable("'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'.Pitch")
+			te.pitch = Read from file... 'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'.Pitch
+		else
+			select te.openSound
+			te.pitch = noprogress To Pitch... 0 60 600
+			# Write file to cache
+			if config.useCache
+				createDirectory(preferencesCacheDir$)
+				call extend_directory_path "'preferencesCacheDir$'" 'currentDirectoryName$'
+				Save as binary file... 'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'.Pitch
+			endif
+		endif
 		pitchName$ = selected$("Pitch")
 		minPitch = Get minimum... 0 0 Hertz Parabolic
 		minPitch = floor(minPitch)
@@ -1425,17 +1436,29 @@ procedure DrawHarmonicityObject
 			endif
 			.cutStart = 0.9 * currentStartTime
 			.cutEnd = 1.1 * currentEndTime
-			select te.openSound
-			.tmpPartID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
-			Rename... TmpPart
-			te.harmonicity = noprogress To Harmonicity (cc)... '.timeStep' 60 0.1 1.0
-			# Arbitrarily put a floor of 0dB on the Harmonicity to Noise ratio
-			Formula... if self < 0 then 0 else self fi
+			# Check for cached analysis file
+			if config.useCache and fileReadable("'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'_'.cutStart'_'.cutEnd'.Harmonicity")
+				te.harmonicity = Read from file... 'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'_'.cutStart'_'.cutEnd'.Harmonicity
+			else
+				select te.openSound
+				.tmpPartID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
+				Rename... TmpPart
+				te.harmonicity = noprogress To Harmonicity (cc)... '.timeStep' 60 0.1 1.0
+				# Arbitrarily put a floor of 0dB on the Harmonicity to Noise ratio
+				Formula... if self < 0 then 0 else self fi
+				select .tmpPartID
+				Remove
+				select te.harmonicity
+				# Write file to cache
+				if config.useCache
+					createDirectory(preferencesCacheDir$)
+					call extend_directory_path "'preferencesCacheDir$'" 'currentDirectoryName$'
+					Save as binary file... 'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'_'.cutStart'_'.cutEnd'.Harmonicity
+				endif
+			endif
 			harmonicityName$ = selected$("Harmonicity")
 			previousHarmonicityStart = currentStartTime
 			previousHarmonicityEnd = currentEndTime
-			select .tmpPartID
-			Remove
 		endif
 		select te.harmonicity
 		minHarmonicity = Get minimum... 0 0 Parabolic
@@ -1460,10 +1483,21 @@ endproc
 # Calculate the MaxHarmonicity time
 procedure calcMaxHarmonicity .soundfile
 	if .soundfile > 0
-		select .soundfile
-		.tmpHarmonicity = noprogress To Harmonicity (cc)... 0.1 60 0.1 4.5
-		# Arbitrarily put a floor of 0dB on the Harmonicity to Noise ratio
-		Formula... if self < 0 then 0 else self fi
+		# Check for cached analysis file
+		if config.useCache and fileReadable("'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'_cc.Harmonicity")
+			.tmpHarmonicity = Read from file... 'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'_cc.Harmonicity
+		else
+			select te.openSound
+			.tmpHarmonicity = noprogress To Harmonicity (cc)... 0.1 60 0.1 4.5
+			# Arbitrarily put a floor of 0dB on the Harmonicity to Noise ratio
+			Formula... if self < 0 then 0 else self fi
+			# Write file to cache
+			if config.useCache
+				createDirectory(preferencesCacheDir$)
+				call extend_directory_path "'preferencesCacheDir$'" 'currentDirectoryName$'
+				Save as binary file... 'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'_cc.Harmonicity
+			endif
+		endif
 		# Get smoothed maximum harmonicity
 		select .tmpHarmonicity
 		.tmpMatrix = To Matrix
@@ -1499,24 +1533,35 @@ procedure DrawGNEObject
 			.timeStep = 0.01
 			.cutStart = currentStartTime
 			.cutEnd = currentEndTime
-			select te.openSound
-			.tmpPartID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
-			Rename... TmpPart
-			.gneSoundID = Create Sound from formula... GNE Mono '.cutStart' '.cutEnd' 100 0
-			for .t from ceiling(.windowSize/(2*.timeStep)) to floor((.cutEnd - .cutStart - .windowSize/2)/.timeStep)
-				.t1 = .cutStart + .t*.timeStep - .windowSize/2
-				.t2 = .t1 + .timeStep + .windowSize
-				select .tmpPartID
-				.frameID = Extract part... '.t1' '.t2' rectangular 1.0 true
-				.gneID = noprogress To Harmonicity (gne)... 500 4500 1000 80
-				.gneValue = Get maximum
-				select .frameID
-				plus .gneID
-				Remove
+			# Check for cached analysis file
+			if config.useCache and fileReadable("'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'_'.cutStart'_'.cutEnd'.GNE")
+				.gneSoundID = Read from file... 'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'_'.cutStart'_'.cutEnd'.GNE
+			else
+				select te.openSound
+				.tmpPartID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
+				Rename... TmpPart
+				.gneSoundID = Create Sound from formula... GNE Mono '.cutStart' '.cutEnd' 100 0
+				for .t from ceiling(.windowSize/(2*.timeStep)) to floor((.cutEnd - .cutStart - .windowSize/2)/.timeStep)
+					.t1 = .cutStart + .t*.timeStep - .windowSize/2
+					.t2 = .t1 + .timeStep + .windowSize
+					select .tmpPartID
+					.frameID = Extract part... '.t1' '.t2' rectangular 1.0 true
+					.gneID = noprogress To Harmonicity (gne)... 500 4500 1000 80
+					.gneValue = Get maximum
+					select .frameID
+					plus .gneID
+					Remove
+					select .gneSoundID
+					Set value at sample number... '.t' '.gneValue'
+				endfor
 				select .gneSoundID
-				Set value at sample number... '.t' '.gneValue'
-			endfor
-			select .gneSoundID
+				# Write file to cache
+				if config.useCache
+					createDirectory(preferencesCacheDir$)
+					call extend_directory_path "'preferencesCacheDir$'" 'currentDirectoryName$'
+					Save as binary file... 'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'_'.cutStart'_'.cutEnd'.GNE
+				endif
+			endif
 			gneName$ = selected$("Sound")
 			previousGNEstart = currentStartTime
 			previousGNEend = currentEndTime
@@ -1565,9 +1610,20 @@ endproc
 procedure DrawSpectrogramObject
 
 	if recordedSound$ <> "" and te.spectrogram = 0
-		select te.openSound
-		.nyquistFrequency = sampleFrequency / 2
-		te.spectrogram = noprogress To Spectrogram... 0.1 '.nyquistFrequency' 0.001 10 Gaussian
+		# Check for cached analysis file
+		if config.useCache and fileReadable("'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'.Spectrogram")
+			te.spectrogram = Read from file... 'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'.Spectrogram
+		else
+			select te.openSound
+			.nyquistFrequency = sampleFrequency / 2
+			te.spectrogram = noprogress To Spectrogram... 0.1 '.nyquistFrequency' 0.001 10 Gaussian
+			# Write file to cache
+			if config.useCache
+				createDirectory(preferencesCacheDir$)
+				call extend_directory_path "'preferencesCacheDir$'" 'currentDirectoryName$'
+				Save as binary file... 'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'.Spectrogram
+			endif
+		endif
 		spectrogramName$ = selected$("Spectrogram")
 		select te.openSound
 		te.formant = noprogress To Formant (burg)... 0.02 4 4400 0.1 50
@@ -1623,8 +1679,19 @@ endproc
 
 procedure DrawIntensityObject
 	if recordedSound$ <> "" and intensityName$ = ""
-		select te.openSound
-		noprogress To Intensity... 60 0 yes
+		# Check for cached analysis file
+		if config.useCache and fileReadable("'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'.Intensity")
+			te.intensity = Read from file... 'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'.Intensity
+		else
+			select te.openSound
+			te.intensity = noprogress To Intensity... 60 0 yes
+			# Write file to cache
+			if config.useCache
+				createDirectory(preferencesCacheDir$)
+				call extend_directory_path "'preferencesCacheDir$'" 'currentDirectoryName$'
+				Save as binary file... 'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'.Intensity
+			endif
+		endif
 		intensityName$ = selected$("Intensity")
 		minIntensity = Get minimum... 0 0 Parabolic
 		if minIntensity < 0
@@ -2160,13 +2227,25 @@ procedure calculateHarmonicityValues
 		# Calculate GNE on segment (if segment is larger than 60ms)
 		if selectedEndTime - selectedStartTime > 0.06
 			if .previousHarmonicity != te.harmonicity or .previousSelectedGNEStartTime != selectedStartTime or .previousSelectedGNEEndTime != selectedEndTime
-				select te.openSound
-				.tmpPartID = Extract part... 'selectedStartTime' 'selectedEndTime' rectangular 1.0 false
-				Rename... TmpPart
-				.gneID = noprogress To Harmonicity (gne)... 500 4500 1000 80
+				if config.useCache and fileReadable("'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'_'selectedStartTime'_'selectedEndTime'.GNE")
+					.gneID = Read from file... 'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'_'selectedStartTime'_'selectedEndTime'.GNE
+				else
+					select te.openSound
+					.tmpPartID = Extract part... 'selectedStartTime' 'selectedEndTime' rectangular 1.0 false
+					Rename... TmpPart
+					.gneID = noprogress To Harmonicity (gne)... 500 4500 1000 80
+					# Write file to cache
+					if config.useCache
+						createDirectory(preferencesCacheDir$)
+						call extend_directory_path "'preferencesCacheDir$'" 'currentDirectoryName$'
+						Save as binary file... 'preferencesCacheDir$'/'currentDirectoryName$''currentSoundName$'_'selectedStartTime'_'selectedEndTime'.GNE
+					endif
+					select .tmpPartID
+					Remove
+				endif
+				select .gneID
 				te.gneValue = Get maximum
-				select .tmpPartID
-				plus .gneID
+				select .gneID
 				Remove
 				.previousSelectedGNEStartTime = selectedStartTime
 				.previousSelectedGNEEndTime = selectedEndTime
