@@ -81,7 +81,13 @@ procedure global_initialization
 	config.selectionWindow = 1.75
 	config.ratingForm$ = "A"
 	config.vasScaleTicks = 0
+	# config.useCache
+	# config.useCache > 0 : Enforce a cache
+	# config.useCache = 0 : Use cache if present
+	# config.useCache < 0 : Never use a cache
 	config.useCache = 0
+	localCacheDir$ = ".tevaCache"
+
 	
 	pathologicalType = 0
 	pathologicalTypeText$ = "- Pathological type = 'pathologicalType'"
@@ -125,7 +131,6 @@ procedure global_initialization
 	# preferencesAppDir$ must have been defined, which happens in the App file
 	preferencesAppFile$ = preferencesAppDir$+"/'demoAppName$'rc.tsv"
 	preferencesTableDir$ = "'preferencesAppDir$'/Data"
-	preferencesCacheDir$ = "'preferencesAppDir$'/Cache"
 	config.openLog$ = "'preferencesAppDir$'/log"
 	preferencesScriptsDir$ = "'preferencesAppDir$'/scripts"
 	defaultFontSize = 12
