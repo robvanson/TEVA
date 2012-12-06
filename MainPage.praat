@@ -1419,6 +1419,22 @@ procedure DrawPitchObject
 endproc
 
 # Do not recalculate without need
+procedure extractPartHarmonicity .fileID .start .end
+	select .fileID
+	.tempMatrix = To Matrix
+	.tempSound = To Sound
+	.tempSoundPart = Extract part... '.start' '.end' rectangular 1.0 true
+	.tempMatrixPart = Down to Matrix
+	.harmonicity = To Harmonicity
+	select .tempMatrix
+	plus .tempSound
+	plus .tempSoundPart
+	plus .tempMatrixPart
+	Remove
+	
+	select .harmonicity
+endproc
+
 procedure DrawHarmonicityObject
 	if te.harmonicity > 0
 		if currentStartTime != previousHarmonicityStart or currentEndTime != previousHarmonicityEnd
@@ -1441,10 +1457,19 @@ procedure DrawHarmonicityObject
 			if config.useCache > 0
 				createDirectory("'currentDirectoryName$''localCacheDir$'")
 			endif
-			if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_'.cutStart:3'_'.cutEnd:3'.Harmonicity")
-				te.harmonicity = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_'.cutStart:3'_'.cutEnd:3'.Harmonicity
+			if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Harmonicity")
+				.tempHarm = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Harmonicity
+				call extractPartHarmonicity '.tempHarm' '.cutStart' '.cutEnd'
+				te.harmonicity = selected()
+				select .tempHarm
+				Remove
+				select te.harmonicity
 			else
 				select te.openSound
+				if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
+					.cutStart = 0
+					.cutEnd = Get total duration
+				endif
 				.tmpPartID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
 				Rename... TmpPart
 				te.harmonicity = noprogress To Harmonicity (cc)... '.timeStep' 60 0.1 1.0
@@ -1455,7 +1480,16 @@ procedure DrawHarmonicityObject
 				select te.harmonicity
 				# Write file to cache
 				if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
-					Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_'.cutStart:3'_'.cutEnd:3'.Harmonicity
+					Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Harmonicity
+					
+					.cutStart = 0.9 * currentStartTime
+					.cutEnd = 1.1 * currentEndTime
+					call extractPartHarmonicity 'te.harmonicity' '.cutStart' '.cutEnd'
+					.newHarm = selected()
+					select te.harmonicity
+					Remove
+					te.harmonicity = .newHarm
+					select te.harmonicity
 				endif
 			endif
 			harmonicityName$ = selected$("Harmonicity")
@@ -1520,6 +1554,61 @@ endproc
 
 ##################################################################
 #
+# Create a Sound file with the GNE values
+procedure sound2GNEvalue .startpoint .endpoint
+	.windowSize = 0.120
+	# Note link with sample frequency below!
+	.timeStep = 0.01
+	select te.openSound
+	.duration = Get total duration
+	if .endpoint = 0
+		.endpoint = .duration
+	endif
+	# Check for cached analysis file
+	if config.useCache > 0
+		createDirectory("'currentDirectoryName$''localCacheDir$'")
+	endif
+	if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
+		.begin = 0
+		.end = .duration
+	else
+		.begin = .startpoint
+		.end = .endpoint
+	endif
+	if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.GNE")
+		.gneSoundID = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.GNE
+	else
+		.gneSoundID = Create Sound from formula... GNE 1 0 .duration 100 0
+		.startSample = ceiling((.begin + .windowSize/2)/.timeStep)
+		.endSample = floor((.end - .windowSize/2)/.timeStep)
+		for .t from .startSample to .endSample
+			.t1 = .t*.timeStep - .windowSize/2
+			.t2 = .t1 + .timeStep + .windowSize
+			select te.openSound
+			.frameID = Extract part... '.t1' '.t2' rectangular 1.0 true
+			.gneID = noprogress To Harmonicity (gne)... 500 4500 1000 80
+			.gneValue = Get maximum
+			select .frameID
+			plus .gneID
+			Remove
+			select .gneSoundID
+			Set value at sample number... 0 '.t' '.gneValue'
+		endfor
+		select .gneSoundID
+		if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
+			Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.GNE
+		endif
+	endif
+	if .startpoint > 0 or .endpoint < .duration
+		select .gneSoundID
+		.newID = Extract part... '.startpoint' '.endpoint' rectangular 1.0 true
+		select .gneSoundID
+		Remove
+		.gneSoundID = .newID
+	endif
+	select .gneSoundID
+endproc
+
 # Mostly useless as the GNE tends to increase for short intervals.
 # Do not recalculate without need
 procedure DrawGNEObject
@@ -1533,49 +1622,16 @@ procedure DrawGNEObject
 	endif
 	if recordedSound$ <> ""
 		if gneName$ = "" or currentStartTime != previousGNEstart or currentEndTime != previousGNEend
-			.timeStep = 0.01
-			.cutStart = currentStartTime
-			.cutEnd = currentEndTime
-			# Check for cached analysis file
-			if config.useCache > 0
-				createDirectory("'currentDirectoryName$''localCacheDir$'")
-			endif
-			if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_'.cutStart:3'_'.cutEnd:3'.GNE")
-				.gneSoundID = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_'.cutStart:3'_'.cutEnd:3'.GNE
-			else
-				select te.openSound
-				.tmpPartID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
-				Rename... TmpPart
-				.gneSoundID = Create Sound from formula... GNE Mono '.cutStart' '.cutEnd' 100 0
-				for .t from ceiling(.windowSize/(2*.timeStep)) to floor((.cutEnd - .cutStart - .windowSize/2)/.timeStep)
-					.t1 = .cutStart + .t*.timeStep - .windowSize/2
-					.t2 = .t1 + .timeStep + .windowSize
-					select .tmpPartID
-					.frameID = Extract part... '.t1' '.t2' rectangular 1.0 true
-					.gneID = noprogress To Harmonicity (gne)... 500 4500 1000 80
-					.gneValue = Get maximum
-					select .frameID
-					plus .gneID
-					Remove
-					select .gneSoundID
-					Set value at sample number... '.t' '.gneValue'
-				endfor
-				select .gneSoundID
-				# Write file to cache
-				if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
-					Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_'.cutStart:3'_'.cutEnd:3'.GNE
-				endif
-			endif
+			call sound2GNEvalue 'currentStartTime' 'currentEndTime'
+			te.gneSound = selected()
 			gneName$ = selected$("Sound")
 			previousGNEstart = currentStartTime
 			previousGNEend = currentEndTime
-			select .tmpPartID
-			Remove
 		endif
 		minGNE = 0
 		maxGNE = 1
 
-		select te.openSound
+		select te.gneSound
 		call 'mainPage.outputPraatObject$'PraatObject 'minGNE' 'maxGNE' Draw... 'currentStartTime' 'currentEndTime' 0 0 yes Curve
 		call 'mainPage.outputPraatObject$'CurrentSelection 'minGNE' 'maxGNE'
 		
@@ -2255,25 +2311,9 @@ procedure calculateHarmonicityValues
 		# Calculate GNE on segment (if segment is larger than 60ms)
 		if selectedEndTime - selectedStartTime > 0.06
 			if .previousHarmonicity != te.harmonicity or .previousSelectedGNEStartTime != selectedStartTime or .previousSelectedGNEEndTime != selectedEndTime
-				if config.useCache > 0
-					createDirectory("'currentDirectoryName$''localCacheDir$'")
-				endif
-				if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_'selectedStartTime:3'_'selectedEndTime:3'.GNE")
-					.gneID = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_'selectedStartTime:3'_'selectedEndTime:3'.GNE
-				else
-					select te.openSound
-					.tmpPartID = Extract part... 'selectedStartTime' 'selectedEndTime' rectangular 1.0 false
-					Rename... TmpPart
-					.gneID = noprogress To Harmonicity (gne)... 500 4500 1000 80
-					# Write file to cache
-					if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
-						Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_'selectedStartTime:3'_'selectedEndTime:3'.GNE
-					endif
-					select .tmpPartID
-					Remove
-				endif
-				select .gneID
-				te.gneValue = Get maximum
+				call sound2GNEvalue 'selectedStartTime' 'selectedEndTime'
+				.gneID = selected()
+				te.gneValue = Get maximum... 0 0 Sinc70
 				select .gneID
 				Remove
 				.previousSelectedGNEStartTime = selectedStartTime
