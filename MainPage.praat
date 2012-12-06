@@ -1446,13 +1446,11 @@ procedure DrawHarmonicityObject
 	endif
 	if recordedSound$ <> ""
 		if te.harmonicity = 0 or currentStartTime != previousHarmonicityStart or currentEndTime != previousHarmonicityEnd
-			.timeStep = (currentEndTime - currentStartTime) / 500
 			# do not exagerate precision
-			if .timeStep < 0.001
-				.timeStep = 0.001
-			endif
+			.timeStep = 0.005
 			.cutStart = 0.9 * currentStartTime
 			.cutEnd = 1.1 * currentEndTime
+			
 			# Check for cached analysis file
 			if config.useCache > 0
 				createDirectory("'currentDirectoryName$''localCacheDir$'")
