@@ -10,7 +10,7 @@ include TEanalysisexpanded.praat
 noDrawingOrWriting = 1
 mainPage.outputPraatObject$ = "Draw"
 te.useFullASTselection = 1
-config.autoSelect = 1
+config.useCache = 1
 
 form Give table file
 	sentence tablefile AllAudio.Table

@@ -2,6 +2,11 @@ ManPagesTextFile
 "What's new?" "R.J.J.H. van Son" 20120215 0
 <intro> "Latest changes in TEVA."
 
+<normal> "##06 December 2012#"
+<list_item> "\bu Added a second evaluation display with Visual Analogue Scales (VAS)."
+<list_item> "\bu Reworked displays with Visual Analogue Scales (VAS)."
+<list_item> "\bu Added support for automatic AST determination based on learned models"
+<list_item> "\bu Added a local analysis cache for repeated analysis runs"
 <normal> "##26 October 2012#"
 <list_item> "\bu Added an evaluation display with Visual Analogue Scales (VAS)."
 <normal> "##17 July 2012#"
