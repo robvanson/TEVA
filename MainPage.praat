@@ -1391,7 +1391,8 @@ procedure DrawPitchObject
 			te.pitch = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Pitch
 		else
 			select te.openSound
-			te.pitch = noprogress To Pitch... 0 60 600
+			# Settings from C.J. van As 2001 "Tracheoesophageal Speech" p83
+			te.pitch = noprogress To Pitch (cc)... 0 40 15 no 0.03 0.40 0.01 0.35 0.14 250
 			# Write file to cache
 			if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
 				Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Pitch
@@ -1470,7 +1471,8 @@ procedure DrawHarmonicityObject
 				endif
 				.tmpPartID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
 				Rename... TmpPart
-				te.harmonicity = noprogress To Harmonicity (cc)... '.timeStep' 60 0.1 1.0
+				# Settings from C.J. van As 2001 "Tracheoesophageal Speech" p83
+				te.harmonicity = noprogress To Harmonicity (cc)... '.timeStep' 40 0 1.0
 				# Arbitrarily put a floor of 0dB on the Harmonicity to Noise ratio
 				Formula... if self < 0 then 0 else self fi
 				select .tmpPartID
@@ -1525,7 +1527,8 @@ procedure calcMaxHarmonicity .soundfile
 			.tmpHarmonicity = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_max.Harmonicity
 		else
 			select te.openSound
-			.tmpHarmonicity = noprogress To Harmonicity (cc)... 0.1 60 0.1 4.5
+			# Settings adapted from C.J. van As 2001 "Tracheoesophageal Speech" p83
+			.tmpHarmonicity = noprogress To Harmonicity (cc)... 0.1 40 0 4.5
 			# Arbitrarily put a floor of 0dB on the Harmonicity to Noise ratio
 			Formula... if self < 0 then 0 else self fi
 			# Write file to cache
@@ -1554,7 +1557,7 @@ endproc
 #
 # Create a Sound file with the GNE values
 procedure sound2GNEvalue .startpoint .endpoint
-	# Window and analysis values from C.J. van As 2001 "Tracheoesophageal Speech"
+	# Window and analysis values from C.J. van As 2001 "Tracheoesophageal Speech" p83
 	.windowSize = 0.250
 	# Note link with sample frequency below!
 	.timeStep = 0.01
@@ -2163,10 +2166,11 @@ procedure calculatePitchValues
 			.voicedFractions = .voicedFrames/.numberFrames
 		endif
 		select PointProcess 'pitchName$'
-		.jitter = Get jitter (local)... 'selectedStartTime' 'selectedEndTime' 0.0001 0.05 5
+		# Settings adapted from C.J. van As 2001 "Tracheoesophageal Speech" p83
+		.jitter = Get jitter (local)... 'selectedStartTime' 'selectedEndTime' 0.0001 0.02 5
 		select te.openSound
 		plus PointProcess 'pitchName$'
-		.shimmer = Get shimmer (local)... 'selectedStartTime' 'selectedEndTime' 0.0001 0.05 5 5
+		.shimmer = Get shimmer (local)... 'selectedStartTime' 'selectedEndTime' 0.0001 0.02 5 5
 	endif
 	if voicingTextGrid > 0
 		select voicingTextGrid
@@ -2731,18 +2735,18 @@ procedure argMinASTselection
 		.bestEndTime = selectedEndTime
 		.currentASTMinimum = 10**10
 		
-		# Set up the first interval
-		selectedStartTime = currentStartTime
-		selectedEndTime = selectedStartTime + .intervalLength
-		if selectedEndTime > currentEndTime
-			selectedEndTime = currentEndTime
+		# Set up the first interval (Start at end)
+		selectedEndTime = currentEndTime
+		selectedStartTime = selectedEndTime - .intervalLength
+		if selectedStartTime < currentStartTime
+			selectedStartTime = currentStartTime
 		endif
 		.bestStartTime = selectedStartTime
 		.bestEndTime = selectedEndTime
 		call predictASTvalue
 		.currentASTMinimum = predictASTvalue.ast
 		.ast = .currentASTMinimum
-		selectedStartTime += .deltaTime
+		selectedStartTime = currentStartTime
 		selectedEndTime = selectedStartTime + .intervalLength	
 		
 		# Step through sound
