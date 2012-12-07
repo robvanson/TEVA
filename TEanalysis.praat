@@ -48,6 +48,8 @@ te.currentFileName$ = ""
 te.openSound = 0
 te.spectrogram = 0
 te.harmonicity = 0
+te.gneSound = 0
+te.pitch = 0
 te.formant = 0
 te.ratingTable = -1
 te.rating$ = ""
@@ -2103,9 +2105,11 @@ procedure reset_analysis
 		endif
 		Remove
 		te.openSound = 0
+		te.pitch = 0
 		te.spectrogram = 0
 		te.formant = 0
 		te.harmonicity = 0
+		te.gneSound = 0
 		
         recordedSound$ = ""
 		pitchName$ = ""

@@ -35,7 +35,7 @@ for .i to .numSpeakers
 	.total_duration = Get total duration
 	.maximum = Get maximum... 0 0 None
 	if .maximum <= 0
-		Goto END
+		goto END
 	endif
 	.ast = pathologicalType
 	call predictASTvalue

@@ -1521,8 +1521,8 @@ procedure calcMaxHarmonicity .soundfile
 		if config.useCache > 0
 			createDirectory("'currentDirectoryName$''localCacheDir$'")
 		endif
-		if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_cc.Harmonicity")
-			.tmpHarmonicity = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_cc.Harmonicity
+		if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_max.Harmonicity")
+			.tmpHarmonicity = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_max.Harmonicity
 		else
 			select te.openSound
 			.tmpHarmonicity = noprogress To Harmonicity (cc)... 0.1 60 0.1 4.5
@@ -1530,7 +1530,7 @@ procedure calcMaxHarmonicity .soundfile
 			Formula... if self < 0 then 0 else self fi
 			# Write file to cache
 			if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
-				Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_cc.Harmonicity
+				Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_max.Harmonicity
 			endif
 		endif
 		# Get smoothed maximum harmonicity
@@ -1554,7 +1554,8 @@ endproc
 #
 # Create a Sound file with the GNE values
 procedure sound2GNEvalue .startpoint .endpoint
-	.windowSize = 0.120
+	# Window and analysis values from C.J. van As 2001 "Tracheoesophageal Speech"
+	.windowSize = 0.250
 	# Note link with sample frequency below!
 	.timeStep = 0.01
 	select te.openSound
