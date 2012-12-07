@@ -2583,14 +2583,28 @@ endproc
 # Predict AST from "learned" formulas
 
 # Linear Model
+# if .vf > 0
+# Coefficients:
+# (Intercept)          MVD          QF3           VF        Pitch       Jitter  
+#    2.362028    -0.102402     0.004036    -1.350803     0.004899     0.305835  
+#     Shimmer          HNR          GNE          BED  
+#    0.613593    -0.042914     0.892717     0.013725  
+# 
+# if .vf = 0
+# Coefficients:
+# (Intercept)          MVD          QF3           VF          HNR          GNE  
+#    3.027056    -0.096463    -0.001849    -1.302729    -0.049842     0.550310  
+#         BED  
+#    0.008584  
+# 
 procedure predictLM .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .gne .bed
   .ast = 0
   if .vf > 0
-		.ast = 3.437897 + -0.120815*.mvd + 0.001765*.qf3 + -1.131584*.vf + -0.002341*.pitch + -2.909444*.jitter  
-...            + -0.057651*.hnr + 0.238368*.gne + 0.004951*.bed  
+		.ast = 2.362028 + -0.102402*.mvd + 0.004036*.qf3 + -1.350803*.vf + 0.004899*.pitch + 0.305835*.jitter  
+...            + 0.613593*.shimmer + -0.042914*.hnr + 0.892717*.gne + 0.013725*.bed  
 	else
-		.ast = 3.569474 + -0.105350*.mvd + -0.002346*.qf3 + -1.001225*.vf + -0.015657*.hnr 
-...            + -0.182041*.gne + -0.010775 *.bed 
+		.ast = 3.027056 + -0.096463*.mvd + -0.001849*.qf3 + -1.302729*.vf + -0.049842*.hnr 
+...            + 0.550310*.gne + 0.008584*.bed 
 	endif
 endproc
 
