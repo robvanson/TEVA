@@ -2613,52 +2613,52 @@ procedure predictRPart .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .gne .bed
 	.ast = 0
 	if .vf > 0
 		# With Pitch
-		if .vf >= 0.492
-			if .vf >= 0.9465
-				.ast = 1.353
+		if .vf >= 0.4955
+			if .hnr >= 10.68
+				.ast = 1
 			else
-				if .hnr < 2.462
-					.ast = 1.714
-				else
-					if .pitch < 5.736
-						.ast = 1.923
+				if .mvd >= 2.731
+					if .jitter < 0.00855
+						.ast = 1.429
 					else
-						.ast = 2.364
+						if .hnr >= 6.144
+							.ast = 1.625
+						else
+							.ast = 2
+						endif
 					endif
+				else
+					.ast = 2.25
 				endif
 			endif
 		else
-			# Without Pitch
-			if .jitter >= 0.00565
-				.ast = 2.462
+			if .gne < 0.9185
+				.ast = 3.125
 			else
-				.ast = 3.909
+				.ast = 3.818
 			endif
 		endif		
 	else
-		if .vf >= 0.492
-			if .vf >= 0.9465
-				.ast = 1.353
+		# Without Pitch
+		if .vf >= 0.4955
+			if .hnr >= 10.68
+				.ast = 1
 			else
-				if .hnr < 2.462
-					.ast = 1.714
-				else
-					if .mvd >= 2.645
-						.ast = 1.909
+				if .mvd >= 2.731
+					if .vf >= 0.998
+						.ast = 1.429
 					else
-						.ast = 2.308
+						.ast = 1.889
 					endif
+				else
+					.ast = 2.25
 				endif
 			endif
 		else
-			if .bed >= 18.91
-				if .gne < 0.7025
-					.ast = 2.25
-				else
-					.ast = 3.375
-				endif
+			if .vf >= 0.072
+				.ast = 3.125
 			else
-				.ast = 3.474
+				.ast = 3.714
 			endif
 		endif
 	endif
