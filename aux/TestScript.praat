@@ -13,7 +13,7 @@ te.useFullASTselection = 1
 config.useCache = 1
 
 form Give table file
-	sentence tablefile AllAudio.Table
+	sentence tablefile Corina_Renee_consensus.Table
 	real interval_length 0
 endform
 .intervalLength = interval_length
@@ -24,7 +24,9 @@ mainPage.draw$ = "Sound"
 config.showFormants = 1
 
 clearinfo
-printline i'tab$'ID'tab$'start'tab$'end'tab$'Duration'tab$'MVD'tab$'QF3'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'Shimmer'tab$'HNR'tab$'GNE'tab$'BED'tab$'AST'tab$'predAST
+printline i'tab$'ID'tab$'start'tab$'end'tab$'Duration'tab$'MVD'tab$'QF3
+...'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'Shimmer'tab$'HNR'tab$'HNRlow
+...'tab$'HNRhigh'tab$'GNE'tab$'BED'tab$'AST'tab$'predAST
 
 call get_speakerInfo 1
 .numSpeakers = get_speakerInfo.numEntries
@@ -46,6 +48,8 @@ for .i to .numSpeakers
 	.calcShimmer = predictASTvalue.shimmer 	
 	.calcBED = predictASTvalue.bed
 	.calcHNR = predictASTvalue.hnr
+	.calcHNRlow = predictASTvalue.hnrLow
+	.calcHNRhigh = predictASTvalue.hnrHigh
 	.calcGNE = predictASTvalue.gne
 	.calcQF3 = predictASTvalue.qf3
 	.predAST = predictASTvalue.ast
@@ -60,6 +64,8 @@ for .i to .numSpeakers
 	print 'tab$''.calcJitter:4'
 	print 'tab$''.calcShimmer:4'
 	print 'tab$''.calcHNR:3'
+	print 'tab$''.calcHNRlow:3'
+	print 'tab$''.calcHNRhigh:3'
 	print 'tab$''.calcGNE:3'
 	print 'tab$''.calcBED:3'
 	print 'tab$''.ast:0'

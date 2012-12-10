@@ -1556,6 +1556,10 @@ endproc
 ##################################################################
 #
 # Create a Sound file with the Harmonicity low value
+# Simply the HNR from a low pass filtered sound file (not correct?)
+# Different from
+# van Gogh et al. (2005) Acoustical analysis of tracheoesophageal voice. 
+# Speech Communication, 47.
 procedure sound2Harm_low .startpoint .endpoint
 	.timeStep = 0.005
 	select te.openSound
@@ -1583,8 +1587,12 @@ procedure sound2Harm_low .startpoint .endpoint
 			.cutStart = .startpoint
 			.cutEnd = .cutEndpoint
 		endif
-		.tmpPartID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
+		.tmpPartSoundID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
+		.tmpPartID = Filter (pass Hann band)... 0 700 100
 		Rename... TmpPart
+		select .tmpPartSoundID
+		Remove
+		select .tmpPartID
 		# Settings from C.J. van As 2001 "Tracheoesophageal Speech" p83
 		te.harmLow = noprogress To Harmonicity (cc)... '.timeStep' 40 0 1.0
 		# Arbitrarily put a floor of 0dB on the Harmonicity to Noise ratio
@@ -1607,6 +1615,70 @@ procedure sound2Harm_low .startpoint .endpoint
 		endif
 	endif
 	select te.harmLow
+endproc
+
+##################################################################
+#
+# Create a Sound file with the Harmonicity high value
+# Simply the HNR from a high pass filtered sound file (not correct?)
+# Different from
+# van Gogh et al. (2005) Acoustical analysis of tracheoesophageal voice. 
+# Speech Communication, 47.
+procedure sound2Harm_high .startpoint .endpoint
+	.timeStep = 0.005
+	select te.openSound
+	.duration = Get total duration
+	if .endpoint = 0
+		.endpoint = .duration
+	endif
+	# Check for cached analysis file
+	if config.useCache > 0
+		createDirectory("'currentDirectoryName$''localCacheDir$'")
+	endif
+	if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_high.Harmonicity")
+		.tempHarm = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_high.Harmonicity
+		call extractPartHarmonicity '.tempHarm' '.startpoint' '.endpoint'
+		te.harmHigh = selected()
+		select .tempHarm
+		Remove
+		select te.harmHigh
+	else
+		select te.openSound
+		if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
+			.cutStart = 0
+			.cutEnd = Get total duration
+		else
+			.cutStart = .startpoint
+			.cutEnd = .cutEndpoint
+		endif
+		.tmpPartSoundID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
+		.tmpPartID = Filter (pass Hann band)... 700 2300 100
+		Rename... TmpPart
+		select .tmpPartSoundID
+		Remove
+		select .tmpPartID
+		# Settings from C.J. van As 2001 "Tracheoesophageal Speech" p83
+		te.harmHigh = noprogress To Harmonicity (cc)... '.timeStep' 40 0 1.0
+		# Arbitrarily put a floor of 0dB on the Harmonicity to Noise ratio
+		Formula... if self < 0 then 0 else self fi
+		select .tmpPartID
+		Remove
+		select te.harmHigh
+		# Write file to cache
+		if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
+			Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_high.Harmonicity
+			
+			.cutStart = .startpoint
+			.cutEnd = .endpoint
+			call extractPartHarmonicity 'te.harmHigh' '.cutStart' '.cutEnd'
+			.newHarm = selected()
+			select te.harmHigh
+			Remove
+			te.harmHigh = .newHarm
+			select te.harmHigh
+		endif
+	endif
+	select te.harmHigh
 endproc
 
 ##################################################################
@@ -2354,6 +2426,7 @@ endproc
 # Do not recalculate needlessly
 te.gneValue = 0
 te.harmLowValue = 0
+te.harmHighValue = 0
 procedure calculateHarmonicityValues
 	.maxHarmonicity = 0
 	.minHarmonicity = 0
@@ -2390,9 +2463,16 @@ procedure calculateHarmonicityValues
 		te.harmLowValue = Get maximum... 0 0 Parabolic
 		select .harmLowID
 		Remove
+		# Calculate 700 < Harmonicity value < 2300Hz
+		call sound2Harm_high 'selectedStartTime' 'selectedEndTime'
+		.harmHighID = selected()
+		te.harmHighValue = Get maximum... 0 0 Parabolic
+		select .harmHighID
+		Remove
 	else
 		te.gneValue = 0
 		te.harmLowValue = 0
+		te.harmHighValue = 0
 	endif
 	
 	call get_feedback_text 'config.language$' HarmonicityValues
@@ -2436,6 +2516,11 @@ procedure calculateHarmonicityValues
 	# Calculated from van As, C.J. "Tracheolesophageal Speech", 2001, p88
 	# Acoustic Signal Typing: GNE
 	call setPathParameter 'pathologicalParameters' GNE 'te.gneValue'
+	# Different from
+	# van Gogh et al. (2005) Acoustical analysis of tracheoesophageal voice. 
+	# Speech Communication, 47.
+	call setPathParameter 'pathologicalParameters' HNRlow 'te.harmLowValue'
+	call setPathParameter 'pathologicalParameters' HNRhigh 'te.harmHighValue'
 
 	.astGNE = 0
 	if te.gneValue > (0.82 + 0.82) / 2
@@ -2738,35 +2823,40 @@ procedure predictASTvalue
 	# MVD + VF + Pitch + Jitter + Shimmer
 	call DrawPitchObject
 	call calculatePitchValues
-	call getPathParameter pathologicalParameters MVD
+	call getPathParameter 'pathologicalParameters' MVD
 	.mvd = getPathParameter.value
-	call getPathParameter pathologicalParameters VoicedFraction
+	call getPathParameter 'pathologicalParameters' VoicedFraction
 	.vf = getPathParameter.value
-	call getPathParameter pathologicalParameters Pitch
+	call getPathParameter 'pathologicalParameters' Pitch
 	.pitch = getPathParameter.value
-	call getPathParameter pathologicalParameters Jitter
+	call getPathParameter 'pathologicalParameters' Jitter
 	.jitter = getPathParameter.value
-	call getPathParameter pathologicalParameters Shimmer
+	call getPathParameter 'pathologicalParameters' Shimmer
 	.shimmer = getPathParameter.value
 	
 	# QF3
 	call DrawSpectrogramObject
 	call calculateSpectrogramValues
-	call getPathParameter pathologicalParameters QF3
+	call getPathParameter 'pathologicalParameters' QF3
 	.qf3 = getPathParameter.value
 	
 	# HNR + GNE
 	call DrawHarmonicityObject
 	call calculateHarmonicityValues
-	call getPathParameter pathologicalParameters HNR
+	call getPathParameter 'pathologicalParameters' HNR
 	.hnr = getPathParameter.value
-	call getPathParameter pathologicalParameters GNE
+	call getPathParameter 'pathologicalParameters' HNRlow
+	.hnrLow = getPathParameter.value
+printline .hnrLow = '.hnrLow'
+	call getPathParameter 'pathologicalParameters' HNRhigh
+	.hnrHigh = getPathParameter.value
+	call getPathParameter 'pathologicalParameters' GNE
 	.gne = getPathParameter.value
 		
 	# BED
 	call DrawLtasObject
 	call calculateLtasValues
-	call getPathParameter pathologicalParameters BED
+	call getPathParameter 'pathologicalParameters' BED
 	.bed = getPathParameter.value
 	
 	# The Formula
