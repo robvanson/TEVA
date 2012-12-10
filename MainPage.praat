@@ -2592,19 +2592,15 @@ endproc
 # 
 # if .vf = 0
 # Coefficients:
-# (Intercept)          MVD          QF3           VF          HNR          GNE  
-#    3.027056    -0.096463    -0.001849    -1.302729    -0.049842     0.550310  
-#         BED  
-#    0.008584  
-# 
+# (Intercept)          QF3          BED  
+#    3.333524    -0.009712    -0.038752  
 procedure predictLM .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .gne .bed
   .ast = 0
   if .vf > 0
 		.ast = 2.362028 + -0.102402*.mvd + 0.004036*.qf3 + -1.350803*.vf + 0.004899*.pitch + 0.305835*.jitter  
 ...            + 0.613593*.shimmer + -0.042914*.hnr + 0.892717*.gne + 0.013725*.bed  
 	else
-		.ast = 3.027056 + -0.096463*.mvd + -0.001849*.qf3 + -1.302729*.vf + -0.049842*.hnr 
-...            + 0.550310*.gne + 0.008584*.bed 
+		.ast = 3.333524 + -0.009712*.qf3 + -0.038752*.bed 
 	endif
 endproc
 
@@ -2640,25 +2636,29 @@ procedure predictRPart .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .gne .bed
 		endif		
 	else
 		# Without Pitch
-		if .vf >= 0.4955
-			if .hnr >= 10.68
-				.ast = 1
+		if .bed >= 25.73
+			if .bed < 30.46
+				.ast = 1.714
 			else
-				if .mvd >= 2.731
-					if .vf >= 0.998
-						.ast = 1.429
-					else
-						.ast = 1.889
-					endif
-				else
-					.ast = 2.25
-				endif
+				.ast = 2.11
 			endif
 		else
-			if .vf >= 0.072
-				.ast = 3.125
+			if .bed >= 11.57
+				if .QF3 >= 9.9
+					if .QF3 < 14.55
+						.ast = 2
+					else
+						.ast = 2.6
+					endif
+				else
+					if .QF3 < 6.25
+						.ast = 2.375
+					else
+						.ast = 3
+					endif
+				endif
 			else
-				.ast = 3.714
+				.ast = 3.333
 			endif
 		endif
 	endif
