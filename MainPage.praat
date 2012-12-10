@@ -1449,8 +1449,8 @@ procedure DrawHarmonicityObject
 		if te.harmonicity = 0 or currentStartTime != previousHarmonicityStart or currentEndTime != previousHarmonicityEnd
 			# do not exagerate precision
 			.timeStep = 0.005
-			.cutStart = 0.9 * currentStartTime
-			.cutEnd = 1.1 * currentEndTime
+			.cutStart = currentStartTime
+			.cutEnd = currentEndTime
 			
 			# Check for cached analysis file
 			if config.useCache > 0
@@ -1482,8 +1482,8 @@ procedure DrawHarmonicityObject
 				if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
 					Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Harmonicity
 					
-					.cutStart = 0.9 * currentStartTime
-					.cutEnd = 1.1 * currentEndTime
+					.cutStart = currentStartTime
+					.cutEnd = currentEndTime
 					call extractPartHarmonicity 'te.harmonicity' '.cutStart' '.cutEnd'
 					.newHarm = selected()
 					select te.harmonicity
@@ -1551,6 +1551,62 @@ procedure calcMaxHarmonicity .soundfile
 		plus .tmpFiltered
 		Remove
 	endif
+endproc
+
+##################################################################
+#
+# Create a Sound file with the Harmonicity low value
+procedure sound2Harm_low .startpoint .endpoint
+	.timeStep = 0.005
+	select te.openSound
+	.duration = Get total duration
+	if .endpoint = 0
+		.endpoint = .duration
+	endif
+	# Check for cached analysis file
+	if config.useCache > 0
+		createDirectory("'currentDirectoryName$''localCacheDir$'")
+	endif
+	if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_low.Harmonicity")
+		.tempHarm = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_low.Harmonicity
+		call extractPartHarmonicity '.tempHarm' '.startpoint' '.endpoint'
+		te.harmLow = selected()
+		select .tempHarm
+		Remove
+		select te.harmLow
+	else
+		select te.openSound
+		if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
+			.cutStart = 0
+			.cutEnd = Get total duration
+		else
+			.cutStart = .startpoint
+			.cutEnd = .cutEndpoint
+		endif
+		.tmpPartID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
+		Rename... TmpPart
+		# Settings from C.J. van As 2001 "Tracheoesophageal Speech" p83
+		te.harmLow = noprogress To Harmonicity (cc)... '.timeStep' 40 0 1.0
+		# Arbitrarily put a floor of 0dB on the Harmonicity to Noise ratio
+		Formula... if self < 0 then 0 else self fi
+		select .tmpPartID
+		Remove
+		select te.harmLow
+		# Write file to cache
+		if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
+			Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_low.Harmonicity
+			
+			.cutStart = .startpoint
+			.cutEnd = .endpoint
+			call extractPartHarmonicity 'te.harmLow' '.cutStart' '.cutEnd'
+			.newHarm = selected()
+			select te.harmLow
+			Remove
+			te.harmLow = .newHarm
+			select te.harmLow
+		endif
+	endif
+	select te.harmLow
 endproc
 
 ##################################################################
@@ -2297,6 +2353,7 @@ endproc
 
 # Do not recalculate needlessly
 te.gneValue = 0
+te.harmLowValue = 0
 procedure calculateHarmonicityValues
 	.maxHarmonicity = 0
 	.minHarmonicity = 0
@@ -2319,6 +2376,7 @@ procedure calculateHarmonicityValues
 				te.gneValue = Get maximum... 0 0 Sinc70
 				select .gneID
 				Remove
+				
 				.previousSelectedGNEStartTime = selectedStartTime
 				.previousSelectedGNEEndTime = selectedEndTime
 				.previousHarmonicity = te.harmonicity
@@ -2326,8 +2384,15 @@ procedure calculateHarmonicityValues
 		else
 			te.gneValue = 0
 		endif
+		# Calculate Harmonicity value < 700Hz
+		call sound2Harm_low 'selectedStartTime' 'selectedEndTime'
+		.harmLowID = selected()
+		te.harmLowValue = Get maximum... 0 0 Parabolic
+		select .harmLowID
+		Remove
 	else
 		te.gneValue = 0
+		te.harmLowValue = 0
 	endif
 	
 	call get_feedback_text 'config.language$' HarmonicityValues
