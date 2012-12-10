@@ -2847,7 +2847,6 @@ procedure predictASTvalue
 	.hnr = getPathParameter.value
 	call getPathParameter 'pathologicalParameters' HNRlow
 	.hnrLow = getPathParameter.value
-printline .hnrLow = '.hnrLow'
 	call getPathParameter 'pathologicalParameters' HNRhigh
 	.hnrHigh = getPathParameter.value
 	call getPathParameter 'pathologicalParameters' GNE
