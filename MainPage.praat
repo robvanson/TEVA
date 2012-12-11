@@ -2735,29 +2735,29 @@ endproc
 # Linear Model
 # if .vf > 0
 # Coefficients:
-# (Intercept)          MVD          QF3           VF        Pitch       Jitter  
-#    2.362028    -0.102402     0.004036    -1.350803     0.004899     0.305835  
-#     Shimmer          HNR          GNE          BED  
-#    0.613593    -0.042914     0.892717     0.013725  
+# (Intercept)          MVD           VF        Pitch       Jitter      Shimmer  
+#    2.438722    -0.103885    -1.356847     0.004749     0.324988     0.662313  
+#         HNR       HNRlow          GNE          BED  
+#   -0.051891     0.006718     0.764487     0.013581  
 # 
 # if .vf = 0
 # Coefficients:
 # (Intercept)          QF3          BED  
 #    3.333524    -0.009712    -0.038752  
-procedure predictLM .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .gne .bed
+procedure predictLM .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .hnrLow .gne .bed
   .ast = 0
-  if .vf > 0
-		.ast = 2.362028 + -0.102402*.mvd + 0.004036*.qf3 + -1.350803*.vf + 0.004899*.pitch + 0.305835*.jitter  
-...            + 0.613593*.shimmer + -0.042914*.hnr + 0.892717*.gne + 0.013725*.bed  
+  if .vf > 0.01
+		.ast = 2.438722 + -0.103885*.mvd + -1.356847*.vf + 0.004749*.pitch + 0.324988*.jitter  
+...            + 0.662313*.shimmer + -0.051891*.hnr + 0.006718*.hnrLow + 0.764487*.gne + 0.013581*.bed  
 	else
 		.ast = 3.333524 + -0.009712*.qf3 + -0.038752*.bed 
 	endif
 endproc
 
 # Recursive Partitioning
-procedure predictRPart .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .gne .bed
+procedure predictRPart .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .hnrLow .gne .bed
 	.ast = 0
-	if .vf > 0
+	if .vf > 0.01
 		# With Pitch
 		if .vf >= 0.4955
 			if .hnr >= 10.68
@@ -2858,12 +2858,23 @@ procedure predictASTvalue
 	call getPathParameter 'pathologicalParameters' BED
 	.bed = getPathParameter.value
 	
+	# If VF = 0, pitch derived parameters do not make sense
+	if .vf = 0
+		.pitch = undefined
+		.jitter = undefined
+		.shimmer = undefined
+		.hnr = undefined
+		.hnrLow = undefined
+		.hnrHigh = undefined
+		.gne = undefined
+	endif
+	
 	# The Formula
 	.astLM = -1
 	.astRPart = -1
-	call predictLM .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .gne .bed
+	call predictLM .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .hnrLow .gne .bed
 	.astLM = predictLM.ast
-	# call predictRPart .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .gne .bed
+	# call predictRPart .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .hnrLow .gne .bed
 	#.astRPart = predictRPart.ast
 	
 	.ast = .astLM

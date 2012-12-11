@@ -53,15 +53,6 @@ for .i to .numSpeakers
 	.calcGNE = predictASTvalue.gne
 	.calcQF3 = predictASTvalue.qf3
 	.predAST = predictASTvalue.ast
-	if .calcVF <= 0
-		.calcPitch = undefined
-		.calcJitter = undefined 	
-		.calcShimmer = undefined 	
-		.calcHNR = undefined
-		.calcHNRlow = undefined
-		.calcHNRhigh = undefined
-		.calcGNE = undefined		
-	endif
 
 	# Print output
 	print '.i''tab$''get_speakerInfo.id$'
