@@ -2933,6 +2933,7 @@ procedure predictASTvalue
 		.hnrLow = undefined
 		.hnrHigh = undefined
 		.gne = undefined
+		.cepsrahm = undefined
 	endif
 	
 	# The Formula
