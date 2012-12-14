@@ -2793,29 +2793,45 @@ endproc
 # Predict AST from "learned" formulas
 
 # Linear Model
-# if .vf > 0
+# if .vf >= 0.96
+# 
+# Coefficients:
+# ( Intercept)          MVD           VF        Pitch       Jitter      Shimmer  
+#   -0.890488    -0.115060     2.252744     0.007286    -7.524663     3.295278  
+#       CRmax          HNR       HNRlow          GNE          BED  
+#   -0.116967    -0.055520     0.015864     2.556529     0.010399  
+# 
+# if 0 < .vf < 0.96
+# 
 # Coefficients:
 # (Intercept)          MVD           VF        Pitch       Jitter      Shimmer  
-#    2.438722    -0.103885    -1.356847     0.004749     0.324988     0.662313  
-#         HNR       HNRlow          GNE          BED  
-#   -0.051891     0.006718     0.764487     0.013581  
+#    2.615183    -0.064338    -1.772765     0.008912    -2.463626     0.102614  
+#       CRmax          HNR       HNRlow          GNE          BED  
+#   -0.026376     0.012499     0.018649     1.217178     0.006222  
 # 
 # if .vf = 0
+# 
 # Coefficients:
 # (Intercept)          QF3          BED  
-#    3.333524    -0.009712    -0.038752  
-procedure predictLM .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .hnrLow .gne .bed
+#   3.7900154   -0.0423776   -0.0005477  
+# 
+procedure predictLM .mvd .qf3 .vf .pitch .jitter .shimmer .crmax .hnr .hnrLow .gne .bed
   .ast = 0
-  if .vf > 0.01
-		.ast = 2.438722 + -0.103885*.mvd + -1.356847*.vf + 0.004749*.pitch + 0.324988*.jitter  
-...            + 0.662313*.shimmer + -0.051891*.hnr + 0.006718*.hnrLow + 0.764487*.gne + 0.013581*.bed  
+  if .vf >= 0.96
+		.ast = -0.890488 + -0.115060*.mvd + 2.252744*.vf + 0.007286*.pitch + -7.524663*.jitter  
+...            + 3.295278*.shimmer + -0.116967*.crmax + -0.055520*.hnr + 0.015864*.hnrLow 
+...            + 2.556529*.gne + 0.010399*.bed  
+  elsif .vf > 0
+		.ast = 2.615183 + -0.064338*.mvd + -1.772765*.vf + 0.008912*.pitch + -2.463626*.jitter  
+...            + 0.102614*.shimmer + -0.026376*.crmax + 0.012499*.hnr + 0.018649*.hnrLow 
+...            + 1.217178*.gne + 0.006222*.bed  
 	else
-		.ast = 3.333524 + -0.009712*.qf3 + -0.038752*.bed 
+		.ast = 3.7900154  + -0.0423776*.qf3 + -0.0005477*.bed 
 	endif
 endproc
 
 # Recursive Partitioning
-procedure predictRPart .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .hnrLow .gne .bed
+procedure predictRPart .mvd .qf3 .vf .pitch .jitter .shimmer .crmax .hnr .hnrLow .gne .bed
 	.ast = 0
 	if .vf > 0.01
 		# With Pitch
@@ -2897,7 +2913,7 @@ procedure predictASTvalue
 	# Cepstral Rahmonic
 	call calculateCepstralRahmonic
 	call getPathParameter 'pathologicalParameters' CepsRahm
-	.cepsrahm = getPathParameter.value
+	.crmax = getPathParameter.value
 	
 	
 	# QF3
@@ -2933,15 +2949,15 @@ procedure predictASTvalue
 		.hnrLow = undefined
 		.hnrHigh = undefined
 		.gne = undefined
-		.cepsrahm = undefined
+		.crmax = undefined
 	endif
 	
 	# The Formula
 	.astLM = -1
 	.astRPart = -1
-	call predictLM .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .hnrLow .gne .bed
+	call predictLM .mvd .qf3 .vf .pitch .jitter .shimmer .crmax .hnr .hnrLow .gne .bed
 	.astLM = predictLM.ast
-	# call predictRPart .mvd .qf3 .vf .pitch .jitter .shimmer .hnr .hnrLow .gne .bed
+	# call predictRPart .mvd .qf3 .vf .pitch .jitter .shimmer .crmax .hnr .hnrLow .gne .bed
 	#.astRPart = predictRPart.ast
 	
 	.ast = .astLM

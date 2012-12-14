@@ -46,7 +46,7 @@ for .i to .numSpeakers
 	.calcPitch = predictASTvalue.pitch
 	.calcJitter = predictASTvalue.jitter 	
 	.calcShimmer = predictASTvalue.shimmer 	
-	.calcCepsRahm = predictASTvalue.cepsrahm 	
+	.calcCRmax = predictASTvalue.crmax 	
 	.calcBED = predictASTvalue.bed
 	.calcHNR = predictASTvalue.hnr
 	.calcHNRlow = predictASTvalue.hnrLow
@@ -64,7 +64,7 @@ for .i to .numSpeakers
 	print 'tab$''.calcPitch:3'
 	print 'tab$''.calcJitter:4'
 	print 'tab$''.calcShimmer:4'
-	print 'tab$''.calcCepsRahm:3'
+	print 'tab$''.calcCRmax:3'
 	print 'tab$''.calcHNR:3'
 	print 'tab$''.calcHNRlow:3'
 	print 'tab$''.calcHNRhigh:3'
