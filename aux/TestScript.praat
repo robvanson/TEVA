@@ -25,8 +25,8 @@ config.showFormants = 1
 
 clearinfo
 printline i'tab$'ID'tab$'start'tab$'end'tab$'Duration'tab$'MVD'tab$'QF3
-...'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'Shimmer'tab$'HNR'tab$'HNRlow
-...'tab$'HNRhigh'tab$'GNE'tab$'BED'tab$'AST'tab$'predAST
+...'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'Shimmer'tab$'CRmax'tab$'HNR
+...'tab$'HNRlow'tab$'HNRhigh'tab$'GNE'tab$'BED'tab$'AST'tab$'predAST
 
 call get_speakerInfo 1
 .numSpeakers = get_speakerInfo.numEntries
@@ -46,6 +46,7 @@ for .i to .numSpeakers
 	.calcPitch = predictASTvalue.pitch
 	.calcJitter = predictASTvalue.jitter 	
 	.calcShimmer = predictASTvalue.shimmer 	
+	.calcCepsRahm = predictASTvalue.cepsrahm 	
 	.calcBED = predictASTvalue.bed
 	.calcHNR = predictASTvalue.hnr
 	.calcHNRlow = predictASTvalue.hnrLow
@@ -63,6 +64,7 @@ for .i to .numSpeakers
 	print 'tab$''.calcPitch:3'
 	print 'tab$''.calcJitter:4'
 	print 'tab$''.calcShimmer:4'
+	print 'tab$''.calcCepsRahm:3'
 	print 'tab$''.calcHNR:3'
 	print 'tab$''.calcHNRlow:3'
 	print 'tab$''.calcHNRhigh:3'

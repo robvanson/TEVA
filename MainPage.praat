@@ -1384,7 +1384,7 @@ endproc
 procedure DrawPitchObject
 	if te.openSound > 0 and pitchName$ = ""
 		# Check for cached analysis file
-		if config.useCache > 0
+		if config.useCache > 0 and variableExists("currentDirectoryName$")
 			createDirectory("'currentDirectoryName$''localCacheDir$'")
 		endif
 		if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Pitch")
@@ -1453,7 +1453,7 @@ procedure DrawHarmonicityObject
 			.cutEnd = currentEndTime
 			
 			# Check for cached analysis file
-			if config.useCache > 0
+			if config.useCache > 0 and variableExists("currentDirectoryName$")
 				createDirectory("'currentDirectoryName$''localCacheDir$'")
 			endif
 			if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Harmonicity")
@@ -1520,7 +1520,7 @@ endproc
 procedure calcMaxHarmonicity .soundfile
 	if .soundfile > 0
 		# Check for cached analysis file
-		if config.useCache > 0
+		if config.useCache > 0 and variableExists("currentDirectoryName$")
 			createDirectory("'currentDirectoryName$''localCacheDir$'")
 		endif
 		if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_max.Harmonicity")
@@ -1568,7 +1568,7 @@ procedure sound2Harm_low .startpoint .endpoint
 		.endpoint = .duration
 	endif
 	# Check for cached analysis file
-	if config.useCache > 0
+	if config.useCache > 0 and variableExists("currentDirectoryName$")
 		createDirectory("'currentDirectoryName$''localCacheDir$'")
 	endif
 	if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_low.Harmonicity")
@@ -1585,7 +1585,7 @@ procedure sound2Harm_low .startpoint .endpoint
 			.cutEnd = Get total duration
 		else
 			.cutStart = .startpoint
-			.cutEnd = .cutEndpoint
+			.cutEnd = .endpoint
 		endif
 		.tmpPartSoundID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
 		.tmpPartID = Filter (pass Hann band)... 0 700 100
@@ -1632,7 +1632,7 @@ procedure sound2Harm_high .startpoint .endpoint
 		.endpoint = .duration
 	endif
 	# Check for cached analysis file
-	if config.useCache > 0
+	if config.useCache > 0 and variableExists("currentDirectoryName$")
 		createDirectory("'currentDirectoryName$''localCacheDir$'")
 	endif
 	if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_high.Harmonicity")
@@ -1649,7 +1649,7 @@ procedure sound2Harm_high .startpoint .endpoint
 			.cutEnd = Get total duration
 		else
 			.cutStart = .startpoint
-			.cutEnd = .cutEndpoint
+			.cutEnd = .endpoint
 		endif
 		.tmpPartSoundID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
 		.tmpPartID = Filter (pass Hann band)... 700 2300 100
@@ -1695,7 +1695,7 @@ procedure sound2GNEvalue .startpoint .endpoint
 		.endpoint = .duration
 	endif
 	# Check for cached analysis file
-	if config.useCache > 0
+	if config.useCache > 0 and variableExists("currentDirectoryName$")
 		createDirectory("'currentDirectoryName$''localCacheDir$'")
 	endif
 	if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
@@ -1801,7 +1801,7 @@ procedure DrawSpectrogramObject
 
 	if recordedSound$ <> "" and te.spectrogram = 0
 		# Check for cached analysis file
-		if config.useCache > 0
+		if config.useCache > 0 and variableExists("currentDirectoryName$")
 			createDirectory("'currentDirectoryName$''localCacheDir$'")
 		endif
 		if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Spectrogram")
@@ -1860,7 +1860,7 @@ procedure DrawLtasObject
 	endif
 	if recordedSound$ <> ""
 		# Check for cached analysis file
-		if config.useCache > 0
+		if config.useCache > 0 and variableExists("currentDirectoryName$")
 			createDirectory("'currentDirectoryName$''localCacheDir$'")
 		endif
 		if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_'selectedStartTime:3'_'selectedEndTime:3'.Ltas")
@@ -1893,7 +1893,7 @@ endproc
 procedure DrawIntensityObject
 	if recordedSound$ <> "" and intensityName$ = ""
 		# Check for cached analysis file
-		if config.useCache > 0
+		if config.useCache > 0 and variableExists("currentDirectoryName$")
 			createDirectory("'currentDirectoryName$''localCacheDir$'")
 		endif
 		if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Intensity")
@@ -2423,6 +2423,66 @@ procedure calculatePitchValues
 	#.text$ = "Pitch - Voiced: '.voicedFractions:1%'\% , Jitter: '.jitter:1%'\% , Shimmer: '.shimmer:1%'\% , Mean: '.meanPitch:0' Hz, SD: '.sdPitch:1' Hz, Median: '.medianPitch:0' Hz"
 endproc
 
+procedure extractRahmonicPart .table .begin .end
+	select .table
+	.name$ = selected$("Table")
+	.tmp = Copy... '.name$'_part
+	if .begin != 0 or .end != 0
+		.numRows = Get number of rows
+		for .i to .numRows
+			.row = .numRows +1 - .i
+			.time = Get value... '.row' time
+			if .time < .begin or .time > .end
+				select .tmp
+				Remove row... '.row'
+			endif
+		endfor
+	endif
+	select .tmp
+endproc
+procedure calculateCepstralRahmonic
+	.windowsize = 0.025
+	.timestep = 0.02
+	.maxfreq = 5000
+	
+	.cutStart = selectedStartTime
+	.cutEnd = selectedStartTime
+	if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
+		.cutStart = 0
+		.cutEnd = 0
+	endif
+	if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Rahmonic")
+		.tmpCepstralRahmonic = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Rahmonic
+		call extractRahmonicPart '.tmpCepstralRahmonic' 'selectedStartTime' 'selectedEndTime'
+		te.cepstralRahmonic = selected()
+		select .tmpCepstralRahmonic
+		Remove
+		select te.cepstralRahmonic
+	else
+		select te.openSound
+		.tmpPartSoundID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
+		.cepstrogram = noprogress To Cepstrogram... .windowsize .timestep .maxfreq
+		te.cepstralRahmonic = noprogress To Table (peak prominence)... 0.003 0.025 Cubic 0.001 0 Robust
+		select .tmpPartSoundID
+		plus .cepstrogram
+		Remove
+		select te.cepstralRahmonic
+		if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
+			Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Rahmonic
+			call extractRahmonicPart 'te.cepstralRahmonic' 'selectedStartTime' 'selectedEndTime'
+			.tmp = selected()
+			select te.cepstralRahmonic
+			Remove
+			te.cepstralRahmonic = .tmp
+		endif
+	endif
+	select te.cepstralRahmonic
+	.max = Get maximum... cpp
+	.mean = Get mean... cpp
+	.sd = Get standard deviation... cpp
+	call setPathParameter 'pathologicalParameters' CepsRahm '.max'
+endproc
+
 # Do not recalculate needlessly
 te.gneValue = 0
 te.harmLowValue = 0
@@ -2833,6 +2893,12 @@ procedure predictASTvalue
 	.jitter = getPathParameter.value
 	call getPathParameter 'pathologicalParameters' Shimmer
 	.shimmer = getPathParameter.value
+	
+	# Cepstral Rahmonic
+	call calculateCepstralRahmonic
+	call getPathParameter 'pathologicalParameters' CepsRahm
+	.cepsrahm = getPathParameter.value
+	
 	
 	# QF3
 	call DrawSpectrogramObject
