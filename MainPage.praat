@@ -2796,18 +2796,14 @@ endproc
 # if .vf >= 0.96
 # 
 # Coefficients:
-# ( Intercept)          MVD           VF        Pitch       Jitter      Shimmer  
-#   -0.890488    -0.115060     2.252744     0.007286    -7.524663     3.295278  
-#       CRmax          HNR       HNRlow          GNE          BED  
-#   -0.116967    -0.055520     0.015864     2.556529     0.010399  
+# (Intercept)          MVD        CRmax          HNR  
+#     3.89077     -0.12629     -0.07447     -0.04621  
 # 
 # if 0 < .vf < 0.96
 # 
 # Coefficients:
-# (Intercept)          MVD           VF        Pitch       Jitter      Shimmer  
-#    2.615183    -0.064338    -1.772765     0.008912    -2.463626     0.102614  
-#       CRmax          HNR       HNRlow          GNE          BED  
-#   -0.026376     0.012499     0.018649     1.217178     0.006222  
+# (Intercept)          MVD           VF        CRmax          HNR  
+#    3.524306    -0.057493    -1.744350     0.004475     0.042697  
 # 
 # if .vf = 0
 # 
@@ -2816,15 +2812,11 @@ endproc
 #   3.7900154   -0.0423776   -0.0005477  
 # 
 procedure predictLM .mvd .qf3 .vf .pitch .jitter .shimmer .crmax .hnr .hnrLow .gne .bed
-  .ast = 0
-  if .vf >= 0.96
-		.ast = -0.890488 + -0.115060*.mvd + 2.252744*.vf + 0.007286*.pitch + -7.524663*.jitter  
-...            + 3.295278*.shimmer + -0.116967*.crmax + -0.055520*.hnr + 0.015864*.hnrLow 
-...            + 2.556529*.gne + 0.010399*.bed  
-  elsif .vf > 0
-		.ast = 2.615183 + -0.064338*.mvd + -1.772765*.vf + 0.008912*.pitch + -2.463626*.jitter  
-...            + 0.102614*.shimmer + -0.026376*.crmax + 0.012499*.hnr + 0.018649*.hnrLow 
-...            + 1.217178*.gne + 0.006222*.bed  
+	.ast = 0
+	if .vf >= 0.96
+		.ast = 3.89077 + -0.12629*.mvd + -0.07447*.crmax + -0.04621*.hnr
+	elsif .vf > 0
+		.ast = 3.524306 + -0.057493*.mvd + -1.744350*.vf + 0.004475*.crmax + 0.042697*.hnr
 	else
 		.ast = 3.7900154  + -0.0423776*.qf3 + -0.0005477*.bed 
 	endif
