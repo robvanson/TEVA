@@ -24,7 +24,7 @@ mainPage.draw$ = "Sound"
 config.showFormants = 1
 
 clearinfo
-printline i'tab$'ID'tab$'start'tab$'end'tab$'Duration'tab$'MVD'tab$'QF3
+printline i'tab$'ID'tab$'start'tab$'end'tab$'Duration'tab$'MVD'tab$'QF1'tab$'QF2'tab$'QF3
 ...'tab$'VF'tab$'Pitch'tab$'Jitter'tab$'Shimmer'tab$'CRmax'tab$'HNR
 ...'tab$'HNRlow'tab$'HNRhigh'tab$'GNE'tab$'BED'tab$'AST'tab$'predAST
 
@@ -52,6 +52,8 @@ for .i to .numSpeakers
 	.calcHNRlow = predictASTvalue.hnrLow
 	.calcHNRhigh = predictASTvalue.hnrHigh
 	.calcGNE = predictASTvalue.gne
+	.calcQF1 = predictASTvalue.qf1
+	.calcQF2 = predictASTvalue.qf2
 	.calcQF3 = predictASTvalue.qf3
 	.predAST = predictASTvalue.ast
 
@@ -59,6 +61,8 @@ for .i to .numSpeakers
 	print '.i''tab$''get_speakerInfo.id$'
 	print 'tab$''selectedStartTime:3''tab$''selectedEndTime:3''tab$''.total_duration:1'
 	print 'tab$''.calcMVD:3'
+	print 'tab$''.calcQF1:1'
+	print 'tab$''.calcQF2:1'
 	print 'tab$''.calcQF3:1'
 	print 'tab$''.calcVF:3'
 	print 'tab$''.calcPitch:3'

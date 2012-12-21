@@ -2786,7 +2786,10 @@ procedure calculateSpectrogramValues
 		.spectrumValues$ = replace$(.spectrumValues$, "QUALITYF3$", "'.qualityF3:0'", 0)
 		.spectrumValues$ = replace$(.spectrumValues$, "QUALITYF4$", "'.qualityF4:0'", 0)
 		.text$ = .spectrumValues$
+		call setPathParameter 'pathologicalParameters' QF1 '.qualityF1'
+		call setPathParameter 'pathologicalParameters' QF2 '.qualityF2'
 		call setPathParameter 'pathologicalParameters' QF3 '.qualityF3'
+		call setPathParameter 'pathologicalParameters' QF4 '.qualityF4'
 	endif
 endproc
 
@@ -2911,6 +2914,10 @@ procedure predictASTvalue
 	# QF3
 	call DrawSpectrogramObject
 	call calculateSpectrogramValues
+	call getPathParameter 'pathologicalParameters' QF1
+	.qf1 = getPathParameter.value
+	call getPathParameter 'pathologicalParameters' QF2
+	.qf2 = getPathParameter.value
 	call getPathParameter 'pathologicalParameters' QF3
 	.qf3 = getPathParameter.value
 	
