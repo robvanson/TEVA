@@ -754,6 +754,8 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 				.labelRating$ = replace_regex$(buttonClicked.label$, "^[^a-zA-Z]+([A-Za-z])", "\l\1", 0)
 				'.labelRating$' = buttonClicked.fractionX
 				call set_RatingValues config.speakerDataTable Rating.'.labelRating$' 'buttonClicked.fractionX'
+				call get_RatingValues 'config.speakerDataTable' 'te.ratingTable'
+
 				.fractionYRating = buttonClicked.fractionY
 				call Draw_button_internal 1 'te.rating$' 'buttonClicked.label$' 0
 				call link_RatingValues 'te.ratingTable' 'config.speakerDataTable' 'buttonClicked.label$'
@@ -3050,9 +3052,17 @@ procedure get_RatingValues .speakerDataTable .ratingTable
 				'.variableName$' = -1
 				if .row > 0
 					if .column > 0
+						.valueTxt$ = Get value... .row Rating.'.variableName$'
 						.value = Get value... .row Rating.'.variableName$'
 						if not .value = undefined
 							'.variableName$' = (.value - 1)/999
+						endif
+						# Ranges
+						if index(.valueTxt$, ";")
+							.value = extractNumber(.valueTxt$, ";")
+							'.variableName$'2 = (.value - 1)/999
+						else
+							'.variableName$'2 = -1
 						endif
 					else
 						select .speakerDataTable
@@ -3073,6 +3083,7 @@ procedure set_RatingValues .speakerDataTable .variable$ .value$
 		Set numeric value... .row '.variable$' '.tableValue:0'
 		
 		call WriteSpeakerData
+		
 	endif
 endproc
 
@@ -3117,6 +3128,7 @@ procedure link_RatingValues .ratingTable .speakerTable .buttonLabel$
 							.labelRating$ = replace_regex$(.variable$, "^[^a-zA-Z]+([A-Za-z])", "\l\1", 0)
 							'.labelRating$' = .newValue
 							call set_RatingValues '.speakerTable' Rating.'.variable$' '.newValue'
+							call get_RatingValues '.speakerTable' '.ratingTable'
 							call Draw_button_internal 1 '.rating$' '.variableLabel$' 0
 						endif
 					endfor
