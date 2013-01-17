@@ -2,6 +2,8 @@ ManPagesTextFile
 "What's new?" "R.J.J.H. van Son" 20120215 0
 <intro> "Latest changes in TEVA."
 
+<normal> "##17 January 2013#"
+<list_item> "\bu Added support for consensus scoring in Visual Analogue Scales (VAS)."
 <normal> "##06 December 2012#"
 <list_item> "\bu Added a second evaluation display with Visual Analogue Scales (VAS)."
 <list_item> "\bu Reworked displays with Visual Analogue Scales (VAS)."

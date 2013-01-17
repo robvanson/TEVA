@@ -59,6 +59,12 @@ think it would take to understand this person when he or she was trying to make 
 <normal> "Fluency: The perceived smoothness of the sound production. Samples containing a lot of hesitations between 
 successive sounds and within continuant sounds (e.g., vowels and some consonants) score badly. "
 
+<entry> "Consensus ratings"
+<normal> "Sometimes it is necessary to combine ratings from two raters into a single consensus rating. This can be 
+achieved by combining the tables written for each rater. Concatenate the numbers for each rater with %%;% into a single 
+tab-delimited column. The two ratings will be displayed as two blue markers. Clicking in the customary way on the 
+VAScale will generate the single consensus rating in Red."
+
 <entry> "References"
 <list_item> "M. B. J. Moerman, J. P. Martens, M. J. Van der Borgt, M. Peleman, M. Gillis, P. H. Dejonckere (2006).
 'Perceptual evaluation of substitution voices: development and evaluation of the (I)INFVo rating scale', 
