@@ -556,30 +556,35 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 		
 		# Draw current position tick
 		.varName$ = replace_regex$(.label$, "^[^a-zA-Z]+([a-zA-Z])", "\l\1", 0)
-		.varName2$ = "'.varName$'2"
+		.varNameArray$ = "'.varName$'Array"
 		.fraction = -1
-		.fraction2 = -1
-		.vasColor$ = "Red"
-		if variableExists(.varName$)
-			.fraction = '.varName$'
+		# Several values
+		if variableExists(.varNameArray$+"[1]") and '.varName$'Array[1] > -1
+			.vasColor$ = "Blue"
+			.numFractions = '.varName$'ArrayLength
+			for .fi to .numFractions
+				.fraction = '.varNameArray$'[.fi]
+				if .fraction < 0
+					.fraction = 0.5
+					.vasColor$ = "Grey"
+				endif
+				.midpoint = .leftX + .fraction * (.rightX - .leftX)
+				demo Colour... '.vasColor$'
+				demo Line width... 1.5
+				demo Draw line... '.midpoint' '.lowY' '.midpoint' '.highY'
+			endfor
+		# Single marker
+		elsif variableExists(.varName$)
 			.vasColor$ = "Red"
-		endif
-		if variableExists(.varName2$)
-			.fraction2 = '.varName$'2
-			if .fraction2 > -1
-				.vasColor$ = "Blue"
+			.fraction = -1
+			.fraction = '.varName$'
+			if .fraction < 0
+				.fraction = 0.5
+				.vasColor$ = "Grey"
 			endif
-		endif
-		if .fraction < 0
-			.fraction = 0.5
-			.vasColor$ = "Grey"
-		endif
-		.midpoint = .leftX + .fraction * (.rightX - .leftX)
-		demo Colour... '.vasColor$'
-		demo Line width... 1.5
-		demo Draw line... '.midpoint' '.lowY' '.midpoint' '.highY'
-		if .fraction2 > -1
-			.midpoint = .leftX + .fraction2 * (.rightX - .leftX)
+			.midpoint = .leftX + .fraction * (.rightX - .leftX)
+			demo Colour... '.vasColor$'
+			demo Line width... 1.5
 			demo Draw line... '.midpoint' '.lowY' '.midpoint' '.highY'
 		endif
     else

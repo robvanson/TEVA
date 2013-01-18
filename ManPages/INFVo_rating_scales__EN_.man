@@ -60,9 +60,9 @@ think it would take to understand this person when he or she was trying to make 
 successive sounds and within continuant sounds (e.g., vowels and some consonants) score badly. "
 
 <entry> "Consensus ratings"
-<normal> "Sometimes it is necessary to combine ratings from two raters into a single consensus rating. This can be 
-achieved by combining the tables written for each rater. Concatenate the numbers for each rater with %%;% into a single 
-tab-delimited column. The two ratings will be displayed as two blue markers. Clicking in the customary way on the 
+<normal> "Sometimes it is necessary to combine ratings from two or more raters into a single consensus rating. This can be 
+achieved by combining the tables written for all the raters. Concatenate the numbers for each rater with %%;% into a single 
+tab-delimited column. The ratings will be displayed with blue markers. Clicking in the customary way on the 
 VAScale will generate the single consensus rating in Red."
 
 <entry> "References"

@@ -3052,6 +3052,10 @@ procedure get_RatingValues .speakerDataTable .ratingTable
 				'.variableName$' = -1
 				if .row > 0
 					if .column > 0
+						# Clean up earlier values
+						'.variableName$' = -1
+						'.variableName$'ArrayLength = 0
+						'.variableName$'Array[1] = -1
 						.valueTxt$ = Get value... .row Rating.'.variableName$'
 						.value = Get value... .row Rating.'.variableName$'
 						if not .value = undefined
@@ -3059,10 +3063,17 @@ procedure get_RatingValues .speakerDataTable .ratingTable
 						endif
 						# Ranges
 						if index(.valueTxt$, ";")
-							.value = extractNumber(.valueTxt$, ";")
-							'.variableName$'2 = (.value - 1)/999
-						else
-							'.variableName$'2 = -1
+							'.variableName$'ArrayLength = 0
+							while index_regex(.valueTxt$, "[0-9]") > 0
+								'.variableName$'ArrayLength += 1
+								.value = extractNumber(.valueTxt$, "")
+								'.variableName$'Array['.variableName$'ArrayLength] = (.value - 1)/999
+								if index(.valueTxt$, ";")
+									.valueTxt$ = right$(.valueTxt$, (length(.valueTxt$) - index(.valueTxt$, ";")))
+								else
+									.valueTxt$ = ""
+								endif
+							endwhile
 						endif
 					else
 						select .speakerDataTable
