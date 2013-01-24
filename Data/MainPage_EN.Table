@@ -6,7 +6,7 @@ Label	Text	Key	Helptext
 !CANVAS	Display	¤	Display area
 !PathologicalType	- Pathological Type:	01234	Pathological Type in window title I-IV
 Speaker	!90!Speaker	k	Input speaker data
-!NextItem	Nxt	x|\\	Next recording in %serial mode
+!NextItem	Spk	x|\\	Next recording in %serial mode
 File	Open	O	Open sound file
 Record	Record	R	Record your speech. You have 4 seconds, watch the recording "light"
 Play	Play	P	Play back of your recorded pronunciation
