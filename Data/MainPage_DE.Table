@@ -4,7 +4,7 @@ Label	Text	Key	Helptext
 !License	Lizenz	¤	GNU GPL version 2 or later
 !WindowTitle	DemoVersion: Hauptseite	¤	DemoVersion: Hauptseite
 !CANVAS	Fenster	¤	Zeichenbereich
-!PathologicalType	- Pathologischer Typos:	01234	Pathologischer Typos in \U"berschrift I-IV
+!PathologicalType	- Pathologischer Typos:	012349	Pathologischer Typos in \U"berschrift I-IV, 0 l\o"scht
 Speaker	!90!Sprecher	p	Eingabe Sprecher daten
 !NextItem	Spr	x|\\	N\a"chste Aufname w\a"hrend seriele Eingabe
 File	\O"ffnen	f	Laden einer Audio-Datei

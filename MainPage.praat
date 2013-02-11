@@ -653,7 +653,7 @@ endproc
 procedure processMainPagePathologicalType .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "!PathologicalType"
-	if index_regex(.pressed$, "[0-4]") > 0
+	if index_regex(.pressed$, "[0-4,9]") > 0
 		call setPathType '.pressed$'
 		call init_window
 	endif

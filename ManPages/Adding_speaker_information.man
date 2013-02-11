@@ -60,24 +60,25 @@ The extension of the file should be %%.tsv% or %%.Table%."
 <list_item> "3: Free form comments"
 <list_item> "4: Relative path to the audio file"
 <list_item> "5: Manually entered @@Acoustic Signal Typing|Acoustic Signal Type@, i.e., %1, %2, %3, or %4"
+<list_item> "6: Start time of interval for which the @@Acoustic Signal Typing|AST@ was entered"
+<list_item> "7: End time of interval for which the @@Acoustic Signal Typing|AST@ was entered"
 <normal> "If the table contains a path to a sound file, this file will be opened automatically 
 when the record is chosen"
 <normal> "Missing columns are automatically generated when the table is read. So, if a table without the %Description and 
 %AST columns is read, two empty columns with the corresponding labels are created."
 
 <normal> "An example file: %%SignaltypeVoiceSamples.Table%"
-<code> "ID          Text                        Description Audio                      AST"
-<code> "Speaker1    Speaker1, M 66yo, Type I    [comments]  signaltype1voicesample.wav 1"
-<code> "Speaker2    Speaker2, M 48yo, Type II   [comments]  signaltype2voicesample.wav 2"
-<code> "Speaker3    Speaker3, F 77yo, Type III  [comments]  signaltype3voicesample.wav 3"
-<code> "Speaker4    Speaker4, F 48yo, Type IV   [comments]  signaltype4voicesample.wav 4"
+<code> "ID          Text                        Description Audio                      AST StartTime EndTime"
+<code> "Speaker1    Speaker1, M 66yo, Type I    [comments]  signaltype1voicesample.wav 1   0.000     1.750"
+<code> "Speaker2    Speaker2, M 48yo, Type II   [comments]  signaltype2voicesample.wav 2   1.000     2.750"
+<code> "Speaker3    Speaker3, F 77yo, Type III  [comments]  signaltype3voicesample.wav 3   0.500     2.250"
+<code> "Speaker4    Speaker4, F 48yo, Type IV   [comments]  signaltype4voicesample.wav 4   1.250     3.000"
 
-<normal> "A text-only file without the %%.tsv% or %%.Table% extension will be read as a list of records separated by empty 
-lines. The first line in each block of text is interpreted as a %Text field and the (unique?) ID is extracted from the text 
-up to the first punctuation mark. If a %%Type: IV% or %%Type: 4% like string is found in the line, the %AST is set to this 
-value. The remaining lines up to the next empty line, if any, are interpreted as the %Description field. The first line of 
-the next block is again interpreted as a %Text field, and so on. Such a file can only be saved as a full Table (%%.tsv%). 
-Backup files too will be saved as %%.tsv% files."
+<normal> "A text-only file without the %%.tsv% or %%.Table% extension will be read as a list of records separated by tabs. 
+The order of the fields is like above, %ID %Text %Description %Audio %AST %StartTime %EndTime. For instance, if three fields 
+are given, they will be entered as %ID, %Text, %Description. If only a single field is given, it is treated as the Audio field. 
+The ID field will be set to numbered %%Item[row]% values if not present. Upon reading, such a file will be converted to a a full 
+table and saved (if backups are set, %%~.tsv%). Backup files too will be saved as %%~.tsv% files."
 
 <entry> "Next:"
 <list_item> "\bu @@Determine pathological type@"

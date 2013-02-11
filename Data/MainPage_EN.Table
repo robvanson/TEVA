@@ -4,7 +4,7 @@ Label	Text	Key	Helptext
 !License	License	!	GNU GPL version 2 or later
 !WindowTitle	NKI TE-VOICE ANALYSIS tool: Main page	!	NKI TE-VOICE ANALYSIS tool: Main page
 !CANVAS	Display	¤	Display area
-!PathologicalType	- Pathological Type:	01234	Pathological Type in window title I-IV
+!PathologicalType	- Pathological Type:	012349	Pathological Type in window title I-IV, 0 erases
 Speaker	!90!Speaker	k	Input speaker data
 !NextItem	Spk	x|\\	Next recording in %serial mode
 File	Open	O	Open sound file

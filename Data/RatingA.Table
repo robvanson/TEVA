@@ -7,7 +7,5 @@ $Scales	5	80	90	95	Black	DrawNull	-
 >Quality	5	80	81	85	Black	DrawNull	-	
 >Fluency	5	80	71	75	Black	DrawNull	-	
 >Continuity	5	80	61	65	Black	DrawNull	-	
->Hypertonicity	5	80	51	55	Black	DrawNull	Tonicity	1
->Hypotonicity	5	80	41	45	Black	DrawNull	Tonicity	1
->Noise	5	80	31	35	Black	DrawNull	-	
+>Noise	5	80	51	55	Black	DrawNull	Tonicity	1
 Help	70	85	25	29	Black	DrawNull	-	

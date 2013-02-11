@@ -601,6 +601,11 @@ procedure ReadSpeakerData .speakerData$
 				.col = Get column index... ID
 				if .col <= 0
 					Append column... ID
+					# We really need unique IDs!!! Supply them
+					.numRows = Get number of rows
+					for .i to .numRows
+						Set string value... '.i' ID Item'.i'
+					endfor
 				endif
 				.col = Get column index... Text
 				if .col <= 0
@@ -644,75 +649,43 @@ procedure ReadSpeakerData .speakerData$
 			.numStrings = Get number of strings
 			if .numStrings > 0
 				config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST StartTime EndTime
-				.currentText$ = ""
-				.currentDescription$ = ""
 
 				for .row to .numStrings
 					select .rawStrings
 					.currentString$ = Get string... '.row'
-					if index_regex(.currentString$, "\S")
-						if .currentText$ = ""
-							.currentText$ = .currentString$
-						else
-							# Use fake newlines
-							.currentDescription$ = .currentDescription$ + .currentString$ + "\n"
-						endif
-					else
-						.currentDescription$ = replace_regex$(.currentDescription$, "\\n$", "", 0)
-						if .currentText$ <> ""
-							.id$ = replace_regex$(.currentText$, "^\W*([\w\- ]+).*$", "\1", 0)
-							# Get AST
-							.ast$ = "-"
-							if index_regex(.currentText$, "Type[:=\s]+IV($|[^[IV])")
-								.ast$ = "4"
-							elsif index_regex(.currentText$, "Type[:=\s]+III($|[^[IV])")
-								.ast$ = "3"
-							elsif index_regex(.currentText$, "Type[:=\s]+II($|[^[IV])")
-								.ast$ = "2"
-							elsif index_regex(.currentText$, "Type[:=\s]+I($|[^[IV])")
-								.ast$ = "1"
-							elsif index_regex(.currentText$, "Type[:=\s]+\d+")
-								.ast$ = replace_regex$(.currentText$, ".*Type[:=\s]+(\d+).*$", "\1", 0)
-							endif
-							select config.speakerDataTable
-							Append row
-							.numRows = Get number of rows
-							Set string value... '.numRows' ID '.id$'
-							Set string value... '.numRows' Text '.currentText$'
-							Set string value... '.numRows' Description '.currentDescription$'
-							Set string value... '.numRows' Audio -
-							Set string value... '.numRows' AST '.ast$'
-							.id$ = ""
-							.currentText$ = ""
-							.currentDescription$ = ""
-							.ast$ = "-"
-						endif
-					endif
-				endfor
-				if .currentText$ <> ""
-					.id$ = replace_regex$(.currentText$, "^\W*([\w\- ]+).*$", "\1", 0)
+					
 					select config.speakerDataTable
 					Append row
-					.numRows = Get number of rows
-					Set string value... '.numRows' ID '.id$'
-					Set string value... '.numRows' Text '.currentText$'
-					Set string value... '.numRows' Description '.currentDescription$'
-					Set string value... '.numRows' Audio -
-					if pathologicalType > 0
-						Set string value... '.numRows' AST 'pathologicalType'
+					if index_regex(.currentString$, "\t")
+						
+						.column = 1
+						while index_regex(.currentString$, "\S")
+							.nextEnd = index_regex(.currentString$, "[\t\n]")
+							.nextEnd -= 1
+							.colLabel$ = Get column label... '.column'
+							.nextValue$ = left$(.currentString$, (.nextEnd - 1))
+							.currentString$ = right$(.currentString$, (length(.currentString$) - .nextEnd))
+							Set string value... '.row' '.colLabel$' '.currentString$'
+						endwhile
 					else
-						Set string value... '.numRows' AST -
+						Set string value... '.row' ID Item'.row'
+						Set string value... '.row' Audio '.currentString$'
 					endif
-					.id$ = ""
-					.currentText$ = ""
-					.currentDescription$ = ""
-				endif
+				endfor
 				# Remove empty first row
 				select config.speakerDataTable
-				Remove row... 1
+				.lastRow = Get number of rows
+				Remove row... .lastRow
 			endif
 			select .rawStrings
 			Remove
+			
+			# Created new data table, backup if needed
+			if config.createBackup
+				config.speakerData$ = replace_regex$(config.speakerData$, "(\.\w+)$", ".tsv", 0)
+				select config.speakerDataTable
+				Save as tab-separated file... 'config.speakerData$'
+			endif
 		endif
 	endif
 endproc
@@ -803,10 +776,16 @@ procedure autoSetPathType
 endproc
 
 procedure setPathType .pathType
-	pathologicalType = .pathType
+	if .pathType < 9
+		pathologicalType = .pathType
+	endif
 	call get_speakerInfo 'speakerID$'
 	if get_speakerInfo.row > 0
-		if pathologicalType > 0
+		# .pathType 9 is just for marking the interval
+		if .pathType >= 9
+			Set string value... 'get_speakerInfo.row' StartTime 'selectedStartTime:4'
+			Set string value... 'get_speakerInfo.row' EndTime 'selectedEndTime:4'
+		elsif pathologicalType > 0
 			Set string value... 'get_speakerInfo.row' AST 'pathologicalType'
 			Set string value... 'get_speakerInfo.row' StartTime 'selectedStartTime:4'
 			Set string value... 'get_speakerInfo.row' EndTime 'selectedEndTime:4'

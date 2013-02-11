@@ -19,8 +19,10 @@ to the sound, and looking at the %Spectrogram. Inspection of the %Pitch and %Har
 give extra information. "
 
 <normal> "When a voice has been evaluated and a type decided upon, the type can be entered by pressing 
-one of the number keys, 1-4 for types I - IV. The types can always be changed. Pressing 0 will erase the 
-type. The currently selected type will be printed over the display and stored in the table with speaker data." 
+one of the number keys, 1-4 for types I - IV. The types can always be changed. The currently selected 
+type will be printed over the display and stored together with the boundaries of the current selection 
+in the table with speaker data. Pressing 0 will erase the type and the boundaries. Pressing 9 will set 
+the boundaries but will not change the type." 
 
 <entry> "Acoustic signal typing"
 <normal> "There is also an @@AST categories|automatic evaluation of pathological type@. The displays 
