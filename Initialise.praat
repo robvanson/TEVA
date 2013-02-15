@@ -342,6 +342,15 @@ procedure read_preferences .preferencesFile$
 		
 		select Table '.preferenceTable$'
 		Remove
+		
+		# Reset variables
+		if te.ratingTable > 0
+			select te.ratingTable
+			Remove
+			te.ratingTable = -1
+		endif
+
+
 	endif
 endproc
 
