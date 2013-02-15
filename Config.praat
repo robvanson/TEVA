@@ -164,23 +164,24 @@ procedure processConfigSpeakerMerge .clickX .clickY .pressed$
 	call getLanguageTexts '.table$' '.label$'
 	.newFile$ = chooseReadFile$ (getLanguageTexts.helpText$)
 	# Read new file
-	.tmpNewSpeakerData = Read from file... '.newFile$'
-	# Make sure data table is read
-	if config.speakerDataTable <= 0 and config.speakerData$ <> ""
-		call get_speakerInfo 1
+	if .newFile$ != "" and fileReadable(.newFile$)
+		.tmpNewSpeakerData = Read from file... '.newFile$'
+		# Make sure data table is read
+		if config.speakerDataTable <= 0 and config.speakerData$ <> ""
+			call get_speakerInfo 1
+		endif
+		# Merge AST values as new columns
+		call merge_AST_values config.speakerDataTable .tmpNewSpeakerData
+		
+		# Merge Rating values
+		call merge_table_values config.speakerDataTable .tmpNewSpeakerData "^Rating\."
+		
+		# Save result
+		call WriteSpeakerData
+		
+		select .tmpNewSpeakerData
+		Remove
 	endif
-	# Merge AST values as new columns
-	call merge_AST_values config.speakerDataTable .tmpNewSpeakerData
-	
-	# Merge Rating values
-	call merge_table_values config.speakerDataTable .tmpNewSpeakerData "^Rating\."
-	
-	# Save result
-	call WriteSpeakerData
-	
-	select .tmpNewSpeakerData
-	Remove
-	
     call Draw_button 'table$' '.label$' 0
 endproc
 
