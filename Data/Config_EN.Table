@@ -36,7 +36,7 @@ SpeakerRandomize	Shuffle	u	Randomize the list of recordings
 RecordingTime	Recording	c	Time of recording in seconds
 $Rating	Rating		Human evaluation of speech
 RatingForm_A	Vowels		Evaluation form (VAS) for vowels
-RatingForm_INFVo	INFVo		INFVo evaluation form (VAS) for words and running speech
+RatingForm_Text	Text		Text evaluation form (VAS) for words and running speech
 VasScaleTicks	Markers		Display scale markers for evaluations forms
 Logging	Log on	L	Start logging sounds
 OpenLog	Select	S	Select directory to store the logging file

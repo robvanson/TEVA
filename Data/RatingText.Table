@@ -4,9 +4,6 @@ Label	LeftX	RightX	LowY	HighY	Color	Draw
 !License	0	0	0	0	Black	DrawNull
 !CANVAS	5	85	25	95	Black	DrawNull
 $Scales	5	80	90	95	Black	DrawNull
->Impression	5	80	81	85	Black	DrawNull
 >Intelligibility	5	80	71	75	Black	DrawNull
->Fluency	5	80	61	65	Black	DrawNull
 >Voice	5	80	51	55	Black	DrawNull
->Noise	5	80	41	45	Black	DrawNull
 Help	70	85	25	29	Black	DrawNull

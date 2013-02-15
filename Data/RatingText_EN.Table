@@ -4,9 +4,6 @@ Label	Text	Key	Helptext
 !License	License	!	GNU GPL version 2 or later
 !CANVAS	Display	¤	Display area
 $Scales	Chose a grade on the line between left (poor) and right (good) descriptors of speech	#	Visual Analogue rating Scales
->Impression	Impression of Voice (similarity to normal speech)	Least;Most	The overall voice quality (like GRADE in GRBAS)
 >Intelligibility	Intelligibility	Poor;Good	The impression of intelligibility
->Fluency	Speech fluency	Disfluent;Fluent 	The perceived smoothness of the sound production
->Voice	Voice	  Unsteady;Steady 	Stability of voice production, are voiced phonemes voiced and unvoiced phonemes unvoiced 
->Noise	Noise	Noise;No noise	The amount of annoyance caused by the audibility of uncontrolled noises produced during speech
+>Voice	Voice Quality (similarity to normal speech)	Least;Most	Is a judgment of the overall voice quality.
 Help	Scale Help	#	Press the scale you want information on, "Help" to continue

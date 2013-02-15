@@ -36,7 +36,7 @@ SpeakerRandomize	Shuffle	h	Randomisiere die Liste mit Aufnahmen
 RecordingTime	Aufnahme	e	Aufnahmezeit in Secunden
 $Rating	Beurteilung		Menschliche Beurteilung de Sprache
 RatingForm_A	Vokallaut		Beurteilungsformular f\u"r Vokallaute
-RatingForm_INFVo	INFVo		INFVo Beurteilungsformular f\u"r W\o"rter und S\a"tze
+RatingForm_Text	Text		Tekst Beurteilungsformular f\u"r W\o"rter und S\a"tze
 VasScaleTicks	Markierung		Zeige Skalenmarkierungen in beurteilungsformular
 Logging	Log an	L	Starte das Protokollieren aller Aufnahmen (Logbuch)
 OpenLog	W\a"hlen	W	Selectiere Verzeichnis f\u"r die Logbuchdatei
