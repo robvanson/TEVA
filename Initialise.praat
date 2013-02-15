@@ -254,6 +254,8 @@ procedure init_window
 			if index_regex(.pathType$, "[^0-9]") <= 0
 				call toRoman '.pathType$'
 				.pathType$ = toRoman.roman$
+			elsif index_regex(.pathType$, "[\?\-]")
+				.pathType$ = ""
 			endif
 			otherASTentries$ = otherASTentries$+" "+.pathType$
 			# Next round
@@ -263,7 +265,7 @@ procedure init_window
 	endif
 	# Set automatic Pathological type and write header
 	call autoSetPathType
-	if pathologicalType > 0 or otherASTentries$ <> ""
+	if pathologicalType > 0 or index_regex(otherASTentries$, "[0-9A-Za-z]")
 		call get_speakerInfo 'speakerID$'
 		.speakerNumber = get_speakerInfo.row
 		if .speakerNumber > 0
