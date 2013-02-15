@@ -169,35 +169,12 @@ procedure processConfigSpeakerMerge .clickX .clickY .pressed$
 	if config.speakerDataTable <= 0 and config.speakerData$ <> ""
 		call get_speakerInfo 1
 	endif
-	if config.speakerDataTable > 0
-		select config.speakerDataTable
-		.numCols = Get number of columns
-		.astNum = 1
-		for .col to .numCols
-			.colLabel$ = Get column label... .col
-			if index_regex(.colLabel$, "^AST[\d]*$") > 0
-				.astNum += 1
-			endif
-		endfor
-		.lastColumn$ = "AST'.astNum'"
-		Append column... '.lastColumn$'
-		.numRows = Get number of rows
-		for .row to .numRows
-			# Find new row corresponding to current row
-			select config.speakerDataTable
-			.id$ = Get value... .row ID
-			select .tmpNewSpeakerData
-			.tmpRow = Search column... ID '.id$'
-			if .tmpRow > 0
-				# Get new value
-				.astValue$ = Get value... .tmpRow AST
-				
-				# Add value
-				select config.speakerDataTable
-				Set string value... .row '.lastColumn$' '.astValue$'
-			endif
-		endfor
-	endif
+	# Merge AST values as new columns
+	call merge_AST_values config.speakerDataTable .tmpNewSpeakerData
+	
+	# Merge Rating values
+	call merge_table_values config.speakerDataTable .tmpNewSpeakerData "^Rating\."
+	
 	# Save result
 	call WriteSpeakerData
 	
@@ -700,3 +677,103 @@ procedure write_credits
 	call set_font_size 'defaultFontSize'
 endproc
 
+# Merge Speaker tables
+
+# Merge AST values, ie, add columns
+procedure merge_AST_values .currentTable .newTable
+	if .currentTable > 0 and .newTable > 0
+		select .currentTable
+		.numCols = Get number of columns
+		.astNum = 1
+		for .col to .numCols
+			.colLabel$ = Get column label... .col
+			if index_regex(.colLabel$, "^AST[\d]*$") > 0
+				.astNum += 1
+			endif
+		endfor
+		.lastColumn$ = "AST'.astNum'"
+		Append column... '.lastColumn$'
+		.numRows = Get number of rows
+		for .row to .numRows
+			# Find new row corresponding to current row
+			select .currentTable
+			.id$ = Get value... .row ID
+			select .newTable
+			.tmpRow = Search column... ID '.id$'
+			if .tmpRow > 0
+				# Get new value
+				.astValue$ = Get value... .tmpRow AST
+				
+				# Add value
+				select .currentTable
+				Set string value... .row '.lastColumn$' '.astValue$'
+			endif
+		endfor
+	endif
+endproc
+
+# Merge Rating values, ie, add values. Use regex, e.g., .colpattern$ = "^Rating\."
+# Only merges rows also in .currentTable. Rows only in .newTable are dropped
+procedure merge_table_values .currentTable .newTable .colpattern$
+	.colpattern$ = replace_regex$(.colpattern$, "(^""|""$)", "", 0)
+	if .currentTable > 0 and .newTable > 0
+		# Handle columns in .newTable that are also in .currentTable
+		select .currentTable
+		.numCols = Get number of columns
+		for .col to .numCols
+			select .currentTable
+			.colLabel$ = Get column label... .col
+			if index_regex(.colLabel$, .colpattern$) > 0
+				select .newTable
+				.newCol = Get column index... '.colLabel$'
+
+				if .newCol > 0
+					select .newTable
+					.numRows = Get number of rows
+					for .row to .numRows
+						select .newTable
+						.id$ = Get value... .row ID
+						.newValue$ = Get value... .row '.colLabel$'
+						select .currentTable
+						.tmpRow = Search column... ID '.id$'
+						if .tmpRow > 0
+							.oldValue$ = Get value... .tmpRow '.colLabel$'
+							if index_regex(.oldValue$, "(^|;)'.newValue$'(;|$)") <= 0
+								.newValue$ = "'.oldValue$';'.newValue$'"
+								# Add value
+								select .currentTable
+								Set string value... .tmpRow '.colLabel$' '.newValue$'
+							endif
+						endif
+					endfor
+				endif
+			endif
+		endfor
+		
+		# Handle columns in .newTable that are not in .currentTable
+		select .newTable
+		.numCols = Get number of columns
+		for .col to .numCols
+			select .newTable
+			.colLabel$ = Get column label... .col
+			if index_regex(.colLabel$, .colpattern$) > 0
+				select .currentTable
+				.newCol = Get column index... '.colLabel$'
+				if .newCol <= 0
+					Append column... '.colLabel$'
+					select .newTable
+					.numRows = Get number of rows
+					for .row to .numRows
+						select .newTable
+						.id$ = Get value... .row ID
+						.newValue$ = Get value... .row '.colLabel$'
+						select .currentTable
+						.tmpRow = Search column... ID '.id$'
+						if .tmpRow > 0
+							Set string value... .tmpRow '.colLabel$' '.newValue$'
+						endif
+					endfor
+				endif
+			endif
+		endfor
+endproc
