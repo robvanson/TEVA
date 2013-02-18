@@ -737,12 +737,18 @@ procedure merge_table_values .currentTable .newTable .colpattern$
 						.newValue$ = Get value... .row '.colLabel$'
 						select .currentTable
 						.tmpRow = Search column... ID '.id$'
-						if .tmpRow > 0
+						if .tmpRow > 0 and index_regex(.newValue$, "[0-9\.]")
 							.oldValue$ = Get value... .tmpRow '.colLabel$'
-							if index_regex(.oldValue$, "(^|;)'.newValue$'(;|$)") <= 0
+							select .currentTable
+							# No old value, take new value
+							if index_regex(.oldValue$, "[0-9\.]") <= 0
+								.oldValue$ = .newValue$
+								# Add value
+								Set string value... .tmpRow '.colLabel$' '.newValue$'
+							elsif .oldValue$ <> "" and index_regex(.oldValue$, "(^|;)'.newValue$'(;|$)") <= 0
+								# Append new value to old value
 								.newValue$ = "'.oldValue$';'.newValue$'"
 								# Add value
-								select .currentTable
 								Set string value... .tmpRow '.colLabel$' '.newValue$'
 							endif
 						endif

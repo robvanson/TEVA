@@ -564,14 +564,16 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 			.numFractions = '.varName$'ArrayLength
 			for .fi to .numFractions
 				.fraction = '.varNameArray$'[.fi]
-				if .fraction < 0
-					.fraction = 0.5
-					.vasColor$ = "Grey"
+				if .fraction != undefined
+					if .fraction < 0
+						.fraction = 0.5
+						.vasColor$ = "Grey"
+					endif
+					.midpoint = .leftX + .fraction * (.rightX - .leftX)
+					demo Colour... '.vasColor$'
+					demo Line width... 1.5
+					demo Draw line... '.midpoint' '.lowY' '.midpoint' '.highY'
 				endif
-				.midpoint = .leftX + .fraction * (.rightX - .leftX)
-				demo Colour... '.vasColor$'
-				demo Line width... 1.5
-				demo Draw line... '.midpoint' '.lowY' '.midpoint' '.highY'
 			endfor
 		# Single marker
 		elsif variableExists(.varName$)
@@ -1372,8 +1374,13 @@ procedure getOpenFile .openDialogue$
 	selectedStartTime = currentStartTime
 	selectedEndTime = currentEndTime
 	
-	call calcMaxHarmonicity te.openSound
-	maxTimeHarmonicity = calcMaxHarmonicity.time
+	# Do not slow down Rating with the Harmonicity
+	if not mainPage.draw$ = "Rating"
+		call calcMaxHarmonicity te.openSound
+		maxTimeHarmonicity = calcMaxHarmonicity.time
+	else
+		maxTimeHarmonicity = -1
+	endif
 	
 	# If this was loaded from a Speaker Data file, set the Select Window
 	call get_speakerInfo 'speakerID$'
