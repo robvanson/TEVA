@@ -251,6 +251,9 @@ procedure init_window
 		.column = Get column index... AST'.iColl'
 		while .column > 0
 			.pathType$ = Get value... get_speakerInfo.row AST'.iColl'
+			if .pathType$ = ""
+				.pathType$ = "-"
+			endif
 			if index_regex(.pathType$, "[^0-9]") <= 0
 				call toRoman '.pathType$'
 				.pathType$ = toRoman.roman$
@@ -616,6 +619,24 @@ procedure ReadSpeakerData .speakerData$
 					.numRows = Get number of rows
 					for .i to .numRows
 						Set string value... '.i' ID Item'.i'
+					endfor
+				else
+					# Check and correct ID's for uniqueness
+					select config.speakerDataTable
+					.numRows = Get number of rows
+					.idList$ = tab$
+					for .row to .numRows
+						select config.speakerDataTable
+						.id$ = Get value... '.row' ID
+						if index_regex(.idList$, "\t'.id$'\t")
+							.copyNum = 1
+							while index_regex(.idList$, "\t'.id$'_'.copyNum'\t")
+								.copyNum += 1
+							endwhile
+							.id$ = .id$+"_'.copyNum'"
+							Set string value... '.row' ID '.id$'
+						endif
+						.idList$ = .idList$+.id$+tab$
 					endfor
 				endif
 				.col = Get column index... Text
