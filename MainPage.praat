@@ -2040,7 +2040,7 @@ procedure saveSound .table$ .label$
 			.pathlessFilename$ = replace_regex$(.pathlessFilename$, "(\.[a-z0-9A-Z]+)$", "", 0)
 			# Create new filename if needed
 			if te.currentFileName$ = ""
-				.pathlessAudioFilename$ = pathlessFilename$
+				.pathlessAudioFilename$ = .pathlessFilename$
 				if speakerID$ <> "" and index(.filename$, .currentID$)
 					te.currentFileName$ = .dirname$+.pathlessAudioFilename$+"_'te.recordingTimeStamp$'.wav"
 				else
