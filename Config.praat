@@ -157,6 +157,60 @@ procedure processConfigSpeakerData .clickX .clickY .pressed$
     call Draw_button 'table$' '.label$' 0
 endproc
 
+procedure processConfigSpeakerDirectory .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "SpeakerDirectory"
+	# Remove old data table
+	# Get help text
+	call getLanguageTexts '.table$' '.label$'
+	.dataDir$ = chooseDirectory$ (getLanguageTexts.helpText$)
+	# Remove old DataTable
+	if config.speakerDataTable > 0 and .dataDir$ <> ""
+		select config.speakerDataTable
+		Remove
+		# Data table is not yet read!
+		config.speakerDataTable = -1
+		config.speakerData$ = ""
+	speakerID$ = ""
+	endif
+	# Set local preferences
+	call load_local_preferences '.dataDir$'
+	
+	# Get all sound files
+	config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST StartTime EndTime
+	.fileList = Create Strings as file list... DataDirList '.dataDir$'
+	.numFiles = Get number of strings
+	
+	for .file to .numFiles
+		select .fileList
+		.fileName$ = Get string... '.file'
+		if index_regex(.fileName$, "(?i\.(wav|au|snd|aif[fc]?|flac)$)")
+			.id$ = replace_regex$(.fileName$, "\.[^\.]*$", "", 0)
+			select config.speakerDataTable
+			Append row
+			.row = Get number of rows
+			.row -= 1
+			Set string value... '.row' ID '.id$'_item'.row'
+			.audioString$ = .dataDir$+"/"+.fileName$
+			.audioString$ = replace_regex$(.audioString$, "/[/]+", "/", 0)
+			Set string value... '.row' Audio '.audioString$'
+			Set numeric value... '.row' StartTime 0 
+			Set numeric value... '.row' EndTime 0 
+		endif
+	endfor
+	select config.speakerDataTable
+	.row = Get number of rows
+	if .row > 1
+		Remove row... .row
+	endif
+
+	# clean up
+	select .fileList
+	Remove
+	
+    call Draw_button 'table$' '.label$' 0
+endproc
+
 procedure processConfigSpeakerMerge .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "SpeakerMerge"
