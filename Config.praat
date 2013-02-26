@@ -296,11 +296,11 @@ procedure processConfigSaveSpeaker .clickX .clickY .pressed$
 		call getLanguageTexts '.table$' '.label$'
 		.filename$ = chooseWriteFile$ (getLanguageTexts.helpText$, .newFileName$)
 		if .filename$ <> ""
-			config.speakerData$ = .filename$
-			call normalize_speakerData 'config.speakerData$'
+			call normalize_speakerData '.filename$'
 			select normalize_speakerData.table
-			Save as tab-separated file... 'config.speakerData$'
+			Save as tab-separated file... '.filename$'
 			Remove
+			config.speakerData$ = .filename$
 		endif
 	endif
     call Draw_button 'table$' '.label$' 0

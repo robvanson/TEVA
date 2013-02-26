@@ -563,12 +563,21 @@ endproc
 # Write them into a COPY of the table
 procedure normalize_speakerData .tableFile$
 	.rootPath$ = replace_regex$(.tableFile$, "[^/]+$", "", 0)
+	.rootCurrent$ = ""
+	if .tableFile$ <> config.speakerData$
+		.rootCurrent$ = replace_regex$(config.speakerData$, "[^/]+$", "", 0)
+	endif
 	select config.speakerDataTable
 	.table = Copy... TempTable
 	.numRows = Get number of rows
 	for .row to .numRows
 		select .table
 		.audioPath$ = Get value... '.row' Audio
+		# Expand current audio paths
+		if .rootCurrent$ <> "" and not startsWith(.audioPath$, "/")
+			.audioPath$ = .rootCurrent$+.audioPath$
+		endif
+		# Remove .rootPath's from audio paths
 		if startsWith(.audioPath$, .rootPath$)
 			.audioPath$ = replace$(.audioPath$, .rootPath$, "", 1)
 			Set string value... '.row' Audio '.audioPath$'

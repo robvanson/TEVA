@@ -44,7 +44,9 @@ saved. However, all changes made in an existing speaker table will be saved in a
 as the original file, but with a tilde (~) added to the name (e.g., %%example.Table% becomes %%example~.Table%). 
 This backup file will be kept until the table is saved to file using the %Save button or all changes are purged 
 with the %Close button, after which the backup will be removed. 
-The backup file will be overwritten the next time the table is opened from file and a change is made."
+The backup file will be overwritten the next time the table is opened from file and a change is made. 
+When using %Save to save a list, an attempt wil be made to convert all paths to audio files to 
+paths relative to the position of the saved table. "
 
 <script> 4.5 2.5 "
 	Axes... 0 100 0 100
@@ -62,6 +64,7 @@ The extension of the file should be %%.tsv% or %%.Table%."
 <list_item> "5: Manually entered @@Acoustic Signal Typing|Acoustic Signal Type@, i.e., %1, %2, %3, or %4"
 <list_item> "6: Start time of interval for which the @@Acoustic Signal Typing|AST@ was entered"
 <list_item> "7: End time of interval for which the @@Acoustic Signal Typing|AST@ was entered"
+<list_item> "8+: Any number of values for @@INFVo rating scales (EN)|rating scales@"
 <normal> "If the table contains a path to a sound file, this file will be opened automatically 
 when the record is chosen"
 <normal> "Missing columns are automatically generated when the table is read. So, if a table without the %Description and 
