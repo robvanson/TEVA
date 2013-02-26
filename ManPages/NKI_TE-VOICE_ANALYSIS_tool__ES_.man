@@ -1,0 +1,23 @@
+ManPagesTextFile
+"NKI TE-VOICE ANALYSIS tool (ES)" "R.J.J.H. van Son" 20111201 0
+<intro> "The %%NKI TE-VOICE ANALYSIS tool% (TEVA) is intended to help the 
+education and research of Speech Pathologists and others who want to study 
+Tracheoesophageal speech. TEVA implements @@Acoustic Signal Typing@ from the 
+work of Corina van As-Brooks (Van As 2001; 2006) "
+
+<script> 4.5 2.5 "
+	Axes... 0 100 0 100
+	Insert picture from file... Main_page_screenshot.png 10 10 0 100
+	Insert picture from file... Configure_page_screenshot.png 90 90 0 100
+"
+
+<entry> "Contents"
+<list_item> "@@Introduction to TEVA|What is the NKI TEVA tool@"
+<list_item> "@@Getting started with TEVA|Getting started@"
+<list_item> "@@Overview of Main page|Overview of the Main page@"
+<list_item> "@@Overview of Configuration page|Overview of the Configuration page@"
+<list_item> "@@TEVA Tutorials|Tutorials@"
+<list_item> "@@Analysis|Analysis calculations and displays@"
+<list_item> "@@Acoustic Signal Typing@"
+<list_item> "@@TEVA licentie|TEVA auteursrechten en licentie@"
+<list_item> "@@What's new?@"

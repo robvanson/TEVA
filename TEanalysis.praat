@@ -54,6 +54,7 @@ te.formant = 0
 te.ratingTable = -1
 te.rating$ = ""
 te.useFullASTselection = 0
+te.defaultLanguage$ = "EN"
 
 # Pop-Up window and other colors
 popUp.bordercolor$ = "{0.5,0.5,1}"
@@ -1548,19 +1549,22 @@ endproc
 # Load local tables if present. Else load
 # build-in scripted tables
 procedure loadTable .tableName$
+	.table = -1
 	# Search for the table in local, preference, and global directories
 	if fileReadable("'localTableDir$'/'.tableName$'.Table")
-    	Read from file... 'localTableDir$'/'.tableName$'.Table
+    	.table = Read from file... 'localTableDir$'/'.tableName$'.Table
 	elsif fileReadable("'preferencesTableDir$'/'.tableName$'.Table")
-    	Read from file... 'preferencesTableDir$'/'.tableName$'.Table
+    	.table = Read from file... 'preferencesTableDir$'/'.tableName$'.Table
 	elsif fileReadable("'globaltablelists$'/'.tableName$'.Table")
-    	Read from file... 'globaltablelists$'/'.tableName$'.Table
+    	.table = Read from file... 'globaltablelists$'/'.tableName$'.Table
 	elsif variableExists(.tableName$)
 		.tableID = '.tableName$'
 		select .tableID
+		.table = .tableID
 	# Load them from script
 	elsif variableExists("procCreate'.tableName$'$")
 		call Create'.tableName$'
+		.table = selected("Table")
 	else
 		call emergency_table_exit '.tableName$' cannot be found
 	endif
@@ -1580,6 +1584,17 @@ procedure checkTable .tableName$
 	else
     	.available = 0
     endif
+endproc
+
+procedure check_and_load_language .tableName$ .language$
+	call checkTable '.tableName$'_'.language$'
+	.table = -1
+	if checkTable.available
+		call loadTable '.tableName$'_'.language$'
+	else
+		call loadTable '.tableName$'_'te.defaultLanguage$'
+	endif
+	.table = loadTable.table
 endproc
 
 # Create a pop-up window with text from a Text Table
@@ -2169,7 +2184,7 @@ procedure loadLanguageTable .tableName$ .language$
     Append column... Key
     Append column... Helptext
     .numLabels = Get number of rows
-	call loadTable '.tableName$'_'.language$'
+    call check_and_load_language '.tableName$' '.language$'
     .tableLang$ = selected$("Table")
     .tableLangID = selected("Table")
     for .row to .numLabels
@@ -2189,7 +2204,7 @@ procedure loadLanguageTable .tableName$ .language$
 			# Load alternative language table
 			.startChar = rindex(.label$, "_")
 			.otherLanguage$ = right$(.label$, length(.label$) - .startChar)
-			call loadTable '.tableName$'_'.otherLanguage$'
+			call check_and_load_language '.tableName$' '.otherLanguage$'
     		.otherLang$ = selected$("Table")
     		.otherLangID = selected("Table")
         	call findLabel '.otherLang$' '.label$'
