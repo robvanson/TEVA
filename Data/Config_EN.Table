@@ -24,6 +24,7 @@ Frequency_2k	2kHz	2	Display up to 2 kHz
 ShowFormants	Formants	F	Draw formants in spectrogram
 $Speaker	Speakers	!	Table with speaker data
 SpeakerData	Data	D	Read table with speaker data
+SpeakerDirectory	Directory	y	Create a table from all recordings in a directory
 SaveSpeaker	Save	v	Write current table with speaker data
 CloseSpeaker	Close	o	Close current table and open a new, empty table
 SpeakerMerge	Merge	g	Merge new table with current speaker data

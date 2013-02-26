@@ -24,6 +24,7 @@ Frequency_2k	2kHz	2	Ga tot 2 kHz
 ShowFormants	Formanten	F	Teken formanten in spectrogram
 $Speaker	Sprekers	!	Tabel met spreker gegevens
 SpeakerData	Data	D	Lees tabel met sprekergegevens
+SpeakerDirectory	Map+	+	Maak een tabel met alle opnamen uit een map
 SaveSpeaker	Bewaar	B	Bewaar huidige tabel met sprekergegevens
 CloseSpeaker	Sluit	S	Sluit huidige tabel en open een nieuwe, lege tabel
 SpeakerMerge	Merge	M	Combineer nieuwe tabel met huidige sprekergegevens

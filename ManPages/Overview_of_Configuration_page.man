@@ -33,6 +33,7 @@ Set the maximal frequency to a frequency that just includes all the relevant fea
 <normal> "It is useful to have a list of speaker data available. TEVA can read and write Tab delimited tables (tsv) 
 with speaker data. A backup of this file, with a tilde '~' appended to the name, is created if the data are changed."
 <list_item> "\bu ##Data#: [D] Read table with speaker data"
+<list_item> "\bu ##Directory#: [y] Create a table from all recordings in a directory"
 <list_item> "\bu ##Save#: [v] Write current table with speaker data"
 <list_item> "\bu ##Close#: [o] Close current table and open a new, empty one"
 <list_item> "\bu ##Merge#: [g] Merge new table with current speaker data"
