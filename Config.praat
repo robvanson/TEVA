@@ -177,20 +177,31 @@ procedure processConfigSpeakerDirectory .clickX .clickY .pressed$
 	call load_local_preferences '.dataDir$'
 	
 	# Get all sound files
-	config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST StartTime EndTime
+	config.speakerDataTable = Create Table with column names... Speaker_Data 1 ID Text Description Audio AST StartTime EndTime
 	.fileList = Create Strings as file list... DataDirList '.dataDir$'
 	.numFiles = Get number of strings
 	
+	.idList$ = tab$
 	for .file to .numFiles
 		select .fileList
 		.fileName$ = Get string... '.file'
 		if index_regex(.fileName$, "(?i\.(wav|au|snd|aif[fc]?|flac)$)")
+			# Create a unique ID
 			.id$ = replace_regex$(.fileName$, "\.[^\.]*$", "", 0)
+			if index_regex(.idList$, "\t'.id$'\t")
+				.num = 1
+				while index_regex(.idList$, "\t'.id$'_item'.num'\t")
+					.num += 1
+				endwhile
+				.id$ = "'.id$'_item'.num'"
+			endif
+			.idList$ = .idList$+.id$+tab$
+			
 			select config.speakerDataTable
 			Append row
 			.row = Get number of rows
 			.row -= 1
-			Set string value... '.row' ID '.id$'_item'.row'
+			Set string value... '.row' ID '.id$'
 			.audioString$ = .dataDir$+"/"+.fileName$
 			.audioString$ = replace_regex$(.audioString$, "/[/]+", "/", 0)
 			Set string value... '.row' Audio '.audioString$'
@@ -286,8 +297,10 @@ procedure processConfigSaveSpeaker .clickX .clickY .pressed$
 		.filename$ = chooseWriteFile$ (getLanguageTexts.helpText$, .newFileName$)
 		if .filename$ <> ""
 			config.speakerData$ = .filename$
-			select config.speakerDataTable
+			call normalize_speakerData 'config.speakerData$'
+			select normalize_speakerData.table
 			Save as tab-separated file... 'config.speakerData$'
+			Remove
 		endif
 	endif
     call Draw_button 'table$' '.label$' 0

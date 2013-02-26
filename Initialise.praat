@@ -559,6 +559,23 @@ procedure delete_speakerData .speakerID$
 	endif
 endproc
 
+# Set all audio files paths relative to the path to the .tableFile$
+# Write them into a COPY of the table
+procedure normalize_speakerData .tableFile$
+	.rootPath$ = replace_regex$(.tableFile$, "[^/]+$", "", 0)
+	select config.speakerDataTable
+	.table = Copy... TempTable
+	.numRows = Get number of rows
+	for .row to .numRows
+		select .table
+		.audioPath$ = Get value... '.row' Audio
+		if startsWith(.audioPath$, .rootPath$)
+			.audioPath$ = replace$(.audioPath$, .rootPath$, "", 1)
+			Set string value... '.row' Audio '.audioPath$'
+		endif
+	endfor
+endproc
+
 # Non-interactive procedure to load a specific speaker from Speaker Data
 procedure loadSpeaker speakerID$
 	call get_speakerInfo 'speakerID$'
