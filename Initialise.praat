@@ -338,6 +338,13 @@ procedure read_preferences .preferencesFile$
 				endif
 			elsif variableExists(.variableName$+"$")
 				.variableValue$ = Get value... '.row' Value
+				# Double check language!!!!
+				if .variableName$ = "config.language"
+					call checkTable 'te.buttons$'_'.variableValue$'
+					if not checkTable.available
+						.variableValue$ = te.defaultLanguage$
+					endif
+				endif
 				.variableName$ = .variableName$+"$"
 				'.variableName$' = "'.variableValue$'"
 			endif

@@ -18,9 +18,9 @@ $MaxFrequency	Frequentie	!	Hoogste frequentie
 Frequency_10k	10kHz	10	Ga tot 10 kHz
 Frequency_8k	8kHz	8	Ga tot 8 kHz
 Frequency_5k	5kHz	5	Ga tot 5 kHz
-Frequency_4k	4kHz	4	Ga tot 4 kHz
 Frequency_3k	3kHz	3	Ga tot 3 kHz
 Frequency_2k	2kHz	2	Ga tot 2 kHz
+Frequency_1k	1kHz	1	Ga tot 1 kHz
 ShowFormants	Formanten	F	Teken formanten in spectrogram
 $Speaker	Sprekers	!	Tabel met spreker gegevens
 SpeakerData	Data	D	Lees tabel met sprekergegevens
