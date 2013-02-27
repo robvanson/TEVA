@@ -1,0 +1,44 @@
+Label	Text	Key	Helptext
+!Author	Author	!	R.J.J.H. van Son
+!Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
+!License	License	!	GNU GPL version 2 or later
+!WindowTitle	NKI TE-VOICE ANALYSIS tool: Change settings	!	NKI TE-VOICE ANALYSIS tool: Change settings
+Return	Return	R	Go back to %%Main% page
+!Language_ES	Espaniol	s	Spanish language version
+ShowBackground	Background	B	Show background
+Input_Microphone	Microphone	h	Use the build-in microphone for recording
+Input_Line	Line input |	|\+	Use the line-input for recording
+Instruction	Pathology	P	Information about pathological types
+Manual	Manual	M	Manual of the application
+Credits	About	iA	Information about NKI TE-VOICE ANALYSIS tool
+Help	Help	?/	Press the button you want information on, "Help" to continue
+MuteOutput	Mute [x]	x	Mute output sound
+Test	Test recording	T	Test recording level
+$MaxFrequency	Frequency	!	Highest frequency shown
+Frequency_10k	10kHz	10	Display up to 10 kHz
+Frequency_8k	8kHz	8	Display up to 8 kHz
+Frequency_5k	5kHz	5	Display up to 5 kHz
+Frequency_4k	4kHz	4	Display up to 4 kHz
+Frequency_3k	3kHz	3	Display up to 3 kHz
+Frequency_2k	2kHz	2	Display up to 2 kHz
+ShowFormants	Formants	F	Draw formants in spectrogram
+$Speaker	Speakers	!	Table with speaker data
+SpeakerData	Data	D	Read table with speaker data
+SpeakerDirectory	Directory	y	Create a table from all recordings in a directory
+SaveSpeaker	Save	v	Write current table with speaker data
+CloseSpeaker	Close	o	Close current table and open a new, empty table
+SpeakerMerge	Merge	g	Merge new table with current speaker data
+SpeakerRevert	Revert	c	Revert speaker data to saved version
+SpeakerSerial	Serial	i	Step through all recordings in sequence (Speaker button reads next recording)
+AutoSelect	AutoSelect		Select the "best" interval automatically
+!SelectionWindow	SelectionWindow	!	Initial width of the selection window (Preferences Serial mode)
+SpeakerSort	Sort V	V	Sort the list of recordings
+SpeakerRandomize	Shuffle	u	Randomize the list of recordings
+RecordingTime	Recording	c	Time of recording in seconds
+$Rating	Rating		Human evaluation of speech
+RatingForm_Vowel	Vowels		Evaluation form (VAS) for vowels
+RatingForm_Text	Text		Text evaluation form (VAS) for words and running speech
+VasScaleTicks	Markers		Display scale markers for evaluations forms
+Logging	Log on	L	Start logging sounds
+OpenLog	Select	S	Select directory to store the logging file
+Run	Run	n	Run command file (replay Log file)
