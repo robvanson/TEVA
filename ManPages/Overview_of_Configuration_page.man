@@ -24,9 +24,9 @@ Set the maximal frequency to a frequency that just includes all the relevant fea
 <list_item> "\bu ##10kHz#: [01] Display up to 10 kHz"
 <list_item> "\bu ##8kHz#: [8] Display up to 8 kHz"
 <list_item> "\bu ##5kHz#: [5] Display up to 5 kHz"
-<list_item> "\bu ##4kHz#: [4] Display up to 4 kHz"
 <list_item> "\bu ##3kHz#: [3] Display up to 3 kHz"
 <list_item> "\bu ##2kHz#: [2] Display up to 2 kHz"
+<list_item> "\bu ##1kHz#: [1] Display up to 1 kHz"
 <list_item> "\bu ##Formants#: [F] Draw formants in spectrogram"
 
 <entry> "Speaker data tables and recording duration"
