@@ -2816,7 +2816,7 @@ endproc
 # (Intercept)          QF3          BED  
 #   3.7900154   -0.0423776   -0.0005477  
 # 
-procedure predictLM .mvd .qf3 .vf .pitch .jitter .shimmer .crmax .hnr .hnrLow .gne .bed
+procedure predictLM .vf .mvd .hnr .hnrLow  .hnrHigh .shimmer .jitter .crmax .gne .bed .qf3
 	.ast = 0
 	if .vf >= 0.96
 		.ast = 3.89077 + -0.12629*.mvd + -0.07447*.crmax + -0.04621*.hnr
@@ -2828,62 +2828,29 @@ procedure predictLM .mvd .qf3 .vf .pitch .jitter .shimmer .crmax .hnr .hnrLow .g
 endproc
 
 # Recursive Partitioning
-procedure predictRPart .mvd .qf3 .vf .pitch .jitter .shimmer .crmax .hnr .hnrLow .gne .bed
+procedure predictRPart .vf .mvd .hnr .hnrLow  .hnrHigh .shimmer .jitter .crmax .gne .bed .qf3
 	.ast = 0
-	if .vf > 0.01
+	if .vf > 0.0001
 		# With Pitch
-		if .vf >= 0.4955
-			if .hnr >= 10.68
-				.ast = 1
+		if .vf >= 0.508
+			if .vf >= 0.998
+				.ast = 1.353
 			else
 				if .mvd >= 2.731
-					if .jitter < 0.00855
-						.ast = 1.429
-					else
-						if .hnr >= 6.144
-							.ast = 1.625
-						else
-							.ast = 2
-						endif
-					endif
+					.ast = 1.885
 				else
-					.ast = 2.25
+					.ast = 2.357
 				endif
 			endif
 		else
-			if .gne < 0.9185
-				.ast = 3.125
+			if .vf >= 0.0715
+				.ast = 3.176
 			else
-				.ast = 3.818
+				.ast = 3.8
 			endif
 		endif		
 	else
-		# Without Pitch
-		if .bed >= 25.73
-			if .bed < 30.46
-				.ast = 1.714
-			else
-				.ast = 2.11
-			endif
-		else
-			if .bed >= 11.57
-				if .QF3 >= 9.9
-					if .QF3 < 14.55
-						.ast = 2
-					else
-						.ast = 2.6
-					endif
-				else
-					if .QF3 < 6.25
-						.ast = 2.375
-					else
-						.ast = 3
-					endif
-				endif
-			else
-				.ast = 3.333
-			endif
-		endif
+		.ast = 4
 	endif
 endproc
 
@@ -2892,6 +2859,10 @@ procedure predictASTvalue
 	noDrawingOrWriting = 1
 	# Get current values
 	# AST ~ MVD + QF3 + VF + Pitch + Jitter + Shimmer+ HNR + GNE + BED
+	# Use:
+	# RPart
+	# AST ~ VF + MVD
+	.useValues = 0
 
 	# MVD + VF + Pitch + Jitter + Shimmer
 	call DrawPitchObject
@@ -2908,38 +2879,55 @@ procedure predictASTvalue
 	.shimmer = getPathParameter.value
 	
 	# Cepstral Rahmonic
-	call calculateCepstralRahmonic
-	call getPathParameter 'pathologicalParameters' CepsRahm
-	.crmax = getPathParameter.value
+	.crmax = 0
+	if .useValues
+		call calculateCepstralRahmonic
+		call getPathParameter 'pathologicalParameters' CepsRahm
+		.crmax = getPathParameter.value
+	endif
 	
 	
-	# QF3
-	call DrawSpectrogramObject
-	call calculateSpectrogramValues
-	call getPathParameter 'pathologicalParameters' QF1
-	.qf1 = getPathParameter.value
-	call getPathParameter 'pathologicalParameters' QF2
-	.qf2 = getPathParameter.value
-	call getPathParameter 'pathologicalParameters' QF3
-	.qf3 = getPathParameter.value
+	# QF1-3
+	.qf1 = 0
+	.qf2 = 0
+	.qf3 = 0
+	if .useValues
+		call DrawSpectrogramObject
+		call calculateSpectrogramValues
+		call getPathParameter 'pathologicalParameters' QF1
+		.qf1 = getPathParameter.value
+		call getPathParameter 'pathologicalParameters' QF2
+		.qf2 = getPathParameter.value
+		call getPathParameter 'pathologicalParameters' QF3
+		.qf3 = getPathParameter.value
+	endif
 	
 	# HNR + GNE
-	call DrawHarmonicityObject
-	call calculateHarmonicityValues
-	call getPathParameter 'pathologicalParameters' HNR
-	.hnr = getPathParameter.value
-	call getPathParameter 'pathologicalParameters' HNRlow
-	.hnrLow = getPathParameter.value
-	call getPathParameter 'pathologicalParameters' HNRhigh
-	.hnrHigh = getPathParameter.value
-	call getPathParameter 'pathologicalParameters' GNE
-	.gne = getPathParameter.value
+	.hnr = 0
+	.hnrLow = 0
+	.hnrHigh = 0
+	.gne = 0	
+	if .useValues
+		call DrawHarmonicityObject
+		call calculateHarmonicityValues
+		call getPathParameter 'pathologicalParameters' HNR
+		.hnr = getPathParameter.value
+		call getPathParameter 'pathologicalParameters' HNRlow
+		.hnrLow = getPathParameter.value
+		call getPathParameter 'pathologicalParameters' HNRhigh
+		.hnrHigh = getPathParameter.value
+		call getPathParameter 'pathologicalParameters' GNE
+		.gne = getPathParameter.value
+	endif
 		
 	# BED
-	call DrawLtasObject
-	call calculateLtasValues
-	call getPathParameter 'pathologicalParameters' BED
-	.bed = getPathParameter.value
+	.bed = 0
+	if .useValues
+		call DrawLtasObject
+		call calculateLtasValues
+		call getPathParameter 'pathologicalParameters' BED
+		.bed = getPathParameter.value
+	endif
 	
 	# If VF = 0, pitch derived parameters do not make sense
 	if .vf = 0
@@ -2956,12 +2944,12 @@ procedure predictASTvalue
 	# The Formula
 	.astLM = -1
 	.astRPart = -1
-	call predictLM .mvd .qf3 .vf .pitch .jitter .shimmer .crmax .hnr .hnrLow .gne .bed
-	.astLM = predictLM.ast
-	# call predictRPart .mvd .qf3 .vf .pitch .jitter .shimmer .crmax .hnr .hnrLow .gne .bed
-	#.astRPart = predictRPart.ast
+	# call predictLM .vf .mvd .hnr .hnrLow  .hnrHigh .shimmer .jitter .crmax .gne .bed .qf3
+	# .astLM = predictLM.ast
+	call predictRPart .vf .mvd .hnr .hnrLow  .hnrHigh .shimmer .jitter .crmax .gne .bed .qf3
+	.astRPart = predictRPart.ast
 	
-	.ast = .astLM
+	.ast = .astRPart
 	noDrawingOrWriting = .drawingSetting
 endproc
 

@@ -53,7 +53,7 @@ te.pitch = 0
 te.formant = 0
 te.ratingTable = -1
 te.rating$ = ""
-te.useFullASTselection = 0
+te.useFullASTselection = 1
 te.defaultLanguage$ = "EN"
 
 # Pop-Up window and other colors

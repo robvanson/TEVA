@@ -159,7 +159,7 @@ procedure global_initialization
 	drawPitch = 0
 	drawPitchTier = 0
 	drawIntensity = 0
-	te.useFullASTselection = 0
+	te.useFullASTselection = 1
 endproc
 
 procedure global_setup
