@@ -37,7 +37,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Graphics_text.cpp
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_praat_sources/sys/praat.cpp
 --- praat_sources/sys/praat.cpp	2012-10-15 10:41:10.000000000 +0200
 +++ demo_praat_sources/sys/praat.cpp	2012-10-15 13:47:24.000000000 +0200
-@@ -1084,9 +1084,9 @@ void praat_init (const char *title, unsi
+@@ -1085,9 +1085,9 @@ void praat_init (const char *title, unsi
  		 * Make sure that the program's private directory exists.
  		 */
  		#if defined (UNIX)
@@ -49,7 +49,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#elif defined (_WIN32)
  			swprintf (name, 256, L"%ls", Melder_utf8ToWcs (praatP.title));   /* For example MyProg */
  		#endif
-@@ -1157,6 +1157,12 @@ void praat_init (const char *title, unsi
+@@ -1158,6 +1158,12 @@ void praat_init (const char *title, unsi
  
  	GuiWindow raam = NULL;
  	if (Melder_batch) {
@@ -62,7 +62,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#if defined (UNIX) || defined (macintosh) || defined (_WIN32) && defined (CONSOLE_APPLICATION)
  			MelderString_empty (& theCurrentPraatApplication -> batchName);
  			for (unsigned int i = iarg_batchName; i < argc; i ++) {
-@@ -1202,9 +1208,11 @@ void praat_init (const char *title, unsi
+@@ -1203,9 +1209,11 @@ void praat_init (const char *title, unsi
  		#if motif
  			GuiApp_setApplicationShell (theCurrentPraatApplication -> topShell -> d_xmShell);
  		#endif
@@ -74,7 +74,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	}
  	Thing_recognizeClassesByName (classCollection, classStrings, classManPages, classSortedSetOfString, NULL);
  	if (Melder_batch) {
-@@ -1214,6 +1222,9 @@ void praat_init (const char *title, unsi
+@@ -1215,6 +1223,9 @@ void praat_init (const char *title, unsi
  		trace ("adding fixed buttons without GUI");
  		praat_addFixedButtons (NULL);
  	} else {
@@ -84,7 +84,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  
  		#ifdef macintosh
  			MelderGui_create (raam);   /* BUG: default Melder_assert would call printf recursively!!! */
-@@ -1237,7 +1248,9 @@ void praat_init (const char *title, unsi
+@@ -1238,7 +1249,9 @@ void praat_init (const char *title, unsi
  		trace ("creating the dynamic menu in the Objects window");
  		praat_actions_createDynamicMenu (raam);
  		trace ("showing the Objects window");
@@ -94,7 +94,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	//Melder_fatal ("stop");
  		#ifdef UNIX
  			try {
-@@ -1262,7 +1275,12 @@ void praat_init (const char *title, unsi
+@@ -1263,7 +1276,12 @@ void praat_init (const char *title, unsi
  
  	trace ("creating the Picture window");
  	trace ("before picture window shows: locale is %s", setlocale (LC_ALL, NULL));
@@ -108,7 +108,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	trace ("after picture window shows: locale is %s", setlocale (LC_ALL, NULL));
  }
  
-@@ -1504,6 +1522,14 @@ void praat_run (void) {
+@@ -1508,6 +1526,14 @@ void praat_run (void) {
  						Melder_flushError (NULL);
  					}
  				}
@@ -126,7 +126,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_picture.cpp demo_praat_sources/sys/praat_picture.cpp
 --- praat_sources/sys/praat_picture.cpp	2012-09-27 09:10:50.000000000 +0200
 +++ demo_praat_sources/sys/praat_picture.cpp	2012-10-15 13:47:43.000000000 +0200
-@@ -1680,7 +1680,9 @@ void praat_picture_init (void) {
+@@ -1688,7 +1688,9 @@ void praat_picture_init (void) {
  		width = height = resolution * 12;
  		scrollWindow = GuiScrolledWindow_createShown (dialog, margin, 0, Machine_getMenuBarHeight () + margin, 0, 1, 1, 0);
  		drawingArea = GuiDrawingArea_createShown (scrollWindow, width, height, NULL, NULL, NULL, NULL, NULL, 0);
@@ -192,7 +192,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  	LOOP {
  		iam (LongSound);
  		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
-@@ -699,7 +701,9 @@ static void cb_SoundEditor_publication (
+@@ -717,7 +719,9 @@ static void cb_SoundEditor_publication (
  	}
  }
  DIRECT (Sound_edit)
@@ -202,7 +202,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  	LOOP {
  		iam (Sound);
  		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
-@@ -1363,8 +1367,10 @@ static void cb_SoundRecorder_publication
+@@ -1381,8 +1385,10 @@ static void cb_SoundRecorder_publication
  	praat_updateSelection ();
  }
  static void do_Sound_record (int numberOfChannels) {
@@ -213,7 +213,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  	if (theSoundRecorder) {
  		if (numberOfChannels == thePreviousNumberOfChannels) {
  			theSoundRecorder -> raise ();
-@@ -1414,10 +1420,21 @@ FORM (Sound_recordFixedTime, L"Record So
+@@ -1432,10 +1438,21 @@ FORM (Sound_recordFixedTime, L"Record So
  	POSITIVE (L"Duration (seconds)", L"1.0")
  	OK
  DO
@@ -355,8 +355,8 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_praat_sources/sys/GuiMenu.cpp
 --- praat_sources/sys/GuiMenu.cpp	2012-09-27 09:10:50.000000000 +0200
 +++ demo_praat_sources/sys/GuiMenu.cpp	2012-10-25 09:55:23.000000000 +0200
-@@ -253,7 +253,9 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
- 			[my d_cocoaMenuButton   setTitle: (NSString *) Melder_peekWcsToCfstring (title)];
+@@ -261,7 +261,9 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+
  		}
  	#elif motif
 +		#if not ( defined( DEMOAPP ) && defined( macintosh ) )
@@ -365,7 +365,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_
  			my d_xmMenuTitle = XmCreateCascadeButton (theGuiTopMenuBar, Melder_peekWcsToUtf8 (title), NULL, 0);
  			if (wcsequ (title, L"Help"))
  				XtVaSetValues (theGuiTopMenuBar, XmNmenuHelpWidget, my d_xmMenuTitle, NULL);
-@@ -262,6 +264,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+@@ -270,6 +272,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
  				XtSetSensitive (my d_xmMenuTitle, False);
  			XtVaSetValues (my d_xmMenuTitle, XmNsubMenuId, my d_widget, NULL);
  			XtManageChild (my d_xmMenuTitle);
@@ -373,7 +373,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_
  		} else {
  			my d_xmMenuTitle = XmCreateCascadeButton (window -> d_xmMenuBar, Melder_peekWcsToUtf8 (title), NULL, 0);
  			if (wcsequ (title, L"Help"))
-@@ -272,6 +275,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+@@ -280,6 +283,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
  			XtVaSetValues (my d_xmMenuTitle, XmNsubMenuId, my d_widget, NULL);
  			XtManageChild (my d_xmMenuTitle);
  		}
