@@ -37,7 +37,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Graphics_text.cpp
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_praat_sources/sys/praat.cpp
 --- praat_sources/sys/praat.cpp	2012-10-15 10:41:10.000000000 +0200
 +++ demo_praat_sources/sys/praat.cpp	2012-10-15 13:47:24.000000000 +0200
-@@ -1085,9 +1085,9 @@ void praat_init (const char *title, unsi
+@@ -1105,9 +1105,9 @@ void praat_init (const char *title, unsi
  		 * Make sure that the program's private directory exists.
  		 */
  		#if defined (UNIX)
@@ -49,7 +49,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#elif defined (_WIN32)
  			swprintf (name, 256, L"%ls", Melder_utf8ToWcs (praatP.title));   /* For example MyProg */
  		#endif
-@@ -1158,6 +1158,12 @@ void praat_init (const char *title, unsi
+@@ -1178,6 +1178,12 @@ void praat_init (const char *title, unsi
  
  	GuiWindow raam = NULL;
  	if (Melder_batch) {
@@ -62,7 +62,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#if defined (UNIX) || defined (macintosh) || defined (_WIN32) && defined (CONSOLE_APPLICATION)
  			MelderString_empty (& theCurrentPraatApplication -> batchName);
  			for (unsigned int i = iarg_batchName; i < argc; i ++) {
-@@ -1203,9 +1209,11 @@ void praat_init (const char *title, unsi
+@@ -1223,9 +1229,11 @@ void praat_init (const char *title, unsi
  		#if motif
  			GuiApp_setApplicationShell (theCurrentPraatApplication -> topShell -> d_xmShell);
  		#endif
@@ -74,7 +74,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	}
  	Thing_recognizeClassesByName (classCollection, classStrings, classManPages, classSortedSetOfString, NULL);
  	if (Melder_batch) {
-@@ -1215,6 +1223,9 @@ void praat_init (const char *title, unsi
+@@ -1235,6 +1243,9 @@ void praat_init (const char *title, unsi
  		trace ("adding fixed buttons without GUI");
  		praat_addFixedButtons (NULL);
  	} else {
@@ -84,7 +84,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  
  		#ifdef macintosh
  			MelderGui_create (raam);   /* BUG: default Melder_assert would call printf recursively!!! */
-@@ -1238,7 +1249,9 @@ void praat_init (const char *title, unsi
+@@ -1258,7 +1269,9 @@ void praat_init (const char *title, unsi
  		trace ("creating the dynamic menu in the Objects window");
  		praat_actions_createDynamicMenu (raam);
  		trace ("showing the Objects window");
@@ -94,7 +94,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	//Melder_fatal ("stop");
  		#ifdef UNIX
  			try {
-@@ -1263,7 +1276,12 @@ void praat_init (const char *title, unsi
+@@ -1283,7 +1296,12 @@ void praat_init (const char *title, unsi
  
  	trace ("creating the Picture window");
  	trace ("before picture window shows: locale is %s", setlocale (LC_ALL, NULL));
@@ -108,7 +108,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	trace ("after picture window shows: locale is %s", setlocale (LC_ALL, NULL));
  }
  
-@@ -1508,6 +1526,14 @@ void praat_run (void) {
+@@ -1529,6 +1547,14 @@ void praat_run (void) {
  						Melder_flushError (NULL);
  					}
  				}
