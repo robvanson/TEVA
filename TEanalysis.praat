@@ -1351,7 +1351,14 @@ procedure getOpenFile .openDialogue$
 
 	# Get the file
 	if .filename$ <> "" and fileReadable(.filename$)
-		Read from file... '.filename$'
+		.sndInput = Read from file... '.filename$'
+		.numChannels = Get number of channels
+		if .numChannels > 1
+			.monoInput= Convert to mono
+			select .sndInput
+			Remove
+			select .monoInput
+		endif
 		call log_command "# Open File: '.filename$'"
 		# Keep track of current sound
 		te.currentFileName$ = .filename$
@@ -1473,6 +1480,7 @@ procedure load_local_preferences .dataDir$
 		endif
 		call write_preferences ""
 		call read_preferences '.localPrefs$'
+		call switch_speaker_next_button 'config.speakerSerial'
 	endif
 endproc
 
