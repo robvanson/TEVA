@@ -1096,7 +1096,7 @@ endproc
 # Print the selected object
 procedure PrintPraatObject .minimum .maximum .printObjectCommand$
 	if not noDrawingOrWriting
-		call PrintSuperImposedPraatObject '.minimum' '.maximum' '.printObjectCommand$'
+		call PrintSuperImposedPraatObject 1 '.minimum' '.maximum' '.printObjectCommand$'
 
 	    call PrintMarksLeft .minimum .maximum
 	    if index(.printObjectCommand$, " 0 'config.frequency' ") > 0
@@ -1108,7 +1108,7 @@ procedure PrintPraatObject .minimum .maximum .printObjectCommand$
 	endif
 endproc
 
-procedure PrintSuperImposedPraatObject .minimum .maximum .printObjectCommand$
+procedure PrintSuperImposedPraatObject .drawMarks .minimum .maximum .printObjectCommand$
 	if not noDrawingOrWriting
 	    # convert Canvas to absolute coordinates
 	    .xL = 0.7
@@ -1117,7 +1117,7 @@ procedure PrintSuperImposedPraatObject .minimum .maximum .printObjectCommand$
 	    .yH = 4.03
 	    Select inner viewport... '.xL' '.xR' '.yL' '.yH'
 	    Axes... 0 100 0 100
-	    if not (index(.printObjectCommand$, "yes") or index(.printObjectCommand$, "no"))
+	    if .drawMarks and not (index(.printObjectCommand$, "yes") or index(.printObjectCommand$, "no"))
 		    Draw rectangle...  0 100 0 100
 	    endif
 	    Axes... 0 100 0 100
