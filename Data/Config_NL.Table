@@ -37,7 +37,7 @@ SpeakerRandomize	Shuffle	e	Randomiseer de lijst met opnamen
 RecordingTime	Opname <	,<	Opnametijd in seconden
 $Rating	Beoordeling		Menselijke beoordeling van spraak
 RatingForm_A	Klinkers		Beoordelingsformulier voor klinkers
-RatingForm_INFVo	Text		Tekst beoordelingsformulier voor woorden en lopende spraak
+RatingForm_Text	Text		Tekst beoordelingsformulier voor woorden en lopende spraak
 VasScaleTicks	Schaal		Schaal markeringen in beoordelingsformulier
 Logging	Log aan	L	Start logging spraak
 OpenLog	Kies	K	Kies map voor logboek
