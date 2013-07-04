@@ -4,6 +4,6 @@ Label	Text	Key	Helptext
 !License	License	!	GNU GPL version 2 or later
 !CANVAS	Display	¤	Display area
 $Scales	Chose a grade on the line between left (poor) and right (good) descriptors of speech	#	Visual Analogue rating Scales
->Impression	Impression of Voice (similarity to normal speech)	Least;Most	The overall voice quality (like GRADE in GRBAS)
+>Impression	Impression of overall voice quality (similarity to normal speech)	Least;Most	The overall voice quality (like GRADE in GRBAS)
 >Intelligibility	Intelligibility: Impression of the difficulty/ease of decoding the speech signal	Poor;Good	The impression of intelligibility. : A speaker with good intelligibility is easy to decode.
 Help	Scale Help	#	Press the scale you want information on, "Help" to continue
