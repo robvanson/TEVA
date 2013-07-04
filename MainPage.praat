@@ -325,6 +325,8 @@ procedure set_draw_signal_button
 	if config.muteOutput
 		call Draw_button 'te.buttons$' Record 1
 		call Draw_button 'te.buttons$' Play 1
+	elsif config.speakerSerial
+		call Draw_button 'te.buttons$' Record 1
 	endif
 endproc
 
@@ -636,7 +638,7 @@ procedure processMainPageRecord .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "Record"
 	
-	if not config.muteOutput	
+	if not config.muteOutput and not  config.speakerSerial
 		if runningCommandMode = 0 and not config.muteOutput
 	    	call record_sound
 			call post_processing_sound
