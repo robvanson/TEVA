@@ -575,20 +575,27 @@ procedure processMainPageNextItem .clickX .clickY .pressed$
 	if speakerID$ = "" and config.speakerDataTable > 0
 		select config.speakerDataTable
 		.numRows = Get number of rows
-		.row = 0
+		.numCols = Get number of columns
+		.astCol = Get column index... AST
+		.colLabel$ = Get column label... .numCols
+		.ast_row = 0
+		.last_row = 0
 		.i = 1
 		# Iterate over all 
-		while .i <= .numRows
-			.astValue$ = Get value... '.i' AST
-			if index_regex(.astValue$, "^[1-9]") > 0
-				.row = .i
-			else
-				.i = .numRows
+		for .i to .numRows
+			.lastValue$ = Get value... '.i' '.colLabel$'
+			if length(.lastValue$) > 0 and .lastValue$ != "?" and .lastValue$ != "-" 
+				.last_row = .i
 			endif
-			.i += 1
-		endwhile
-		if .row > 0
-			speakerID$ = Get value... '.row' ID
+			.astValue$ = Get value... '.i' AST
+			if length(.astValue$) > 0 and .astValue$ != "?" and .astValue$ != "-" 
+				.ast_row = .i
+			endif
+		endfor
+		if .ast_row > 0 and .ast_row <  .numRows
+			speakerID$ = Get value... '.ast_row' ID
+		elsif .last_row > 0 and .last_row <  .numRows
+			speakerID$ = Get value... '.last_row' ID
 		endif
 		call get_nextSpeaker 'speakerID$'
 	endif
