@@ -584,11 +584,11 @@ procedure processMainPageNextItem .clickX .clickY .pressed$
 		# Iterate over all 
 		for .i to .numRows
 			.lastValue$ = Get value... '.i' '.colLabel$'
-			if length(.lastValue$) > 0 and .lastValue$ != "?" and .lastValue$ != "-" 
+			if length(.lastValue$) > 0 and index_regex(.lastValue$, "[^?\-\s]") > 0
 				.last_row = .i
 			endif
 			.astValue$ = Get value... '.i' AST
-			if length(.astValue$) > 0 and .astValue$ != "?" and .astValue$ != "-" 
+			if length(.astValue$) > 0 and index_regex(.astValue$, "[^?\-\s]") > 0
 				.ast_row = .i
 			endif
 		endfor

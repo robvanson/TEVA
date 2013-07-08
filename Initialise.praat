@@ -167,6 +167,8 @@ procedure global_setup
 	call set_up_directories
 	# Get saved preferences
 	call read_preferences ""
+	# If there exists a preferences file in the startup directory, read it
+	call load_local_preferences .
 	# Set inital language
 	call set_language 'config.language$'
 	# Set Speaker color
