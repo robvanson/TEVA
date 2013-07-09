@@ -167,12 +167,13 @@ procedure global_setup
 	call set_up_directories
 	# Get saved preferences
 	call read_preferences ""
-	# If there exists a preferences file in the startup directory, read it
-	call load_local_preferences .
 	# Set inital language
 	call set_language 'config.language$'
 	# Set Speaker color
 	call switch_speaker_next_button 'config.speakerSerial'
+	
+	# Load local preferences if present
+	
 endproc
 
 procedure switch_speaker_next_button .set_nextItem
@@ -342,7 +343,11 @@ procedure read_preferences .preferencesFile$
 				.variableValue$ = Get value... '.row' Value
 				# Double check language!!!!
 				if .variableName$ = "config.language"
-					call checkTable 'te.buttons$'_'.variableValue$'
+					.buttonsTable$ = te.buttons$
+					if .buttonsTable$ = ""
+						.buttonsTable$ = buttonsTableName$
+					endif
+					call checkTable '.buttonsTable$'_'.variableValue$'
 					if not checkTable.available
 						.variableValue$ = te.defaultLanguage$
 					endif
@@ -361,7 +366,6 @@ procedure read_preferences .preferencesFile$
 			Remove
 			te.ratingTable = -1
 		endif
-
 
 	endif
 endproc
