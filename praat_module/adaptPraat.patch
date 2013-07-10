@@ -1,7 +1,7 @@
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/stat/praat_Stat.cpp demo_praat_sources/stat/praat_Stat.cpp
 --- praat_sources/stat/praat_Stat.cpp	2011-10-01 13:32:45.000000000 +0200
 +++ demo_praat_sources/stat/praat_Stat.cpp	2011-11-18 08:55:32.000000000 +0100
-@@ -406,7 +406,9 @@ DO
+@@ -414,7 +414,9 @@ DO
  END
  
  DIRECT (Table_edit)
