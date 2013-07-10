@@ -173,7 +173,7 @@ procedure global_setup
 	call switch_speaker_next_button 'config.speakerSerial'
 	
 	# Load local preferences if present
-	
+
 endproc
 
 procedure switch_speaker_next_button .set_nextItem
