@@ -1474,7 +1474,6 @@ endproc
 procedure load_local_preferences .dataDir$
 	.dataDir$ = replace_regex$(.dataDir$, "[/:\\]$", "", 0)
 	if fileReadable("'.dataDir$'/.tevarc") or fileReadable("'.dataDir$'/TEVApreferences.tsv")
-printline IN '.dataDir$'
 		.localPrefs$ = "'.dataDir$'/TEVApreferences.tsv"
 		if fileReadable("'.dataDir$'/.tevarc")
 			.localPrefs$ = "'.dataDir$'/.tevarc"
