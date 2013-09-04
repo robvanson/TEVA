@@ -25,7 +25,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_script.cpp 
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Graphics_text.cpp demo_praat_sources/sys/Graphics_text.cpp
 --- praat_sources/sys/Graphics_text.cpp	2011-09-29 12:27:01.000000000 +0200
 +++ demo_praat_sources/sys/Graphics_text.cpp	2011-10-27 09:14:57.000000000 +0200
-@@ -137,7 +137,7 @@ static HFONT loadFont (GraphicsScreen me
+@@ -136,7 +136,7 @@ static HFONT loadFont (GraphicsScreen me
  		ipaInited = TRUE;
  		if (! charisAvailable && ! doulosAvailable) {
  			/* BUG: The next warning may cause reentry of drawing (on window exposure) and lead to crash. Some code must be non-reentrant !! */
@@ -126,7 +126,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_picture.cpp demo_praat_sources/sys/praat_picture.cpp
 --- praat_sources/sys/praat_picture.cpp	2012-09-27 09:10:50.000000000 +0200
 +++ demo_praat_sources/sys/praat_picture.cpp	2012-10-15 13:47:43.000000000 +0200
-@@ -1688,7 +1688,9 @@ void praat_picture_init (void) {
+@@ -1684,7 +1684,9 @@ void praat_picture_init (void) {
  		width = height = resolution * 12;
  		scrollWindow = GuiScrolledWindow_createShown (dialog, margin, 0, Machine_getMenuBarHeight () + margin, 0, 1, 1, 0);
  		drawingArea = GuiDrawingArea_createShown (scrollWindow, width, height, NULL, NULL, NULL, NULL, NULL, 0);
@@ -239,7 +239,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/UiPause.cpp demo_
 --- praat_sources/sys/UiPause.cpp	2012-09-27 09:10:50.000000000 +0200
 +++ demo_praat_sources/sys/UiPause.cpp	2012-09-27 13:25:18.000000000 +0200
 @@ -159,6 +159,7 @@ int UiPause_end (int numberOfContinueBut
- 		{ // scope
+ 		{// scope
  			autoMelderSaveDefaultDir saveDir;
  			thePauseForm_clicked = 0;
 +			if(wcsnequ(continueText1, L"DESTROY WINDOW ", 15))thePauseForm_clicked = 1;
@@ -330,7 +330,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/dwtools/Intensity_ext
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus.cpp demo_praat_sources/sys/praat_objectMenus.cpp
 --- praat_sources/sys/praat_objectMenus.cpp	2012-02-22 13:04:43.000000000 +0100
 +++ demo_praat_sources/sys/praat_objectMenus.cpp	2012-02-22 13:48:24.000000000 +0100
-@@ -466,8 +466,10 @@ FORM (SearchManual, L"Search manual", L"
+@@ -469,8 +469,10 @@ FORM (SearchManual, L"Search manual", L"
  	TEXTFIELD (L"query", L"")
  	OK
  DO
@@ -341,7 +341,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
  	Manual manPage = Manual_create (L"Intro", theCurrentPraatApplication -> manPages, false);
  	Manual_search (manPage, GET_STRING (L"query"));
  END
-@@ -478,8 +480,10 @@ FORM (GoToManualPage, L"Go to manual pag
+@@ -481,8 +483,10 @@ FORM (GoToManualPage, L"Go to manual pag
  	LIST (L"Page", numberOfPages, pages, 1)}
  	OK
  DO
