@@ -767,8 +767,9 @@ procedure merge_AST_values .currentTable .newTable
 			select .currentTable
 			.id$ = Get value... .row ID
 			select .newTable
+			.astColumnIndex = Get column index... AST
 			.tmpRow = Search column... ID '.id$'
-			if .tmpRow > 0
+			if .tmpRow > 0 and .astColumnIndex > 0
 				# Get new value
 				.astValue$ = Get value... .tmpRow AST
 				
