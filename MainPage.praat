@@ -576,26 +576,56 @@ procedure processMainPageNextItem .clickX .clickY .pressed$
 		select config.speakerDataTable
 		.numRows = Get number of rows
 		.numCols = Get number of columns
-		.astCol = Get column index... AST
-		.colLabel$ = Get column label... .numCols
-		.ast_row = 0
-		.last_row = 0
-		.i = 1
-		# Iterate over all 
-		for .i to .numRows
-			.lastValue$ = Get value... '.i' '.colLabel$'
-			if length(.lastValue$) > 0 and index_regex(.lastValue$, "[^?\-\s]") > 0
-				.last_row = .i
+		if mainPage.draw$ = "Rating"
+			.firstRow = 0
+			for .c to .numCols
+				select config.speakerDataTable
+				.currentColLabel$ = Get column label... '.c'
+				if startsWith(.currentColLabel$, "Rating.")
+					.r = 1
+					.f = 0
+					while .r <= .numRows and .f = 0
+						.currentValue$ = Get value... '.r' '.currentColLabel$'
+						if index(.currentValue$, ";")
+							.f = .r
+						endif
+						.r += 1
+					endwhile
+					if .f < .firstRow or .firstRow < 1
+						.firstRow = .f
+					endif
+				endif
+			endfor
+			if .firstRow > 0 and .firstRow <=  .numRows
+				.firstRow -= 1				
 			endif
-			.astValue$ = Get value... '.i' AST
-			if length(.astValue$) > 0 and index_regex(.astValue$, "[^?\-\s]") > 0
-				.ast_row = .i
+			if .firstRow > 0 and .firstRow <=  .numRows
+				speakerID$ = Get value... '.firstRow' ID
+			else
+				speakerID$ = ""
 			endif
-		endfor
-		if .ast_row > 0 and .ast_row <  .numRows
-			speakerID$ = Get value... '.ast_row' ID
-		elsif .last_row > 0 and .last_row <  .numRows
-			speakerID$ = Get value... '.last_row' ID
+		else
+			.astCol = Get column index... AST
+			.colLabel$ = Get column label... .numCols
+			.ast_row = 0
+			.last_row = 0
+			.i = 1
+			# Iterate over all 
+			for .i to .numRows
+				.lastValue$ = Get value... '.i' '.colLabel$'
+				if length(.lastValue$) > 0 and index_regex(.lastValue$, "[^?\-\s]") > 0
+					.last_row = .i
+				endif
+				.astValue$ = Get value... '.i' AST
+				if length(.astValue$) > 0 and index_regex(.astValue$, "[^?\-\s]") > 0
+					.ast_row = .i
+				endif
+			endfor
+			if .ast_row > 0 and .ast_row <  .numRows
+				speakerID$ = Get value... '.ast_row' ID
+			elsif .last_row > 0 and .last_row <  .numRows
+				speakerID$ = Get value... '.last_row' ID
+			endif
 		endif
 		call get_nextSpeaker 'speakerID$'
 	endif
