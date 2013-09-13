@@ -701,7 +701,7 @@ endproc
 # Process Sound Speech
 procedure post_processing_sound
 	# Analyze Pitch in Serial step mode or with config.autoSelect
-	if config.speakerSerial or config.autoSelect
+	if (config.speakerSerial or config.autoSelect) and index(" Ltas Rating ", " 'mainPage.draw$' ") <= 0
 		# Supress drawing, but set up Pitch parameters
 		.tmp = noDrawingOrWriting
 		noDrawingOrWriting = 1
