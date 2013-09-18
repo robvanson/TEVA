@@ -355,7 +355,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_praat_sources/sys/GuiMenu.cpp
 --- praat_sources/sys/GuiMenu.cpp	2012-09-27 09:10:50.000000000 +0200
 +++ demo_praat_sources/sys/GuiMenu.cpp	2012-10-25 09:55:23.000000000 +0200
-@@ -261,7 +261,9 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+@@ -276,7 +276,9 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
 
  		}
  	#elif motif
@@ -365,7 +365,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_
  			my d_xmMenuTitle = XmCreateCascadeButton (theGuiTopMenuBar, Melder_peekWcsToUtf8 (title), NULL, 0);
  			if (wcsequ (title, L"Help"))
  				XtVaSetValues (theGuiTopMenuBar, XmNmenuHelpWidget, my d_xmMenuTitle, NULL);
-@@ -270,6 +272,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+@@ -285,6 +287,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
  				XtSetSensitive (my d_xmMenuTitle, False);
  			XtVaSetValues (my d_xmMenuTitle, XmNsubMenuId, my d_widget, NULL);
  			XtManageChild (my d_xmMenuTitle);
@@ -373,7 +373,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_
  		} else {
  			my d_xmMenuTitle = XmCreateCascadeButton (window -> d_xmMenuBar, Melder_peekWcsToUtf8 (title), NULL, 0);
  			if (wcsequ (title, L"Help"))
-@@ -280,6 +283,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+@@ -295,6 +298,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
  			XtVaSetValues (my d_xmMenuTitle, XmNsubMenuId, my d_widget, NULL);
  			XtManageChild (my d_xmMenuTitle);
  		}
