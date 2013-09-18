@@ -82,7 +82,7 @@ wipeFeedbackArea$ = ""
 sampleFrequency = 44100
 config.frequency = 5000
 config.showFormants = 1
-config.speakerSerial = 0
+config.speakerSerial$ = "None"
 config.autoSelect = 0
 config.selectionWindow = 1.75
 config.muteOutput = 0
@@ -209,7 +209,7 @@ endproc
 # Intialize buttons
 procedure init_buttons
 	# Set Speaker color
-	call switch_speaker_next_button 'config.speakerSerial'
+	call switch_speaker_next_button 'config.speakerSerial$'
 
 	call Draw_all_buttons 'te.buttons$'
 endproc
@@ -1480,7 +1480,7 @@ procedure load_local_preferences .dataDir$
 		endif
 		call write_preferences ""
 		call read_preferences '.localPrefs$'
-		call switch_speaker_next_button 'config.speakerSerial'
+		call switch_speaker_next_button 'config.speakerSerial$'
 	endif
 endproc
 

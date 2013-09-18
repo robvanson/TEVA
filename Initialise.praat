@@ -74,7 +74,7 @@ procedure global_initialization
 	config.speakerDataBackup$ = ""
 	config.createBackup = 0
 	config.speakerDataTable = -1
-	config.speakerSerial = 0
+	config.speakerSerial$ = "None"
 	config.autoSelect = 0
 	config.showFormants = 1
 	config.muteOutput = 0
@@ -170,21 +170,27 @@ procedure global_setup
 	# Set inital language
 	call set_language 'config.language$'
 	# Set Speaker color
-	call switch_speaker_next_button 'config.speakerSerial'
+	call switch_speaker_next_button 'config.speakerSerial$'
 	
 	# Load local preferences if present
 
 endproc
 
-procedure switch_speaker_next_button .set_nextItem
+procedure switch_speaker_next_button .set_nextItem$
 	# Speaker & !NextItem -> !Speaker & NextItem
-	if .set_nextItem
+	if .set_nextItem$ = "Forw"
 		call hide_button 'te.buttons$' Speaker
+		call hide_button 'te.buttons$' PreviousItem
 		call unhide_button 'te.buttons$' !NextItem
+	elsif .set_nextItem$ = "Backw" 
+		call hide_button 'te.buttons$' Speaker
+		call hide_button 'te.buttons$' NextItem
+		call unhide_button 'te.buttons$' !PreviousItem
 	# !Speaker & Next -> Speaker & !NextItem
-	elsif not .set_nextItem
+	elsif .set_nextItem$ = "None"
 		call unhide_button 'te.buttons$' !Speaker
 		call hide_button 'te.buttons$' NextItem
+		call hide_button 'te.buttons$' PreviousItem
 	endif
 endproc
 

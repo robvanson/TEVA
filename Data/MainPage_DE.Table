@@ -7,6 +7,7 @@ Label	Text	Key	Helptext
 !PathologicalType	- Pathologischer Typos:	012349	Pathologischer Typos in \U"berschrift I-IV, 0 l\o"scht
 Speaker	!90!Sprecher	p	Eingabe Sprecher daten
 !NextItem	Spr	x|\\	N\a"chste Aufname w\a"hrend seriele Eingabe
+!PreviousItem	Spr	x|\\	Vorherige Aufnahme w\a"hrend seriele Eingabe
 File	\O"ffnen	f	Laden einer Audio-Datei
 Record	Aufnahme	A	Machen Sie eine Sprachaufnahme. Sie haben 4 Sekunden bevor die Aufnahme beginnt; achten Sie auf das rote Licht.
 Play	Wiedergabe	W	Abspielen der Aufnahme

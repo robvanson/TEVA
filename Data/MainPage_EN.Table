@@ -7,6 +7,7 @@ Label	Text	Key	Helptext
 !PathologicalType	- Pathological Type:	012349	Pathological Type in window title I-IV, 0 erases
 Speaker	!90!Speaker	k	Input speaker data
 !NextItem	Spk	x|\\	Next recording in %serial mode
+!PreviousItem	Spk	x|\\	Previous recording in %serial mode
 File	Open	O	Open sound file
 Record	Record	R	Record your speech. You have 4 seconds, watch the recording "light"
 Play	Play	P	Play back of your recorded pronunciation

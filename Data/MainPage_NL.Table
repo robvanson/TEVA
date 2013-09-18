@@ -7,6 +7,7 @@ Label	Text	Key	Helptext
 !PathologicalType	- Pathologisch type:	012349	Pathologisch type in venstertitel I-IV, 0 wist
 Speaker	!90!Spreker	r	Invoer spreker gegevens
 !NextItem	Spr	x|\\	Volgende opname bij %%seri\e"le% verwerking
+!PreviousItem	Spr	x|\\	Vorige opname bij %%seri\e"le% verwerking
 File	Open	p	Open geluids bestand
 Record	Opnemen	O	Neem spraak op. U hebt 4 seconden, let op het rode "lampje"
 Play	Afspelen	A	Speel je opgenomen uitspraak af

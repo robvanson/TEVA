@@ -29,8 +29,11 @@ SaveSpeaker	Speichern	S	Speichere aktuelle Tabelle mit den Sprecherdaten
 CloseSpeaker	Schlie\ssen	l	Schlie\sse die aktuelle Tabelle und \o"fne eine lehre Tabelle f\u"r die Sprecherdaten
 SpeakerMerge	Kombiniere	K	Kombiniere tabelle mit Sprecherdaten
 SpeakerRevert	Gespeichert	c	Gespeicherte Version der Sprecherdaten wiederherstellen
-SpeakerSerial	Seriell	r	Verarbeite alle Aufnahmen hintereinander (Sprecher Taste liest n\a"chste Aufnahme)
 AutoSelect	AutoSelect		W\a"hlen Sie das beste Intervall automatisch
+$SpeakerSelect	Verarbeitung	!	Selection und Verarbeitung von Aufnahmen
+SpeakerSerial_None	Einzeln	v	Verarbeite alle Aufnahmen einzeln
+SpeakerSerial_Forw	Seriell >	.>	Verarbeite alle Aufnahmen hintereinander (Sprecher Taste liest n\a"chste Aufnahme)
+SpeakerSerial_Backw	< Seriell	,<	Verarbeite alle Aufnahmen r\u"ckw\a"rt (Sprecher Taste liest vorherige Aufnahme)
 !SelectionWindow	SelectionWindow	!	Urspr\u"ngliche Breite des Auswahl-Fenster (Voreinstellungen Serieller modus)
 SpeakerSort	Sortiere	o	Sortiere die Liste mit Aufnahmen
 SpeakerRandomize	Shuffle	h	Randomisiere die Liste mit Aufnahmen

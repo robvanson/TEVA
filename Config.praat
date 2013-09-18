@@ -101,8 +101,6 @@ endproc
 procedure setConfigMainPage
     #call Draw_button 'te.config$' Language_'config.language$' 2
     call Draw_button 'te.config$' Input_'config.input$' 2
-    .displaybutton = 2*config.speakerSerial
-    call Draw_button 'te.config$' SpeakerSerial '.displaybutton'
 	call setFrequencyButton
     # Handle logging buttons with forced button draw
     if logging
@@ -333,15 +331,14 @@ procedure processConfigCloseSpeaker .clickX .clickY .pressed$
     call Draw_button 'table$' '.label$' 0
 endproc
 
-procedure processConfigSpeakerSerial .clickX .clickY .pressed$
+procedure processConfigSpeakerSerial .input$ .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "SpeakerSerial"
 
-	config.speakerSerial = not config.speakerSerial
-	call switch_speaker_next_button 'config.speakerSerial'
-
-	.displayButton = 2*config.speakerSerial
-    call Draw_button 'table$' '.label$' '.displayButton'
+    call Draw_button '.table$' '.label$'_'config.speakerSerial$' 0
+	config.speakerSerial$ = .input$
+	call switch_speaker_next_button 'config.speakerSerial$'
+    call Draw_button '.table$' '.label$'_'config.speakerSerial$' 2
 endproc
 
 procedure processConfigAutoSelect .clickX .clickY .pressed$
