@@ -34,12 +34,12 @@ $SpeakerSelect	Selection	!	Selection of recordings
 SpeakerSerial_None	Individual	l	Select individual recordings
 SpeakerSerial_Forw	Series >	.>	Acceder a todas las gabaciones en secuencia (Boton del Hablante lee nueva grabacion)
 SpeakerSerial_Backw	< Series	,<	Acceder a todas las gabaciones en secuencia (Boton del Hablante lee el grabacion anterior)
-!SelectionWindow	Seleccionar ventana	!	Extensión inicial de la ventana seleccionada (Preferencias Serial mode)
+!SelectionWindow	Seleccionar ventana	!	Extensi\o'n inicial de la ventana seleccionada (Preferencias Serial mode)
 SpeakerSort	Tipo V	V	Clasificar la lista de grabaciones
 SpeakerRandomize	Arrastrar	!	Aleatorizar lista de grabaciones
-RecordingTime	Grabaci\o'n	b	Tiempo de gravación en segundos
-$Rating	Valoraci\o'n		Valoración humana del habla
-RatingForm_A	Vocales		Formulario de evaluación (VAS) de vocales
+RecordingTime	Grabaci\o'n	b	Tiempo de gravaci\o'n en segundos
+$Rating	Valoraci\o'n		Valoraci\o'n humana del habla
+RatingForm_A	Vocales		Formulario de evaluaci\o'n (VAS) de vocales
 RatingForm_Text	Text		Text evaluation form (VAS) for words and running speech
 VasScaleTicks	Registros	!	Visualizar registros de escalas para formularios de evaluaci\o'n
 Logging	Entrar	!	Iniciar regitro de sonidos
