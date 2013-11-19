@@ -8,7 +8,7 @@ Return	90	100	77.5	87.5	Black	DrawReturn
 Language_EN	0	15	95	100	Black	DrawNull
 Language_DE	0	15	89	94	Black	DrawNull
 Language_NL	0	15	83	88	Black	DrawNull
-!Language_ES	0	15	77	82	Black	DrawNull
+Language_ES	0	15	77	82	Black	DrawNull
 $MaxFrequency	20	30	96	100	Black	DrawNull
 Frequency_10k	20	30	91	96	Black	DrawNull
 Frequency_8k	20	30	85	90	Black	DrawNull

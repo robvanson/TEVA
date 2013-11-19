@@ -1,47 +1,47 @@
 Label	Text	Key	Helptext
-!Author	Author	!	R.J.J.H. van Son
+!Author	Author	!	R.J.J.H. van Son & Nieves Broquetas
 !Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
 !License	License	!	GNU GPL version 2 or later
-!WindowTitle	NKI TE-VOICE ANALYSIS tool: Change settings	!	NKI TE-VOICE ANALYSIS tool: Change settings
-Return	Return	R	Go back to %%Main% page
-!Language_ES	Espaniol	s	Spanish language version
-ShowBackground	Background	B	Show background
-Input_Microphone	Microphone	h	Use the build-in microphone for recording
-Input_Line	Line input |	|\+	Use the line-input for recording
-Instruction	Pathology	P	Information about pathological types
-Manual	Manual	M	Manual of the application
-Credits	About	iA	Information about NKI TE-VOICE ANALYSIS tool
-Help	Help	?/	Press the button you want information on, "Help" to continue
-MuteOutput	Mute [x]	x	Mute output sound
-Test	Test recording	T	Test recording level
-$MaxFrequency	Frequency	!	Highest frequency shown
-Frequency_10k	10kHz	10	Display up to 10 kHz
-Frequency_8k	8kHz	8	Display up to 8 kHz
-Frequency_5k	5kHz	5	Display up to 5 kHz
-Frequency_3k	3kHz	3	Display up to 3 kHz
-Frequency_2k	2kHz	2	Display up to 2 kHz
-Frequency_1k	1kHz	1	Display up to 1 kHz
-ShowFormants	Formants	F	Draw formants in spectrogram
-$Speaker	Speakers	!	Table with speaker data
-SpeakerData	Data	D	Read table with speaker data
-SpeakerDirectory	Directory	y	Create a table from all recordings in a directory
-SaveSpeaker	Save	v	Write current table with speaker data
-CloseSpeaker	Close	o	Close current table and open a new, empty table
-SpeakerMerge	Merge	g	Merge new table with current speaker data
-SpeakerRevert	Revert	c	Revert speaker data to saved version
-AutoSelect	AutoSelect		Select the "best" interval automatically
+!WindowTitle	NKI TE-VOICE ANALYSIS Herramienta: Cambiar la configuracion	!	NKI TE-VOICE ANALYSIS Herramienta: Cambiar la configuacion
+Return	Volver	r	Volver a  %%principal% pagina
+Language_ES	Espa\n~ol	s	Version Idioma Espa\n~ol
+ShowBackground	Anterior	B	Mostrar anterior
+Input_Microphone	Microfono	h	Utilice el microfono configurado para la gabacion
+Input_Line	Entrada Linea |	|\+	Utilice la entrada de la linea para la grabacion
+Instruction	Patologia	P	Informacion acerca de los tipos de patologia
+Manual	Manual	M	Manual de la aplicaci\o'n
+Credits	Acerca	iA	Informacion acerca de la herramienta NKI TE-VOICE ANALYSIS
+Help	Ayuda	?/	Presione el boton para acceder a informacion, "Ayuda" para continuar
+MuteOutput	Silencio [x]	x	Salida silencio sonido
+Test	Prueba grabacion	T	Prueba de nivel de grabacion
+$MaxFrequency	Frequencia	!	Frecuencias m\a's altas mostradas
+Frequency_10k	10kHz	10	Pantalla hasta 10 kHz
+Frequency_8k	8kHz	8	Pantalla hasta 8 kHz
+Frequency_5k	5kHz	5	Pantalla hasta 5 kHz
+Frequency_3k	3kHz	3	Pantalla hasta 3 kHz
+Frequency_2k	2kHz	2	Pantalla hasta 2 kHz
+Frequency_1k	1kHz	1	Pantalla hasta 1 kHz
+ShowFormants	Formantes	F	Dibujo de formantes en el espectograma
+$Speaker	Hablantes	!	Tabla con los datos del hablante
+SpeakerData	Datos	D	Tabla leida con los datos del hablante
+SpeakerDirectory	Directorio	y	Crear una tabla de todos los grabaciones en un directorio
+SaveSpeaker	Guardar	v	Escribir en la tabla los datos del hablante
+CloseSpeaker	Cerrar	o	Cerrar tabla actual y abrir una nueva y vac\i'a
+SpeakerMerge	Mezclar	g	Mezclar nueva tabla con datos actuales del hablante
+SpeakerRevert	Volver habl	c	Volver a los datos del hablante para guardar la versi\o'n
+AutoSelect	Autom\a'tico		Seleccionar el "mejor" intervalo autom\a'ticamente
 $SpeakerSelect	Selection	!	Selection of recordings
 SpeakerSerial_None	Individual	i	Select individual recordings
-SpeakerSerial_Forw	Serial >	.>	Step through all recordings in sequence (Speaker button reads next recording)
-SpeakerSerial_Backw	< Serial	,<	Step through all recordings in reverse order (Speaker button reads previous recording)
-!SelectionWindow	SelectionWindow	!	Initial width of the selection window (Preferences Serial mode)
-SpeakerSort	Sort V	V	Sort the list of recordings
-SpeakerRandomize	Shuffle	u	Randomize the list of recordings
-RecordingTime	Recording	c	Time of recording in seconds
-$Rating	Rating		Human evaluation of speech
-RatingForm_A	Vowels		Evaluation form (VAS) for vowels
+SpeakerSerial_Forw	Series >	.>	Acceder a todas las gabaciones en secuencia (Boton del Hablante lee nueva grabacion)
+SpeakerSerial_Backw	< Series	,<	Acceder a todas las gabaciones en secuencia (Boton del Hablante lee el grabacion anterior)
+!SelectionWindow	Seleccionar ventana	!	Extensión inicial de la ventana seleccionada (Preferencias Serial mode)
+SpeakerSort	Tipo V	V	Clasificar la lista de grabaciones
+SpeakerRandomize	Arrastrar	u	Aleatorizar lista de grabaciones
+RecordingTime	Grabaci\o'n	c	Tiempo de gravación en segundos
+$Rating	Valoraci\o'n		Valoración humana del habla
+RatingForm_A	Vocales		Formulario de evaluación (VAS) de vocales
 RatingForm_Text	Text		Text evaluation form (VAS) for words and running speech
-VasScaleTicks	Markers		Display scale markers for evaluations forms
-Logging	Log on	L	Start logging sounds
-OpenLog	Select	S	Select directory to store the logging file
-Run	Run	n	Run command file (replay Log file)
+VasScaleTicks	Registros	!	Visualizar registros de escalas para formularios de evaluaci\o'n
+Logging	Entrar	L	Iniciar regitro de sonidos
+OpenLog	Seleccionar	S	Seleccionar directorio para guardar los archivos de registro
+Run	Arrancar	n	Arrancar orden de archivo (repetir archivo de registro)
