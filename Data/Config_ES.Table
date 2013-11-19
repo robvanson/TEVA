@@ -3,17 +3,17 @@ Label	Text	Key	Helptext
 !Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
 !License	License	!	GNU GPL version 2 or later
 !WindowTitle	NKI TE-VOICE ANALYSIS Herramienta: Cambiar la configuracion	!	NKI TE-VOICE ANALYSIS Herramienta: Cambiar la configuacion
-Return	Volver	r	Volver a  %%principal% pagina
+Return	Volver	V	Volver a  %%principal% pagina
 Language_ES	Espa\n~ol	s	Version Idioma Espa\n~ol
-ShowBackground	Anterior	B	Mostrar anterior
-Input_Microphone	Microfono	h	Utilice el microfono configurado para la gabacion
+ShowBackground	Anterior	A	Mostrar anterior
+Input_Microphone	Microfono	o	Utilice el microfono configurado para la gabacion
 Input_Line	Entrada Linea |	|\+	Utilice la entrada de la linea para la grabacion
 Instruction	Patologia	P	Informacion acerca de los tipos de patologia
 Manual	Manual	M	Manual de la aplicaci\o'n
-Credits	Acerca	iA	Informacion acerca de la herramienta NKI TE-VOICE ANALYSIS
+Credits	Acerca	i	Informacion acerca de la herramienta NKI TE-VOICE ANALYSIS
 Help	Ayuda	?/	Presione el boton para acceder a informacion, "Ayuda" para continuar
 MuteOutput	Silencio [x]	x	Salida silencio sonido
-Test	Prueba grabacion	T	Prueba de nivel de grabacion
+Test	Prueba grabacion	r	Prueba de nivel de grabacion
 $MaxFrequency	Frequencia	!	Frecuencias m\a's altas mostradas
 Frequency_10k	10kHz	10	Pantalla hasta 10 kHz
 Frequency_8k	8kHz	8	Pantalla hasta 8 kHz
@@ -24,24 +24,24 @@ Frequency_1k	1kHz	1	Pantalla hasta 1 kHz
 ShowFormants	Formantes	F	Dibujo de formantes en el espectograma
 $Speaker	Hablantes	!	Tabla con los datos del hablante
 SpeakerData	Datos	D	Tabla leida con los datos del hablante
-SpeakerDirectory	Directorio	y	Crear una tabla de todos los grabaciones en un directorio
-SaveSpeaker	Guardar	v	Escribir en la tabla los datos del hablante
-CloseSpeaker	Cerrar	o	Cerrar tabla actual y abrir una nueva y vac\i'a
-SpeakerMerge	Mezclar	g	Mezclar nueva tabla con datos actuales del hablante
-SpeakerRevert	Volver habl	c	Volver a los datos del hablante para guardar la versi\o'n
-AutoSelect	Autom\a'tico		Seleccionar el "mejor" intervalo autom\a'ticamente
+SpeakerDirectory	Directorio	t	Crear una tabla de todos los grabaciones en un directorio
+SaveSpeaker	Guardar	G	Escribir en la tabla los datos del hablante
+CloseSpeaker	Cerrar	C	Cerrar tabla actual y abrir una nueva y vac\i'a
+SpeakerMerge	Mezclar	z	Mezclar nueva tabla con datos actuales del hablante
+SpeakerRevert	Volver habl	h	Volver a los datos del hablante para guardar la versi\o'n
+AutoSelect	Autom\a'tico	u	Seleccionar el "mejor" intervalo autom\a'ticamente
 $SpeakerSelect	Selection	!	Selection of recordings
-SpeakerSerial_None	Individual	i	Select individual recordings
+SpeakerSerial_None	Individual	l	Select individual recordings
 SpeakerSerial_Forw	Series >	.>	Acceder a todas las gabaciones en secuencia (Boton del Hablante lee nueva grabacion)
 SpeakerSerial_Backw	< Series	,<	Acceder a todas las gabaciones en secuencia (Boton del Hablante lee el grabacion anterior)
 !SelectionWindow	Seleccionar ventana	!	Extensión inicial de la ventana seleccionada (Preferencias Serial mode)
 SpeakerSort	Tipo V	V	Clasificar la lista de grabaciones
-SpeakerRandomize	Arrastrar	u	Aleatorizar lista de grabaciones
-RecordingTime	Grabaci\o'n	c	Tiempo de gravación en segundos
+SpeakerRandomize	Arrastrar	s	Aleatorizar lista de grabaciones
+RecordingTime	Grabaci\o'n	b	Tiempo de gravación en segundos
 $Rating	Valoraci\o'n		Valoración humana del habla
 RatingForm_A	Vocales		Formulario de evaluación (VAS) de vocales
 RatingForm_Text	Text		Text evaluation form (VAS) for words and running speech
 VasScaleTicks	Registros	!	Visualizar registros de escalas para formularios de evaluaci\o'n
-Logging	Entrar	L	Iniciar regitro de sonidos
-OpenLog	Seleccionar	S	Seleccionar directorio para guardar los archivos de registro
-Run	Arrancar	n	Arrancar orden de archivo (repetir archivo de registro)
+Logging	Entrar	!	Iniciar regitro de sonidos
+OpenLog	Seleccionar	!	Seleccionar directorio para guardar los archivos de registro
+Run	Arrancar	!	Arrancar orden de archivo (repetir archivo de registro)
