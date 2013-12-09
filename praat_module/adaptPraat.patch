@@ -14,7 +14,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/stat/praat_Stat.cpp d
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_script.cpp demo_praat_sources/sys/praat_script.cpp
 --- praat_sources/sys/praat_script.cpp	2011-09-02 13:53:33.000000000 +0200
 +++ demo_praat_sources/sys/praat_script.cpp	2011-10-28 07:54:25.000000000 +0200
-@@ -460,6 +460,7 @@ void praat_executeScriptFromText (wchar 
+@@ -462,6 +462,7 @@ void praat_executeScriptFromText (wchar 
  		autoInterpreter interpreter = Interpreter_create (NULL, NULL);
  		Interpreter_run (interpreter.peek(), text);
  	} catch (MelderError) {
@@ -330,7 +330,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/dwtools/Intensity_ext
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus.cpp demo_praat_sources/sys/praat_objectMenus.cpp
 --- praat_sources/sys/praat_objectMenus.cpp	2012-02-22 13:04:43.000000000 +0100
 +++ demo_praat_sources/sys/praat_objectMenus.cpp	2012-02-22 13:48:24.000000000 +0100
-@@ -469,8 +469,10 @@ FORM (SearchManual, L"Search manual", L"
+@@ -470,8 +470,10 @@ FORM (SearchManual, L"Search manual", L"
  	TEXTFIELD (L"query", L"")
  	OK
  DO
@@ -341,7 +341,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
  	Manual manPage = Manual_create (L"Intro", theCurrentPraatApplication -> manPages, false);
  	Manual_search (manPage, GET_STRING (L"query"));
  END
-@@ -481,8 +483,10 @@ FORM (GoToManualPage, L"Go to manual pag
+@@ -482,8 +484,10 @@ FORM (GoToManualPage, L"Go to manual pag
  	LIST (L"Page", numberOfPages, pages, 1)}
  	OK
  DO
@@ -355,7 +355,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_praat_sources/sys/GuiMenu.cpp
 --- praat_sources/sys/GuiMenu.cpp	2012-09-27 09:10:50.000000000 +0200
 +++ demo_praat_sources/sys/GuiMenu.cpp	2012-10-25 09:55:23.000000000 +0200
-@@ -343,7 +343,9 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+@@ -347,7 +347,9 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
 
  		}
  	#elif motif
@@ -365,7 +365,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_
  			my d_xmMenuTitle = XmCreateCascadeButton (theGuiTopMenuBar, Melder_peekWcsToUtf8 (title), NULL, 0);
  			if (wcsequ (title, L"Help"))
  				XtVaSetValues (theGuiTopMenuBar, XmNmenuHelpWidget, my d_xmMenuTitle, NULL);
-@@ -352,6 +354,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+@@ -356,6 +358,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
  				XtSetSensitive (my d_xmMenuTitle, False);
  			XtVaSetValues (my d_xmMenuTitle, XmNsubMenuId, my d_widget, NULL);
  			XtManageChild (my d_xmMenuTitle);
@@ -373,7 +373,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_
  		} else {
  			my d_xmMenuTitle = XmCreateCascadeButton (window -> d_xmMenuBar, Melder_peekWcsToUtf8 (title), NULL, 0);
  			if (wcsequ (title, L"Help"))
-@@ -362,6 +365,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+@@ -366,6 +369,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
  			XtVaSetValues (my d_xmMenuTitle, XmNsubMenuId, my d_widget, NULL);
  			XtManageChild (my d_xmMenuTitle);
  		}
