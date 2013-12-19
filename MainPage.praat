@@ -181,6 +181,7 @@ procedure draw_signal
 	endif
 endproc
 
+# Old version
 procedure print_signal .outFileName$
 	.outFileName$ = replace_regex$(.outFileName$, "\.[a-z0-9A-Z]+$","",0)
 	
@@ -310,6 +311,256 @@ procedure print_signal .outFileName$
 	# Reset draw
 	mainPage.outputPraatObject$ = "Draw"
 
+endproc
+
+procedure New_print_signal .outFileName$
+	.outFileName$ = replace_regex$(.outFileName$, "\.[a-z0-9A-Z]+$","",0)
+	
+	# Set output format
+	.outExtension$ = "eps"
+	.outFileType$ = "EPS file"
+	if macintosh
+		.outExtension$ = "pdf"
+		.outFileType$ = "PDF file"
+	elsif windows
+		.outExtension$ = "emf"
+		.outFileType$ = "Windows metafile"
+	endif
+	
+	.outFileName$ = replace_regex$(.outFileName$, "([\\/:])([^\\/:]*)$", "\1'.outExtension$'\1\2", 0)
+	.outEpsFileName$ = replace_regex$(.outFileName$, "([\\/:])'.outExtension$'([\\/:])([^\\/:]*)$", "\1eps\2\3", 0)
+	# On unix, create PNG files
+	.convertEPS2PNG = 0
+	if unix
+		if fileReadable("/usr/bin/convert")
+			.convertEPS2PNG = 1
+			.outPngFileName$ = replace_regex$(.outFileName$, "([\\/:])'.outExtension$'([\\/:])([^\\/:]*)$", "\1png\2\3", 0)
+			.convertEPS2PNGcommand$ = "convert"
+			 .convertEPS2PNGoptions$ = "-antialias"
+		endif
+	endif
+	
+	# Print
+	mainPage.outputPraatObject$ = "Print"
+	Erase all
+	
+	# Set drawing
+	.plotWidth = 7.5
+	.plotHeight = 2
+	
+	.plotyTop = 0
+	.labelText$ = ""
+
+	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, .labelText$)
+
+	.plotyTop += .plotHeight
+	@PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
+
+pause
+	
+	.plotyTop += .plotHeight
+	do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
+	select 8
+	.labelText$ = "Pitch"
+	Helvetica
+	do ("Draw...", 0, 0, 0, 300, "no", "Speckles")
+	do ("Draw inner box")
+	do ("Marks left every...", 1, 100, "yes", "yes", "no")
+	do ("Marks bottom every...", 1, 0.5, "yes", "yes", "no")
+	Font size... 16
+	do("Viewport text...", "Left", "Top", 0, .labelText$)
+	Font size... 10
+	
+	.plotyTop += .plotHeight
+	do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
+	select 12
+	.labelText$ = "Ltas"
+	Helvetica
+	do ("Draw...", 0, 5000, -20, 80, "no", "Curve")
+	do ("Draw inner box")
+	do ("Marks left every...", 1, 20, "yes", "yes", "no")
+	do ("Marks bottom every...", 1, 1000, "yes", "yes", "no")
+	Font size... 16
+	do("Viewport text...", "Left", "Top", 0, .labelText$)
+	Font size... 10
+		
+		
+	# Draw Sound
+	call DrawSoundObject
+	Save as '.outFileType$'... '.outFileName$'_Sound.'.outExtension$'
+	if .outExtension$ <> "eps"
+		Save as EPS file... '.outEpsFileName$'_Sound.eps
+	endif
+	if unix and .convertEPS2PNG
+		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Sound.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Sound.png
+	endif
+	Erase all
+
+	# Draw Pitch
+	call DrawPitchObject
+	Save as '.outFileType$'... '.outFileName$'_Pitch.'.outExtension$'
+	if .outExtension$ <> "eps"
+		Save as EPS file... '.outEpsFileName$'_Pitch.eps
+	endif
+	if unix and .convertEPS2PNG
+		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Pitch.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Pitch.png
+	endif
+	Erase all
+
+	# Draw GNE
+	#call DrawGNEObject
+	#Save as '.outFileType$'... '.outFileName$'_GNE.'.outExtension$'
+	#if .outExtension$ <> "eps"
+	#	Save as EPS file... '.outEpsFileName$'_GNE.eps
+	#endif
+	#if unix and .convertEPS2PNG
+	#	system '.convertEPS2PNGcommand$' '.outEpsFileName$'_GNE.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_GNE.png
+	#endif
+	#Erase all
+
+	# Draw PitchTier
+	#call DrawPitchTierObject
+	#Save as '.outFileType$'... '.outFileName$'_PitchTier.'.outExtension$'
+	#if .outExtension$ <> "eps"
+	#	Save as EPS file... '.outEpsFileName$'_PitchTier.eps
+	#endif
+	#if unix and .convertEPS2PNG
+	#	system '.convertEPS2PNGcommand$' '.outEpsFileName$'_PitchTier.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_PitchTier.png
+	#endif
+	#Erase all
+
+	# Draw Spectrogram
+	call DrawSpectrogramObject
+	Save as '.outFileType$'... '.outFileName$'_Spectrogram.'.outExtension$'
+	if .outExtension$ <> "eps"
+		Save as EPS file... '.outEpsFileName$'_Spectrogram.eps
+	endif
+	if unix and .convertEPS2PNG
+		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Spectrogram.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Spectrogram.png
+	endif
+	Erase all
+
+	# Draw Ltas
+	call DrawLtasObject
+	Save as '.outFileType$'... '.outFileName$'_Ltas.'.outExtension$'
+	if .outExtension$ <> "eps"
+		Save as EPS file... '.outEpsFileName$'_Ltas.eps
+	endif
+	if unix and .convertEPS2PNG
+		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Ltas.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Ltas.png
+	endif
+	Erase all
+
+	# Draw Intensity
+	call DrawIntensityObject
+	Save as '.outFileType$'... '.outFileName$'_Intensity.'.outExtension$'
+	if .outExtension$ <> "eps"
+		Save as EPS file... '.outEpsFileName$'_Intensity.eps
+	endif
+	if unix and .convertEPS2PNG
+		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Intensity.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Intensity.png
+	endif
+	Erase all
+	
+	# Draw Harmonicity
+	call DrawHarmonicityObject
+	Save as '.outFileType$'... '.outFileName$'_Harmonicity.'.outExtension$'
+	if .outExtension$ <> "eps"
+		Save as EPS file... '.outEpsFileName$'_Harmonicity.eps
+	endif
+	if unix and .convertEPS2PNG
+		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Harmonicity.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Harmonicity.png
+	endif
+	Erase all
+
+	# Reset draw
+	mainPage.outputPraatObject$ = "Draw"
+
+endproc
+
+procedure PrintSoundObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
+	if recordedSound$ <> ""
+		select te.openSound
+		.minimum = Get minimum... 0 0 None
+		.maximum = Get maximum... 0 0 None
+		if not (.minimum = undefined or .maximum = undefined)
+			if .minimum = .maximum			
+				.minimum -= 1
+				.maximum += 1
+			endif
+			
+			# Draw
+			Helvetica
+			Font size... 10
+				
+			do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
+			.labelText$ = "Waveform"
+			do ("Draw...", 0, 0, 0, 0, "no", "Curve")
+			do ("Draw inner box")
+			do ("Marks left every...", 1, 0.2, "yes", "yes", "no")
+			do ("Marks bottom every...", 1, 0.5, "yes", "yes", "no")
+			
+			Helvetica
+			Font size... 16
+			do("Viewport text...", "Left", "Top", 0, .labelText$)
+			Font size... 10
+		endif
+	endif
+endproc
+
+procedure PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
+
+	if recordedSound$ <> "" and te.spectrogram = 0
+		# Check for cached analysis file
+		if config.useCache > 0 and variableExists("currentDirectoryName$")
+			createDirectory("'currentDirectoryName$''localCacheDir$'")
+		endif
+		if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Spectrogram")
+			te.spectrogram = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Spectrogram
+		else
+			select te.openSound
+			.nyquistFrequency = sampleFrequency / 2
+			te.spectrogram = noprogress To Spectrogram... 0.1 '.nyquistFrequency' 0.001 10 Gaussian
+			# Write file to cache
+			if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
+				Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Spectrogram
+			endif
+		endif
+		spectrogramName$ = selected$("Spectrogram")
+		if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Formant")
+			te.formant = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Formant
+		else
+			select te.openSound
+			te.formant = noprogress To Formant (burg)... 0.02 4 4400 0.1 50
+			# Write file to cache
+			if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
+				Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Formant
+			endif
+		endif
+		
+		formantName$ = selected$("Formant")
+	endif
+
+	if te.spectrogram > 0 and not noDrawingOrWriting
+		select te.spectrogram
+	
+		do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
+		.labelText$ = "Spectrogram"
+		Helvetica
+		do("Paint...", currentStartTime, currentEndTime, 0, config.frequency, 80, "no", 70, 6, 0, "no")
+		if config.showFormants > 0
+			do("Colour...", "Maroon")
+			select te.formant
+			do("Speckle...", currentStartTime, currentEndTime, config.frequency, 25 "no")
+			do("Colour...",  "Black"
+		endif
+		do ("Draw inner box")
+		do ("Marks left every...", 1, 500, "yes", "yes", "no")
+		do ("Marks bottom every...", 1, 0.5, "yes", "yes", "no")
+		Font size... 16
+		do("Viewport text...", "Left", "Top", 0, .labelText$)
+		Font size... 10
+	endif
 endproc
 
 procedure set_draw_signal_button
@@ -2151,6 +2402,8 @@ procedure saveSound .table$ .label$
 		# Append directory separator to directory path
 		.dirname$ = replace_regex$(.dirname$, "([\\/:])([\w\-\s]+)$","\1\2\1",0)
 	endif
+call print_signal '.filename$'
+	
 	.localAudioFileName$ = ""
 	if .filename$ <> ""
 	   createDirectory(.dirname$)
