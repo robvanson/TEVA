@@ -343,15 +343,37 @@ procedure print_signal .outFileName$
 	
 	# Set drawing
 	.plotWidth = 7.27
-	.plotHeight = 10.69/5
+	.plotHeight = 10.19/5
 	
-	.plotyTop = 0
+	.plotyTop = 0.5
 	.labelText$ = ""
-
+	
+	
+	# Write title
+	.titleText$ = speakerID$
+	if .titleText$ = ""
+		.titleText$ = te.currentFileName$
+		.last_point = index_regex(te.currentFileName$, "([\\/:])([^\\/:]*)$")
+		.titleText$ = right$(.titleText$, length(.titleText$) - .last_point)
+		.titleText$ = replace_regex$(.titleText$, "\.[^\.]*$", "", 0)
+	endif
+	if .titleText$ = ""
+		.titleText$ = .outFileName$		
+		.last_point = index_regex(te.currentFileName$, "([\\/:])([^\\/:]*)$")
+		.titleText$ = right$(.titleText$, length(.titleText$) - .last_point)
+		.titleText$ = replace_regex$(.titleText$, "\.[^\.]*$", "", 0)
+	endif
+	.x = 50
+	.y = 0
+	do("Select outer viewport...", 0, 7.27, 0, 0.5)
+	do("Axes...", 0, 100, 0, 1)
+	do("Text special...", .x, "centre", .y, "bottom", "Helvetica", 14, "0", .titleText$)
+	
 	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, "Full recording")
 
 	.plotyTop += .plotHeight
-	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, "Selected segment")
+	.duration = selectedEndTime - selectedStartTime
+	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, "Selected segment ('.duration:3's)")
 
 	.plotyTop += .plotHeight
 	@PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
@@ -386,7 +408,7 @@ procedure PrintSoundObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 		if .labelText$ <> "" and index_regex(.labelText$, "(?iselected)") > 0
 			.start = selectedStartTime
 			.end = selectedEndTime
-			.numbers$ = "no"
+			.numbers$ = "yes"
 			.draw_Selection = 0
 		else
 			.draw_Selection = 1
@@ -416,11 +438,11 @@ procedure PrintSoundObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 			do ("Draw...", .start, .end, 0, 0, "no", "Curve")
 			do ("Draw inner box")
 			@leftMarks (.minimum, .maximum, "")
-			@bottomMarks (.start, .end, .numbers$, "")
+			@bottomMarks (.start, .end, .numbers$, "time -> s")
 			
 			Helvetica
 			Font size... 16
-			do("Viewport text...", "Centre", "Top", 0, .labelText$)
+			do("Viewport text...", "Left", "Top", 0, .labelText$)
 			Font size... 10
 		endif
 	endif
@@ -474,9 +496,9 @@ procedure PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText
 		endif
 		do ("Draw inner box")
 		@leftMarks (0, config.frequency, "Hz")
-		@bottomMarks (selectedStartTime, selectedEndTime, "no", "")
+		@bottomMarks (selectedStartTime, selectedEndTime, "yes", "time -> s")
 		Font size... 16
-		do("Viewport text...", "Centre", "Top", 0, .labelText$)
+		do("Viewport text...", "Left", "Top", 0, .labelText$)
 		Font size... 10
 	endif
 endproc
@@ -526,7 +548,7 @@ procedure PrintPitchObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 		@leftMarks (.lower, .upper, "Hz")
 		@bottomMarks (selectedStartTime, selectedEndTime, "yes", "time -> s")
 		Font size... 16
-		do("Viewport text...", "Centre", "Top", 0, .labelText$)
+		do("Viewport text...", "Left", "Top", 0, .labelText$)
 		Font size... 10
 	endif
 endproc
@@ -580,7 +602,7 @@ procedure PrintLtasObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 		@leftMarks (-20, .upper, "SPL dB/Hz")
 		@bottomMarks (0, config.frequency, "yes", "Frequency -> Hz")
 		Font size... 16
-		do("Viewport text...", "Centre", "Top", 0, .labelText$)
+		do("Viewport text...", "Left", "Top", 0, .labelText$)
 		Font size... 10
 	endif
 endproc
