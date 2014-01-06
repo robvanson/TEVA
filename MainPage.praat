@@ -182,7 +182,7 @@ procedure draw_signal
 endproc
 
 # Old version
-procedure print_signal .outFileName$
+procedure Old_print_signal .outFileName$
 	.outFileName$ = replace_regex$(.outFileName$, "\.[a-z0-9A-Z]+$","",0)
 	
 	# Set output format
@@ -313,9 +313,8 @@ procedure print_signal .outFileName$
 
 endproc
 
-procedure New_print_signal .outFileName$
+procedure print_signal .outFileName$
 	.outFileName$ = replace_regex$(.outFileName$, "\.[a-z0-9A-Z]+$","",0)
-	
 	# Set output format
 	.outExtension$ = "eps"
 	.outFileType$ = "EPS file"
@@ -327,8 +326,6 @@ procedure New_print_signal .outFileName$
 		.outFileType$ = "Windows metafile"
 	endif
 	
-	.outFileName$ = replace_regex$(.outFileName$, "([\\/:])([^\\/:]*)$", "\1'.outExtension$'\1\2", 0)
-	.outEpsFileName$ = replace_regex$(.outFileName$, "([\\/:])'.outExtension$'([\\/:])([^\\/:]*)$", "\1eps\2\3", 0)
 	# On unix, create PNG files
 	.convertEPS2PNG = 0
 	if unix
@@ -345,131 +342,32 @@ procedure New_print_signal .outFileName$
 	Erase all
 	
 	# Set drawing
-	.plotWidth = 7.5
-	.plotHeight = 2
+	.plotWidth = 7.27
+	.plotHeight = 10.69/5
 	
 	.plotyTop = 0
 	.labelText$ = ""
 
-	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, .labelText$)
+	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, "Full recording")
+
+	.plotyTop += .plotHeight
+	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, "Selected segment")
 
 	.plotyTop += .plotHeight
 	@PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 
-pause
-	
 	.plotyTop += .plotHeight
-	do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
-	select 8
-	.labelText$ = "Pitch"
-	Helvetica
-	do ("Draw...", 0, 0, 0, 300, "no", "Speckles")
-	do ("Draw inner box")
-	do ("Marks left every...", 1, 100, "yes", "yes", "no")
-	do ("Marks bottom every...", 1, 0.5, "yes", "yes", "no")
-	Font size... 16
-	do("Viewport text...", "Left", "Top", 0, .labelText$)
-	Font size... 10
-	
+	@PrintPitchObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
+
 	.plotyTop += .plotHeight
-	do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
-	select 12
-	.labelText$ = "Ltas"
-	Helvetica
-	do ("Draw...", 0, 5000, -20, 80, "no", "Curve")
-	do ("Draw inner box")
-	do ("Marks left every...", 1, 20, "yes", "yes", "no")
-	do ("Marks bottom every...", 1, 1000, "yes", "yes", "no")
-	Font size... 16
-	do("Viewport text...", "Left", "Top", 0, .labelText$)
-	Font size... 10
-		
-		
-	# Draw Sound
-	call DrawSoundObject
-	Save as '.outFileType$'... '.outFileName$'_Sound.'.outExtension$'
-	if .outExtension$ <> "eps"
-		Save as EPS file... '.outEpsFileName$'_Sound.eps
-	endif
-	if unix and .convertEPS2PNG
-		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Sound.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Sound.png
-	endif
-	Erase all
+	@PrintLtasObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 
-	# Draw Pitch
-	call DrawPitchObject
-	Save as '.outFileType$'... '.outFileName$'_Pitch.'.outExtension$'
-	if .outExtension$ <> "eps"
-		Save as EPS file... '.outEpsFileName$'_Pitch.eps
-	endif
+	# Write to file
+	.plotyTop += .plotHeight
+	do("Select outer viewport...", 0, 7.27, 0, 10.69)
+	do("Save as '.outFileType$'...", "'.outFileName$'.'.outExtension$'")
 	if unix and .convertEPS2PNG
-		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Pitch.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Pitch.png
-	endif
-	Erase all
-
-	# Draw GNE
-	#call DrawGNEObject
-	#Save as '.outFileType$'... '.outFileName$'_GNE.'.outExtension$'
-	#if .outExtension$ <> "eps"
-	#	Save as EPS file... '.outEpsFileName$'_GNE.eps
-	#endif
-	#if unix and .convertEPS2PNG
-	#	system '.convertEPS2PNGcommand$' '.outEpsFileName$'_GNE.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_GNE.png
-	#endif
-	#Erase all
-
-	# Draw PitchTier
-	#call DrawPitchTierObject
-	#Save as '.outFileType$'... '.outFileName$'_PitchTier.'.outExtension$'
-	#if .outExtension$ <> "eps"
-	#	Save as EPS file... '.outEpsFileName$'_PitchTier.eps
-	#endif
-	#if unix and .convertEPS2PNG
-	#	system '.convertEPS2PNGcommand$' '.outEpsFileName$'_PitchTier.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_PitchTier.png
-	#endif
-	#Erase all
-
-	# Draw Spectrogram
-	call DrawSpectrogramObject
-	Save as '.outFileType$'... '.outFileName$'_Spectrogram.'.outExtension$'
-	if .outExtension$ <> "eps"
-		Save as EPS file... '.outEpsFileName$'_Spectrogram.eps
-	endif
-	if unix and .convertEPS2PNG
-		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Spectrogram.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Spectrogram.png
-	endif
-	Erase all
-
-	# Draw Ltas
-	call DrawLtasObject
-	Save as '.outFileType$'... '.outFileName$'_Ltas.'.outExtension$'
-	if .outExtension$ <> "eps"
-		Save as EPS file... '.outEpsFileName$'_Ltas.eps
-	endif
-	if unix and .convertEPS2PNG
-		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Ltas.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Ltas.png
-	endif
-	Erase all
-
-	# Draw Intensity
-	call DrawIntensityObject
-	Save as '.outFileType$'... '.outFileName$'_Intensity.'.outExtension$'
-	if .outExtension$ <> "eps"
-		Save as EPS file... '.outEpsFileName$'_Intensity.eps
-	endif
-	if unix and .convertEPS2PNG
-		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Intensity.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Intensity.png
-	endif
-	Erase all
-	
-	# Draw Harmonicity
-	call DrawHarmonicityObject
-	Save as '.outFileType$'... '.outFileName$'_Harmonicity.'.outExtension$'
-	if .outExtension$ <> "eps"
-		Save as EPS file... '.outEpsFileName$'_Harmonicity.eps
-	endif
-	if unix and .convertEPS2PNG
-		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Harmonicity.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Harmonicity.png
+		system '.convertEPS2PNGcommand$' '.outEpsFileName$'.eps '.convertEPS2PNGoptions$' '.outPngFileName$'.png
 	endif
 	Erase all
 
@@ -478,9 +376,21 @@ pause
 
 endproc
 
+# Print selected waveform or total file
 procedure PrintSoundObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 	if recordedSound$ <> ""
 		select te.openSound
+		.start = 0
+		.end = Get total duration
+		.numbers$ = "yes"
+		if .labelText$ <> "" and index_regex(.labelText$, "(?iselected)") > 0
+			.start = selectedStartTime
+			.end = selectedEndTime
+			.numbers$ = "no"
+			.draw_Selection = 0
+		else
+			.draw_Selection = 1
+		endif
 		.minimum = Get minimum... 0 0 None
 		.maximum = Get maximum... 0 0 None
 		if not (.minimum = undefined or .maximum = undefined)
@@ -494,15 +404,23 @@ procedure PrintSoundObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 			Font size... 10
 				
 			do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
-			.labelText$ = "Waveform"
-			do ("Draw...", 0, 0, 0, 0, "no", "Curve")
+			if .draw_Selection > 0
+				do("Axes...", .start, .end, 0, 1)
+				do("Colour...", "Blue")
+				do("Line width...", 3)
+				do("Draw line...", selectedStartTime, 0, selectedStartTime, 1)
+				do("Draw line...", selectedEndTime, 0, selectedEndTime, 1)
+				do("Colour...", "Black")
+				do("Line width...", 1)
+			endif
+			do ("Draw...", .start, .end, 0, 0, "no", "Curve")
 			do ("Draw inner box")
-			do ("Marks left every...", 1, 0.2, "yes", "yes", "no")
-			do ("Marks bottom every...", 1, 0.5, "yes", "yes", "no")
+			@leftMarks (.minimum, .maximum, "")
+			@bottomMarks (.start, .end, .numbers$, "")
 			
 			Helvetica
 			Font size... 16
-			do("Viewport text...", "Left", "Top", 0, .labelText$)
+			do("Viewport text...", "Centre", "Top", 0, .labelText$)
 			Font size... 10
 		endif
 	endif
@@ -547,7 +465,7 @@ procedure PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText
 		do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
 		.labelText$ = "Spectrogram"
 		Helvetica
-		do("Paint...", currentStartTime, currentEndTime, 0, config.frequency, 80, "no", 70, 6, 0, "no")
+		do("Paint...", selectedStartTime, selectedEndTime, 0, config.frequency, 80, "no", 70, 6, 0, "no")
 		if config.showFormants > 0
 			do("Colour...", "Maroon")
 			select te.formant
@@ -555,12 +473,162 @@ procedure PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText
 			do("Colour...",  "Black"
 		endif
 		do ("Draw inner box")
-		do ("Marks left every...", 1, 500, "yes", "yes", "no")
-		do ("Marks bottom every...", 1, 0.5, "yes", "yes", "no")
+		@leftMarks (0, config.frequency, "Hz")
+		@bottomMarks (selectedStartTime, selectedEndTime, "no", "")
 		Font size... 16
-		do("Viewport text...", "Left", "Top", 0, .labelText$)
+		do("Viewport text...", "Centre", "Top", 0, .labelText$)
 		Font size... 10
 	endif
+endproc
+
+procedure PrintPitchObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
+
+	if te.openSound > 0 and te.pitch = 0
+		# Check for cached analysis file
+		if config.useCache > 0 and variableExists("currentDirectoryName$")
+			createDirectory("'currentDirectoryName$''localCacheDir$'")
+		endif
+		if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Pitch")
+			te.pitch = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Pitch
+		else
+			select te.openSound
+			# Settings from C.J. van As 2001 "Tracheoesophageal Speech" p83
+			te.pitch = noprogress To Pitch (cc)... 0 40 15 no 0.03 0.40 0.01 0.35 0.14 250
+			# Write file to cache
+			if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
+				Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Pitch
+			endif
+		endif
+		pitchName$ = selected$("Pitch")
+		minPitch = Get minimum... 0 0 Hertz Parabolic
+		minPitch = floor(minPitch)
+		maxPitch = Get maximum... 0 0 Hertz Parabolic
+		maxPitch = ceiling(maxPitch)
+		if minPitch = undefined or maxPitch = undefined
+			minPitch = 0
+			maxPitch = 600
+		endif
+		To PointProcess
+		pointProcessName$ = selected$("PointProcess")
+		voicingTextGrid = To TextGrid (vuv)... 0.2 0.1
+	endif
+	
+	if te.pitch > 0 and not noDrawingOrWriting
+		select te.pitch
+	
+		do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
+		.labelText$ = "Pitch"
+		Helvetica
+		.lower = 20*(floor(minPitch/20))
+		.upper = 20*(ceiling(maxPitch/20))
+		do("Draw...", selectedStartTime, selectedEndTime, .lower, .upper, "no")
+		do ("Draw inner box")
+		@leftMarks (.lower, .upper, "Hz")
+		@bottomMarks (selectedStartTime, selectedEndTime, "yes", "time -> s")
+		Font size... 16
+		do("Viewport text...", "Centre", "Top", 0, .labelText$)
+		Font size... 10
+	endif
+endproc
+
+procedure PrintLtasObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
+
+	if ltasName$ <> ""
+		select Ltas 'ltasName$'
+		Remove
+		ltasName$ = ""
+		te.Ltas = 0
+	endif
+	if recordedSound$ <> ""
+		# Check for cached analysis file
+		if config.useCache > 0 and variableExists("currentDirectoryName$")
+			createDirectory("'currentDirectoryName$''localCacheDir$'")
+		endif
+		if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_'selectedStartTime:3'_'selectedEndTime:3'.Ltas")
+			te.Ltas = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_'selectedStartTime:3'_'selectedEndTime:3'.Ltas
+		else
+			select te.openSound
+			.tmpPartID = Extract part... 'selectedStartTime' 'selectedEndTime' rectangular 1.0 false
+			Rename... TmpPart
+			.tmpSpecID = noprogress To Spectrum... yes
+			te.Ltas = noprogress To Ltas (1-to-1)
+			select .tmpPartID
+			plus .tmpSpecID
+			Remove
+			select te.Ltas
+			# Write file to cache
+			if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
+				Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'_'selectedStartTime:3'_'selectedEndTime:3'.Ltas
+			endif
+			
+		endif
+		ltasName$ = selected$("Ltas")
+		.minimum = -20
+		.maximum = Get maximum... 0 0 None
+	endif
+	
+	if ltasName$ <> "" and not noDrawingOrWriting
+		select te.Ltas
+	
+		do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
+		.labelText$ = "Ltas"
+		Helvetica
+		.lower = 10*(floor(.minimum/10))
+		.upper = 10*(ceiling(.maximum/10))
+		do("Draw...", 0, config.frequency, .lower, .upper, "no", "Curve")
+		do ("Draw inner box")
+		@leftMarks (-20, .upper, "SPL dB/Hz")
+		@bottomMarks (0, config.frequency, "yes", "Frequency -> Hz")
+		Font size... 16
+		do("Viewport text...", "Centre", "Top", 0, .labelText$)
+		Font size... 10
+	endif
+endproc
+
+procedure bottomMarks (.start, .end, .numbers$, .label$)
+	.interval = .end - .start
+	.scale = 10**(floor(log10(.interval))-1)
+	if .interval/.scale > 30
+		.scale *= 10
+	endif
+	if .interval/.scale > 20
+		.scale *= 5
+	endif
+	if .interval/.scale > 15
+		.scale *= 2
+	endif
+	
+	Font size... 10
+	do ("Marks bottom every...", 1, .scale, .numbers$, "yes", "no")
+	do ("Marks top every...", 1, .scale, "no", "yes", "no")
+	if .label$ <> ""
+		Font size... 10
+		do ("Text bottom...", "yes", .label$)
+	endif
+	Font size... 10
+endproc
+
+procedure leftMarks (.low, .high, .label$)
+	.interval = .high - .low
+	.scale = 10**(floor(log10(.interval)))
+	if .interval/.scale > 25
+		.scale *= 10
+	endif
+	if .interval/.scale > 12
+		.scale *= 5
+	endif
+	if .interval/.scale > 6
+		.scale *= 2
+	endif
+	
+	Font size... 10
+	do ("Marks left every...", 1, .scale, "yes", "yes", "no")
+	do ("Marks right every...", 1, .scale, "no", "yes", "no")
+	if .label$ <> ""
+		Font size... 10
+		do ("Text left...", "yes", .label$)
+	endif
+	Font size... 10
 endproc
 
 procedure set_draw_signal_button
@@ -2373,6 +2441,34 @@ procedure saveSound .table$ .label$
 	.writeDialogue$ = getLanguageTexts.helpText$
 	call convert_praat_to_latin1 '.writeDialogue$'
 	.writeDialogue$ = convert_praat_to_latin1.text$
+	
+	# Do not print "nothing"
+	.currentID$ = ""
+	if speakerID$ <> ""
+		.currentID$ = replace_regex$(speakerID$, "^\W*([\w\- ]+).*$", "\1", 0)
+		.currentID$ = replace_regex$(.currentID$, " ", "_", 0)
+	else
+		.currentID$ = "TEanalysis"
+	endif
+	.filename$ = ""
+	if currentSoundName$ <> ""
+		.outExtension$ = "eps"
+		if macintosh
+			.outExtension$ = "pdf"
+		elsif windows
+			.outExtension$ = "emf"
+		endif
+		.filename$ = chooseWriteFile$ (.writeDialogue$, "'.currentID$'.'.outExtension$'")
+		call print_signal '.filename$'
+	endif
+endproc
+
+procedure Old_saveSound .table$ .label$
+	# Get feedback texts
+	call getLanguageTexts '.table$' '.label$'
+	.writeDialogue$ = getLanguageTexts.helpText$
+	call convert_praat_to_latin1 '.writeDialogue$'
+	.writeDialogue$ = convert_praat_to_latin1.text$
 	.filename$ = ""
 	
 	# Set Footer text
@@ -2402,7 +2498,7 @@ procedure saveSound .table$ .label$
 		# Append directory separator to directory path
 		.dirname$ = replace_regex$(.dirname$, "([\\/:])([\w\-\s]+)$","\1\2\1",0)
 	endif
-call print_signal '.filename$'
+	call print_signal '.filename$'
 	
 	.localAudioFileName$ = ""
 	if .filename$ <> ""
