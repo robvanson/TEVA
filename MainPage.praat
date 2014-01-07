@@ -332,14 +332,14 @@ procedure PrintSoundObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 			# Draw
 			Helvetica
 			Font size... 10
-			do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
+			do("Select outer viewport...", 0.5, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
 			do ("Draw...", selectedStartTime, selectedEndTime, 0, 0, "no", "Curve")
 			do ("Draw inner box")
 			@leftMarks (.minimum, .maximum, "")
 			@bottomMarks (selectedStartTime, selectedEndTime, "yes", "time -> s")
 			
 			Helvetica
-			Font size... 16
+			Font size... 14
 			do("Viewport text...", "Left", "Top", 0, .labelText$)
 			Font size... 10
 		endif
@@ -386,7 +386,7 @@ procedure PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText
 	
 		select te.spectrogram
 	
-		do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
+		do("Select outer viewport...", 0.5, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
 		.labelText$ = "Spectrogram"
 		Helvetica
 		do("Paint...", selectedStartTime, selectedEndTime, 0, config.frequency, 80, "no", 70, 6, 0, "no")
@@ -399,12 +399,10 @@ procedure PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText
 		do ("Draw inner box")
 		@leftMarks (0, config.frequency, "Hz")
 		@bottomMarks (selectedStartTime, selectedEndTime, "yes", "time -> s")
-		Font size... 16
+		Font size... 14
 		do("Viewport text...", "Left", "Top", 0, .labelText$)
-		Font size... 10
-		if .hnrValuesText$ <> ""
-			do("Viewport text...", "Right", "Top", 0, newline$+.hnrValuesText$+" ")
-		endif
+		Font size... 11
+		do("Viewport text...", "Right", "Top", 0, newline$+.hnrValuesText$+" ")
 		Font size... 10
 	endif
 endproc
@@ -415,7 +413,7 @@ procedure PrintVoicingBar (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 	endif
 	
 	if te.voicingTextGrid > 0
-		do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
+		do("Select outer viewport...", 0.5, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
 		do("Axes...", selectedStartTime, selectedEndTime, 0, 1)
 		select te.voicingTextGrid
 		.numIntervals = Get number of intervals... 1
@@ -489,7 +487,7 @@ procedure PrintPitchObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 		.pitchValuesText$ = calculatePitchValues.shortText$
 
 		select te.pitch
-		do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
+		do("Select outer viewport...", 0.5, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
 		.labelText$ = "Pitch"
 		Helvetica
 		.lower = 20*(floor(minPitch/20))
@@ -498,9 +496,9 @@ procedure PrintPitchObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 		do ("Draw inner box")
 		@leftMarks (.lower, .upper, "Hz")
 		@bottomMarks (selectedStartTime, selectedEndTime, "yes", "time -> s")
-		Font size... 16
+		Font size... 14
 		do("Viewport text...", "Left", "Top", 0, .labelText$)
-		Font size... 10
+		Font size... 11
 		do("Viewport text...", "Right", "Top", 0, newline$+.pitchValuesText$+" ")
 		Font size... 10
 	endif
@@ -549,7 +547,7 @@ procedure PrintLtasObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 	if ltasName$ <> "" and not noDrawingOrWriting
 		select te.Ltas
 	
-		do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
+		do("Select outer viewport...", 0.5, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
 		.labelText$ = "Ltas"
 		Helvetica
 		.lower = 10*(floor(.minimum/10))
@@ -558,16 +556,16 @@ procedure PrintLtasObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 		do ("Draw inner box")
 		@leftMarks (-20, .upper, "SPL dB/Hz")
 		@bottomMarks (0, config.frequency, "yes", "Frequency -> Hz")
-		Font size... 16
+		Font size... 14
 		do("Viewport text...", "Left", "Top", 0, .labelText$)
-		Font size... 10
+		Font size... 11
 		do("Viewport text...", "Right", "Top", 0, newline$+.ltasValuesText$+" ")
 		Font size... 10
 	endif
 endproc
 
 procedure draw_SelectionLines (.plotWidth, .plotyTop, .plotHeight, .start, .end)
-	do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
+	do("Select outer viewport...", 0.5, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
 	do("Axes...", selectedStartTime, selectedEndTime, 0, 1)
 	do("Colour...", "Blue")
 	do("Line width...", 3)
