@@ -210,12 +210,39 @@ procedure print_signal .outFileName$
 	Erase all
 	
 	# Set drawing (A4 with 0.5 inch margins)
-	.plotWidth = 7.27
-	.plotHeight = 10.19/5
+	.plotWidth = 7
+	.plotHeight = 10/5
 	
 	.plotyTop = 0.5
 	.labelText$ = ""
 	
+	# Get Voice Quality rating
+	call get_speakerInfo 'speakerID$'
+	select config.speakerDataTable
+	.vq_Rating = -1
+	.colImpression = Get column index... Rating.impression
+	.colQuality = Get column index... Rating.quality
+	if .colImpression > 0
+		.vq_Rating = do("Get value...", get_speakerInfo.row, "Rating.quality")
+	endif
+	if .vq_Rating = undefined and .colQuality > 0
+		.vq_Rating = do("Get value...", get_speakerInfo.row, "Rating.impression")
+	endif
+	if .vq_Rating = undefined
+		.vq_Rating = -1
+	else
+		.vq_Rating /= 10
+	endif
+	.col = Get column index... Rating.intelligibility
+	.intel_Rating = -1
+	if .col > 0
+		.intel_Rating = do("Get value...", get_speakerInfo.row, "Rating.intelligibility")
+		if .intel_Rating = undefined
+			.intel_Rating = -1
+		else
+			.intel_Rating /= 10
+		endif
+	endif
 	
 	# Write title
 	.titleText$ = speakerID$
@@ -229,13 +256,23 @@ procedure print_signal .outFileName$
 			.titleText$ = right$(.titleText$, length(.titleText$) - .last_point)
 		endif
 		.titleText$ = replace_regex$(.titleText$, "\.[^\.]*$", "", 0)
-		.titleText$ = replace_regex$(.titleText$, "_", "\\_ ", 0)
 	endif
+	call protect_praat_special_characters '.titleText$'
+	.titleText$ = protect_praat_special_characters.text$
+	
 	.x = 50
 	.y = 0
 	do("Select outer viewport...", 0, 7.27, 0, 0.5)
 	do("Axes...", 0, 100, 0, 1)
 	do("Text special...", .x, "centre", .y, "bottom", "Helvetica", 14, "0", .titleText$)
+	.subtext$ = pathologicalTypeText$
+	if .vq_Rating >= 0
+		.subtext$ = .subtext$ + ", VQ: '.vq_Rating'"
+	endif
+	if .intel_Rating >= 0
+		.subtext$ = .subtext$ + ", Intell.: '.intel_Rating'"
+	endif
+	do("Text special...", .x, "centre", .y, "top", "Helvetica", 12, "0",  .subtext$)	
 	
 	.duration = selectedEndTime - selectedStartTime
 	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, "Waveform ('.duration:3's)")
@@ -343,6 +380,10 @@ procedure PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText
 	endif
 
 	if te.spectrogram > 0 and not noDrawingOrWriting
+		call calcMaxHarmonicity te.openSound
+		maxHarmonicity = calcMaxHarmonicity.value
+		.hnrValuesText$ = "HNR__max_: 'maxHarmonicity:2'dB"
+	
 		select te.spectrogram
 	
 		do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
@@ -360,6 +401,10 @@ procedure PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText
 		@bottomMarks (selectedStartTime, selectedEndTime, "yes", "time -> s")
 		Font size... 16
 		do("Viewport text...", "Left", "Top", 0, .labelText$)
+		Font size... 10
+		if .hnrValuesText$ <> ""
+			do("Viewport text...", "Right", "Top", 0, newline$+.hnrValuesText$+" ")
+		endif
 		Font size... 10
 	endif
 endproc
@@ -439,8 +484,11 @@ procedure PrintPitchObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 	endif
 	
 	if te.pitch > 0 and not noDrawingOrWriting
+		# Get Pitch values
+		call calculatePitchValues
+		.pitchValuesText$ = calculatePitchValues.shortText$
+
 		select te.pitch
-	
 		do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
 		.labelText$ = "Pitch"
 		Helvetica
@@ -452,6 +500,8 @@ procedure PrintPitchObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 		@bottomMarks (selectedStartTime, selectedEndTime, "yes", "time -> s")
 		Font size... 16
 		do("Viewport text...", "Left", "Top", 0, .labelText$)
+		Font size... 10
+		do("Viewport text...", "Right", "Top", 0, newline$+.pitchValuesText$+" ")
 		Font size... 10
 	endif
 endproc
@@ -492,6 +542,10 @@ procedure PrintLtasObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 		.maximum = Get maximum... 0 0 None
 	endif
 	
+	# Get Ltas values
+	call calculateLtasValues
+	.ltasValuesText$ = calculateLtasValues.shortText$
+
 	if ltasName$ <> "" and not noDrawingOrWriting
 		select te.Ltas
 	
@@ -506,6 +560,8 @@ procedure PrintLtasObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 		@bottomMarks (0, config.frequency, "yes", "Frequency -> Hz")
 		Font size... 16
 		do("Viewport text...", "Left", "Top", 0, .labelText$)
+		Font size... 10
+		do("Viewport text...", "Right", "Top", 0, newline$+.ltasValuesText$+" ")
 		Font size... 10
 	endif
 endproc
@@ -1606,9 +1662,6 @@ procedure DrawSuperImposedPraatObject .drawMarks .minimum .maximum .drawObjectCo
 					call DrawMarksBottom 'currentStartTime' 'currentEndTime'
 				endif
 
-		    	if .drawMarks and maxTimeHarmonicity > 0
-					call DrawMarkAtTime 'maxTimeHarmonicity' '.minimum' '.maximum' Green
-				endif
 				if te.voicingTextGrid > 0
 					select te.voicingTextGrid
 					.numIntervals = Get number of intervals... 1
@@ -2456,14 +2509,23 @@ procedure calculatePitchValues
 	call get_feedback_text 'config.language$' PitchValues
 	.pitchValues$ = get_feedback_text.text$
 	.pitchValues$ = replace$(.pitchValues$, "MAXIMUMVOICINGDUR$", "'.maximumVoicingDuration:1's", 0)
-	.pitchValues$ = replace$(.pitchValues$, "VOICEDFRACTIONS$", "'.voicedFractions:1%'", 0)
-	.pitchValues$ = replace$(.pitchValues$, "JITTER$", "'.jitter:1%'", 0)
-	.pitchValues$ = replace$(.pitchValues$, "SHIMMER$", "'.shimmer:1%'", 0)
+	.pitchValues$ = replace$(.pitchValues$, "VOICEDFRACTIONS$", "'.voicedFractions:1%'\% ", 0)
+	.pitchValues$ = replace$(.pitchValues$, "JITTER$", "'.jitter:1%'\% ", 0)
+	.pitchValues$ = replace$(.pitchValues$, "SHIMMER$", "'.shimmer:1%'\% ", 0)
 	.pitchValues$ = replace$(.pitchValues$, "MEANPITCH$", "'.meanPitch:0'", 0)
 	.pitchValues$ = replace$(.pitchValues$, "SDPITCH$", "'.sdPitch:1'", 0)
 	.pitchValues$ = replace$(.pitchValues$, "MEDIANPITCH$", "'.medianPitch:0'", 0)
-	.text$ = .pitchValues$
+	.text$ = replace$(.pitchValues$, "--undefined--", "--", 0)
 	
+	call get_feedback_text 'config.language$' ShortPitchValues
+	.shortPitchValues$ = get_feedback_text.text$
+	.shortPitchValues$ = replace$(.shortPitchValues$, "VOICEDFRACTIONS$", "'.voicedFractions:1%'\% ", 0)
+	.shortPitchValues$ = replace$(.shortPitchValues$, "JITTER$", "'.jitter:1%'\% ", 0)
+	.shortPitchValues$ = replace$(.shortPitchValues$, "SHIMMER$", "'.shimmer:1%'\% ", 0)
+	.shortPitchValues$ = replace$(.shortPitchValues$, "MEANPITCH$", "'.meanPitch:0'", 0)
+	.shortPitchValues$ = replace$(.shortPitchValues$, "SDPITCH$", "'.sdPitch:1'", 0)
+	.shortText$ = replace$(.shortPitchValues$, "--undefined--", "--", 0)
+
 	# Calculated from van As, C.J. "Tracheolesophageal Speech", 2001, p88
 	# Acoustic Signal Typing: Pitch
 	call setPathParameter 'pathologicalParameters' Pitch '.sdPitch'
@@ -2670,13 +2732,22 @@ procedure calculateHarmonicityValues
 	endif
 	
 	call get_feedback_text 'config.language$' HarmonicityValues
-	.pitchValues$ = get_feedback_text.text$
-	.pitchValues$ = replace$(.pitchValues$, "MAXHARMONICITY$", "'.maxHarmonicity:1'", 0)
-	.pitchValues$ = replace$(.pitchValues$, "MINHARMONICITY$", "'.minHarmonicity:1'", 0)
-	.pitchValues$ = replace$(.pitchValues$, "MEANHARMONICITY$", "'.meanHarmonicity:1'", 0)
-	.pitchValues$ = replace$(.pitchValues$, "SDHARMONICITY$", "'.sdHarmonicity:2'", 0)
-	.pitchValues$ = replace$(.pitchValues$, "GNEVALUE$", "'te.gneValue:3'", 0)
-	.text$ = .pitchValues$
+	.hnrValues$ = get_feedback_text.text$
+	.hnrValues$ = replace$(.hnrValues$, "MAXHARMONICITY$", "'.maxHarmonicity:1'", 0)
+	.hnrValues$ = replace$(.hnrValues$, "MINHARMONICITY$", "'.minHarmonicity:1'", 0)
+	.hnrValues$ = replace$(.hnrValues$, "MEANHARMONICITY$", "'.meanHarmonicity:1'", 0)
+	.hnrValues$ = replace$(.hnrValues$, "SDHARMONICITY$", "'.sdHarmonicity:2'", 0)
+	.hnrValues$ = replace$(.hnrValues$, "GNEVALUE$", "'te.gneValue:3'", 0)
+	.text$ = .hnrValues$
+
+	call get_feedback_text 'config.language$' ShortHarmonicityValues
+	.shortHnrValues$ = get_feedback_text.text$
+	.shortHnrValues$ = replace$(.shortHnrValues$, "MAXHARMONICITY$", "'.maxHarmonicity:1'", 0)
+	.shortHnrValues$ = replace$(.shortHnrValues$, "MINHARMONICITY$", "'.minHarmonicity:1'", 0)
+	.shortHnrValues$ = replace$(.shortHnrValues$, "MEANHARMONICITY$", "'.meanHarmonicity:1'", 0)
+	.shortHnrValues$ = replace$(.shortHnrValues$, "SDHARMONICITY$", "'.sdHarmonicity:2'", 0)
+	.shortHnrValues$ = replace$(.shortHnrValues$, "GNEVALUE$", "'te.gneValue:3'", 0)
+	.shortText$ = .shortHnrValues$
 
 
 	.textAST$ = "";
@@ -2835,6 +2906,14 @@ procedure calculateLtasValues
 	.ltasValues$ = replace$(.ltasValues$, "SELECTEDSTARTTIME$", "'selectedStartTime:3'", 0)
 	.ltasValues$ = replace$(.ltasValues$, "SELECTEDENDTIME$", "'selectedEndTime:3'", 0)
 	.text$ = .ltasValues$
+
+	call get_feedback_text 'config.language$' ShortLtasValues
+	.shortLtasValues$ = get_feedback_text.text$
+	.shortLtasValues$ = replace$(.shortLtasValues$, "MAXFREQUENCY$", "'.maxFrequency:0'", 0)
+	.shortLtasValues$ = replace$(.shortLtasValues$, "MINFREQUENCY$", "'.minFrequency:0'", 0)
+	.shortLtasValues$ = replace$(.shortLtasValues$, "BED$", "'.bed:1'", 0)
+	.shortLtasValues$ = replace$(.shortLtasValues$, "COG$", "'.cog:0'", 0)
+	.shortText$ = .shortLtasValues$
 
 	.textAST$ = "";
 	# Calculated from van As, C.J. "Tracheolesophageal Speech", 2001, p88
@@ -3108,51 +3187,46 @@ endproc
 
 # Get best selection to predict AST. This will set a new selection
 procedure argMinASTselection
-	if te.useFullASTselection
-		# Initialization
-		.originalStartTime = selectedStartTime
-		.originalEndTime = selectedEndTime
-		.intervalLength = config.selectionWindow
-		.deltaTime = .intervalLength / 10
-		.bestStartTime = selectedStartTime
-		.bestEndTime = selectedEndTime
-		.currentASTMinimum = 10**10
-		
-		# Set up the first interval (Start at end)
-		selectedEndTime = currentEndTime
-		selectedStartTime = selectedEndTime - .intervalLength
-		if selectedStartTime < currentStartTime
-			selectedStartTime = currentStartTime
-		endif
-		.bestStartTime = selectedStartTime
-		.bestEndTime = selectedEndTime
-		call predictASTvalue
-		.currentASTMinimum = predictASTvalue.ast
-		.ast = .currentASTMinimum
+	# Initialization
+	.originalStartTime = selectedStartTime
+	.originalEndTime = selectedEndTime
+	.intervalLength = config.selectionWindow
+	.deltaTime = .intervalLength / 10
+	.bestStartTime = selectedStartTime
+	.bestEndTime = selectedEndTime
+	.currentASTMinimum = 10**10
+	
+	# Set up the first interval (Start at end)
+	selectedEndTime = currentEndTime
+	selectedStartTime = selectedEndTime - .intervalLength
+	if selectedStartTime < currentStartTime
 		selectedStartTime = currentStartTime
-		selectedEndTime = selectedStartTime + .intervalLength	
-		
-		# Step through sound
-		while selectedEndTime <= currentEndTime
-			call predictASTvalue
-			if .currentASTMinimum > predictASTvalue.ast
-				.currentASTMinimum = predictASTvalue.ast
-				.bestStartTime = selectedStartTime
-				.bestEndTime = selectedEndTime
-			endif
-			selectedStartTime += .deltaTime
-			selectedEndTime = selectedStartTime + .intervalLength	
-		endwhile
-		
-		# Set up best values
-		selectedStartTime = .bestStartTime
-		selectedEndTime = .bestEndTime
-		.ast = .currentASTMinimum
-		predictedPathType = round(.ast)
-	else
-		# Simple way: Set it up around the maxTimeHarmonicity
-		call selectMaxTimeHarmonicity te.openSound
 	endif
+	.bestStartTime = selectedStartTime
+	.bestEndTime = selectedEndTime
+	call predictASTvalue
+	.currentASTMinimum = predictASTvalue.ast
+	.ast = .currentASTMinimum
+	selectedStartTime = currentStartTime
+	selectedEndTime = selectedStartTime + .intervalLength	
+	
+	# Step through sound
+	while selectedEndTime <= currentEndTime
+		call predictASTvalue
+		if .currentASTMinimum > predictASTvalue.ast
+			.currentASTMinimum = predictASTvalue.ast
+			.bestStartTime = selectedStartTime
+			.bestEndTime = selectedEndTime
+		endif
+		selectedStartTime += .deltaTime
+		selectedEndTime = selectedStartTime + .intervalLength	
+	endwhile
+	
+	# Set up best values
+	selectedStartTime = .bestStartTime
+	selectedEndTime = .bestEndTime
+	.ast = .currentASTMinimum
+	predictedPathType = round(.ast)
 endproc
 
 # Procedures involved in the Rating screen

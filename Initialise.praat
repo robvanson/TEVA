@@ -124,7 +124,6 @@ procedure global_initialization
 	maxIntensity = 0
 	maxTimeIntensity = 0
 	maxHarmonicity = 0
-	maxTimeHarmonicity = 0
 	
 	config.language$ = "EN"
 	logging = 0

@@ -929,8 +929,6 @@ procedure record_sound
 	# A sound is recorded, wipe file name
 	currentSoundName$ = "RECORDED SOUND"
 	
-	call calcMaxHarmonicity te.openSound
-	maxTimeHarmonicity = calcMaxHarmonicity.time
 	if config.autoSelect
 		call argMinASTselection
 	endif
@@ -1381,14 +1379,6 @@ procedure getOpenFile .openDialogue$
 	# Reset selected window
 	selectedStartTime = currentStartTime
 	selectedEndTime = currentEndTime
-	
-	# Do not slow down Rating with the Harmonicity
-	if not mainPage.draw$ = "Rating"
-		call calcMaxHarmonicity te.openSound
-		maxTimeHarmonicity = calcMaxHarmonicity.time
-	else
-		maxTimeHarmonicity = -1
-	endif
 	
 	# If this was loaded from a Speaker Data file, set the Select Window
 	call get_speakerInfo 'speakerID$'
@@ -2171,7 +2161,6 @@ procedure reset_analysis
 		harmonicityName$ = ""
 		
 		maxTimeIntensity = 0
-		maxTimeHarmonicity = 0
     endif
 endproc
 
