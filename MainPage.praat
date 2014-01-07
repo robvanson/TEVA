@@ -181,138 +181,6 @@ procedure draw_signal
 	endif
 endproc
 
-# Old version
-procedure Old_print_signal .outFileName$
-	.outFileName$ = replace_regex$(.outFileName$, "\.[a-z0-9A-Z]+$","",0)
-	
-	# Set output format
-	.outExtension$ = "eps"
-	.outFileType$ = "EPS file"
-	if macintosh
-		.outExtension$ = "pdf"
-		.outFileType$ = "PDF file"
-	elsif windows
-		.outExtension$ = "emf"
-		.outFileType$ = "Windows metafile"
-	endif
-	
-	.outFileName$ = replace_regex$(.outFileName$, "([\\/:])([^\\/:]*)$", "\1'.outExtension$'\1\2", 0)
-	.outDirName$ = replace_regex$(.outFileName$, "([\\/:])([^\\/:]*)$", "", 0)
-	createDirectory(.outDirName$)
-	.outEpsFileName$ = replace_regex$(.outFileName$, "([\\/:])'.outExtension$'([\\/:])([^\\/:]*)$", "\1eps\2\3", 0)
-	if .outExtension$ <> "eps"
-		.outDirName$ = replace_regex$(.outDirName$, "([\\/:])'.outExtension$'$", "\1eps", 0)
-		createDirectory(.outDirName$)
-	endif
-	# On unix, create PNG files
-	.convertEPS2PNG = 0
-	if unix
-		if fileReadable("/usr/bin/convert")
-			.convertEPS2PNG = 1
-			.outPngDirName$ = replace_regex$(.outDirName$, "([\\/:])eps$", "\1png", 0)
-			.outPngFileName$ = replace_regex$(.outFileName$, "([\\/:])'.outExtension$'([\\/:])([^\\/:]*)$", "\1png\2\3", 0)
-			createDirectory(.outPngDirName$)
-			.convertEPS2PNGcommand$ = "convert"
-			 .convertEPS2PNGoptions$ = "-antialias"
-		endif
-	endif
-	
-	# Print
-	mainPage.outputPraatObject$ = "Print"
-	Erase all
-	# Draw Sound
-	call DrawSoundObject
-	Save as '.outFileType$'... '.outFileName$'_Sound.'.outExtension$'
-	if .outExtension$ <> "eps"
-		Save as EPS file... '.outEpsFileName$'_Sound.eps
-	endif
-	if unix and .convertEPS2PNG
-		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Sound.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Sound.png
-	endif
-	Erase all
-
-	# Draw Pitch
-	call DrawPitchObject
-	Save as '.outFileType$'... '.outFileName$'_Pitch.'.outExtension$'
-	if .outExtension$ <> "eps"
-		Save as EPS file... '.outEpsFileName$'_Pitch.eps
-	endif
-	if unix and .convertEPS2PNG
-		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Pitch.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Pitch.png
-	endif
-	Erase all
-
-	# Draw GNE
-	#call DrawGNEObject
-	#Save as '.outFileType$'... '.outFileName$'_GNE.'.outExtension$'
-	#if .outExtension$ <> "eps"
-	#	Save as EPS file... '.outEpsFileName$'_GNE.eps
-	#endif
-	#if unix and .convertEPS2PNG
-	#	system '.convertEPS2PNGcommand$' '.outEpsFileName$'_GNE.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_GNE.png
-	#endif
-	#Erase all
-
-	# Draw PitchTier
-	#call DrawPitchTierObject
-	#Save as '.outFileType$'... '.outFileName$'_PitchTier.'.outExtension$'
-	#if .outExtension$ <> "eps"
-	#	Save as EPS file... '.outEpsFileName$'_PitchTier.eps
-	#endif
-	#if unix and .convertEPS2PNG
-	#	system '.convertEPS2PNGcommand$' '.outEpsFileName$'_PitchTier.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_PitchTier.png
-	#endif
-	#Erase all
-
-	# Draw Spectrogram
-	call DrawSpectrogramObject
-	Save as '.outFileType$'... '.outFileName$'_Spectrogram.'.outExtension$'
-	if .outExtension$ <> "eps"
-		Save as EPS file... '.outEpsFileName$'_Spectrogram.eps
-	endif
-	if unix and .convertEPS2PNG
-		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Spectrogram.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Spectrogram.png
-	endif
-	Erase all
-
-	# Draw Ltas
-	call DrawLtasObject
-	Save as '.outFileType$'... '.outFileName$'_Ltas.'.outExtension$'
-	if .outExtension$ <> "eps"
-		Save as EPS file... '.outEpsFileName$'_Ltas.eps
-	endif
-	if unix and .convertEPS2PNG
-		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Ltas.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Ltas.png
-	endif
-	Erase all
-
-	# Draw Intensity
-	call DrawIntensityObject
-	Save as '.outFileType$'... '.outFileName$'_Intensity.'.outExtension$'
-	if .outExtension$ <> "eps"
-		Save as EPS file... '.outEpsFileName$'_Intensity.eps
-	endif
-	if unix and .convertEPS2PNG
-		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Intensity.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Intensity.png
-	endif
-	Erase all
-	
-	# Draw Harmonicity
-	call DrawHarmonicityObject
-	Save as '.outFileType$'... '.outFileName$'_Harmonicity.'.outExtension$'
-	if .outExtension$ <> "eps"
-		Save as EPS file... '.outEpsFileName$'_Harmonicity.eps
-	endif
-	if unix and .convertEPS2PNG
-		system '.convertEPS2PNGcommand$' '.outEpsFileName$'_Harmonicity.eps '.convertEPS2PNGoptions$' '.outPngFileName$'_Harmonicity.png
-	endif
-	Erase all
-
-	# Reset draw
-	mainPage.outputPraatObject$ = "Draw"
-
-endproc
-
 procedure print_signal .outFileName$
 	.outFileName$ = replace_regex$(.outFileName$, "\.[a-z0-9A-Z]+$","",0)
 	# Set output format
@@ -341,7 +209,7 @@ procedure print_signal .outFileName$
 	mainPage.outputPraatObject$ = "Print"
 	Erase all
 	
-	# Set drawing
+	# Set drawing (A4 with 0.5 inch margins)
 	.plotWidth = 7.27
 	.plotHeight = 10.19/5
 	
@@ -355,13 +223,13 @@ procedure print_signal .outFileName$
 		.titleText$ = te.currentFileName$
 		.last_point = index_regex(te.currentFileName$, "([\\/:])([^\\/:]*)$")
 		.titleText$ = right$(.titleText$, length(.titleText$) - .last_point)
+		if .titleText$ = ""
+			.titleText$ = .outFileName$		
+			.last_point = index_regex(te.currentFileName$, "([\\/:])([^\\/:]*)$")
+			.titleText$ = right$(.titleText$, length(.titleText$) - .last_point)
+		endif
 		.titleText$ = replace_regex$(.titleText$, "\.[^\.]*$", "", 0)
-	endif
-	if .titleText$ = ""
-		.titleText$ = .outFileName$		
-		.last_point = index_regex(te.currentFileName$, "([\\/:])([^\\/:]*)$")
-		.titleText$ = right$(.titleText$, length(.titleText$) - .last_point)
-		.titleText$ = replace_regex$(.titleText$, "\.[^\.]*$", "", 0)
+		.titleText$ = replace_regex$(.titleText$, "_", "\\_ ", 0)
 	endif
 	.x = 50
 	.y = 0
@@ -369,14 +237,29 @@ procedure print_signal .outFileName$
 	do("Axes...", 0, 100, 0, 1)
 	do("Text special...", .x, "centre", .y, "bottom", "Helvetica", 14, "0", .titleText$)
 	
-	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, "Full recording")
-
-	.plotyTop += .plotHeight
 	.duration = selectedEndTime - selectedStartTime
-	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, "Selected segment ('.duration:3's)")
+	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, "Waveform ('.duration:3's)")
+	# Select 0.1 second from the center
+	.start = (selectedEndTime + selectedStartTime)/2 - 0.05
+	.end = (selectedEndTime + selectedStartTime)/2 + 0.05
+	@draw_SelectionLines (.plotWidth, .plotyTop, .plotHeight, .start, .end)
 
+	# Switch to 0.1 second
+	.oldSelectedStartTime = selectedStartTime
+	.oldSelectedEndTime = selectedEndTime
+	selectedStartTime = .start
+	selectedEndTime = .end
+	
+	.plotyTop += .plotHeight
+	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, "Waveform 0.1 second")
+	
+	# Switch back to original selection
+	selectedStartTime = .oldSelectedStartTime
+	selectedEndTime = .oldSelectedEndTime
+	
 	.plotyTop += .plotHeight
 	@PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
+	@PrintVoicingBar (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 
 	.plotyTop += .plotHeight
 	@PrintPitchObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
@@ -391,7 +274,6 @@ procedure print_signal .outFileName$
 	if unix and .convertEPS2PNG
 		system '.convertEPS2PNGcommand$' '.outEpsFileName$'.eps '.convertEPS2PNGoptions$' '.outPngFileName$'.png
 	endif
-	Erase all
 
 	# Reset draw
 	mainPage.outputPraatObject$ = "Draw"
@@ -402,17 +284,6 @@ endproc
 procedure PrintSoundObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 	if recordedSound$ <> ""
 		select te.openSound
-		.start = 0
-		.end = Get total duration
-		.numbers$ = "yes"
-		if .labelText$ <> "" and index_regex(.labelText$, "(?iselected)") > 0
-			.start = selectedStartTime
-			.end = selectedEndTime
-			.numbers$ = "yes"
-			.draw_Selection = 0
-		else
-			.draw_Selection = 1
-		endif
 		.minimum = Get minimum... 0 0 None
 		.maximum = Get maximum... 0 0 None
 		if not (.minimum = undefined or .maximum = undefined)
@@ -424,21 +295,11 @@ procedure PrintSoundObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 			# Draw
 			Helvetica
 			Font size... 10
-				
 			do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
-			if .draw_Selection > 0
-				do("Axes...", .start, .end, 0, 1)
-				do("Colour...", "Blue")
-				do("Line width...", 3)
-				do("Draw line...", selectedStartTime, 0, selectedStartTime, 1)
-				do("Draw line...", selectedEndTime, 0, selectedEndTime, 1)
-				do("Colour...", "Black")
-				do("Line width...", 1)
-			endif
-			do ("Draw...", .start, .end, 0, 0, "no", "Curve")
+			do ("Draw...", selectedStartTime, selectedEndTime, 0, 0, "no", "Curve")
 			do ("Draw inner box")
 			@leftMarks (.minimum, .maximum, "")
-			@bottomMarks (.start, .end, .numbers$, "time -> s")
+			@bottomMarks (selectedStartTime, selectedEndTime, "yes", "time -> s")
 			
 			Helvetica
 			Font size... 16
@@ -503,6 +364,48 @@ procedure PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText
 	endif
 endproc
 
+procedure PrintVoicingBar (.plotWidth, .plotyTop, .plotHeight, .labelText$)
+	if te.openSound > 0 and te.voicingTextGrid = 0
+		call calculatePitchValues
+	endif
+	
+	if te.voicingTextGrid > 0
+		do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
+		do("Axes...", selectedStartTime, selectedEndTime, 0, 1)
+		select te.voicingTextGrid
+		.numIntervals = Get number of intervals... 1
+		for .interval to .numIntervals
+			select te.voicingTextGrid
+			.label$ = Get label of interval... 1 '.interval'
+			if .label$ = "V"
+				.start = Get start point... 1 '.interval'
+				.end = Get end point... 1 '.interval'
+				.duration = .end - .start
+				# Interval is in window
+				if .start < selectedEndTime and .end > selectedStartTime
+				    do("Colour...", te.voicingcolor$)
+				    do("Line width...", 1)
+				    .botPoint = -0.03
+				    .leftPoint = max(.start, selectedStartTime)
+				    .rightPoint = min(.end, selectedEndTime)
+					do("Draw line...", .leftPoint, .botPoint, .rightPoint, .botPoint)
+				    do("Line width...", defaultLineWidth)
+				    
+				    # Print label
+					call get_feedback_text 'config.language$' VoicingMarker
+					.voicingText$ = get_feedback_text.text$
+					.voiceMarkerPositionX = selectedStartTime -(selectedEndTime - selectedStartTime)/11
+					.voiceMarkerPositionY = .botPoint - 0.02
+					do("Text special...", .voiceMarkerPositionX, "Left", .voiceMarkerPositionY, "Top", "Helvetica", 11, "0", .voicingText$)
+				    do("Colour...", "Black")
+				    
+				endif
+			endif
+			
+		endfor
+	endif
+endproc
+
 procedure PrintPitchObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 
 	if te.openSound > 0 and te.pitch = 0
@@ -532,7 +435,7 @@ procedure PrintPitchObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 		endif
 		To PointProcess
 		pointProcessName$ = selected$("PointProcess")
-		voicingTextGrid = To TextGrid (vuv)... 0.2 0.1
+		te.voicingTextGrid = To TextGrid (vuv)... 0.2 0.1
 	endif
 	
 	if te.pitch > 0 and not noDrawingOrWriting
@@ -607,9 +510,20 @@ procedure PrintLtasObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 	endif
 endproc
 
+procedure draw_SelectionLines (.plotWidth, .plotyTop, .plotHeight, .start, .end)
+	do("Select outer viewport...", 0, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
+	do("Axes...", selectedStartTime, selectedEndTime, 0, 1)
+	do("Colour...", "Blue")
+	do("Line width...", 3)
+	do("Draw line...", .start, 0, .start, 1)
+	do("Draw line...", .end, 0, .end, 1)
+	do("Colour...", "Black")
+	do("Line width...", 1)
+endproc
+
 procedure bottomMarks (.start, .end, .numbers$, .label$)
 	.interval = .end - .start
-	.scale = 10**(floor(log10(.interval))-1)
+	.scale = 10**(floor(log10(.interval))-1)/10
 	if .interval/.scale > 30
 		.scale *= 10
 	endif
@@ -632,14 +546,14 @@ endproc
 
 procedure leftMarks (.low, .high, .label$)
 	.interval = .high - .low
-	.scale = 10**(floor(log10(.interval)))
+	.scale = 10**(floor(log10(.interval)))/10
 	if .interval/.scale > 25
 		.scale *= 10
 	endif
-	if .interval/.scale > 12
+	if .interval/.scale > 15
 		.scale *= 5
 	endif
-	if .interval/.scale > 6
+	if .interval/.scale > 8
 		.scale *= 2
 	endif
 	
@@ -1695,8 +1609,8 @@ procedure DrawSuperImposedPraatObject .drawMarks .minimum .maximum .drawObjectCo
 		    	if .drawMarks and maxTimeHarmonicity > 0
 					call DrawMarkAtTime 'maxTimeHarmonicity' '.minimum' '.maximum' Green
 				endif
-				if voicingTextGrid > 0
-					select voicingTextGrid
+				if te.voicingTextGrid > 0
+					select te.voicingTextGrid
 					.numIntervals = Get number of intervals... 1
 					for .interval to .numIntervals
 						.label$ = Get label of interval... 1 '.interval'
@@ -1877,7 +1791,7 @@ procedure DrawPitchObject
 		endif
 		To PointProcess
 		pointProcessName$ = selected$("PointProcess")
-		voicingTextGrid = To TextGrid (vuv)... 0.2 0.1
+		te.voicingTextGrid = To TextGrid (vuv)... 0.2 0.1
 	endif
 
 	if pitchName$ <> ""
@@ -2485,284 +2399,6 @@ procedure saveSound .table$ .label$
 	endif
 endproc
 
-procedure Old_saveSound .table$ .label$
-	# Get feedback texts
-	call getLanguageTexts '.table$' '.label$'
-	.writeDialogue$ = getLanguageTexts.helpText$
-	call convert_praat_to_latin1 '.writeDialogue$'
-	.writeDialogue$ = convert_praat_to_latin1.text$
-	.filename$ = ""
-	
-	# Set Footer text
-	.footerText$ = "<footer>'newline$'"
-	.footerText$ = .footerText$ + "<p style=""text-align:right; font-size:10pt; color:gray; "">"
-	.footerText$ = .footerText$ + "<i>Created with NKI TE-VOICE ANALYSIS TOOL 1.0: 'build_SHA$'</i></p>'newline$'"
-	.footerText$ = .footerText$ + "</footer>'newline$'"
-	
-	# Do not print "nothing"
-	.currentID$ = ""
-	if speakerID$ <> ""
-		.currentID$ = replace_regex$(speakerID$, "^\W*([\w\- ]+).*$", "\1", 0)
-		.currentID$ = replace_regex$(.currentID$, " ", "_", 0)
-	else
-		.currentID$ = "TEanalysis"
-	endif
-	.filename$ = ""
-	if currentSoundName$ <> ""
-		if unix
-			.dirname$ = chooseWriteFile$ (.writeDialogue$, "'.currentID$'")
-		else
-			.dirname$ = chooseWriteFile$ (.writeDialogue$, "'.currentID$'")
-		endif
-		if .dirname$ <> ""
-	    	.filename$ = replace_regex$(.dirname$, "([\\/:])([\w\-\s]+)$","\1\2\1\2.html",0)
-		endif
-		# Append directory separator to directory path
-		.dirname$ = replace_regex$(.dirname$, "([\\/:])([\w\-\s]+)$","\1\2\1",0)
-	endif
-	call print_signal '.filename$'
-	
-	.localAudioFileName$ = ""
-	if .filename$ <> ""
-	   createDirectory(.dirname$)
-	   .outFileName$ = replace_regex$(.filename$, "\.[a-z0-9A-Z]+$","",0)
-		# Supress drawing
-		.tmp = noDrawingOrWriting
-		noDrawingOrWriting = 1
-		# Create new filename if sound is recorded
-		if currentSoundName$ <> ""
-			.rightPos = length(.filename$) - rindex_regex(.filename$, "[\\/:]")
-			.pathlessFilename$ = right$(.filename$, .rightPos)
-			.pathlessFilename$ = replace_regex$(.pathlessFilename$, "(\.[a-z0-9A-Z]+)$", "", 0)
-			# Create new filename if needed
-			if te.currentFileName$ = ""
-				.pathlessAudioFilename$ = .pathlessFilename$
-				if speakerID$ <> "" and index(.filename$, .currentID$)
-					te.currentFileName$ = .dirname$+.pathlessAudioFilename$+"_'te.recordingTimeStamp$'.wav"
-				else
-					te.currentFileName$ = .dirname$+.pathlessAudioFilename$+"_'.currentID$'-'te.recordingTimeStamp$'.wav"
-				endif
-			else
-				.rightPos = length(te.currentFileName$) - rindex_regex(te.currentFileName$, "[\\/:]")
-				.pathlessAudioFilename$ = right$(te.currentFileName$, .rightPos)
-				.pathlessAudioFilename$ = replace_regex$(.pathlessAudioFilename$, "(\.[a-z0-9A-Z]+)$", "", 0)
-				te.currentFileName$ = .dirname$+.pathlessAudioFilename$+".wav"	
-			endif
-			select te.openSound
-			nowarn Save as WAV file... 'te.currentFileName$'
-			.rightPos = length(te.currentFileName$) - rindex_regex(te.currentFileName$, "[\\/:]")
-			.localAudioFileName$ = right$(te.currentFileName$, .rightPos)
-		endif
-		
-		# Store current data in Table
-		if speakerID$ <> ""
-			call WriteSpeakerData
-		endif
-		
-		.date$ = date$()
-		deleteFile(.filename$)
-		# Write to file
-		.htmlText$ = ""
-		
-		# HTML header
-		.htmlText$ = .htmlText$ + "<html>'newline$'<head><title>'speakerID$'</title></head>'newline$'"
-		.htmlText$ = .htmlText$ + "<body>'newline$'"
-		.htmlText$ = .htmlText$ + "<h1 style=""text-align: center;"">'speakerID$'</H1>'newline$'"
-		.htmlText$ = .htmlText$ + "<H2 align=""CENTER"">'.date$'</H2>'newline$'"
-		
-		# Speaker ID en Text
-		call get_feedback_text 'config.language$' SpeakerText
-		get_feedback_text.text$ = replace$(get_feedback_text.text$, "_", " ", 0)
-		call convert_praat_to_html 'get_feedback_text.text$'
-		.htmlText$ = .htmlText$ + "<p style=""text-align: center"">'convert_praat_to_html.text$':'newline$'"
-		.htmlText$ = .htmlText$ + "'speakerInfo$'</p>'newline$'"
-		
-		if speakerComments$ <> ""
-			.htmlText$ = .htmlText$ + "<p><blockquote>'newline$'"
-			.htmlText$ = .htmlText$ + "'speakerComments$''newline$'"
-			.htmlText$ = .htmlText$ + "</blockquote></p>'newline$'"
-		endif
-		
-		# Link to audio
-		.htmlText$ = .htmlText$ + "<p style=""text-align: center"">"
-		call get_feedback_text 'config.language$' Recording
-		call convert_praat_to_html 'get_feedback_text.text$'
-		.htmlText$ = .htmlText$ + "'convert_praat_to_html.text$': 'newline$'"
-		.htmlText$ = .htmlText$ + "<a href=""'.localAudioFileName$'"" target=""_blank"">'.currentID$'</a>'newline$'"
-		.htmlText$ = .htmlText$ + "</p>'newline$'"
-		
-		# Write Acoustic measurements
-		.htmlText$ = .htmlText$ + "<p>'newline$'"
-		call calculateTimeValues
-		call convert_praat_to_html 'calculateTimeValues.text$'
-		.currentLine$ = convert_praat_to_html.text$
-		.htmlText$ = .htmlText$ + "<p style=""text-align: center"">'.currentLine$'</p>'newline$'"
-		
-		.htmlText$ = .htmlText$ + "<center><table>'newline$'"
-		.htmlText$ = .htmlText$ + "<tr valign=""top"" width=""100%""><td width=""30%"">'newline$'"
-		
-		call DrawPitchObject
-		call calculatePitchValues
-		call convert_praat_to_html 'calculatePitchValues.text$'
-		.currentLine$ = replace_regex$(convert_praat_to_html.text$, " - ", "</b><blockquote>", 0)
-		.currentLine$ = replace_regex$(.currentLine$, ", ", "<br />", 0)
-		.htmlText$ = .htmlText$ + "<p><b>'.currentLine$'</blockquote></p>'newline$'"
-
-		.htmlText$ = .htmlText$ + "</td><td width=""30%"">'newline$'"
-		
-		call DrawSpectrogramObject
-		call calculateSpectrogramValues
-		call convert_praat_to_html 'calculateSpectrogramValues.text$'
-		.currentLine$ = replace_regex$(convert_praat_to_html.text$, " - ", "</b><blockquote>", 0)
-		.currentLine$ = replace_regex$(.currentLine$, ", ", "<br />", 0)
-		.htmlText$ = .htmlText$ + "<p><b>'.currentLine$'</blockquote></p>'newline$'"
-		
-		.htmlText$ = .htmlText$ + "</td><td width=""30%"">'newline$'"
-
-		call DrawLtasObject
-		call calculateLtasValues
-		call convert_praat_to_html 'calculateLtasValues.text$'
-		.currentLine$ = replace_regex$(convert_praat_to_html.text$, " - ", "</b><blockquote>", 0)
-		.currentLine$ = replace_regex$(.currentLine$, ", ", "<br />", 0)
-		.htmlText$ = .htmlText$ + "<p><b>'.currentLine$'</blockquote></p>'newline$'"
-		
-		.htmlText$ = .htmlText$ + "</td></tr>'newline$'"
-		
-		.htmlText$ = .htmlText$ + "<tr valign=""top"" width=""100%""><td >'newline$'"
-		call DrawIntensityObject
-		call calculateIntensityValues
-		call convert_praat_to_html 'calculateIntensityValues.text$'
-		.currentLine$ = replace_regex$(convert_praat_to_html.text$, " - ", "</b><blockquote>", 0)
-		.currentLine$ = replace_regex$(.currentLine$, ", ", "<br />", 0)
-		.htmlText$ = .htmlText$ + "<p><b>'.currentLine$'</blockquote></p>'newline$'"
-
-		.htmlText$ = .htmlText$ + "</td><td width=""30%"">'newline$'"
-		
-		call DrawHarmonicityObject
-		call calculateHarmonicityValues
-		call convert_praat_to_html 'calculateHarmonicityValues.text$'
-		.currentLine$ = replace_regex$(convert_praat_to_html.text$, " - ", "</b><blockquote>", 0)
-		.currentLine$ = replace_regex$(.currentLine$, ", ", "<br />", 0)
-		.htmlText$ = .htmlText$ + "<p><b>'.currentLine$'</blockquote></p>'newline$'"
-
-		.htmlText$ = .htmlText$ + "</td><td></td></tr>'newline$'"
-		.htmlText$ = .htmlText$ + "</table></center>'newline$'"
-		.htmlText$ = .htmlText$ + "'newline$'"
-		
-		.htmlText$ = .htmlText$ + "<center><table>'newline$'"
-		.htmlText$ = .htmlText$ + "<tr valign=""top"" width=""100%""><td width=""45%"">'newline$'"
-		call autoSetPathType
-		call convert_praat_to_html 'pathologicalTypeText$'
-		.htmlText$ = .htmlText$ + "<h3>'convert_praat_to_html.text$'</h3>'newline$'"
-
-		# Write AST values
-		.htmlText$ = .htmlText$ + "<p><ul>'newline$'"
-		call DrawPitchObject
-		call calculatePitchValues
-		call convert_praat_to_html 'calculatePitchValues.textAST$'
-		.htmlText$ = .htmlText$ + "'convert_praat_to_html.text$''newline$'"
-		
-		call DrawLtasObject
-		call calculateLtasValues
-		call convert_praat_to_html 'calculateLtasValues.textAST$'
-		.htmlText$ = .htmlText$ + "'convert_praat_to_html.text$''newline$'"
-		
-		call DrawHarmonicityObject
-		call calculateHarmonicityValues
-		call convert_praat_to_html 'calculateHarmonicityValues.textAST$'
-		.htmlText$ = .htmlText$ + "'convert_praat_to_html.text$''newline$'"
-		.htmlText$ = .htmlText$ + "</ul></p>'newline$'"
-		.htmlText$ = .htmlText$ + "</td></tr>'newline$'"
-		.htmlText$ = .htmlText$ + "</table></center>'newline$'"
-		.htmlText$ = .htmlText$ + "'newline$'"
-
-		# Print out the build version
-		.htmlText$ = .htmlText$ + .footerText$
-		
-		# Enable drawing
-		noDrawingOrWriting = .tmp
-		
-		# Now save the pictures
-		call print_signal '.filename$'
-		
-		# Set output format
-		.outExtension$ = "eps"
-		.outFileType$ = "EPS file"
-		if macintosh
-			.outExtension$ = "pdf"
-			.outFileType$ = "PDF file"
-		elsif windows
-			.outExtension$ = "emf"
-			.outFileType$ = "Windows metafile"
-		endif
-		
-		# Construct picture links
-		call getButtonText '.table$' Draw_Sound
-		.htmlText$ = .htmlText$ + "<h1 align=""CENTER"" style=""text-align: center;page-break-before:always;"">'getButtonText.html$'</h1><p style=""text-align: center""><a href=""'.outExtension$'/'.pathlessFilename$'_Sound.'.outExtension$'"" target=""_blank""><img src=""'.outExtension$'/'.pathlessFilename$'_Sound.'.outExtension$'"" width=""70%"" /></a></p>'newline$'"
-
-		call getButtonText '.table$' Draw_Pitch
-		.htmlText$ = .htmlText$ + "<h1 style=""text-align: center;"">'getButtonText.html$'</h1><p style=""text-align: center""><a href=""'.outExtension$'/'.pathlessFilename$'_Pitch.'.outExtension$'"" target=""_blank""><img src=""'.outExtension$'/'.pathlessFilename$'_Pitch.'.outExtension$'"" width=""70%"" /></a></p>'newline$'"
-		call convert_praat_to_html 'calculatePitchValues.text$'
-		.htmlText$ = .htmlText$ + "<p style=""text-align: center"">'convert_praat_to_html.text$'</p>'newline$'"
-
-		# Print out the build version
-		.htmlText$ = .htmlText$ + .footerText$
-
-		call getButtonText '.table$' Draw_Spectrogram
-		.htmlText$ = .htmlText$ + "<h1 style=""text-align: center;page-break-before:always;"">'getButtonText.html$'</h1><p style=""text-align: center""><a href=""'.outExtension$'/'.pathlessFilename$'_Spectrogram.'.outExtension$'"" target=""_blank""><img src=""'.outExtension$'/'.pathlessFilename$'_Spectrogram.'.outExtension$'"" width=""70%"" /></a></p>'newline$'"
-		call convert_praat_to_html 'calculateSpectrogramValues.text$'
-		.htmlText$ = .htmlText$ + "<p style=""text-align: center"">'convert_praat_to_html.text$'</p>'newline$'"
-
-		call getButtonText '.table$' Draw_Ltas
-		.htmlText$ = .htmlText$ + "<h1 style=""text-align: center;"">'getButtonText.html$'</h1><p style=""text-align: center""><a href=""'.outExtension$'/'.pathlessFilename$'_Ltas.'.outExtension$'"" target=""_blank""><img src=""'.outExtension$'/'.pathlessFilename$'_Ltas.'.outExtension$'"" width=""70%"" /></a></p>'newline$'"
-		call convert_praat_to_html 'calculateLtasValues.text$'
-		.htmlText$ = .htmlText$ + "<p style=""text-align: center"">'convert_praat_to_html.text$'</p>'newline$'"
-
-		# Print out the build version
-		.htmlText$ = .htmlText$ + .footerText$
-
-		call getButtonText '.table$' Draw_Intensity
-		.htmlText$ = .htmlText$ + "<h1 style=""text-align: center;page-break-before:always;"">'getButtonText.html$'</h1><p style=""text-align: center""><a href=""'.outExtension$'/'.pathlessFilename$'_Intensity.'.outExtension$'"" target=""_blank""><img src=""'.outExtension$'/'.pathlessFilename$'_Intensity.'.outExtension$'"" width=""70%"" /></a></p>'newline$'"
-		call convert_praat_to_html 'calculateIntensityValues.text$'
-		.htmlText$ = .htmlText$ + "<p style=""text-align: center"">'convert_praat_to_html.text$'</p>'newline$'"
-
-		call getButtonText '.table$' Draw_Harmonicity
-		.htmlText$ = .htmlText$ + "<h1 style=""text-align: center;"">'getButtonText.html$'</h1><p style=""text-align: center""><a href=""'.outExtension$'/'.pathlessFilename$'_Harmonicity.'.outExtension$'"" target=""_blank""><img src=""'.outExtension$'/'.pathlessFilename$'_Harmonicity.'.outExtension$'"" width=""70%"" /></a></p>'newline$'"
-		call convert_praat_to_html 'calculateHarmonicityValues.text$'
-		.htmlText$ = .htmlText$ + "<p style=""text-align: center"">'convert_praat_to_html.text$'</p>'newline$'"
-		
-		# Print out the build version
-		.htmlText$ = .htmlText$ + .footerText$
-		
-		# Closing HTML footer
-		.htmlText$ = .htmlText$ + "</body>'newline$'"
-		.htmlText$ = .htmlText$ + "</html>'newline$'"
-		
-		
-		# Also write EPS version
-		if .outExtension$ <> "eps"
-			.htmlText$ > '.filename$'
-		endif
-		
-		# Convert to PNG
-		if unix and fileReadable("/usr/bin/convert")
-			.pngHtmlText$ = replace_regex$(.htmlText$, "(\.)'.outExtension$'("")", "\1png\2", 0)
-			.pngHtmlText$ = replace_regex$(.pngHtmlText$, "("")'.outExtension$'(/)", "\1png\2", 0)
-			.pngFilename$ = .filename$
-			.pngHtmlText$ > '.pngFilename$'
-		endif
-		
-		# Output EPS
-		.epsHtmlText$ = replace_regex$(.htmlText$, "(\.)'.outExtension$'("")", "\1eps\2", 0)
-		.epsHtmlText$ = replace_regex$(.epsHtmlText$, "("")'.outExtension$'(/)", "\1eps\2", 0)
-		.epsFilename$ = replace_regex$(.filename$, "\.html", ".odt", 0)
-		.epsHtmlText$ > '.epsFilename$'
-	else
-		# Do nothing
-	endif
-	
-endproc
-
 procedure calculatePitchValues
 	.numberFrames = 0
 	.voicedFrames = 0
@@ -2798,8 +2434,8 @@ procedure calculatePitchValues
 		plus PointProcess 'pitchName$'
 		.shimmer = Get shimmer (local)... 'selectedStartTime' 'selectedEndTime' 0.0001 0.02 5 5
 	endif
-	if voicingTextGrid > 0
-		select voicingTextGrid
+	if te.voicingTextGrid > 0
+		select te.voicingTextGrid
 		.numberOfIntervals = Get number of intervals... 1
 		.maximumVoicingDuration = 0
 		.mvdIntervalNumber = 0

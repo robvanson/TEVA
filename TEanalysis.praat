@@ -2143,8 +2143,8 @@ procedure reset_analysis
  		if pointProcessName$ <> ""
 			plus PointProcess 'pointProcessName$'
 		endif
-		if voicingTextGrid > 0
-			plus 'voicingTextGrid'
+		if te.voicingTextGrid > 0
+			plus 'te.voicingTextGrid'
 		endif
  		if te.spectrogram > 0
 			plus 'te.spectrogram'
@@ -2166,7 +2166,7 @@ procedure reset_analysis
 		spectrogramName$ = ""
 		formantName$ = ""
 		pointProcessName$ = ""
-		voicingTextGrid = -1
+		te.voicingTextGrid = -1
 		gneName$ = ""
 		harmonicityName$ = ""
 		
