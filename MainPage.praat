@@ -223,11 +223,12 @@ procedure print_signal .outFileName$
 	.colImpression = Get column index... Rating.impression
 	.colQuality = Get column index... Rating.quality
 	if .colImpression > 0
-		.vq_Rating = do("Get value...", get_speakerInfo.row, "Rating.quality")
-	endif
-	if .vq_Rating = undefined and .colQuality > 0
 		.vq_Rating = do("Get value...", get_speakerInfo.row, "Rating.impression")
 	endif
+	if (.vq_Rating = undefined or .vq_Rating < 0 ) and .colQuality > 0
+		.vq_Rating = do("Get value...", get_speakerInfo.row, "Rating.quality")
+	endif
+pause '.vq_Rating'
 	if .vq_Rating = undefined
 		.vq_Rating = -1
 	else
@@ -265,12 +266,21 @@ procedure print_signal .outFileName$
 	do("Select outer viewport...", 0, 7.27, 0, 0.5)
 	do("Axes...", 0, 100, 0, 1)
 	do("Text special...", .x, "centre", .y, "bottom", "Helvetica", 14, "0", .titleText$)
-	.subtext$ = pathologicalTypeText$
+	# Get subtext
+	.subtext$ = ""
+	.typeText$ = "-"
+	if pathologicalType != 0 or predictedPathType != 0
+		.type = abs(pathologicalType)
+		.typeText$ = "'.type'"
+		if .type <= 0 and predictedPathType > 0
+			.typeText$ = "'predictedPathType:1'"
+			.subtext$ = .subtext$ + "Computed "
+		endif
+		.subtext$ = .subtext$ + "AST: "+.typeText$
+	endif
+	
 	if .vq_Rating >= 0
 		.subtext$ = .subtext$ + ", VQ: '.vq_Rating'"
-	endif
-	if .intel_Rating >= 0
-		.subtext$ = .subtext$ + ", Intell.: '.intel_Rating'"
 	endif
 	do("Text special...", .x, "centre", .y, "top", "Helvetica", 12, "0",  .subtext$)	
 	
@@ -571,6 +581,12 @@ procedure draw_SelectionLines (.plotWidth, .plotyTop, .plotHeight, .start, .end)
 	do("Line width...", 3)
 	do("Draw line...", .start, 0, .start, 1)
 	do("Draw line...", .end, 0, .end, 1)
+	
+	do("Line width...", 1)
+	do("Draw line...", .start, 0, (.start+selectedStartTime)/2, -0.6)
+	do("Draw line...", .end, 0, (.end+selectedEndTime)/2, -0.6)
+
+	
 	do("Colour...", "Black")
 	do("Line width...", 1)
 endproc
@@ -3160,6 +3176,7 @@ procedure predictASTvalue
 	
 	.ast = .astRPart
 	noDrawingOrWriting = .drawingSetting
+	
 endproc
 
 # Select a window based on maxTimeHaronicity

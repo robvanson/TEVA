@@ -1385,6 +1385,8 @@ procedure getOpenFile .openDialogue$
 	if get_speakerInfo.endTime > 0 
 		selectedStartTime = get_speakerInfo.startTime
 		selectedEndTime = get_speakerInfo.endTime
+		call predictASTvalue
+		predictedPathType = predictASTvalue.ast
 	elsif config.autoSelect
 		# If no selection if given, determine it
 		call argMinASTselection
