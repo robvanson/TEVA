@@ -228,7 +228,6 @@ procedure print_signal .outFileName$
 	if (.vq_Rating = undefined or .vq_Rating < 0 ) and .colQuality > 0
 		.vq_Rating = do("Get value...", get_speakerInfo.row, "Rating.quality")
 	endif
-pause '.vq_Rating'
 	if .vq_Rating = undefined
 		.vq_Rating = -1
 	else
@@ -961,8 +960,10 @@ procedure processMainPageNextItem .clickX .clickY .pressed$
 	pathologicalType = 'get_nextSpeaker.ast$'
 	call load_audio_file 'te.currentFileName$'
 	call autoSetPathType
-	if config.speakerSerial$ <> "None"
-		call Draw_button '.table$' '.label$' 0
+	if config.speakerSerial$ = "Backw"
+		call Draw_button '.table$' PreviousItem 0
+	elsif config.speakerSerial$ = "Forw"
+		call Draw_button '.table$' NextItem 0
 	endif
 endproc
 
@@ -1047,8 +1048,10 @@ procedure processMainPagePreviousItem .clickX .clickY .pressed$
 	pathologicalType = 'get_previousSpeaker.ast$'
 	call load_audio_file 'te.currentFileName$'
 	call autoSetPathType
-	if config.speakerSerial$ <> "None"
-		call Draw_button '.table$' '.label$' 0
+	if config.speakerSerial$ = "Backw"
+		call Draw_button '.table$' PreviousItem 0
+	elsif config.speakerSerial$ = "Forw"
+		call Draw_button '.table$' NextItem 0
 	endif
 endproc
 
