@@ -700,11 +700,8 @@ endproc
 procedure i8n_date
 	.date$ = date$()
 	.dayOfWeek$ = left$(.date$, 3)
-printline '.dayOfWeek$'
 	.month$ = mid$(.date$, 5, 3)
-printline '.month$'
 	.rest$ = right$(.date$, length(.date$)-7)
-printline '.rest$'
 	# Get day of week
 	call get_printsignal_text 'config.language$' '.dayOfWeek$'
 	.i8n_dayOfWeek$ = get_printsignal_text.text$
