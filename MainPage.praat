@@ -244,6 +244,9 @@ procedure print_signal .outFileName$
 		endif
 	endif
 	
+	# Date and time
+	.datetime$ = date$()
+	
 	# Write title
 	.titleText$ = speakerID$
 	if .titleText$ = ""
@@ -265,6 +268,12 @@ procedure print_signal .outFileName$
 	do("Select outer viewport...", 0, 7.27, 0, 0.5)
 	do("Axes...", 0, 100, 0, 1)
 	do("Text special...", .x, "centre", .y, "bottom", "Helvetica", 14, "0", .titleText$)
+	# Print Date and Time of print
+	.subtext$ = .datetime$
+	call points_to_wc 10
+	.y += points_to_wc.wc/4
+	do("Text special...", .x, "centre", .y, "top", "Helvetica", 9, "0", .subtext$)
+
 	# Get subtext
 	.subtext$ = ""
 	.typeText$ = "-"
@@ -281,7 +290,10 @@ procedure print_signal .outFileName$
 	if .vq_Rating >= 0
 		.subtext$ = .subtext$ + ", VQ: '.vq_Rating'"
 	endif
-	do("Text special...", .x, "centre", .y, "top", "Helvetica", 12, "0",  .subtext$)	
+
+	call points_to_wc 11
+	.y -= points_to_wc.wc/2
+	do("Text special...", .x, "centre", .y, "top", "Helvetica", 11, "0",  .subtext$)	
 	
 	.duration = selectedEndTime - selectedStartTime
 	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, "Waveform ('.duration:3's)")
