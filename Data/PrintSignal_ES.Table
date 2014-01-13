@@ -1,0 +1,33 @@
+Key	Text
+!Author	Auteur R.J.J.H. van Son
+!Copyright	Copyright \co 2014 R.J.J.H. van Son \&  the NKI
+!License	License GNU GPL version 2 or later
+Waveform	Waveform
+Spectrogram	Spectrogram
+Ltas	Ltas
+Pitch	Pitch
+seconds	seconds
+time	time -> s
+Frequency	Frequency -> Hz
+Hz	Hz
+SPL	SPL dB/Hz
+AST	AST
+VoiceQuality	VQ
+Mon	Mon
+Tue	Tue
+Wed	Wed
+Thu	Thu
+Fri	Fri
+Sat	Sat
+Sun	Sun
+Jan	Jan
+Feb	Feb
+Mar	Mar
+Apr	Apr
+Jun	Jun
+Jul	Jul
+Aug	Aug
+Sep	Sep
+Oct	Oct
+Nov	Nov
+Dec	Dec

@@ -245,7 +245,8 @@ procedure print_signal .outFileName$
 	endif
 	
 	# Date and time
-	.datetime$ = date$()
+	call i8n_date
+	.datetime$ = i8n_date.date$
 	
 	# Write title
 	.titleText$ = speakerID$
@@ -278,43 +279,60 @@ procedure print_signal .outFileName$
 	.subtext$ = ""
 	.typeText$ = "-"
 	if pathologicalType != 0 or predictedPathType != 0
+		call get_printsignal_text 'config.language$' AST
+		.astText$ = get_printsignal_text.text$
 		.type = abs(pathologicalType)
 		.typeText$ = "'.type'"
 		if .type <= 0 and predictedPathType > 0
 			.typeText$ = "'predictedPathType:1'"
 			.subtext$ = .subtext$ + "Computed "
 		endif
-		.subtext$ = .subtext$ + "AST: "+.typeText$
+		.subtext$ = .subtext$ + .astText$ + ": "+.typeText$
 	endif
 	
 	if .vq_Rating >= 0
-		.subtext$ = .subtext$ + ", VQ: '.vq_Rating'"
+		call get_printsignal_text 'config.language$' VoiceQuality
+		.vqText$ = get_printsignal_text.text$
+		.subtext$ = .subtext$ + ", " + .vqText$ + ": '.vq_Rating'"
 	endif
 
 	call points_to_wc 11
 	.y -= points_to_wc.wc/2
 	do("Text special...", .x, "centre", .y, "top", "Helvetica", 11, "0",  .subtext$)	
 	
+	# Waveform
+	call get_printsignal_text 'config.language$' Waveform
+	.labelText$ = get_printsignal_text.text$
 	.duration = selectedEndTime - selectedStartTime
-	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, "Waveform ('.duration:3's)")
+	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, .labelText$ + " ('.duration:3's)")
 	# Select 0.1 second from the center
 	.start = (selectedEndTime + selectedStartTime)/2 - 0.05
 	.end = (selectedEndTime + selectedStartTime)/2 + 0.05
 	@draw_SelectionLines (.plotWidth, .plotyTop, .plotHeight, .start, .end)
+
+	# Waveform (selection)
+	call get_printsignal_text 'config.language$' Waveform
+	.labelText$ = get_printsignal_text.text$
+	call get_printsignal_text 'config.language$' seconds
+	.secondsText$ = get_printsignal_text.text$
 
 	# Switch to 0.1 second
 	.oldSelectedStartTime = selectedStartTime
 	.oldSelectedEndTime = selectedEndTime
 	selectedStartTime = .start
 	selectedEndTime = .end
-	
+	.duration = selectedEndTime - selectedStartTime
+
 	.plotyTop += .plotHeight
-	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, "Waveform 0.1 second")
+	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, .labelText$ + " '.duration:1' " + .secondsText$)
 	
 	# Switch back to original selection
 	selectedStartTime = .oldSelectedStartTime
 	selectedEndTime = .oldSelectedEndTime
 	
+	# Spectrogram
+	call get_printsignal_text 'config.language$' Spectrogram
+	.labelText$ = get_printsignal_text.text$
 	.plotyTop += .plotHeight
 	@PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 	@PrintVoicingBar (.plotWidth, .plotyTop, .plotHeight, .labelText$)
@@ -322,6 +340,9 @@ procedure print_signal .outFileName$
 	.plotyTop += .plotHeight
 	@PrintPitchObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 
+	# Spectrogram
+	call get_printsignal_text 'config.language$' Ltas
+	.labelText$ = get_printsignal_text.text$
 	.plotyTop += .plotHeight
 	@PrintLtasObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 
@@ -350,14 +371,19 @@ procedure PrintSoundObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 				.maximum += 1
 			endif
 			
+			# Get label of X-axis
+			call get_printsignal_text 'config.language$' time
+			.xaxisLabel$ = get_printsignal_text.text$
+			
 			# Draw
+			select te.openSound
 			Helvetica
 			Font size... 10
 			do("Select outer viewport...", 0.5, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
 			do ("Draw...", selectedStartTime, selectedEndTime, 0, 0, "no", "Curve")
 			do ("Draw inner box")
 			@leftMarks (.minimum, .maximum, "")
-			@bottomMarks (selectedStartTime, selectedEndTime, "yes", "time -> s")
+			@bottomMarks (selectedStartTime, selectedEndTime, "yes", .xaxisLabel$)
 			
 			Helvetica
 			Font size... 14
@@ -405,10 +431,18 @@ procedure PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText
 		maxHarmonicity = calcMaxHarmonicity.value
 		.hnrValuesText$ = "HNR__max_: 'maxHarmonicity:2'dB"
 	
+		# Get label of X&Y-axes
+		call get_printsignal_text 'config.language$' time
+		.xaxisLabel$ = get_printsignal_text.text$
+		call get_printsignal_text 'config.language$' Hz
+		.yaxisLabel$ = get_printsignal_text.text$
+
 		select te.spectrogram
 	
 		do("Select outer viewport...", 0.5, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
-		.labelText$ = "Spectrogram"
+		if .labelText$ = ""
+			.labelText$ = "Spectrogram"
+		endif
 		Helvetica
 		do("Paint...", selectedStartTime, selectedEndTime, 0, config.frequency, 80, "no", 70, 6, 0, "no")
 		if config.showFormants > 0
@@ -418,8 +452,8 @@ procedure PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText
 			do("Colour...",  "Black"
 		endif
 		do ("Draw inner box")
-		@leftMarks (0, config.frequency, "Hz")
-		@bottomMarks (selectedStartTime, selectedEndTime, "yes", "time -> s")
+		@leftMarks (0, config.frequency, .yaxisLabel$)
+		@bottomMarks (selectedStartTime, selectedEndTime, "yes", .xaxisLabel$)
 		Font size... 14
 		do("Viewport text...", "Left", "Top", 0, .labelText$)
 		Font size... 11
@@ -507,16 +541,24 @@ procedure PrintPitchObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 		call calculatePitchValues
 		.pitchValuesText$ = calculatePitchValues.shortText$
 
+		# Get label of X&Y-axes
+		call get_printsignal_text 'config.language$' time
+		.xaxisLabel$ = get_printsignal_text.text$
+		call get_printsignal_text 'config.language$' Hz
+		.yaxisLabel$ = get_printsignal_text.text$
+
 		select te.pitch
 		do("Select outer viewport...", 0.5, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
-		.labelText$ = "Pitch"
+		if .labelText$ = ""
+			.labelText$ = "Pitch"
+		endif
 		Helvetica
 		.lower = 20*(floor(minPitch/20))
 		.upper = 20*(ceiling(maxPitch/20))
 		do("Draw...", selectedStartTime, selectedEndTime, .lower, .upper, "no")
 		do ("Draw inner box")
-		@leftMarks (.lower, .upper, "Hz")
-		@bottomMarks (selectedStartTime, selectedEndTime, "yes", "time -> s")
+		@leftMarks (.lower, .upper, .yaxisLabel$)
+		@bottomMarks (selectedStartTime, selectedEndTime, "yes", .xaxisLabel$)
 		Font size... 14
 		do("Viewport text...", "Left", "Top", 0, .labelText$)
 		Font size... 11
@@ -566,17 +608,24 @@ procedure PrintLtasObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 	.ltasValuesText$ = calculateLtasValues.shortText$
 
 	if ltasName$ <> "" and not noDrawingOrWriting
+		# Get label of X&Y-axes
+		call get_printsignal_text 'config.language$' Frequency
+		.xaxisLabel$ = get_printsignal_text.text$
+		call get_printsignal_text 'config.language$' SPL
+		.yaxisLabel$ = get_printsignal_text.text$
+
 		select te.Ltas
-	
 		do("Select outer viewport...", 0.5, .plotWidth, .plotyTop, .plotyTop+.plotHeight)
-		.labelText$ = "Ltas"
+		if .labelText$ = ""
+			.labelText$ = "Ltas"
+		endif
 		Helvetica
 		.lower = 10*(floor(.minimum/10))
 		.upper = 10*(ceiling(.maximum/10))
 		do("Draw...", 0, config.frequency, .lower, .upper, "no", "Curve")
 		do ("Draw inner box")
-		@leftMarks (-20, .upper, "SPL dB/Hz")
-		@bottomMarks (0, config.frequency, "yes", "Frequency -> Hz")
+		@leftMarks (-20, .upper, .yaxisLabel$ )
+		@bottomMarks (0, config.frequency, "yes", .xaxisLabel$)
 		Font size... 14
 		do("Viewport text...", "Left", "Top", 0, .labelText$)
 		Font size... 11
@@ -647,6 +696,42 @@ procedure leftMarks (.low, .high, .label$)
 	endif
 	Font size... 10
 endproc
+
+procedure i8n_date
+	.date$ = date$()
+	.dayOfWeek$ = left$(.date$, 3)
+printline '.dayOfWeek$'
+	.month$ = mid$(.date$, 5, 3)
+printline '.month$'
+	.rest$ = right$(.date$, length(.date$)-7)
+printline '.rest$'
+	# Get day of week
+	call get_printsignal_text 'config.language$' '.dayOfWeek$'
+	.i8n_dayOfWeek$ = get_printsignal_text.text$
+	call get_printsignal_text 'config.language$' '.month$'
+	.i8n_month$ = get_printsignal_text.text$
+	.date$ = .i8n_dayOfWeek$ + " " + .i8n_month$ + .rest$
+endproc
+
+# Read feedback table and get keyed text
+procedure get_printsignal_text .language$ .key$
+	if not endsWith(printsignalTableName$, "_'.language$'")
+		if printsignalTableName$ <> ""
+			select Table 'printsignalTableName$'
+			Remove
+		endif
+		call loadTable 'printsignalTablePrefix$'_'.language$'
+		printsignalTableName$ = selected$("Table")
+	endif
+	call findKey 'printsignalTableName$' '.key$'
+	.row = findKey.row
+	select Table 'printsignalTableName$'
+	.text$ = Get value... '.row' Text
+	# Expand variables, eg, 'praatVersion$'
+	call expand_praat_variables '.text$'
+	.text$ = expand_praat_variables.text$	
+endproc
+
 
 procedure set_draw_signal_button
 	call Draw_button 'te.buttons$' Draw_'mainPage.draw$' 2
