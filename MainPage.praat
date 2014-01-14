@@ -337,10 +337,13 @@ procedure print_signal .outFileName$
 	@PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 	@PrintVoicingBar (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 
+	# Pitch
+	call get_printsignal_text 'config.language$' Pitch
+	.labelText$ = get_printsignal_text.text$
 	.plotyTop += .plotHeight
 	@PrintPitchObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 
-	# Spectrogram
+	# Ltas
 	call get_printsignal_text 'config.language$' Ltas
 	.labelText$ = get_printsignal_text.text$
 	.plotyTop += .plotHeight

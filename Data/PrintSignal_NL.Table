@@ -2,32 +2,37 @@ Key	Text
 !Author	Auteur R.J.J.H. van Son
 !Copyright	Copyright \co 2014 R.J.J.H. van Son \&  the NKI
 !License	License GNU GPL version 2 or later
-Waveform	Waveform
+Waveform	Golfvorm
 Spectrogram	Spectrogram
 Ltas	Ltas
-Pitch	Pitch
-seconds	seconds
-time	time -> s
-Frequency	Frequency -> Hz
+Pitch	Toonhoogte
+seconds	seconden
+time	tijd -> s
+Frequency	Frekwentie -> Hz
 Hz	Hz
 SPL	SPL dB/Hz
 AST	AST
-VoiceQuality	VQ
-Mon	Mon
-Tue	Tue
-Wed	Wed
-Thu	Thu
-Fri	Fri
-Sat	Sat
-Sun	Sun
+VoiceQuality	Stemkwaliteit
+Jitter	Jitter
+Shimmer	Shimmer
+Mean	Mean
+SD	SD
+Mon	Ma
+Tue	Di
+Wed	Wo
+Thu	Do
+Fri	Vr
+Sat	Za
+Sun	Zo
 Jan	Jan
 Feb	Feb
-Mar	Mar
+Mar	Maa
 Apr	Apr
+May	Mei
 Jun	Jun
 Jul	Jul
 Aug	Aug
 Sep	Sep
-Oct	Oct
+Oct	Okt
 Nov	Nov
 Dec	Dec

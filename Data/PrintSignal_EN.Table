@@ -13,6 +13,10 @@ Hz	Hz
 SPL	SPL dB/Hz
 AST	AST
 VoiceQuality	VQ
+Jitter	Jitter
+Shimmer	Shimmer
+Mean	Mean
+SD	SD
 Mon	Mon
 Tue	Tue
 Wed	Wed
@@ -24,6 +28,7 @@ Jan	Jan
 Feb	Feb
 Mar	Mar
 Apr	Apr
+May	May
 Jun	Jun
 Jul	Jul
 Aug	Aug
