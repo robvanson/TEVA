@@ -12,7 +12,9 @@ Frequency	Frekwentie -> Hz
 Hz	Hz
 SPL	SPL dB/Hz
 AST	AST
+CompAST	berek.
 VoiceQuality	Stemkwaliteit
+CompVQ	berek.
 Jitter	Jitter
 Shimmer	Shimmer
 Mean	Mean

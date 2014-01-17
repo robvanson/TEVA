@@ -132,6 +132,13 @@ procedure setPitchButton
 		endif
 	endfor
 	
+	# Reset the pitch calculations
+	if te.pitch > 0
+		select te.pitch
+		Remove
+		te.pitch = 0
+		pitchName$ = ""		
+	endif
 	call Draw_button 'te.config$' Pitchalgorithm_'config.pitchalgorithm$' 2
 endproc
 

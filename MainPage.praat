@@ -277,24 +277,26 @@ procedure print_signal .outFileName$
 
 	# Get subtext
 	.subtext$ = ""
-	.typeText$ = "-"
+	.typeASTText$ = "-"
+	.typeCompASTText$ = "-"
 	if pathologicalType != 0 or predictedPathType != 0
 		call get_printsignal_text 'config.language$' AST
 		.astText$ = get_printsignal_text.text$
+		call get_printsignal_text 'config.language$' CompAST
+		.astCompText$ = get_printsignal_text.text$
 		.type = abs(pathologicalType)
-		.typeText$ = "'.type'"
-		if .type <= 0 and predictedPathType > 0
-			.typeText$ = "'predictedPathType:1'"
-			.subtext$ = .subtext$ + "Computed "
-		endif
-		.subtext$ = .subtext$ + .astText$ + ": "+.typeText$
+		.typeASTText$ = "'.type'"
+		.subtext$ = .subtext$ + .astText$ + ": " + .typeASTText$
+		.typeCompText$ = "'predictedPathType:1'"
+		.subtext$ = .subtext$ + ", " + .astCompText$ + ": " + .typeCompText$
 	endif
 	
-	if .vq_Rating >= 0
-		call get_printsignal_text 'config.language$' VoiceQuality
-		.vqText$ = get_printsignal_text.text$
-		.subtext$ = .subtext$ + ", " + .vqText$ + ": '.vq_Rating'"
-	endif
+	call get_printsignal_text 'config.language$' VoiceQuality
+	.vqText$ = get_printsignal_text.text$
+	call get_printsignal_text 'config.language$' CompVQ
+	.compvqText$ = get_printsignal_text.text$
+	.subtext$ = .subtext$ + "; " + .vqText$ + ": '.vq_Rating:1'"
+	.subtext$ = .subtext$ + ", " + .compvqText$ + ": -"
 
 	call points_to_wc 11
 	.y -= points_to_wc.wc/2

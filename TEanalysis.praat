@@ -2116,8 +2116,8 @@ endproc
 procedure reset_analysis
     if te.openSound > 0
         select te.openSound
-		if pitchName$ != ""
-			plus Pitch 'pitchName$'
+		if te.pitch > 0
+			plus te.pitch
 		endif
 		if pitchTierName$ != ""
 			plus PitchTier 'pitchTierName$'

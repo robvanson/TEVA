@@ -12,7 +12,9 @@ Frequency	Frequency -> Hz
 Hz	Hz
 SPL	SPL dB/Hz
 AST	AST
+CompAST	comp.
 VoiceQuality	VQ
+CompVQ	comp.
 Jitter	Jitter
 Shimmer	Shimmer
 Mean	Mean
