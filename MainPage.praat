@@ -198,15 +198,15 @@ procedure print_signal .outFileName$
 	config.convert2PNG = 0
 	if unix and fileReadable("/usr/bin/convert")
 		config.convert2PNG = 1
-		.convert2PNGcommand$ = "convert"
-		# add -density 1024 ?
-		.convert2PNGinoptions$ = "-antialias"
+		.convert2PNGcommand$ = "/usr/bin/convert"
+		# add -density 250 ?
+		.convert2PNGinoptions$ = "-antialias -density 250"
 		.convert2PNGoutoptions$ = "-flatten"
 	elsif macintosh and fileReadable("/opt/local/bin/convert")
 		config.convert2PNG = 1
-		convert2PNGcommand$ = "convert"
-		# add -density 1024 ?
-		.convert2PNGinoptions$ = "-antialias"
+		.convert2PNGcommand$ = "/opt/local/bin/convert"
+		# add -density 250 ?
+		.convert2PNGinoptions$ = "-antialias -density 250"
 		.convert2PNGoutoptions$ = "-flatten"
 	endif
 	
@@ -361,7 +361,7 @@ procedure print_signal .outFileName$
 	do("Select outer viewport...", 0, 7.27, 0, 10.69)
 	do("Save as '.outFileType$'...", "'.outFileName$'.'.outExtension$'")
 	if config.convert2PNG
-		system_nocheck 'convert2PNGcommand$' '.convert2PNGinoptions$' '.outFileName$'.'.outExtension$' '.convert2PNGoutoptions$' '.outFileName$'.png
+		system '.convert2PNGcommand$' '.convert2PNGinoptions$' "'.outFileName$'.'.outExtension$'" '.convert2PNGoutoptions$' "'.outFileName$'.png"
 	endif
 
 	# Reset draw
