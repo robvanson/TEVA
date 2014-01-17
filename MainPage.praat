@@ -196,12 +196,14 @@ procedure print_signal .outFileName$
 	
 	# On unix, create PNG files
 	.convertEPS2PNG = 0
-	if unix
-		if fileReadable("/usr/bin/convert")
-			.convertEPS2PNG = 1
-			.convertEPS2PNGcommand$ = "convert"
-			 .convertEPS2PNGoptions$ = "-antialias -flatten -density 600"
-		endif
+	if unix and fileReadable("/usr/bin/convert")
+		.convertEPS2PNG = 1
+		.convertEPS2PNGcommand$ = "convert"
+		.convertEPS2PNGoptions$ = "-flatten -density 1024"
+	elsif macintosh and fileReadable(" /opt/local/bin/convert")
+		.convertEPS2PNG = 1
+		.convertEPS2PNGcommand$ = "convert"
+		.convertEPS2PNGoptions$ = "-flatten -density 1200"
 	endif
 	
 	# Print
@@ -355,7 +357,7 @@ procedure print_signal .outFileName$
 	do("Select outer viewport...", 0, 7.27, 0, 10.69)
 	do("Save as '.outFileType$'...", "'.outFileName$'.'.outExtension$'")
 	if unix and .convertEPS2PNG
-		system '.convertEPS2PNGcommand$' '.outFileName$'.eps '.convertEPS2PNGoptions$' '.outFileName$'.png
+		system '.convertEPS2PNGcommand$' '.outFileName$'.'.outExtension$' '.convertEPS2PNGoptions$' '.outFileName$'.png
 	endif
 
 	# Reset draw
