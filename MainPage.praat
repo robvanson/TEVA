@@ -194,16 +194,20 @@ procedure print_signal .outFileName$
 		.outFileType$ = "Windows metafile"
 	endif
 	
-	# On unix, create PNG files
-	.convertEPS2PNG = 0
+	# On unix and mac, create PNG files
+	config.convert2PNG = 0
 	if unix and fileReadable("/usr/bin/convert")
-		.convertEPS2PNG = 1
-		.convertEPS2PNGcommand$ = "convert"
-		.convertEPS2PNGoptions$ = "-flatten -density 1024"
-	elsif macintosh and fileReadable(" /opt/local/bin/convert")
-		.convertEPS2PNG = 1
-		.convertEPS2PNGcommand$ = "convert"
-		.convertEPS2PNGoptions$ = "-flatten -density 1200"
+		config.convert2PNG = 1
+		.convert2PNGcommand$ = "convert"
+		# add -density 1024 ?
+		.convert2PNGinoptions$ = "-antialias"
+		.convert2PNGoutoptions$ = "-flatten"
+	elsif macintosh and fileReadable("/opt/local/bin/convert")
+		config.convert2PNG = 1
+		convert2PNGcommand$ = "convert"
+		# add -density 1024 ?
+		.convert2PNGinoptions$ = "-antialias"
+		.convert2PNGoutoptions$ = "-flatten"
 	endif
 	
 	# Print
@@ -356,8 +360,8 @@ procedure print_signal .outFileName$
 	.plotyTop += .plotHeight
 	do("Select outer viewport...", 0, 7.27, 0, 10.69)
 	do("Save as '.outFileType$'...", "'.outFileName$'.'.outExtension$'")
-	if unix and .convertEPS2PNG
-		system '.convertEPS2PNGcommand$' '.outFileName$'.'.outExtension$' '.convertEPS2PNGoptions$' '.outFileName$'.png
+	if config.convert2PNG
+		system_nocheck 'convert2PNGcommand$' '.convert2PNGinoptions$' '.outFileName$'.'.outExtension$' '.convert2PNGoutoptions$' '.outFileName$'.png
 	endif
 
 	# Reset draw
