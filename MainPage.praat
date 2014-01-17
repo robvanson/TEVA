@@ -199,9 +199,8 @@ procedure print_signal .outFileName$
 	if unix
 		if fileReadable("/usr/bin/convert")
 			.convertEPS2PNG = 1
-			.outPngFileName$ = replace_regex$(.outFileName$, "([\\/:])'.outExtension$'([\\/:])([^\\/:]*)$", "\1png\2\3", 0)
 			.convertEPS2PNGcommand$ = "convert"
-			 .convertEPS2PNGoptions$ = "-antialias"
+			 .convertEPS2PNGoptions$ = "-antialias -flatten -density 600"
 		endif
 	endif
 	
@@ -356,7 +355,7 @@ procedure print_signal .outFileName$
 	do("Select outer viewport...", 0, 7.27, 0, 10.69)
 	do("Save as '.outFileType$'...", "'.outFileName$'.'.outExtension$'")
 	if unix and .convertEPS2PNG
-		system '.convertEPS2PNGcommand$' '.outEpsFileName$'.eps '.convertEPS2PNGoptions$' '.outPngFileName$'.png
+		system '.convertEPS2PNGcommand$' '.outFileName$'.eps '.convertEPS2PNGoptions$' '.outFileName$'.png
 	endif
 
 	# Reset draw
