@@ -122,6 +122,19 @@ procedure setFrequencyButton
 	call Draw_button 'te.config$' Frequency_'.freqkHz'k 2
 endproc
 
+procedure setPitchButton
+	select Table 'te.config$'
+	.numLabels = Get number of rows
+	for .i to .numLabels
+		.currentLabel$ = Get value... '.i' Label
+		if startsWith(.currentLabel$, "Pitchalgorithm_")
+			call Draw_button 'te.config$' '.currentLabel$' 0
+		endif
+	endfor
+	
+	call Draw_button 'te.config$' Pitchalgorithm_'config.pitchalgorithm$' 2
+endproc
+
 ###############################################################
 #
 # Button Processing Routines
@@ -474,6 +487,13 @@ procedure processConfigFrequency .frequencyK$ .clickX .clickY .pressed$
 	config.frequency = .freqHz * 1000
 	ingnored_sampleFrequency = 2*config.frequency
 	call setFrequencyButton
+endproc
+
+procedure processConfigPitchalgorithm .pitchalgorithm$ .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "Pitchalgorithm"
+	config.pitchalgorithm$ = .pitchalgorithm$
+	call setPitchButton
 endproc
 
 procedure processConfigShowFormants .clickX .clickY .pressed$

@@ -517,9 +517,7 @@ procedure PrintPitchObject (.plotWidth, .plotyTop, .plotHeight, .labelText$)
 		if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Pitch")
 			te.pitch = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Pitch
 		else
-			select te.openSound
-			# Settings from C.J. van As 2001 "Tracheoesophageal Speech" p83
-			te.pitch = noprogress To Pitch (cc)... 0 40 15 no 0.03 0.40 0.01 0.35 0.14 250
+			call to_pitch te.openSound
 			# Write file to cache
 			if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
 				Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Pitch
@@ -1939,9 +1937,8 @@ procedure DrawPitchObject
 		if config.useCache >= 0 and fileReadable("'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Pitch")
 			te.pitch = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Pitch
 		else
-			select te.openSound
-			# Settings from C.J. van As 2001 "Tracheoesophageal Speech" p83
-			te.pitch = noprogress To Pitch (cc)... 0 40 15 no 0.03 0.40 0.01 0.35 0.14 250
+			call to_pitch te.openSound
+
 			# Write file to cache
 			if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
 				Save as binary file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Pitch
@@ -1950,12 +1947,13 @@ procedure DrawPitchObject
 		pitchName$ = selected$("Pitch")
 		minPitch = Get minimum... 0 0 Hertz Parabolic
 		minPitch = floor(minPitch)
+		minPitch = 0
 		maxPitch = Get maximum... 0 0 Hertz Parabolic
-		maxPitch = ceiling(maxPitch)
 		if minPitch = undefined or maxPitch = undefined
 			minPitch = 0
-			maxPitch = 600
+			maxPitch = 400
 		endif
+		maxPitch = ceiling(1.5*maxPitch)
 		To PointProcess
 		pointProcessName$ = selected$("PointProcess")
 		te.voicingTextGrid = To TextGrid (vuv)... 0.2 0.1
@@ -2731,6 +2729,30 @@ procedure calculatePitchValues
 	#.shorttextAST$ = " (AST: P-'.astPitch', J-'.astJitter', V-'.astVoicedFraction')"
 
 	#.text$ = "Pitch - Voiced: '.voicedFractions:1%'\% , Jitter: '.jitter:1%'\% , Shimmer: '.shimmer:1%'\% , Mean: '.meanPitch:0' Hz, SD: '.sdPitch:1' Hz, Median: '.medianPitch:0' Hz"
+endproc
+
+procedure to_pitch .sound
+	# Most of these do not work, van As and CC seem to be the best
+	select .sound
+	if config.pitchalgorithm$ = "VanAs"
+		# Settings from C.J. van As 2001 "Tracheoesophageal Speech" p83
+		te.pitch = noprogress To Pitch (cc)... 0 40 15 no  0.03 0.40 0.01 0.35 0.14 250
+	elsif config.pitchalgorithm$ = "CC300"
+		#  time step, Min pitch, Candidates, accurate, sil thr, voic thr., Oct cost, jump cost, VU cost, Max pitch
+		te.pitch = noprogress To Pitch (cc)... 0 40 15 yes 0.03 0.40 0.045 0.35 0.14 300
+	elsif config.pitchalgorithm$ = "CC600"
+		#  time step, Min pitch, Candidates, accurate, sil thr, voic thr., Oct cost, jump cost, VU cost, Max pitch
+		te.pitch = noprogress To Pitch (cc)... 0 40 15 yes 0.03 0.40 0.045 0.35 0.14 600
+	elsif config.pitchalgorithm$ = "AC"
+		te.pitch = noprogress To Pitch (ac)... 0 40 25 yes 0.03 0.40 0.1 0.5 0.2 250
+	elsif config.pitchalgorithm$ = "SHS"
+		te.pitch = noprogress To Pitch (shs)... 0.01 40 15 1250.0 15 0.84 250 48		
+	elsif config.pitchalgorithm$ = "SPINET"
+		te.pitch = noprogress To Pitch (SPINET)... 0.005 0.040 40 5000.0 250 250 20		
+	else
+		te.pitch = noprogress To Pitch (cc)... 0 40 15 no 0.03 0.40 0.01 0.35 0.14 250
+	endif
+	select te.pitch
 endproc
 
 procedure extractRahmonicPart .table .begin .end

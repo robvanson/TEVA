@@ -81,6 +81,8 @@ procedure global_initialization
 	config.selectionWindow = 1.75
 	config.ratingForm$ = "A"
 	config.vasScaleTicks = 0
+	#config.pitchalgorithm$ = "VanAs"
+	config.pitchalgorithm$ = "CC300"
 	# config.useCache
 	# config.useCache > 0 : Enforce a cache
 	# config.useCache = 0 : Use cache if present
