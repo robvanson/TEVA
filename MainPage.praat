@@ -184,8 +184,10 @@ endproc
 procedure print_signal .outFileName$
 	.outFileName$ = replace_regex$(.outFileName$, "\.[a-z0-9A-Z]+$","",0)
 	# Set output format
-	.outExtension$ = "eps"
-	.outFileType$ = "EPS file"
+	.outEPSExtension$ = "eps"
+	.outEPSFileType$ = "EPS file"
+	.outExtension$ = .outEPSExtension$
+	.outFileType$ = .outEPSFileType$
 	if macintosh
 		.outExtension$ = "pdf"
 		.outFileType$ = "PDF file"
@@ -359,6 +361,9 @@ procedure print_signal .outFileName$
 	# Write to file
 	.plotyTop += .plotHeight
 	do("Select outer viewport...", 0, 7.27, 0, 10.69)
+	if config.outputEPS > 0 and .outExtension$ <> "eps"
+		do("Save as '.outEPSFileType$'...", "'.outFileName$'.'.outEPSExtension$'")
+	endif
 	do("Save as '.outFileType$'...", "'.outFileName$'.'.outExtension$'")
 	if config.convert2PNG
 		system '.convert2PNGcommand$' '.convert2PNGinoptions$' "'.outFileName$'.'.outExtension$'" '.convert2PNGoutoptions$' "'.outFileName$'.png"

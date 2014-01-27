@@ -89,8 +89,9 @@ procedure global_initialization
 	# config.useCache < 0 : Never use a cache
 	config.useCache = 0
 	localCacheDir$ = ".tevaCache"
+	config.outputEPS = 1
+	config.convert2PNG = 0
 
-	
 	pathologicalType = 0
 	pathologicalTypeText$ = "- Pathological type = 'pathologicalType'"
 	predictedPathType = 0
