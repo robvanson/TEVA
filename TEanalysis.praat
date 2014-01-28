@@ -327,8 +327,8 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 	.topBackGroundColorDown$ = "{0.89,0.89,0.94}"
 	.topLineColorDown$ = "{0.3,0.3,0.3}"
 	.topLineWidthDown = 1.5
-	.topBackGroundColorDisabled$ = "{0.85,0.85,0.85}"
-	.topLineColorDisabled$ = "{0.70,0.70,0.70}"
+	.topBackGroundColorDisabled$ = "{0.90,0.90,0.90}"
+	.topLineColorDisabled$ = "{0.85,0.85,0.85}"
 	.topLineWidthDisabled = 1.5
 	.flankBackGroundColorUp$ = "{0.6,0.6,0.6}"
 	.flankLineColorUp$ = "{0.2,0.2,0.2}"
@@ -470,6 +470,8 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 		endif
     elsif .push >= 2
         .buttonColor$ = "Maroon"
+    elsif .push <= -2
+        .buttonColor$ = "{0.85,0.85,0.85}"
 	else
     	demo Colour... Black
 	endif

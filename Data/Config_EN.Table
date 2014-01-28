@@ -34,6 +34,9 @@ CloseSpeaker	Close	o	Close current table and open a new, empty table
 SpeakerMerge	Merge	g	Merge new table with current speaker data
 SpeakerRevert	Revert	c	Revert speaker data to saved version
 AutoSelect	AutoSelect		Select the "best" interval automatically
+$VoicePrint	Voiceprint	!	Settings of VoicePrint image
+SaveEPS	EPS	!	Save VoicePrint as EPS file
+SavePNG	PNG	!	Save VoicePrint as PNG file
 $SpeakerSelect	Selection	!	Selection of recordings
 SpeakerSerial_None	Individual	i	Select individual recordings
 SpeakerSerial_Forw	Serial >	.>	Step through all recordings in sequence (Speaker button reads next recording)

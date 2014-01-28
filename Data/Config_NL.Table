@@ -34,6 +34,9 @@ CloseSpeaker	Sluit	S	Sluit huidige tabel en open een nieuwe, lege tabel
 SpeakerMerge	Merge	M	Combineer nieuwe tabel met huidige sprekergegevens
 SpeakerRevert	Herstel	#	Herstel naar opgeslagen sprekergegevens
 AutoSelect	AutoSelect		Selecteer automatisch het "beste" interval
+$VoicePrint	Voiceprint	!	Instellingen van de VoicePrint afbeelding
+SaveEPS	EPS	!	Bewaar VoicePrint als EPS bestand
+SavePNG	PNG	!	Bewaar VoicePrint als PNG bestand
 $SpeakerSelect	Verwerking	!	Selectie en verwerking van opnamen
 SpeakerSerial_None	Individueel	r	Selecteer individuele opnamen
 SpeakerSerial_Forw	Serieel >	.>	Verwerk alle opnamen in volgorde (Spreker knop leest volgende opname)

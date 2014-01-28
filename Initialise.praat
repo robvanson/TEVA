@@ -89,8 +89,6 @@ procedure global_initialization
 	# config.useCache < 0 : Never use a cache
 	config.useCache = 0
 	localCacheDir$ = ".tevaCache"
-	config.outputEPS = 1
-	config.convert2PNG = 0
 
 	pathologicalType = 0
 	pathologicalTypeText$ = "- Pathological type = 'pathologicalType'"
@@ -162,6 +160,25 @@ procedure global_initialization
 	drawPitchTier = 0
 	drawIntensity = 0
 	te.useFullASTselection = 1
+	
+	# On unix and mac, create PNG files
+	config.savePNG = 0
+	config.saveEPS = 0
+	config.canSavePNG = 0
+	if unix and fileReadable("/usr/bin/convert")
+		config.canSavePNG 1
+		config.savePNGcommand$ = "/usr/bin/convert"
+		# add -density 250 ?
+		config.savePNGinoptions$ = "-antialias -density 250"
+		config.savePNGoutoptions$ = "-flatten"
+	elsif macintosh and fileReadable("/opt/local/bin/convert")
+		config.canSavePNG = 1
+		config.savePNGcommand$ = "/opt/local/bin/convert"
+		# add -density 250 ?
+		config.savePNGinoptions$ = "-antialias -density 250"
+		config.savePNGoutoptions$ = "-flatten"
+	endif
+
 endproc
 
 procedure global_setup

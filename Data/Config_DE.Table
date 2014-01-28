@@ -23,7 +23,7 @@ Frequency_2k	2kHz	2	Wiedergabe bis 2 kHz
 Frequency_1k	1kHz	1	Wiedergabe bis 1 kHz
 ShowFormants	Formante	F	Zeige Formante im Spektrogramm
 $Pitch	Tonh\o"he	!	Einstellung der Tonh\o"hemessung
-Pitchalgorithm_VanAs	Kompatibel	!	Einstellunger von C.J. van As 2001 "Tracheoesophageal Speech" p83
+Pitchalgorithm_VanAs	Kompatibel	!	Einstellungen von C.J. van As 2001 "Tracheoesophageal Speech" p83
 Pitchalgorithm_CC300	Tief	!	Reduzierte Oktavenspr\u"nge, f\u"r normale und tiefe Stimmen (<300 Hz)
 Pitchalgorithm_CC600	Hoch	!	Reduzierte Oktavenspr\u"nge, f\u"r hohe Stimmen (<600 Hz)
 $Speaker	Sprecher	!	Tabelle mit den Sprecherdaten
@@ -34,6 +34,9 @@ CloseSpeaker	Schlie\ssen	l	Schlie\sse die aktuelle Tabelle und \o"fne eine lehre
 SpeakerMerge	Kombiniere	K	Kombiniere tabelle mit Sprecherdaten
 SpeakerRevert	Gespeichert	c	Gespeicherte Version der Sprecherdaten wiederherstellen
 AutoSelect	AutoSelect		W\a"hlen Sie das beste Intervall automatisch
+$VoicePrint	Voiceprint	!	Einstellungen VoicePrint Bild
+SaveEPS	EPS	!	VoicePrint als EPS Datei aufbewahren
+SavePNG	PNG	!	VoicePrint als PNG Datei aufbewahren
 $SpeakerSelect	Verarbeitung	!	Selection und Verarbeitung von Aufnahmen
 SpeakerSerial_None	Einzeln	v	Verarbeite alle Aufnahmen einzeln
 SpeakerSerial_Forw	Seriell >	.>	Verarbeite alle Aufnahmen hintereinander (Sprecher Taste liest n\a"chste Aufnahme)

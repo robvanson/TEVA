@@ -196,22 +196,6 @@ procedure print_signal .outFileName$
 		.outFileType$ = "Windows metafile"
 	endif
 	
-	# On unix and mac, create PNG files
-	config.convert2PNG = 0
-	if unix and fileReadable("/usr/bin/convert")
-		config.convert2PNG = 1
-		.convert2PNGcommand$ = "/usr/bin/convert"
-		# add -density 250 ?
-		.convert2PNGinoptions$ = "-antialias -density 250"
-		.convert2PNGoutoptions$ = "-flatten"
-	elsif macintosh and fileReadable("/opt/local/bin/convert")
-		config.convert2PNG = 1
-		.convert2PNGcommand$ = "/opt/local/bin/convert"
-		# add -density 250 ?
-		.convert2PNGinoptions$ = "-antialias -density 250"
-		.convert2PNGoutoptions$ = "-flatten"
-	endif
-	
 	# Print
 	mainPage.outputPraatObject$ = "Print"
 	Erase all
@@ -361,12 +345,12 @@ procedure print_signal .outFileName$
 	# Write to file
 	.plotyTop += .plotHeight
 	do("Select outer viewport...", 0, 7.27, 0, 10.69)
-	if config.outputEPS > 0 and .outExtension$ <> "eps"
+	if config.saveEPS > 0 and .outExtension$ <> "eps"
 		do("Save as '.outEPSFileType$'...", "'.outFileName$'.'.outEPSExtension$'")
 	endif
 	do("Save as '.outFileType$'...", "'.outFileName$'.'.outExtension$'")
-	if config.convert2PNG
-		system '.convert2PNGcommand$' '.convert2PNGinoptions$' "'.outFileName$'.'.outExtension$'" '.convert2PNGoutoptions$' "'.outFileName$'.png"
+	if config.savePNG
+		system 'config.savePNGcommand$' 'config.savePNGinoptions$' "'.outFileName$'.'.outExtension$'" 'config.savePNGoutoptions$' "'.outFileName$'.png"
 	endif
 
 	# Reset draw

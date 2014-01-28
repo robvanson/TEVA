@@ -99,6 +99,13 @@ endproc
 
 # Set the correct button states after redrawing the window
 procedure setConfigMainPage
+	# Handle the Save to PNG button
+    if config.canSavePNG
+		.displayButton = 2*config.savePNG
+		call Draw_button 'te.config$' SavePNG .displayButton
+    else
+		call Draw_button 'te.config$' SavePNG -1
+	endif
     #call Draw_button 'te.config$' Language_'config.language$' 2
     call Draw_button 'te.config$' Input_'config.input$' 2
 	call setFrequencyButton
@@ -106,6 +113,7 @@ procedure setConfigMainPage
     if logging
     	call Draw_button 'te.config$' Logging 'logging'
     endif
+
 endproc
 
 procedure setFrequencyButton
@@ -359,6 +367,30 @@ procedure processConfigSpeakerSerial .input$ .clickX .clickY .pressed$
 	config.speakerSerial$ = .input$
 	call switch_speaker_next_button 'config.speakerSerial$'
     call Draw_button '.table$' '.label$'_'config.speakerSerial$' 2
+endproc
+
+procedure processConfigSaveEPS .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "SaveEPS"
+
+    call Draw_button '.table$' '.label$' 0
+	config.saveEPS = not config.saveEPS
+	.displayButton = 2*config.saveEPS
+    call Draw_button '.table$' '.label$' .displayButton
+endproc
+
+procedure processConfigSavePNG .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "SavePNG"
+
+	if config.canSavePNG
+	    call Draw_button '.table$' '.label$' 0
+		config.savePNG = not config.savePNG
+		.displayButton = 2*config.savePNG
+	    call Draw_button '.table$' '.label$' .displayButton
+	else
+		call Draw_button '.table$' '.label$' -2
+	endif
 endproc
 
 procedure processConfigAutoSelect .clickX .clickY .pressed$

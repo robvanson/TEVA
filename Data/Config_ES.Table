@@ -4,7 +4,7 @@ Label	Text	Key	Helptext
 !License	License	!	GNU GPL version 2 or later
 !WindowTitle	NKI TE-VOICE ANALYSIS Herramienta: Cambiar la configuracion	!	NKI TE-VOICE ANALYSIS Herramienta: Cambiar la configuacion
 Return	Volver	V	Volver a  %%principal% pagina
-Language_ES	Espa\n~ol	s	Version Idioma Espa\n~ol
+!Language_ES	Espa\n~ol	s	Version Idioma Espa\n~ol
 ShowBackground	Anterior	A	Mostrar anterior
 Input_Microphone	Microfono	o	Utilice el microfono configurado para la gabacion
 Input_Line	Entrada Linea |	|\+	Utilice la entrada de la linea para la grabacion
@@ -34,6 +34,9 @@ CloseSpeaker	Cerrar	C	Cerrar tabla actual y abrir una nueva y vac\i'a
 SpeakerMerge	Mezclar	z	Mezclar nueva tabla con datos actuales del hablante
 SpeakerRevert	Volver habl	h	Volver a los datos del hablante para guardar la versi\o'n
 AutoSelect	Autom\a'tico	u	Seleccionar el "mejor" intervalo autom\a'ticamente
+$VoicePrint	Voiceprint	!	Settings of VoicePrint image
+SaveEPS	EPS	!	Save VoicePrint as EPS file
+SavePNG	PNG	!	Save VoicePrint as PNG file
 $SpeakerSelect	Selection	!	Selection of recordings
 SpeakerSerial_None	Individual	l	Select individual recordings
 SpeakerSerial_Forw	Series >	.>	Acceder a todas las gabaciones en secuencia (Boton del Hablante lee nueva grabacion)
