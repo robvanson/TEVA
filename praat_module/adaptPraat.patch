@@ -126,7 +126,18 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_picture.cpp demo_praat_sources/sys/praat_picture.cpp
 --- praat_sources/sys/praat_picture.cpp	2012-09-27 09:10:50.000000000 +0200
 +++ demo_praat_sources/sys/praat_picture.cpp	2012-10-15 13:47:43.000000000 +0200
-@@ -1682,7 +1682,9 @@ void praat_picture_init (void) {
+@@ -1396,8 +1396,10 @@ void praat_picture_open (void) {
+ 		#elif cocoa
+ 			dialog -> f_show ();
+ 		#elif motif
++#ifndef DEMOAPP
+ 			XtMapWidget (dialog -> d_xmShell);
+ 			XMapRaised (XtDisplay (dialog -> d_xmShell), XtWindow (dialog -> d_xmShell));
++#endif
+ 		#endif
+ 		Picture_unhighlight (praat_picture);
+ 	}
+@@ -1682,7 +1684,9 @@ void praat_picture_init (void) {
  		width = height = resolution * 12;
  		scrollWindow = GuiScrolledWindow_createShown (dialog, margin, 0, Machine_getMenuBarHeight () + margin, 0, 1, 1, 0);
  		drawingArea = GuiDrawingArea_createShown (scrollWindow, width, height, NULL, NULL, NULL, NULL, NULL, 0);
