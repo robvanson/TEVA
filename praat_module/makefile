@@ -8,7 +8,7 @@ endif
 all: TEanalysisexpanded.h TEanalysisManPages.cpp
 	bash makePraat.sh 2>&1
 	bash makePraat.sh MinGW 2>&1
-	bash makePraat.sh MinGW XP 2>&1
+	#bash makePraat.sh MinGW XP 2>&1
 
 TEanalysisexpanded.praat: ../*.praat
 	perl ./expandPraatScripts.pl ../TEanalysis.praat > TEanalysisexpanded.praat

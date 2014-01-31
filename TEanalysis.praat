@@ -885,15 +885,6 @@ procedure record_sound
 	# Display a recording light
     demo Paint circle... Red 'recordingLightX' 'recordingLightY' 2
     demoShow()
-	# In Windows interaction between demoWaitForInput and Record Sound blocks drawing the feedback
-	if windows and endsWith(build_SHA$, " XP")
-		# Display a pause window to flush the graphics buffer
-		beginPause ("DESTROY WINDOW ")
-			comment (" ")
-		endPause ("DESTROY WINDOW ", 1, 1)
-    	demo Paint circle... Red 'recordingLightX' 'recordingLightY' 2
-    	demoShow()
-	endif
     noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 44100 'config.recordingTime$'
 	# Keep track of current sound
 	call getTimeStamp
