@@ -1,9 +1,9 @@
 #
-# TEanalysis 0.1
+# TEVA 0.1
 # 
 # Master Praat script
 #
-#     TEanalysis: main.praat is the master GUI of TEanalysis
+#     TEVA: main.praat is the master GUI of TEVA
 #     It is written in Praat script for the demo window 
 #     
 #     Copyright (C) 2010-2012  R.J.J.H. van Son and the Netherlands Cancer Institute
@@ -23,7 +23,7 @@
 #     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 # 
 
-demoAppName$ = "Teanalysis"
+demoAppName$ = "TEVA"
 
 # Define variable that might be reset in Initialise*.praat
 if not variableExists("build_SHA$")
@@ -1062,7 +1062,7 @@ endproc
 ######################################################
 procedure config_page
     demo Erase all
-    demoWindowTitle("TEanalysis: Change settings")
+    demoWindowTitle("TEVA: Change settings")
     .label$ = ""
     call Draw_config_page
     

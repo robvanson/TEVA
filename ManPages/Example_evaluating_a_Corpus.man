@@ -86,7 +86,7 @@ directory as the Table with the list of recordings. For example, the preferences
 <code> "config.speakerSerial    1"
 <code> "mainPage.draw           Spectrogram"
 
-<normal> "A complete preferences file as created by TEVA, e.g., %%~/Library/Preferences/TEanalysis/Teanalysisrc.tsv%, could look like 
+<normal> "A complete preferences file as created by TEVA, e.g., %%~/Library/Preferences/TEVA/TEVArc.tsv%, could look like 
 (again, use single tabs to separate the fields):"
 <code> "Key                     Value"
 <code> "config.language         EN"
@@ -98,6 +98,6 @@ directory as the Table with the list of recordings. For example, the preferences
 <code> "config.showBackground   1"
 <code> "config.input            Microphone"
 <code> "config.muteOutput       0"
-<code> "config.openLog          /Users/gues/Library/Preferences/TEanalysis/log"
+<code> "config.openLog          /Users/gues/Library/Preferences/TEVA/log"
 <code> "mainPage.draw           Spectrogram"
 <normal> "Note that the last Table used is stored in the preferences file (here it is %%SignaltypeVoiceSamples.Table%)."

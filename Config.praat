@@ -1,10 +1,10 @@
 #
-# TEanalysis 2.0
+# TEVA 2.0
 # 
 # Praat script handling configuration page
 #
-#     TEanalysis: Config.praat loads the code needed for the 
-#     settings and the Settings page of TEanalysis.
+#     TEVA: Config.praat loads the code needed for the 
+#     settings and the Settings page of TEVA.
 #     
 #     Copyright (C) 2010-2012  R.J.J.H. van Son and the Netherlands Cancer Institute
 # 
@@ -789,7 +789,7 @@ procedure write_credits
 	.xleft += 2
  	.dy = .lineHeight
  	.ytext = .yhigh - 2 - .dy
- 	demo Text... '.xleft' Left '.ytext' Bottom TEanalysis version 0.1
+ 	demo Text... '.xleft' Left '.ytext' Bottom TEVA version 0.1
 	.ytext -= 2*.dy
  	demo Text... '.xleft' Left '.ytext' Bottom For more information, visit our website: http://www.
 	.ytext -= .dy

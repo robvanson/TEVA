@@ -1,9 +1,9 @@
 #
-# TEanalysis 0.1
+# TEVA 0.1
 # 
 # Praat script handling buttons page
 #
-#     TEanalysis: MainPage.praat loads the code needed for the 
+#     TEVA: MainPage.praat loads the code needed for the 
 #     main, practice, page of DemoApp and the sound handling and recognition.
 #     
 #     Copyright (C) 2010-2012  R.J.J.H. van Son and the Netherlands Cancer Institute
@@ -2545,7 +2545,7 @@ procedure saveSound .table$ .label$
 		.currentID$ = replace_regex$(speakerID$, "^\W*([\w\- ]+).*$", "\1", 0)
 		.currentID$ = replace_regex$(.currentID$, " ", "_", 0)
 	else
-		.currentID$ = "TEanalysis"
+		.currentID$ = "TEVA"
 	endif
 	.filename$ = ""
 	if currentSoundName$ <> ""

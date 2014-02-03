@@ -1,9 +1,9 @@
 #
-# TEanalysis 0.1
+# TEVA 0.1
 # 
 # Intializing Praat script
 #
-#     TEanalysis: Initialize.praat defines and sets the global variables
+#     TEVA: Initialize.praat defines and sets the global variables
 #     and loads general application specific code 
 #     
 #     Copyright (C) 2010-2012  R.J.J.H. van Son and the Netherlands Cancer Institute
