@@ -209,29 +209,31 @@ procedure print_signal .outFileName$
 	
 	# Get Voice Quality rating
 	call get_speakerInfo 'speakerID$'
-	select config.speakerDataTable
-	.vq_Rating = -1
-	.colImpression = Get column index... Rating.impression
-	.colQuality = Get column index... Rating.quality
-	if .colImpression > 0
-		.vq_Rating = do("Get value...", get_speakerInfo.row, "Rating.impression")
-	endif
-	if (.vq_Rating = undefined or .vq_Rating < 0 ) and .colQuality > 0
-		.vq_Rating = do("Get value...", get_speakerInfo.row, "Rating.quality")
-	endif
-	if .vq_Rating = undefined
+	if config.speakerDataTable > 0
+		select config.speakerDataTable
 		.vq_Rating = -1
-	else
-		.vq_Rating /= 10
-	endif
-	.col = Get column index... Rating.intelligibility
-	.intel_Rating = -1
-	if .col > 0
-		.intel_Rating = do("Get value...", get_speakerInfo.row, "Rating.intelligibility")
-		if .intel_Rating = undefined
-			.intel_Rating = -1
+		.colImpression = Get column index... Rating.impression
+		.colQuality = Get column index... Rating.quality
+		if .colImpression > 0
+			.vq_Rating = do("Get value...", get_speakerInfo.row, "Rating.impression")
+		endif
+		if (.vq_Rating = undefined or .vq_Rating < 0 ) and .colQuality > 0
+			.vq_Rating = do("Get value...", get_speakerInfo.row, "Rating.quality")
+		endif
+		if .vq_Rating = undefined
+			.vq_Rating = -1
 		else
-			.intel_Rating /= 10
+			.vq_Rating /= 10
+		endif
+		.col = Get column index... Rating.intelligibility
+		.intel_Rating = -1
+		if .col > 0
+			.intel_Rating = do("Get value...", get_speakerInfo.row, "Rating.intelligibility")
+			if .intel_Rating = undefined
+				.intel_Rating = -1
+			else
+				.intel_Rating /= 10
+			endif
 		endif
 	endif
 	
@@ -2556,7 +2558,9 @@ procedure saveSound .table$ .label$
 			.outExtension$ = "emf"
 		endif
 		.filename$ = chooseWriteFile$ (.writeDialogue$, "'.currentID$'.'.outExtension$'")
-		call print_signal '.filename$'
+		if .filename$ <> ""
+			call print_signal '.filename$'
+		endif
 	endif
 endproc
 
