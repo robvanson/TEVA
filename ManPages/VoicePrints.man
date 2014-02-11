@@ -1,0 +1,18 @@
+ManPagesTextFile
+"Voiceprints" "R.J.J.H. van Son" 20140211 0
+<intro> "Voice prints"
+<normal> "Voice prints are useful to document the acoustic characteristics of the voice. "
+
+<entry> "Information displayed on a voice print"
+<list_item> "\bu #Title: Title or ID of the print, date and time of the voice print, Acoustic Signal type, and Voice Quality"
+<list_item> "\bu #Waveform: The overall waveform of the selected window"
+<list_item> "\bu ##Waveform 0.1s#: Display of 0.1s in the center of the window"
+<list_item> "\bu #Spectrogram: Power spectrogram"
+<list_item> "\bu #Pitch: Pitch contour"
+<list_item> "\bu #Ltas: Long time average spectrum"
+
+
+<script> 6.75 6 "
+	Axes... 0 100 0 100
+	Insert picture from file... signaltype3_example.png 0 69 0 100
+"
