@@ -1163,7 +1163,12 @@ Displays</h3>
 <code>
 select Sound SND<br></code>
 <code>
-<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Pitch___.html" target="_blank">To Pitch...</a> 0 60 600<br></code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Pitch__cc____.html" target="_blank">To Pitch (cc)...</a> 0 40 15 yes 0.03 0.40 0.045 0.35 0.14 300<br></code>
+<p>
+There are three options, a low and high pitch cutoff (300 and 600Hz), and a compatible option 
+that implements the settings of Van As 2001</p>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Pitch__cc____.html" target="_blank">To Pitch (cc)...</a> 0 40 15 no  0.03 0.40 0.01 0.35 0.14 250<br></code>
 <h3>
 <a href="http://www.fon.hum.uva.nl/praat/manual/Spectrogram.html" target="_blank">Spectrogram</a></h3>
 <code>
@@ -1195,10 +1200,10 @@ select Sound SND<br></code>
 <code>
 select Sound SND<br></code>
 <code>
-<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Harmonicity__cc____.html" target="_blank">To Harmonicity (cc)...</a> 'dT' 40 0 4.5<br></code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Harmonicity__cc____.html" target="_blank">To Harmonicity (cc)...</a> 'dT' 40 0 1.0<br></code>
 <p>
 dT is the time step. The position of the maximum Harmonicity is determined on a smoothed 
-low-pass filtered contour (low-pass 5Hz and 5Hz transition), <i>not</i> on the highest peak.</p>
+low-pass filtered contour using <i>'dT' 40 0 4.5</i> (low-pass 5Hz and 5Hz transition), <i>not</i> on the highest peak.</p>
 <h3>
 Measurements</h3>
 <h3>

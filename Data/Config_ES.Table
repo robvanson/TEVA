@@ -46,7 +46,7 @@ SpeakerSort	Tipo V	V	Clasificar la lista de grabaciones
 SpeakerRandomize	Arrastrar	!	Aleatorizar lista de grabaciones
 RecordingTime	Grabaci\o'n	b	Tiempo de gravaci\o'n en segundos
 $Rating	Valoraci\o'n		Valoraci\o'n humana del habla
-RatingForm_A	Vocales		Formulario de evaluaci\o'n (VAS) de vocales
+RatingForm_Vowel	Vocales		Formulario de evaluaci\o'n (VAS) de vocales
 RatingForm_Text	Text		Text evaluation form (VAS) for words and running speech
 VasScaleTicks	Registros	!	Visualizar registros de escalas para formularios de evaluaci\o'n
 Logging	Entrar	!	Iniciar regitro de sonidos

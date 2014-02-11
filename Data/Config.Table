@@ -46,7 +46,7 @@ RecordingTime	70	85	75	80	Black	DrawNull
 MuteOutput	70	85	69	74	Grey	DrawNull
 Test	70	85	61	66	Black	DrawTest
 $Rating	70	85	53	58	Black	DrawNull
-RatingForm_A	70	85	47	52	Black	DrawNull
+RatingForm_Vowel	70	85	47	52	Black	DrawNull
 RatingForm_Text	70	85	41	46	Black	DrawNull
 VasScaleTicks	70	85	35	40	Grey	DrawNull
 Instruction	90	100	65	75	Black	DrawInstruction
