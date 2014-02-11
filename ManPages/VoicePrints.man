@@ -1,7 +1,7 @@
 ManPagesTextFile
 "Voiceprints" "R.J.J.H. van Son" 20140211 0
 <intro> "Voice prints"
-<normal> "Voice prints are useful to document the acoustic characteristics of the voice. "
+<normal> "The development of voice characteristics and voice quality after laryngectomy is important for the quality of speech and, ultimately, affects the quality of life (QoL) of the patient. Clinical practice and subsequent therapies would benefit if such developments are documented over the course of treatment and even beyond. This documentation should consist of perceptual (subjective) evaluation and the results of acoustic measurements. Based on research of Van As, Clapham, and others, a set of acoustic measures have emerged that are useful to describe the voice of tracheolaryngeal (TE) speakers. These have been incorporated in the Voice Print of @@NKI TE-VOICE ANALYSIS tool (EN)|TEVA@ which gives a single-page view of the most important acoustic and perceptual measures of the TE voice. Voice prints are useful to document the acoustic characteristics of the TE voice. "
 
 <entry> "Information displayed on a voice print"
 <list_item> "\bu #Title: Title or ID of the print, date and time of the voice print, Acoustic Signal type, and Voice Quality"
