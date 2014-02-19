@@ -15,7 +15,7 @@ Quit	Ende	E	Das Programm beenden
 Config	Einstellungen	g	Zur Seite "Einstellungen"
 Refresh	Aktualisieren	u	Der aktuelle Bildschirm wird abgebildet. Mit der Leertaste kann der Bildschirm aktualisiert werden.
 Help	Hilfe	?/	Dr\u"cken Sie auf den Knopf \u"ber den Sie Informationen m\o"chten. Dr\u"cken Sie danach auf "Hilfe".
-Save	Drucken \#	#	Speichern der Daten und Aufnahme zum abdrucken
+Save	Drucken \#	#	Speichern der Daten zum abdrucken
 Draw_Sound	Audio	d	Abbildung des Audiosignals
 Draw_Pitch	Tonh\o"he	T	Abbildung der Tonh\o"he
 Draw_Harmonicity	Harmonizit\a"t	H	Abbildung des Harmonicity-to-Noise Verh\a"ltnis

@@ -3,14 +3,17 @@ ManPagesTextFile
 <intro> "#Introduction"
 <normal> "The development of voice characteristics and voice quality after laryngectomy is important for the quality of speech and, ultimately, for the quality of life (QoL) of the patient. Clinical practice and subsequent therapies will benefit if such developments are documented over the course of treatment and even beyond. This documentation should consist of professional  and perceptual (subjective) evaluations of the voice and the results of acoustic measurements."
 <normal> "Based on research of Van As, Clapham, and others, a set of acoustic measures have emerged that are useful to describe the voice of tracheolaryngeal (TE) speakers. These have been incorporated in the Voice Print of @@NKI TE-VOICE ANALYSIS tool (EN)|TEVA@ which gives a single-page view of the most important acoustic and perceptual measures of the TE voice. Voice prints are useful to document the acoustic characteristics of the TE voice. "
-<normal> "Traditionally, voice evaluations are done on sustained vowels and articulated speech, e.g., words, sentences, and read stories. For TE speech, the basic evaluations can be done on sustained vowels, most importantly, a sustained /a/. "
+<normal> "Traditionally, voice evaluations are done on sustained vowels and articulated speech, e.g., words, sentences, and read stories. For TE speech, the basic evaluations can be done on sustained vowels, most importantly, sustained /a/. "
 
 <entry> "Perceptual evaluation of voice"
-<normal> "Perceptual voice and speech quality traditionally has several dimensions. These voice and speech evaluations are implemented in @@NKI TE-VOICE ANALYSIS tool (EN)|TEVA@ as Visual Analogue Scales (VAS) on the ##@@INFVo rating scales (EN)|Rating@# page. For TE speech, three scales can express the most important qualities of the /a/ (under the %%Vowel% Rating): "
+<normal> "Several perceptual dimensions are traditionally distinguished to evaluate voice and speech quality. These voice and speech evaluations are implemented in ##[NKI TE-VOICE ANALYSIS tool (EN)|TEVA]# as Visual Analogue Scales (VAS) on the ##[INFVo rating scales (EN)|Rating]# page. For TE speech, three scales can express the most important qualities of the /a/ (under the %%Vowels% Rating): "
 <list_item> "\bu ##Quality#: The overall similarity to normal voice quality"
 <list_item> "\bu ##Continuity#: The continuity of phonation/voicing, i.e. proportion of vowel that is voiced in \% "
 <list_item> "\bu ##Noise#: The amount of audible noise during speech "
 <normal> "The VoicePrint will print out the Voice Quality rating (VQ). "
+
+<entry> "Visual evaluation of voice"
+<normal> "Van As-Brooks has developed a four grade ##[Acoustic Signal Typing]# of voice that is based on visual inspection of the ##[Spectrogram]#. The ##[Acoustic Signal Typing|AST]# categories can be entered using the number keys 1-4, the key 0 removes the ##[Acoustic Signal Typing|AST]# category. ##[Acoustic Signal Typing|AST]# categories are displayed as Roman numerals on the ##[Overview of Main page|main]# page."
 
 <entry> "Acoustic measures of voice"
 

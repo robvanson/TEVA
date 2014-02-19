@@ -48,6 +48,7 @@ RecordingTime	Opname ]	]}	Opnametijd in seconden
 $Rating	Beoordeling		Menselijke beoordeling van spraak
 RatingForm_Vowel	Klinkers		Beoordelingsformulier voor klinkers
 RatingForm_Text	Text		Tekst beoordelingsformulier voor woorden en lopende spraak
+RatingForm_INFVo	IINFVo		IINFVo beoordelingsformulier (Impression, Intelligibility, Noise, Fluency, Voice)
 VasScaleTicks	Schaal		Schaal markeringen in beoordelingsformulier
 Logging	Log aan	L	Start logging spraak
 OpenLog	Kies	K	Kies map voor logboek

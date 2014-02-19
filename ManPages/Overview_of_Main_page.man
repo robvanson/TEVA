@@ -47,13 +47,13 @@ keys will position a %1 or %2 second window around the (first) selection point, 
 %Select button again will cancel the selection."
 
 <entry> "Saving and printing a report"
-<list_item> "\bu #Print [\# ] Save recording and a report of the analysis in printer format"
-<normal> "The current sound, and a report with all graphs and the analysis results can be saved into a seperate map (or directory). 
-The analysis windows are calculated and pictures are stored. A web page (.html and .odt) is created for printing on Apple OSX and
-Microsoft Windows systems. On Apple OSX the pictures are saved as PDF graphics, on Microsoft Windows as WMF graphics. On these 
-two systems, a web page (.html) is created with the report. On all systems, pictures are also saved as PostScript graphics (EPS) and a 
-report with an .odt extension is created. This report can be opened with OpenOffice.org or LibreOffice word processors for inspection 
-and printing. Both OpenOffice.org and LibreOffice.org are Free and Open Source word processing programs."
+<list_item> "\bu #Print [\# ] Save a one page report in printer format (##[VoicePrints|Voice print]#)"
+<normal> "A report with graphs and the analysis results can be saved into a report in printing format. 
+The report contains the waveform of the current window, a 0.1 second enlargement window, and the ##[Spectrogram]#, ##[Pitch]#, 
+and ##[Ltas]# graphs.
+The analysis windows are calculated and pictures are combined into a single page report. On Apple OSX the pictures are saved as PDF 
+graphics, on Microsoft Windows as (extended) WMF graphics. On all systems, pictures can also saved as PostScript graphics (EPS). 
+There is experimental support for PNG format on Mac OSX and Linux."
 
 <entry> "@@Analysis|Analysis calculations and displays@"
 <normal> "Selected statistics about the analysis will be written below the display. This includes the 

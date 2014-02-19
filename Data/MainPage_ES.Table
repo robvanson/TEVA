@@ -15,7 +15,7 @@ Quit	Quit	Q	Quit TEVA
 Config	Settings	S	Go to %%Configuration% page
 Refresh	Refresh	h	Redraw the current screen, the space-bar always refreshes screen
 Help	Help	?/	Press the button you want information on, "Help" to continue
-Save	Print \# 	#	Save recording and a report of the analysis in printer format
+Save	Print \# 	#	Save a report in printer format
 Draw_Sound	Sound	S	Draw the Sound
 Draw_Pitch	Pitch	t	Draw Pitch
 Draw_Harmonicity	Harmonicity	H	Draw the Harmonicity to Noise ratio

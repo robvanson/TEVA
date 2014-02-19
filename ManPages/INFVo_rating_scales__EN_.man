@@ -9,7 +9,7 @@ ManPagesTextFile
 <normal> "##(I)INFV0# is a standard for rating voices used in Speech Therapy. TEVA will primarily be used to 
 study voicing in sustained vowels. In these circumstances, the standard %Impression, %Intelligibility, and %Fluency 
 scales of ##(I)INFVo# would be of little use. Therefore, the TEVA Rating screen includes also a derived set of the scales 
-optimized for vowels."
+optimized for vowels (#Vowels). In addition, there is a simplified subset for the evaluation of running speech (#Text)"
 
 <entry> "Visual Analogue Scale (VAS) rating"
 <normal> "In VAS rating, the judges have to indicate the severety of some condition as a mark on a line. 
