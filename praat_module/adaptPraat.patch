@@ -14,7 +14,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/stat/praat_Stat.cpp d
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_script.cpp demo_praat_sources/sys/praat_script.cpp
 --- praat_sources/sys/praat_script.cpp	2011-09-02 13:53:33.000000000 +0200
 +++ demo_praat_sources/sys/praat_script.cpp	2011-10-28 07:54:25.000000000 +0200
-@@ -562,6 +562,7 @@ void praat_executeScriptFromText (wchar 
+@@ -556,6 +556,7 @@ void praat_executeScriptFromText (wchar 
  		autoInterpreter interpreter = Interpreter_create (NULL, NULL);
  		Interpreter_run (interpreter.peek(), text);
  	} catch (MelderError) {
@@ -126,7 +126,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_picture.cpp demo_praat_sources/sys/praat_picture.cpp
 --- praat_sources/sys/praat_picture.cpp	2012-09-27 09:10:50.000000000 +0200
 +++ demo_praat_sources/sys/praat_picture.cpp	2012-10-15 13:47:43.000000000 +0200
-@@ -1396,8 +1396,10 @@ void praat_picture_open (void) {
+@@ -1398,8 +1398,10 @@ void praat_picture_open (void) {
  		#elif cocoa
  			dialog -> f_show ();
  		#elif motif
@@ -137,7 +137,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_picture.cpp
  		#endif
  		Picture_unhighlight (praat_picture);
  	}
-@@ -1682,7 +1684,9 @@ void praat_picture_init (void) {
+@@ -1684,7 +1686,9 @@ void praat_picture_init (void) {
  		width = height = resolution * 12;
  		scrollWindow = GuiScrolledWindow_createShown (dialog, margin, 0, Machine_getMenuBarHeight () + margin, 0, 1, 1, 0);
  		drawingArea = GuiDrawingArea_createShown (scrollWindow, width, height, NULL, NULL, NULL, NULL, NULL, 0);
