@@ -165,7 +165,7 @@ procedure global_initialization
 	config.saveFMT$ = "PDF"
 	config.canSavePNG = 0
 	if unix and fileReadable("/usr/bin/convert")
-		config.canSavePNG 1
+		config.canSavePNG = 1
 		config.savePNGcommand$ = "/usr/bin/convert"
 		# add -density 250 ?
 		config.savePNGinoptions$ = "-antialias -density 250"
