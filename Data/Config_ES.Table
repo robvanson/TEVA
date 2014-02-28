@@ -35,8 +35,9 @@ SpeakerMerge	Mezclar	z	Mezclar nueva tabla con datos actuales del hablante
 SpeakerRevert	Volver habl	h	Volver a los datos del hablante para guardar la versi\o'n
 AutoSelect	Autom\a'tico	u	Seleccionar el "mejor" intervalo autom\a'ticamente
 $VoicePrint	Voiceprint	!	Settings of VoicePrint image
-SaveEPS	EPS	!	Save VoicePrint as EPS file
-SavePNG	PNG	!	Save VoicePrint as PNG file
+SaveFMT_PDF	PDF	!	Save VoicePrint as PDF file
+SaveFMT_EPS	EPS	!	Save VoicePrint as EPS file
+SaveFMT_PNG	PNG	!	Save VoicePrint as PNG file
 $SpeakerSelect	Selection	!	Selection of recordings
 SpeakerSerial_None	Individual	l	Select individual recordings
 SpeakerSerial_Forw	Series >	.>	Acceder a todas las gabaciones en secuencia (Boton del Hablante lee nueva grabacion)

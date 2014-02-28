@@ -161,9 +161,8 @@ procedure global_initialization
 	drawIntensity = 0
 	te.useFullASTselection = 1
 	
-	# On unix and mac, create PNG files
-	config.savePNG = 0
-	config.saveEPS = 0
+	# On unix and mac, default to PDF and allow PNG files
+	config.saveFMT$ = "PDF"
 	config.canSavePNG = 0
 	if unix and fileReadable("/usr/bin/convert")
 		config.canSavePNG 1
@@ -177,6 +176,9 @@ procedure global_initialization
 		# add -density 250 ?
 		config.savePNGinoptions$ = "-antialias -density 250"
 		config.savePNGoutoptions$ = "-flatten"
+	elsif windows
+		# On windows, only EMF are possible
+		config.saveFMT$ = "EMF"
 	endif
 
 endproc

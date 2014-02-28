@@ -188,10 +188,10 @@ procedure print_signal .outFileName$
 	.outEPSFileType$ = "EPS file"
 	.outExtension$ = .outEPSExtension$
 	.outFileType$ = .outEPSFileType$
-	if macintosh
+	if config.saveFMT$ = "PDF"
 		.outExtension$ = "pdf"
 		.outFileType$ = "PDF file"
-	elsif windows
+	elsif windows or config.saveFMT$ = "EMF"
 		.outExtension$ = "emf"
 		.outFileType$ = "Windows metafile"
 	endif
@@ -347,11 +347,11 @@ procedure print_signal .outFileName$
 	# Write to file
 	.plotyTop += .plotHeight
 	do("Select outer viewport...", 0, 7.27, 0, 10.69)
-	if config.saveEPS > 0 and .outExtension$ <> "eps"
+	if config.saveFMT$ = "EPS" and .outExtension$ <> "eps"
 		do("Save as '.outEPSFileType$'...", "'.outFileName$'.'.outEPSExtension$'")
 	endif
 	do("Save as '.outFileType$'...", "'.outFileName$'.'.outExtension$'")
-	if config.savePNG
+	if config.saveFMT$ = "PNG"
 		system 'config.savePNGcommand$' 'config.savePNGinoptions$' "'.outFileName$'.'.outExtension$'" 'config.savePNGoutoptions$' "'.outFileName$'.png"
 	endif
 
@@ -2552,9 +2552,11 @@ procedure saveSound .table$ .label$
 	.filename$ = ""
 	if currentSoundName$ <> ""
 		.outExtension$ = "eps"
-		if macintosh
+		if config.saveFMT$ = "PDF"
 			.outExtension$ = "pdf"
-		elsif windows
+		elsif config.saveFMT$ = "PNG"
+			.outExtension$ = "png"
+		elsif config.saveFMT$ = "EMF"
 			.outExtension$ = "emf"
 		endif
 		.filename$ = chooseWriteFile$ (.writeDialogue$, "'.currentID$'.'.outExtension$'")
