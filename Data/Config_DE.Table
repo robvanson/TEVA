@@ -51,6 +51,6 @@ RatingForm_Vowel	Vokallaut		Beurteilungsformular f\u"r Vokallaute
 RatingForm_Text	Text		Tekst Beurteilungsformular f\u"r W\o"rter und S\a"tze
 RatingForm_INFVo	IINFVo		IINFVo Beurteilungsformular (Impression, Intelligibility, Noise, Fluency, Voice)
 VasScaleTicks	Markierung		Zeige Skalenmarkierungen in beurteilungsformular
-Logging	Log an	L	Starte das Protokollieren aller Aufnahmen (Logbuch)
-OpenLog	W\a"hlen	W	Selectiere Verzeichnis f\u"r die Logbuchdatei
-Run	Ausf\u"hren	n	Befehlsdatei oder Logbuchdatei ausf\u"hren
+!Logging	Log an	L	Starte das Protokollieren aller Aufnahmen (Logbuch)
+!OpenLog	W\a"hlen	W	Selectiere Verzeichnis f\u"r die Logbuchdatei
+!Run	Ausf\u"hren	n	Befehlsdatei oder Logbuchdatei ausf\u"hren

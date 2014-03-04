@@ -318,7 +318,7 @@ procedure init_window
 	# Sound recording level
 	call draw_recording_level
 	# Logging light
-	call paint_logging_light
+	#call paint_logging_light
 	# Draw something (do it last so the axes do not get erased)
 	selectionIsDrawn = 0
 	call draw_signal

@@ -51,6 +51,6 @@ RatingForm_Vowel	Vowels		Evaluation form (VAS) for vowels
 RatingForm_Text	Text		Text evaluation form (VAS) for words and running speech
 RatingForm_INFVo	IINFVo		IINFVo evaluation form (VAS, for Impression, Intelligibility, Noise, Fluency, Voice)
 VasScaleTicks	Markers		Display scale markers for evaluations forms
-Logging	Log on	L	Start logging sounds
-OpenLog	Select	S	Select directory to store the logging file
-Run	Run	n	Run command file (replay Log file)
+!Logging	Log on	L	Start logging sounds
+!OpenLog	Select	S	Select directory to store the logging file
+!Run	!Run	n	!Run command file (replay Log file)

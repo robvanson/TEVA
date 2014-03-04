@@ -401,6 +401,15 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 		.eraseTop = .shiftHighY + 0.01
 		demo Paint rectangle... White .eraseLeft .eraseRight .eraseBottom .eraseTop
 	endif
+	# Set a "gray area" around buttons with a _
+	if index(.label$, "_")
+		# Make erase area minutely larger
+		.eraseLeft = .shiftLeftX - 0.5
+		.eraseRight = .shiftRightX + 0.5
+		.eraseBottom = .shiftLowY - 0.8
+		.eraseTop = .shiftHighY + 0.8
+		demo Paint rectangle... {0.92,0.92,0.92} .eraseLeft .eraseRight .eraseBottom .eraseTop
+	endif
 	
     # If label starts with "$", it is a text field. Then do not draw the button
 	if not startsWith(.label$, "$")
