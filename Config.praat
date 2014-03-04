@@ -720,27 +720,26 @@ endproc
 procedure paint_logging_light
     select Table Config
     .row = Search column... Label Logging
-	if .row < 1
-		exit Button Table Config does not have a row with label Logging
+	if .row > 0
+		# Get button values
+	    .leftX = Get value... '.row' LeftX
+	    .rightX = Get value... '.row' RightX
+	    .lowY = Get value... '.row' LowY
+	    .highY = Get value... '.row' HighY
+	    .buttonColor$ = Get value... '.row' Color
+	    .centerX = (.leftX + .rightX)/2
+	    .centerY = (.lowY + .highY)/2
+	    .radius = (.highY - .lowY )/(4*2)
+	    .wipeRadius = 1.1*.radius
+	    if logging
+	    	demo Paint circle... White '.centerX' '.centerY' '.wipeRadius'
+	    	demo Paint circle... '.buttonColor$' '.centerX' '.centerY' '.radius'
+	    	demoShow()
+	    else
+	    	demo Paint circle... White '.centerX' '.centerY' '.wipeRadius'
+	    	demoShow()
+	    endif
 	endif
-	# Get button values
-    .leftX = Get value... '.row' LeftX
-    .rightX = Get value... '.row' RightX
-    .lowY = Get value... '.row' LowY
-    .highY = Get value... '.row' HighY
-    .buttonColor$ = Get value... '.row' Color
-    .centerX = (.leftX + .rightX)/2
-    .centerY = (.lowY + .highY)/2
-    .radius = (.highY - .lowY )/(4*2)
-    .wipeRadius = 1.1*.radius
-    if logging
-    	demo Paint circle... White '.centerX' '.centerY' '.wipeRadius'
-    	demo Paint circle... '.buttonColor$' '.centerX' '.centerY' '.radius'
-    	demoShow()
-    else
-    	demo Paint circle... White '.centerX' '.centerY' '.wipeRadius'
-    	demoShow()
-    endif
 endproc
 
 # The Credits
