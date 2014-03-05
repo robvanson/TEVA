@@ -176,7 +176,8 @@ procedure global_initialization
 		# add -density 250 ?
 		config.savePNGinoptions$ = "-antialias -density 250"
 		config.savePNGoutoptions$ = "-flatten"
-	elsif windows
+	endif
+	if windows
 		# On windows, only EMF are possible
 		config.saveFMT$ = "EMF"
 	endif

@@ -38,6 +38,7 @@ $VoicePrint	Voiceprint	!	Einstellungen VoicePrint Bild
 SaveFMT_PDF	PDF	!	VoicePrint als PDF Datei aufbewahren
 SaveFMT_EPS	EPS	!	VoicePrint als EPS Datei aufbewahren
 SaveFMT_PNG	PNG	!	VoicePrint als PNG Datei aufbewahren
+SaveFMT_EMF	EMF	!	VoicePrint als EMF Datei aufbewahren
 $SpeakerSelect	Verarbeitung	!	Selection und Verarbeitung von Aufnahmen
 SpeakerSerial_None	Einzeln	v	Verarbeite alle Aufnahmen einzeln
 SpeakerSerial_Forw	Seriell >	.>	Verarbeite alle Aufnahmen hintereinander (Sprecher Taste liest n\a"chste Aufnahme)

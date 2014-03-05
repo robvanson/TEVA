@@ -678,7 +678,15 @@ procedure set_language .lang$
     call loadLanguageTable 'configTableName$' 'config.language$'
     select loadLanguageTable.tableID
     te.config$ = selected$("Table")
-   
+    
+    # Hide platform specific buttons on load
+	if windows
+		call hide_button 'te.config$' SaveFMT_PDF
+		call hide_button 'te.config$' SaveFMT_PNG
+	else
+		call hide_button 'te.config$' SaveFMT_EMF
+	endif
+    
 
 	# Make language change visible
 	if .redraw_config

@@ -99,11 +99,6 @@ endproc
 
 # Set the correct button states after redrawing the window
 procedure setConfigMainPage
-	# Handle the Save to PNG/PDF button
-	if windows
-		call Draw_button 'te.config$' SaveFMT_PDF -1
-		call Draw_button 'te.config$' SaveFMT_PNG -1
-	endif
     #call Draw_button 'te.config$' Language_'config.language$' 2
     call Draw_button 'te.config$' Input_'config.input$' 2
 	call setFrequencyButton
@@ -371,9 +366,16 @@ procedure processConfigSaveFMT .fmt$ .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "SaveFMT"
 
-    call Draw_button '.table$' SaveFMT_'config.saveFMT$' 0
-	config.saveFMT$ = .fmt$
-    call Draw_button '.table$' SaveFMT_'config.saveFMT$' 2
+	if windows and index("EMF EPS", .fmt$) <= 0
+		.fmt$ = config.saveFMT$
+	elsif not windows and index("EMF", .fmt$) > 0
+		.fmt$ = config.saveFMT$
+	else
+		call Draw_button '.table$' SaveFMT_'config.saveFMT$' 0
+		config.saveFMT$ = .fmt$
+		call Draw_button '.table$' SaveFMT_'config.saveFMT$' 2
+	endif
+
 endproc
 
 procedure processConfigAutoSelect .clickX .clickY .pressed$
