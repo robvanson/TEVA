@@ -15,4 +15,5 @@ Example_evaluating_a_Corpus.html
 Analysis.html
 Acoustic_Signal_Typing.html
 AST_categories.html
+VoicePrints.html
 TEVA_license.html

@@ -47,7 +47,7 @@ keys will position a %1 or %2 second window around the (first) selection point, 
 %Select button again will cancel the selection."
 
 <entry> "Saving and printing a report"
-<list_item> "\bu #Print [\# ] Save a one page report in printer format (##[VoicePrints|Voice print]#)"
+<list_item> "\bu #Print [\# ] Save a one page report in printer format (@@VoicePrints|Voice print@)"
 <normal> "A report with graphs and the analysis results can be saved into a report in printing format. 
 The report contains the waveform of the current window, a 0.1 second enlargement window, and the ##[Spectrogram]#, ##[Pitch]#, 
 and ##[Ltas]# graphs.

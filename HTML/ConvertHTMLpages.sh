@@ -19,6 +19,8 @@ sed -i ""  's/Adding_speaker_information_2.png/Speaker_screenshot.png/g' Adding_
 rm -f Adding_speaker_information_2.png
 sed -i ""  's/Adding_speaker_information_3.png/SpeakerInfo_screenshot.png/g' Adding_speaker_information.html
 rm -f Adding_speaker_information_3.png
+sed -i ""  's/VoicePrints_1.png/signaltype3_example.png/g' VoicePrints.html
+rm -f VoicePrints_1.png
 sed -i ""  's/Example_evaluating_AST_1.png/Speaker_screenshot.png/g' Example_evaluating_AST.html
 rm -f Example_evaluating_AST_1.png
 sed -i ""  's/Example_evaluating_AST_2.png/SpeakerInfo_screenshot.png/g' Example_evaluating_AST.html
