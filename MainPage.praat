@@ -183,6 +183,11 @@ endproc
 
 procedure print_signal .outFileName$
 	.outFileName$ = replace_regex$(.outFileName$, "\.[a-z0-9A-Z]+$","",0)
+	
+	# Switch off Formant display
+	.currentShowFormants = config.showFormants
+	config.showFormants = 0
+	
 	# Set output format
 	.outEPSExtension$ = "eps"
 	.outEPSFileType$ = "EPS file"
@@ -278,9 +283,15 @@ procedure print_signal .outFileName$
 		call get_printsignal_text 'config.language$' CompAST
 		.astCompText$ = get_printsignal_text.text$
 		.type = abs(pathologicalType)
-		.typeASTText$ = "'.type'"
+		.typeASTText$ = "-"
+		if .type > 0
+			.typeASTText$ = "'.type'"
+		endif
 		.subtext$ = .subtext$ + .astText$ + ": " + .typeASTText$
-		.typeCompText$ = "'predictedPathType:1'"
+		.typeCompText$ = "-"
+		if predictedPathType > 0
+			.typeCompText$ = "'predictedPathType:1'"
+		endif
 		.subtext$ = .subtext$ + ", " + .astCompText$ + ": " + .typeCompText$
 	endif
 	
@@ -288,7 +299,11 @@ procedure print_signal .outFileName$
 	.vqText$ = get_printsignal_text.text$
 	call get_printsignal_text 'config.language$' CompVQ
 	.compvqText$ = get_printsignal_text.text$
-	.subtext$ = .subtext$ + "; " + .vqText$ + ": '.vq_Rating:1'"
+	.vq_RatingText$ = "-"
+	if .vq_Rating >= 0
+		.vq_RatingText$ = "'.vq_Rating:1'"
+	endif
+	.subtext$ = .subtext$ + "; " + .vqText$ + ": '.vq_RatingText$'"
 	.subtext$ = .subtext$ + ", " + .compvqText$ + ": -"
 
 	call points_to_wc 11
@@ -357,7 +372,8 @@ procedure print_signal .outFileName$
 
 	# Reset draw
 	mainPage.outputPraatObject$ = "Draw"
-
+	# Reset changed settings
+	config.showFormants = .currentShowFormants
 endproc
 
 # Print selected waveform or total file
@@ -449,8 +465,8 @@ procedure PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText
 		if config.showFormants > 0
 			do("Colour...", "Maroon")
 			select te.formant
-			do("Speckle...", currentStartTime, currentEndTime, config.frequency, 25 "no")
-			do("Colour...",  "Black"
+			do("Speckle...", currentStartTime, currentEndTime, config.frequency, 25, "no")
+			do("Colour...",  "Black")
 		endif
 		do ("Draw inner box")
 		@leftMarks (0, config.frequency, .yaxisLabel$)
