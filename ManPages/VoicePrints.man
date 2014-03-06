@@ -26,7 +26,7 @@ ManPagesTextFile
 <list_item> "\bu #Ltas: Long time average spectrum"
 
 
-<script> 6.75 6 "
+<script> 8.27 11.69 "
 	Axes... 0 100 0 100
 	Insert picture from file... signaltype3_example.png 0 69 0 100
 "
