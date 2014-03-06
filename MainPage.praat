@@ -1182,7 +1182,12 @@ procedure processMainPageFile .clickX .clickY .pressed$
 	call Draw_button '.table$' '.label$' 0
 
 	# Get first item and Draw using the NextItem button
-	call processMainPageNextItem 0 0 x
+	if te.openSound <= 0
+		call processMainPageNextItem 0 0 x
+	else
+		call WriteSpeakerData
+		call init_window
+	endif
 endproc	
 
 procedure processMainPageReadFromFile .filename$
