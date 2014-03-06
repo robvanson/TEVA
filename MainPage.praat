@@ -1182,9 +1182,10 @@ procedure processMainPageFile .clickX .clickY .pressed$
 	call Draw_button '.table$' '.label$' 0
 
 	# Get first item and Draw using the NextItem button
-	if te.openSound <= 0
+	if speakerID$ = ""
 		call processMainPageNextItem 0 0 x
 	else
+		call ReadSpeakerData 'config.speakerData$'
 		call WriteSpeakerData
 		call init_window
 	endif
