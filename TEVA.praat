@@ -57,8 +57,9 @@ te.ratingTable = -1
 te.rating$ = ""
 te.useFullASTselection = 1
 te.defaultLanguage$ = "EN"
+# te.recordingTaskTable = Read from file... testprompt.tsv
 te.recordingTaskTable = 0
-te.recordingTaskPrompt = 0
+te.recordingTaskPrompt = 1
 
 # Pop-Up window and other colors
 popUp.bordercolor$ = "{0.5,0.5,1}"
@@ -905,12 +906,22 @@ procedure record_sound
     demoShow()
     
     # Show a task window
-    if te.recordingTaskTable > 0
-		call display_Prompt 'te.recordingTaskTable' 'te.recordingTaskPrompt'
+	.rectime = 'config.recordingTime$'
+    if te.recordingTaskTable > 0 and te.recordingTaskPrompt > 0
+		select te.recordingTaskTable
+		.numRows = Get number of rows
+		.timeColumn = Get column index... time
+		if .timeColumn > 0 and te.recordingTaskPrompt <= .numRows
+			.rectime = Get value... 'te.recordingTaskPrompt' time
+		endif
+		if .rectime = undefined or .rectime <= 0
+			.rectime = 'config.recordingTime$'
+		endif
+		call display_prompt 'te.recordingTaskTable' 'te.recordingTaskPrompt'
     endif
     
     # Record
-    noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 44100 'config.recordingTime$'
+    noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 44100 '.rectime'
 	# Keep track of current sound
 	call getTimeStamp
 	te.recordingTimeStamp$ = getTimeStamp.string$
@@ -933,8 +944,12 @@ procedure record_sound
 	currentStartTime = 0
 	currentEndTime = Get total duration
 	
-	# Cut out real sound from silences/noise
-	call sound_detection 'recordedSound$' 'soundMargin'
+	# Cut out real sound from silences/noise (if NO prompt)
+	if te.recordingTaskTable <= 0
+		call sound_detection 'recordedSound$' 'soundMargin'
+	else
+		call remove_margins 'recordedSound$' 'soundMargin'
+	endif
 	select Sound 'recordedSound$'
 	te.openSound = selected("Sound")
 	currentStartTime = 0
@@ -956,21 +971,26 @@ procedure record_sound
 	select te.openSound
 endproc
 
-procedure display_Prompt .table .number
+procedure display_prompt .table .number
 	if .table > 0
 		select .table
+		.alignColumn = Get column index... align
+		.align$ = "left"
 		.numRows = Get number of rows
 		if .number > 0 and .number <= .numRows
 			# Get the values
+			if .alignColumn > 0
+				.align$ = Get value... '.number' align
+			endif
 			.font$ = Get value... '.number' font
 			.fontSize = Get value... '.number' size
 			.font$ = extractWord$(.font$, "")
 			.text$ = Get value... '.number' text
 			
 			# Write popup
-			call text2popuptable 'font$' '.fontSize' '.text$'
-			record_sound.popUpTable = text2popuptable.textTable
-			call write_text_table record_sound.popUpTable
+			call text2popuptable '.align$' '.font$' '.fontSize' "'.text$'"
+			display_prompt.popUpTable = text2popuptable.textTable
+			call write_text_table display_prompt.popUpTable
 			
 		endif
 	endif
@@ -1007,6 +1027,49 @@ procedure draw_recording_level
 endproc
 
 # Select real sound from recording
+procedure remove_margins .sound$ .margin
+	select Sound '.sound$'
+	.origSound = selected("Sound")
+	.soundlength = Get total duration
+	.intensity = Get intensity (dB)
+	.begintime = 0
+	.endtime = .soundlength
+	.internalSilence = 2*.margin
+	
+	# Silence and remove noise, DANGEROUS
+	.textgridSound = To TextGrid (silences)... 'minimumPitch' 0 'noiseThresshold' '.internalSilence' 0.1 silent sounding
+	Rename... Input'.sound$'
+
+	select .textgridSound
+	.numberofIntervals = Get number of intervals... 1
+	if .numberofIntervals > 2 and .intensity > minimumIntensity
+		select .textgridSound
+		# First interval
+		.value$ = Get label of interval... 1 1
+		.intbegin = Get starting point... 1 1
+		.intend = Get end point... 1 1
+		if .value$ = "silent" and .intend > .margin
+			.begintime = .intend - .margin
+		endif
+		# Last interval
+		.value$ = Get label of interval... 1 '.numberofIntervals'
+		.intbegin = Get starting point... 1 '.numberofIntervals'
+		.intend = Get end point... 1 '.numberofIntervals'
+		if .value$ = "silent" and .intbegin + .margin < .soundlength
+			.endtime = .intbegin + .margin
+		endif
+		
+		# Copy sound
+		select .origSound
+    	.newSound = Extract part... '.begintime' '.endtime' Rectangular 1.0 no
+		Rename... '.sound$'
+		select .origSound
+		Remove
+		select .newSound
+	endif
+	
+endproc
+
 # Uses some global variable
 procedure sound_detection .sound$ .margin
 	select Sound '.sound$'
@@ -1644,6 +1707,7 @@ procedure write_text_table .table$
   	.ylow = 20
    	.yhigh = 85
 	.lineHeight = 2.5
+	.align$ = "Left"
 
 	# Get table with text and longest line
 	call loadTable '.table$'
@@ -1718,6 +1782,7 @@ procedure write_text_table .table$
 	.yhigh = .midY + (.numRows+1) * .dy / 2
 	.ylow = .yhigh - (.numRows+1) * .dy
 	.textleft = .xleft + 2
+	.textXAnchor = .textleft
 	
 	demo Line width... 8
  	demo Colour... 'popUp.bordercolor$'
@@ -1735,6 +1800,18 @@ procedure write_text_table .table$
 		if .heightColumn > 0
 			.currentHeight = Get value... '.i' height
 		endif
+		.align$ = "Left"
+		.alignColumn = Get column index... align
+		if .alignColumn > 0
+			.align$ = Get value... '.i' align
+		endif
+		if index_regex(.align$, "(?icentre)")
+			.textXAnchor = .xmid
+		elsif index_regex(.align$, "(?iright)")
+			.textXAnchor = .xright - 2
+		else
+			.textXAnchor = .textleft
+		endif
 		# Scale font
 		.fontSize = floor(.fontSize*.fontSizeFactor)
 		if .fontSize < 4
@@ -1742,11 +1819,11 @@ procedure write_text_table .table$
 		endif
 		.line$ = Get value... '.i' text
 		# Expand variables, eg, 'praatVersion$'
-		call expand_praat_variables '.line$'
+		call expand_praat_variables "'.line$'"
 		.line$ = expand_praat_variables.text$
-		
+
 		# Display text
-		demo Text special... '.textleft' Left '.ytext' Bottom '.font$' '.fontSize' 0 '.line$'
+		demo Text special... '.textXAnchor' '.align$' '.ytext' Bottom '.font$' '.fontSize' 0 '.line$'
 		.ytext -= .currentHeight
 	endfor	
 	demoShow()	
@@ -1801,18 +1878,23 @@ procedure write_text_popup .font$ .size .text$
 	call set_font_size 'defaultFontSize'
 endproc
 
-procedure text2popuptable .font$ .size .popUpText$
+procedure text2popuptable .align$ .font$ .size .popUpText$
 	if variableExists(.popUpText$)
 		.popUpText$ = "'.popUpText$'"
 	endif
 	if .popUpText$ <> ""
+		if startsWith(.popUpText$, """")
+			.popUpText$ = right$(.popUpText$, length(.popUpText$) - 1)
+			.popUpText$ = left$(.popUpText$, length(.popUpText$) - 1)
+		endif
 		call points_to_wc '.size'
 		.height = points_to_wc.wc
 		if index_regex(.popUpText$, "\S") <= 0
 			.popUpText$ = "-"
 		endif
-		.textTable = Create Table with column names... Text 1 font size height text
+		.textTable = Create Table with column names... Text 1 align font size height text
 		# Set values
+		Set string value... 1 align '.align$'
 		Set string value... 1 font '.font$'
 		Set numeric value... 1 size '.size'
 		Set numeric value... 1 height '.height'
@@ -1823,14 +1905,18 @@ procedure text2popuptable .font$ .size .popUpText$
 			Insert row... 1
 			.endOfLine = rindex_regex(.popUpText$, "\\n")
 			.leftPart = .endOfLine - 1
-			.rightPart = length(.popUpText$)
-			if .leftPart > 0
-				.rightPart -= (.endOfLine + 1)
+			.rightPart = length(.popUpText$) - .endOfLine
+			if .endOfLine > 0
+				.rightPart -= 1
 			endif
-				
 			.currentLine$ = right$(.popUpText$, .rightPart)
+			if startsWith(.currentLine$, " ")
+				.currentLine$ = "\\ " + .currentLine$
+			endif
 			.popUpText$ = left$(.popUpText$, .leftPart)
+
 			# Set values
+			Set string value... 1 align '.align$'
 			Set string value... 1 font '.font$'
 			Set numeric value... 1 size '.size'
 			Set numeric value... 1 height '.height'
@@ -2111,6 +2197,10 @@ endproc
 # Eg, 'praatVersion$' becomes 5.1.45 or whatever is the current version
 # Single quotes can be protected by \'
 procedure expand_praat_variables .text$
+	if startsWith(.text$, """") and endsWith(.text$, """")
+		.text$ = left$(.text$, length(.text$) - 1)
+		.text$ = right$(.text$, length(.text$) - 1)
+	endif
 	if index(.text$, "'")
 		.tempText$ = replace_regex$(.text$, "(^|[^\\])'([\w\$\.]+)'", "\1""+\2+""", 0)
 		.tempText$ = replace_regex$(.tempText$, "[\\]'", "'", 0)
