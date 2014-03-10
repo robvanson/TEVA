@@ -57,6 +57,8 @@ te.ratingTable = -1
 te.rating$ = ""
 te.useFullASTselection = 1
 te.defaultLanguage$ = "EN"
+te.recordingTaskTable = 0
+te.recordingTaskPrompt = 0
 
 # Pop-Up window and other colors
 popUp.bordercolor$ = "{0.5,0.5,1}"
@@ -901,6 +903,13 @@ procedure record_sound
 	# Display a recording light
     demo Paint circle... Red 'recordingLightX' 'recordingLightY' 2
     demoShow()
+    
+    # Show a task window
+    if te.recordingTaskTable > 0
+		call display_Prompt 'te.recordingTaskTable' 'te.recordingTaskPrompt'
+    endif
+    
+    # Record
     noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 44100 'config.recordingTime$'
 	# Keep track of current sound
 	call getTimeStamp
@@ -945,6 +954,26 @@ procedure record_sound
 	endif
 	
 	select te.openSound
+endproc
+
+procedure display_Prompt .table .number
+	if .table > 0
+		select .table
+		.numRows = Get number of rows
+		if .number > 0 and .number <= .numRows
+			# Get the values
+			.font$ = Get value... '.number' font
+			.fontSize = Get value... '.number' size
+			.font$ = extractWord$(.font$, "")
+			.text$ = Get value... '.number' text
+			
+			# Write popup
+			call text2popuptable 'font$' '.fontSize' '.text$'
+			record_sound.popUpTable = text2popuptable.textTable
+			call write_text_table record_sound.popUpTable
+			
+		endif
+	endif
 endproc
 
 procedure draw_recording_level
@@ -1626,6 +1655,8 @@ procedure write_text_table .table$
 	.maxLine = 0
 	.maxFontSize = 0
 	.maxWidth = 0
+	.maxHeight = .lineHeight
+	.currentHeight = .lineHeight
 	for .l to .numLines
 		select '.instructionText'
 		.currentText$ = Get value... '.l' text
@@ -1635,6 +1666,11 @@ procedure write_text_table .table$
 
 		.font$ = Get value... '.l' font
 		.fontSize = Get value... '.l' size
+		# Get optional line height
+		.heightColumn = Get column index... height
+		if .heightColumn > 0
+			.currentHeight = Get value... '.l' height
+		endif
 		call set_font_size '.fontSize'
 		.textWidth = demo Text width (wc)... '.currentText$'
 		if .fontSize > .maxFontSize
@@ -1645,11 +1681,15 @@ procedure write_text_table .table$
 			.instructionFontSize = .fontSize
 			.maxLine = .l
 		endif
+		if .currentHeight > .maxHeight
+			.maxHeight = .currentHeight
+		endif
 	endfor
 	select '.instructionText'
 	.referenceText$ = Get value... '.maxLine' text
 	.maxLineFont$ = Get value... '.maxLine' font
 	.instructionFontSize = Get value... '.maxLine' size
+	.lineHeight = .maxHeight
 	call set_font_size '.maxFontSize'
 	
 	# Adapt size of button to length of text
@@ -1664,6 +1704,12 @@ procedure write_text_table .table$
 	endif
 	call set_font_size '.instructionFontSize'
 	.fontSizeFactor = .instructionFontSize / .origFontSize
+	
+	# Adjust width to size of text
+	.textWidth = demo Text width (wc)... '.referenceText$' + 4
+	.xmid = (.xright + .xleft) / 2
+	.xleft = .xmid - .textWidth / 2
+	.xright = .xmid + .textWidth / 2
 
 	.numRows = Get number of rows
 	# Calculate length from number of lines.
@@ -1685,6 +1731,10 @@ procedure write_text_table .table$
 		.font$ = Get value... '.i' font
 		.fontSize = Get value... '.i' size
 		.font$ = extractWord$(.font$, "")
+		.currentHeight = .lineHeight
+		if .heightColumn > 0
+			.currentHeight = Get value... '.i' height
+		endif
 		# Scale font
 		.fontSize = floor(.fontSize*.fontSizeFactor)
 		if .fontSize < 4
@@ -1697,7 +1747,7 @@ procedure write_text_table .table$
 		
 		# Display text
 		demo Text special... '.textleft' Left '.ytext' Bottom '.font$' '.fontSize' 0 '.line$'
-		.ytext -= .dy
+		.ytext -= .currentHeight
 	endfor	
 	demoShow()	
 	call set_font_size 'defaultFontSize'
@@ -1751,30 +1801,39 @@ procedure write_text_popup .font$ .size .text$
 	call set_font_size 'defaultFontSize'
 endproc
 
-procedure text2popuptable .font$ .size .variableName$
-	if variableExists(.variableName$)
-		.variableName$ = '.variableName$'
-		.currentText$ = '.variableName$'
-		if index_regex(.currentText$, "\S") <= 0
-			.currentText$ = "-"
+procedure text2popuptable .font$ .size .popUpText$
+	if variableExists(.popUpText$)
+		.popUpText$ = "'.popUpText$'"
+	endif
+	if .popUpText$ <> ""
+		call points_to_wc '.size'
+		.height = points_to_wc.wc
+		if index_regex(.popUpText$, "\S") <= 0
+			.popUpText$ = "-"
 		endif
-		.textTable = Create Table with column names... Text 1 font size text
+		.textTable = Create Table with column names... Text 1 font size height text
 		# Set values
 		Set string value... 1 font '.font$'
 		Set numeric value... 1 size '.size'
-		Set string value... 1 text  
+		Set numeric value... 1 height '.height'
+		Set string value... 1 text 
 		
-		while length(.currentText$) > 0
+		while length(.popUpText$) > 0
 			select .textTable
 			Insert row... 1
-			.endOfLine = rindex_regex(.currentText$, "\n")
+			.endOfLine = rindex_regex(.popUpText$, "\\n")
 			.leftPart = .endOfLine - 1
-			.rightPart = length(.currentText$) - .endOfLine
-			.currentLine$ = right$(.currentText$, .rightPart)
-			.currentText$ = left$(.currentText$, .leftPart)
+			.rightPart = length(.popUpText$)
+			if .leftPart > 0
+				.rightPart -= (.endOfLine + 1)
+			endif
+				
+			.currentLine$ = right$(.popUpText$, .rightPart)
+			.popUpText$ = left$(.popUpText$, .leftPart)
 			# Set values
 			Set string value... 1 font '.font$'
 			Set numeric value... 1 size '.size'
+			Set numeric value... 1 height '.height'
 			Set string value... 1 text '.currentLine$'
 		endwhile
 		select .textTable

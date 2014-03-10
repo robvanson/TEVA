@@ -173,6 +173,7 @@ procedure global_initialization
 			config.savePNGoutoptions$ = "-flatten"
 		else
 			config.canSavePNG = 0
+			config.savePNGcommand$ = ""
 		endif
 	endif
 	if windows
