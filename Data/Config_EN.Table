@@ -38,7 +38,6 @@ $VoicePrint	Voiceprint	!	Settings of VoicePrint image
 SaveFMT_PDF	PDF	!	Save VoicePrint as PDF file
 SaveFMT_PNG	PNG	!	Save VoicePrint as PNG file
 SaveFMT_EPS	EPS	!	Save VoicePrint as EPS file
-SaveFMT_EMF	EMF	!	Save VoicePrint as Windows EMF file
 $SpeakerSelect	Selection	!	Selection of recordings
 SpeakerSerial_None	Individual	i	Select individual recordings
 SpeakerSerial_Forw	Serial >	.>	Step through all recordings in sequence (Speaker button reads next recording)

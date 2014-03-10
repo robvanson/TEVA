@@ -38,7 +38,6 @@ $VoicePrint	Voiceprint	!	Instellingen van de VoicePrint afbeelding
 SaveFMT_PDF	PDF	!	Bewaar VoicePrint als PDF bestand
 SaveFMT_EPS	EPS	!	Bewaar VoicePrint als EPS bestand
 SaveFMT_PNG	PNG	!	Bewaar VoicePrint als PNG bestand
-SaveFMT_EMF	EMF	!	Bewaar VoicePrint als Windows EMF bestand
 $SpeakerSelect	Verwerking	!	Selectie en verwerking van opnamen
 SpeakerSerial_None	Individueel	r	Selecteer individuele opnamen
 SpeakerSerial_Forw	Serieel >	.>	Verwerk alle opnamen in volgorde (Spreker knop leest volgende opname)

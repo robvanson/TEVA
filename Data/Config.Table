@@ -32,10 +32,9 @@ SpeakerRandomize	35	45	53	58	Black	DrawNull
 SpeakerRevert	35	45	46	51	Black	DrawNull
 AutoSelect	35	45	39	44	{0.65,0.60,0.45}	DrawNull
 $VoicePrint	35	45	33	38	Black	DrawNull
-SaveFMT_EMF	35	45	27	32	Black	DrawNull
-SaveFMT_EPS	35	45	21	26	Black	DrawNull
+SaveFMT_EPS	35	45	27	32	Black	DrawNull
+SaveFMT_PNG	35	45	21	26	Black	DrawNull
 SaveFMT_PDF	35	45	15	20	Black	DrawNull
-SaveFMT_PNG	35	45	9	14	Black	DrawNull
 $SpeakerSelect	50	60	96	100	Black	DrawNull
 SpeakerSerial_None	50	60	91	96	Black	DrawNull
 SpeakerSerial_Forw	50	60	85	90	Black	DrawNull

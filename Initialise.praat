@@ -163,23 +163,21 @@ procedure global_initialization
 	
 	# On unix and mac, default to PDF and allow PNG files
 	config.saveFMT$ = "PDF"
-	config.canSavePNG = 0
-	if unix and fileReadable("/usr/bin/convert")
-		config.canSavePNG = 1
-		config.savePNGcommand$ = "/usr/bin/convert"
-		# add -density 250 ?
-		config.savePNGinoptions$ = "-antialias -density 250"
-		config.savePNGoutoptions$ = "-flatten"
-	elsif macintosh and fileReadable("/opt/local/bin/convert")
-		config.canSavePNG = 1
-		config.savePNGcommand$ = "/opt/local/bin/convert"
-		# add -density 250 ?
-		config.savePNGinoptions$ = "-antialias -density 250"
-		config.savePNGoutoptions$ = "-flatten"
+	config.canSavePNG = 1
+	if macintosh 
+		if fileReadable("/opt/local/bin/convert")
+			config.canSavePNG = 1
+			config.savePNGcommand$ = "/opt/local/bin/convert"
+			# add -density 250 ?
+			config.savePNGinoptions$ = "-antialias -density 250"
+			config.savePNGoutoptions$ = "-flatten"
+		else
+			config.canSavePNG = 0
+		endif
 	endif
 	if windows
-		# On windows, only EMF are possible
-		config.saveFMT$ = "EMF"
+		# On windows, only PNG and EPS are possible (kill EMF)
+		config.saveFMT$ = "PNG"
 	endif
 
 endproc

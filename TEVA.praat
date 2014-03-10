@@ -682,7 +682,6 @@ procedure set_language .lang$
     # Hide platform specific buttons on load
 	if windows
 		call hide_button 'te.config$' SaveFMT_PDF
-		call hide_button 'te.config$' SaveFMT_PNG
 	else
 		call hide_button 'te.config$' SaveFMT_EMF
 	endif

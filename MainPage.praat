@@ -196,7 +196,13 @@ procedure print_signal .outFileName$
 	if config.saveFMT$ = "PDF"
 		.outExtension$ = "pdf"
 		.outFileType$ = "PDF file"
-	elsif windows or config.saveFMT$ = "EMF"
+	elsif unix and config.saveFMT$ = "PNG"
+		.outExtension$ = "png"
+		.outFileType$ = "PNG file"
+	elsif windows and config.saveFMT$ = "PNG"
+		.outExtension$ = "png"
+		.outFileType$ = "600-dpi PNG file"
+	elsif config.saveFMT$ = "EMF"
 		.outExtension$ = "emf"
 		.outFileType$ = "Windows metafile"
 	endif
@@ -366,7 +372,7 @@ procedure print_signal .outFileName$
 		do("Save as '.outEPSFileType$'...", "'.outFileName$'.'.outEPSExtension$'")
 	endif
 	do("Save as '.outFileType$'...", "'.outFileName$'.'.outExtension$'")
-	if config.saveFMT$ = "PNG"
+	if macintosh and config.saveFMT$ = "PNG"
 		system 'config.savePNGcommand$' 'config.savePNGinoptions$' "'.outFileName$'.'.outExtension$'" 'config.savePNGoutoptions$' "'.outFileName$'.png"
 	endif
 
