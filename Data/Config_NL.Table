@@ -45,7 +45,9 @@ SpeakerSerial_Backw	< Serieel	,<	Verwerk alle opnamen in omgekeerde volgorde (Sp
 !SelectionWindow	SelectionWindow	!	Beginlengte van het selectie venster (Voorkeursinstelling Serieel mode)
 SpeakerSort	Sorteer V	V	Sorteer de lijst met opnamen
 SpeakerRandomize	Shuffle	e	Randomiseer de lijst met opnamen
-RecordingTime	Opname ]	]}	Opnametijd in seconden
+RecordingTime	Opname	]}	Opnametijd in seconden
+!RecordingTaskFile	RecordingTaskFile	!	Bestand met de opnametaken
+!RecordingTarget	RecordingTarget	!	Map met de opnamen
 $Rating	Beoordeling		Menselijke beoordeling van spraak
 RatingForm_Vowel	Klinkers		Beoordelingsformulier voor klinkers
 RatingForm_Text	Text		Tekst beoordelingsformulier voor woorden en lopende spraak

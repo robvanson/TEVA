@@ -723,12 +723,18 @@ procedure i8n_date
 	.dayOfWeek$ = left$(.date$, 3)
 	.month$ = mid$(.date$, 5, 3)
 	.rest$ = right$(.date$, length(.date$)-7)
+	# File stamp date
+	
 	# Get day of week
 	call get_printsignal_text 'config.language$' '.dayOfWeek$'
 	.i8n_dayOfWeek$ = get_printsignal_text.text$
 	call get_printsignal_text 'config.language$' '.month$'
 	.i8n_month$ = get_printsignal_text.text$
 	.date$ = .i8n_dayOfWeek$ + " " + .i8n_month$ + .rest$
+	# File stamp date
+	.printDate$ = .i8n_month$ + .rest$
+	.printDate$ = replace_regex$(.printDate$, "[:]", "-", 0)
+	.printDate$ = replace_regex$(.printDate$, "[ ]", "_", 0)
 endproc
 
 # Read feedback table and get keyed text
@@ -1212,6 +1218,77 @@ procedure processMainPageRecord .clickX .clickY .pressed$
 	
 	if not config.muteOutput and config.speakerSerial$ = "None"
 		if runningCommandMode = 0 and not config.muteOutput
+			# If there is an active task, initialize recording
+			if te.recordingTaskTable <= 0 and fileReadable(config.recordingTaskFile$)
+				te.recordingTaskTable = Read from file... 'config.recordingTaskFile$'
+				if te.recordingTaskTable > 0
+					te.recordingTaskPrompt = 1
+					
+					# Switch to serial
+					config.speakerSerial$ = "Forw"
+					# Set up new Speaker table
+					config.speakerData$ = ""
+					if config.speakerDataTable > 0
+						select config.speakerDataTable
+						Remove
+					endif
+					# Initialize Speaker Data
+					config.speakerData$ = ""
+					config.speakerDataTable = -1
+					speakerInfo$ = ""
+					speakerComments$ = ""
+					pathologicalType = 0
+					config.speakerDataBackup$ = ""
+					# If no speaker ID is given, ask for it
+					if speakerID$ = ""
+						call getLanguageTexts '.table$' Speaker
+						# Get feedback texts
+						call get_feedback_text 'config.language$' SpeakerID
+						call convert_praat_to_latin1 'get_feedback_text.text$'
+						.inputText$ = convert_praat_to_latin1.text$
+						call get_feedback_text 'config.language$' Cancel
+						call convert_praat_to_latin1 'get_feedback_text.text$'
+						.cancelText$ = convert_praat_to_latin1.text$
+						call get_feedback_text 'config.language$' Continue
+						call convert_praat_to_latin1 'get_feedback_text.text$'
+						.continueText$ = convert_praat_to_latin1.text$
+						clicked = -1
+						beginPause(getLanguageTexts.helpText$)
+							sentence (.inputText$, speakerID$)
+						clicked = endPause ("'.cancelText$'", "'.continueText$'", 2)
+						if clicked = 2
+							.inputText$ = replace_regex$(.inputText$, ".+", "\l&\$", 0)
+							.inputText$ = replace_regex$(.inputText$, "[ ]", "_", 0)
+							.inputText$ = replace_regex$(.inputText$, "\$", "", 0)
+							speakerID$ = '.inputText$'$
+						endif
+					endif
+					if speakerID$ = ""
+						goto SKIPRECORDING
+					endif
+					# Date and time
+					call i8n_date
+					.datetime$ = i8n_date.printDate$
+					# New speakerDataTable
+					config.speakerDataTable = Create Table with column names... Speaker_Data 1 ID Text Description StartTime EndTime Audio SaveAudio AST
+					select te.recordingTaskTable
+					.numRows = Get number of rows
+					.postfix$ = Get value... 1 postfix
+					.filename$ = replace_regex$(speakerID$, "[^a-zA-Z0-9\.\-_]", "_", 0)
+					select config.speakerDataTable
+					Set string value... 1 ID '.filename$''.postfix$'
+					Set string value... 1 Audio 'config.recordingTarget$'/'.filename$''.postfix$'_'.datetime$'.wav
+					for .i from 2 to .numRows
+						select te.recordingTaskTable
+						.postfix$ = Get value... '.i' postfix
+						select config.speakerDataTable
+						Append row
+						Set string value... '.i' ID '.filename$''.postfix$'
+						Set string value... '.i' Audio 'config.recordingTarget$'/'.filename$''.postfix$'_'.datetime$'.wav
+					endfor	
+				endif	
+			endif
+
 	    	call record_sound
 			call post_processing_sound
 		else
@@ -1220,6 +1297,7 @@ procedure processMainPageRecord .clickX .clickY .pressed$
 		# Reset button
 		call Draw_button '.table$' '.label$' 0
 		# Draw
+		label STOPRECORDING
 		call init_window
 	endif
 endproc

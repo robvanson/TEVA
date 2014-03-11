@@ -46,6 +46,8 @@ SpeakerSerial_Backw	< Serial	,<	Step through all recordings in reverse order (Sp
 SpeakerSort	Sort V	V	Sort the list of recordings
 SpeakerRandomize	Shuffle	u	Randomize the list of recordings
 RecordingTime	Recording	c	Time of recording in seconds
+!RecordingTaskFile	RecordingTaskFile	!	File with recording tasks
+!RecordingTarget	RecordingTarget	!	Directory with the recordings
 $Rating	Rating		Human evaluation of speech
 RatingForm_Vowel	Vowels		Evaluation form (VAS) for vowels
 RatingForm_Text	Text		Text evaluation form (VAS) for words and running speech

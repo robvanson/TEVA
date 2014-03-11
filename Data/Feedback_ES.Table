@@ -14,6 +14,9 @@ LtasValues	Ltas - Max.: MAXFREQUENCY$ Hz, Min.: MINFREQUENCY$ Hz, BED: BED$ dB, 
 ShortLtasValues	Max.: MAXFREQUENCY$ Hz, Min.: MINFREQUENCY$ Hz, BED: BED$ dB, CoG: COG$ Hz
 TimeValues	Time interval: SELECTEDSTARTTIME$ - SELECTEDENDTIME$ S (SELECTEDINTERVAL$ S)
 Recording	Recording
+RecordingTask	Task
+RecordingClear	Clear
+RecordingTarget	Store
 Cancel	Cancel
 Continue	Continue
 Unsaved	Unsaved changes

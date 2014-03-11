@@ -435,19 +435,73 @@ endproc
 procedure processConfigRecordingTime .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "RecordingTime"
+	.fileLabel$ = "RecordingTask"
 	# Get feedback texts
 	call getLanguageTexts '.table$' '.label$'
-	.inputText$ = getLanguageTexts.inputText$
-	beginPause(getLanguageTexts.helpText$)
-		positive (.inputText$, config.recordingTime$)
-	clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2, 1)
-	if clicked = 2
-		# The text of the field name equals the name of the variable! That is, an indirection
-		.inputText$ = replace_regex$(.inputText$, ".+", "\l&\$", 0)
-		.inputText$ = replace_regex$(.inputText$, "\$", "", 0)
-		.inputValue = '.inputText$'
-		config.recordingTime$ = "'.inputValue'"
-	endif
+	.inputText$ = getLanguageTexts.text$
+	call get_feedback_text 'config.language$' RecordingTask
+	.inputTaskFile$ = get_feedback_text.text$
+	call get_feedback_text 'config.language$' RecordingTarget
+	.inputTarget$ = get_feedback_text.text$
+	call get_feedback_text 'config.language$' RecordingClear
+	.inputTaskClear$ = get_feedback_text.text$
+	clicked = -1
+	while clicked <> 5
+		beginPause(getLanguageTexts.helpText$)
+			positive (.inputText$, config.recordingTime$)
+			sentence (.inputTaskFile$, config.recordingTaskFile$)
+			sentence (.inputTarget$, config.recordingTarget$)
+		clicked = endPause ("'getLanguageTexts.cancelText$'", "'.inputTaskFile$'", "'.inputTarget$'", "'.inputTaskClear$'", "'getLanguageTexts.continueText$'", 5)
+		if clicked = 2
+			.filename$ = chooseReadFile$ (.inputTaskFile$)
+			if .filename$ <> "" and fileReadable(.filename$)
+				if te.recordingTaskTable > 0
+					select te.recordingTaskTable
+					Remove
+					te.recordingTaskTable = 0
+					te.recordingTaskPrompt = 0
+				endif
+				config.recordingTaskFile$ = .filename$
+			endif
+		elsif clicked = 3
+			.dirname$ = chooseDirectory$ (.inputTarget$)
+			if .dirname$ <> ""
+				config.recordingTarget$ = .dirname$
+			endif
+		elsif clicked = 4
+			if te.recordingTaskTable > 0
+				select te.recordingTaskTable
+				Remove
+				te.recordingTaskTable = 0
+				te.recordingTaskPrompt = 0
+			endif
+			if config.recordingTaskFile$ <> ""
+				config.recordingTaskFile$ = ""
+				te.recordingTaskPrompt = 0
+			endif
+		elsif clicked = 5
+			# The text of the field name equals the name of the variable! That is, an indirection
+			.inputText$ = replace_regex$(.inputText$, ".+", "\l&\$", 0)
+			.inputText$ = replace_regex$(.inputText$, "\$", "", 0)
+			.inputValue = '.inputText$'
+			config.recordingTime$ = "'.inputValue'"
+			# The text of the field name equals the name of the variable! That is, an indirection
+			.inputTaskFile$ = replace_regex$(.inputTaskFile$, ".+", "\l&\$", 0)
+			.inputTaskFile$ = replace_regex$(.inputTaskFile$, "\$", "", 0)
+			.inputFile$ = '.inputTaskFile$'$
+			if .inputFile$ <> "" and .inputFile$ <> config.recordingTaskFile$ and fileReadable(.inputFile$)
+				config.recordingTaskFile$ = .inputFile$
+			elsif .inputFile$ = ""		
+				if te.recordingTaskTable > 0
+					select te.recordingTaskTable
+					Remove
+					te.recordingTaskTable = 0
+					te.recordingTaskPrompt = 0
+				endif
+				config.recordingTaskFile$ = ""
+			endif
+		endif
+	endwhile
     call Draw_button 'table$' '.label$' 0
 endproc
 

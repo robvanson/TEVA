@@ -58,8 +58,10 @@ te.rating$ = ""
 te.useFullASTselection = 1
 te.defaultLanguage$ = "EN"
 # te.recordingTaskTable = Read from file... testprompt.tsv
+config.recordingTaskFile$ = ""
+config.recordingTarget$ = ""
 te.recordingTaskTable = 0
-te.recordingTaskPrompt = 1
+te.recordingTaskPrompt = 0
 
 # Pop-Up window and other colors
 popUp.bordercolor$ = "{0.5,0.5,1}"

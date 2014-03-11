@@ -46,6 +46,8 @@ SpeakerSerial_Backw	< Seriell	,<	Verarbeite alle Aufnahmen r\u"ckw\a"rt (Spreche
 SpeakerSort	Sortiere	o	Sortiere die Liste mit Aufnahmen
 SpeakerRandomize	Shuffle	h	Randomisiere die Liste mit Aufnahmen
 RecordingTime	Aufnahme	e	Aufnahmezeit in Secunden
+!RecordingTaskFile	RecordingTaskFile	!	Die Datei mit den Aufnahmeaufgaben
+!RecordingTarget	RecordingTarget	!	Die Mappe mit den Aufnahmen
 $Rating	Beurteilung		Menschliche Beurteilung de Sprache
 RatingForm_Vowel	Vokallaut		Beurteilungsformular f\u"r Vokallaute
 RatingForm_Text	Text		Tekst Beurteilungsformular f\u"r W\o"rter und S\a"tze
