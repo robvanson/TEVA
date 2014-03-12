@@ -24,6 +24,7 @@ BrokenTable	Incomplete of beschadigde tabel
 Next	>
 Previous	<
 Current	=
+Speaker	Spreker ID
 SpeakerID	Opname ID of regelnummer
 SpeakerText	Spreker info
 SpeakerDefault	Spreker ID, naam, geslacht en/of leeftijd

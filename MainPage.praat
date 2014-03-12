@@ -770,8 +770,6 @@ procedure set_draw_signal_button
 	if config.muteOutput
 		call Draw_button 'te.buttons$' Record 1
 		call Draw_button 'te.buttons$' Play 1
-	elsif config.speakerSerial$ <> "None"
-		call Draw_button 'te.buttons$' Record 1
 	endif
 endproc
 
@@ -1216,11 +1214,23 @@ procedure processMainPageRecord .clickX .clickY .pressed$
 	.table$ = "MainPage"
 	.label$ = "Record"
 	
-	if not config.muteOutput and config.speakerSerial$ = "None"
+	if not config.muteOutput
 		if runningCommandMode = 0 and not config.muteOutput
 			# If there is an active task, initialize recording
-			if te.recordingTaskTable <= 0 and fileReadable(config.recordingTaskFile$)
-				te.recordingTaskTable = Read from file... 'config.recordingTaskFile$'
+			if te.recordingTaskTable <= 0 and config.recordingTaskFile$ <> ""
+				if fileReadable(config.recordingTaskFile$)
+					te.recordingTaskTable = Read from file... 'config.recordingTaskFile$'
+				elsif startsWith(config.recordingTaskFile$, "[") and endsWith(config.recordingTaskFile$, "]")
+					.text$ = left$(config.recordingTaskFile$, length(config.recordingTaskFile$) - 1)
+					.text$ = right$(.text$, length(.text$) - 1)
+					te.recordingTaskTable = Create Table with column names... RecordingTaskTable 1 postfix time align font size text
+					Set string value... 1 postfix _rec
+					Set numeric value... 1 time 'config.recordingTime$'
+					Set string value... 1 align centre
+					Set string value... 1 font Helvetica
+					Set numeric value... 1 size 24
+					Set string value... 1 text '.text$'
+				endif
 				if te.recordingTaskTable > 0
 					te.recordingTaskPrompt = 1
 					
@@ -1241,7 +1251,7 @@ procedure processMainPageRecord .clickX .clickY .pressed$
 					config.speakerDataBackup$ = ""
 					# If no speaker ID is given, ask for it
 					if speakerID$ = ""
-						call getLanguageTexts '.table$' Speaker
+						call get_feedback_text 'config.language$' Speaker
 						# Get feedback texts
 						call get_feedback_text 'config.language$' SpeakerID
 						call convert_praat_to_latin1 'get_feedback_text.text$'
@@ -1255,7 +1265,7 @@ procedure processMainPageRecord .clickX .clickY .pressed$
 						clicked = -1
 						beginPause(getLanguageTexts.helpText$)
 							sentence (.inputText$, speakerID$)
-						clicked = endPause ("'.cancelText$'", "'.continueText$'", 2)
+						clicked = endPause ("'.cancelText$'", "'.continueText$'", 2, 1)
 						if clicked = 2
 							.inputText$ = replace_regex$(.inputText$, ".+", "\l&\$", 0)
 							.inputText$ = replace_regex$(.inputText$, "[ ]", "_", 0)

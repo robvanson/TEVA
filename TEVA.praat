@@ -976,8 +976,8 @@ endproc
 procedure display_prompt .table .number
 	if .table > 0
 		select .table
-		.alignColumn = Get column index... align
 		.align$ = "left"
+		.alignColumn = Get column index... align
 		.numRows = Get number of rows
 		if .number > 0 and .number <= .numRows
 			# Get the values

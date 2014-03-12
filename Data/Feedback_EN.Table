@@ -24,6 +24,7 @@ BrokenTable	Incomplete or corrupted table
 Next	>
 Previous	<
 Current	=
+Speaker	Speaker ID
 SpeakerID	Recording ID or row number
 SpeakerText	Speaker info
 SpeakerDefault	Speaker ID, name, sex, and/or age

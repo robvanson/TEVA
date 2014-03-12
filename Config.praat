@@ -280,7 +280,7 @@ procedure processConfigSpeakerRevert .clickX .clickY .pressed$
 			.inputText$ = getLanguageTexts.inputText$
 			beginPause("")
 				comment(getLanguageTexts.helpText$)
-			clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2)
+			clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2, 1)
 			if clicked = 2
 				select config.speakerDataTable
 				Remove
@@ -401,7 +401,7 @@ procedure processConfigSpeakerRandomize .clickX .clickY .pressed$
 		.inputText$ = getLanguageTexts.inputText$
 		beginPause("")
 			comment(getLanguageTexts.helpText$)
-		clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2)
+		clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2, 1)
 		if clicked = 2
 			select config.speakerDataTable
 			Randomize rows
@@ -423,7 +423,7 @@ procedure processConfigSpeakerSort .clickX .clickY .pressed$
 		.inputText$ = getLanguageTexts.inputText$
 		beginPause("")
 			comment(getLanguageTexts.helpText$)
-		clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2)
+		clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2, 1)
 		if clicked = 2
 			select config.speakerDataTable
 			Sort rows... ID Audio Text Description
@@ -436,6 +436,10 @@ procedure processConfigRecordingTime .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "RecordingTime"
 	.fileLabel$ = "RecordingTask"
+	# Original values
+	.orig_recordingTime$ = config.recordingTime$
+	.orig_recordingTaskFile$ = config.recordingTaskFile$
+	.orig_recordingTarget$ = config.recordingTarget$
 	# Get feedback texts
 	call getLanguageTexts '.table$' '.label$'
 	.inputText$ = getLanguageTexts.text$
@@ -446,13 +450,19 @@ procedure processConfigRecordingTime .clickX .clickY .pressed$
 	call get_feedback_text 'config.language$' RecordingClear
 	.inputTaskClear$ = get_feedback_text.text$
 	clicked = -1
-	while clicked <> 5
+	while clicked <> 5 and clicked <> 1
 		beginPause(getLanguageTexts.helpText$)
 			positive (.inputText$, config.recordingTime$)
 			sentence (.inputTaskFile$, config.recordingTaskFile$)
 			sentence (.inputTarget$, config.recordingTarget$)
-		clicked = endPause ("'getLanguageTexts.cancelText$'", "'.inputTaskFile$'", "'.inputTarget$'", "'.inputTaskClear$'", "'getLanguageTexts.continueText$'", 5)
-		if clicked = 2
+		clicked = endPause ("'getLanguageTexts.cancelText$'", "'.inputTaskFile$'", "'.inputTarget$'", "'.inputTaskClear$'", "'getLanguageTexts.continueText$'", 5, 1)
+		# Cancel
+		if clicked = 1
+			config.recordingTime$ = .orig_recordingTime$
+			config.recordingTaskFile$ = .orig_recordingTaskFile$
+			config.recordingTarget$ = .orig_recordingTarget$
+		# Input task file
+		elsif clicked = 2
 			.filename$ = chooseReadFile$ (.inputTaskFile$)
 			if .filename$ <> "" and fileReadable(.filename$)
 				if te.recordingTaskTable > 0
@@ -463,11 +473,19 @@ procedure processConfigRecordingTime .clickX .clickY .pressed$
 				endif
 				config.recordingTaskFile$ = .filename$
 			endif
+		# Target directory
 		elsif clicked = 3
+			# Keep track of the task!
+			.inputTaskFile$ = replace_regex$(.inputTaskFile$, ".+", "\l&\$", 0)
+			.inputTaskFile$ = replace_regex$(.inputTaskFile$, "\$", "", 0)
+			.inputFile$ = '.inputTaskFile$'$
+			config.recordingTaskFile$ = .inputFile$
+			
 			.dirname$ = chooseDirectory$ (.inputTarget$)
 			if .dirname$ <> ""
 				config.recordingTarget$ = .dirname$
 			endif
+		# Clear
 		elsif clicked = 4
 			if te.recordingTaskTable > 0
 				select te.recordingTaskTable
@@ -479,6 +497,7 @@ procedure processConfigRecordingTime .clickX .clickY .pressed$
 				config.recordingTaskFile$ = ""
 				te.recordingTaskPrompt = 0
 			endif
+		# Continue
 		elsif clicked = 5
 			# The text of the field name equals the name of the variable! That is, an indirection
 			.inputText$ = replace_regex$(.inputText$, ".+", "\l&\$", 0)
@@ -489,8 +508,22 @@ procedure processConfigRecordingTime .clickX .clickY .pressed$
 			.inputTaskFile$ = replace_regex$(.inputTaskFile$, ".+", "\l&\$", 0)
 			.inputTaskFile$ = replace_regex$(.inputTaskFile$, "\$", "", 0)
 			.inputFile$ = '.inputTaskFile$'$
-			if .inputFile$ <> "" and .inputFile$ <> config.recordingTaskFile$ and fileReadable(.inputFile$)
-				config.recordingTaskFile$ = .inputFile$
+			if .inputFile$ <> ""
+				if fileReadable(.inputFile$)
+					if te.recordingTaskTable > 0
+						select te.recordingTaskTable
+						Remove
+						te.recordingTaskTable = 0
+						te.recordingTaskPrompt = 0
+					endif
+					config.recordingTaskFile$ = .inputFile$
+				elsif startsWith(.inputFile$, """") and endsWith(.inputFile$, """")
+					.inputFile$ = left$(.inputFile$, length(.inputFile$) - 1)
+					.inputFile$ = right$(.inputFile$, length(.inputFile$) - 1)
+					config.recordingTaskFile$ = "["+.inputFile$+"]"
+				elsif startsWith(.inputFile$, "[") and endsWith(.inputFile$, "]")
+					config.recordingTaskFile$ = .inputFile$
+				endif
 			elsif .inputFile$ = ""		
 				if te.recordingTaskTable > 0
 					select te.recordingTaskTable
