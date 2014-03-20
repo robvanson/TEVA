@@ -1486,6 +1486,13 @@ procedure getOpenFile .openDialogue$
 	selectedEndTime = currentEndTime
 	
 	# If this was loaded from a Speaker Data file, set the Select Window
+	if speakerID$ = ""
+		if currentSoundName$ <> ""
+			speakerID$ = currentSoundName$
+		else
+			speakerID$ = recordedSound$
+		endif
+	endif
 	call get_speakerInfo 'speakerID$'
 	if get_speakerInfo.endTime > 0 
 		selectedStartTime = get_speakerInfo.startTime
@@ -2311,8 +2318,13 @@ procedure reset_analysis
 		te.formant = 0
 		te.harmonicity = 0
 		te.gneSound = 0
+		selectedEndTime = 0
+		selectedStartTime = 0
+		currentStartTime = 0
+		currentEndTime = 0
 		
         recordedSound$ = ""
+        currentSoundName$ = ""
 		pitchName$ = ""
 		pitchTierName$ = ""
 		ltasName$ = ""
