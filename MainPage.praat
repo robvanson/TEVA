@@ -217,6 +217,7 @@ procedure print_signal .outFileName$
 	
 	# Get Voice Quality rating
 	call get_speakerInfo 'speakerID$'
+	.vq_Rating = -1
 	if config.speakerDataTable > 0
 		select config.speakerDataTable
 		.vq_Rating = -1
