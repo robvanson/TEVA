@@ -47,6 +47,7 @@ config.ratingForm$ = "Vowel"
 config.vasScaleTicks = 0
 te.recordingTimeStamp$ = ""
 te.currentFileName$ = ""
+te.saveAudio = 0
 te.openSound = 0
 te.spectrogram = 0
 te.harmonicity = 0
@@ -1158,6 +1159,8 @@ procedure sound_detection .sound$ .margin
 endproc
 
 procedure end_program
+	# Clean up
+	call reset_analysis
 	call write_preferences ""
 	demo Erase all
 	select all
@@ -1494,9 +1497,14 @@ procedure getOpenFile .openDialogue$
 		endif
 	endif
 	call get_speakerInfo 'speakerID$'
+	
 	if get_speakerInfo.endTime > 0 
 		selectedStartTime = get_speakerInfo.startTime
 		selectedEndTime = get_speakerInfo.endTime
+		te.saveAudio = 0
+		if get_speakerInfo.saveAudio$ = "Yes"
+			te.saveAudio = 1
+		endif
 		call predictASTvalue
 		predictedPathType = predictASTvalue.ast
 	elsif config.autoSelect
@@ -2283,6 +2291,10 @@ endproc
 procedure reset_analysis
     if te.openSound > 0
         select te.openSound
+        # If this file should be saved, do it now!
+		if te.saveAudio > 0
+			Save as WAV file... 'te.currentFileName$' 
+		endif
 		if te.pitch > 0
 			plus te.pitch
 		endif

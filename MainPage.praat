@@ -1290,6 +1290,7 @@ procedure processMainPageRecord .clickX .clickY .pressed$
 						Append row
 						Set string value... '.i' ID '.filename$''.postfix$'
 						Set string value... '.i' Audio 'config.recordingTarget$'/'.filename$''.postfix$'_'.datetime$'.wav
+						Set string value... '.i' SaveAudio Save						
 					endfor	
 				endif	
 			endif

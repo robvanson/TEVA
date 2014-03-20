@@ -505,6 +505,7 @@ procedure get_speakerInfo .speakerID$
 	.row = 0
 	.startTime = -1
 	.endTime = -1
+	.saveAudio$ = "No"
 	
 	if .speakerID$ <> "" and config.speakerData$ <> "" and fileReadable (config.speakerData$)
 		call ReadSpeakerData 'config.speakerData$'
@@ -545,6 +546,15 @@ procedure get_speakerInfo .speakerID$
 					# Root of audio files is in config.speakerData$, if not rooted elsewhere
 					if index_regex(.audio$, "^(?i[\\/:~]|[a-z]:)") <= 0
 						.audio$ = replace_regex$(config.speakerData$, "[^\\/:]+$", "'.audio$'", 0)
+					endif
+				endif
+				# Look if the audio has to be saved
+				.saveAudio$ = "No"
+				if .audio$ <> ""
+					select config.speakerDataTable
+					.colIndex = Get column index... SaveAudio
+					if .colIndex > 0
+						.saveAudio$ = Get value... '.row' SaveAudio
 					endif
 				endif
 				.ast$ = Get value... '.row' AST
