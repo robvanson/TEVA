@@ -2337,6 +2337,7 @@ procedure reset_analysis
 		
         recordedSound$ = ""
         currentSoundName$ = ""
+        speakerID$ = ""
 		pitchName$ = ""
 		pitchTierName$ = ""
 		ltasName$ = ""
