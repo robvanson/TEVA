@@ -1440,6 +1440,9 @@ procedure getOpenFile .openDialogue$
 		.filename$ = chooseReadFile$ (.openDialogue$)
 	endif
 	if .filename$ <> "" and fileReadable(.filename$) and index_regex(.filename$, "(?i\.(txt|tsv|table)$)")
+		# Reset all internal structures
+		call reset_analysis
+		
 		config.speakerData$ = .filename$
 		.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
 		call load_local_preferences '.dataDir$'
@@ -1452,11 +1455,11 @@ procedure getOpenFile .openDialogue$
 		.filename$ = ""
 	endif
 	
-	# Reset all internal structures
-	call reset_analysis
-
 	# Get the file
 	if .filename$ <> "" and fileReadable(.filename$)
+		# Reset all internal structures
+		call reset_analysis
+		
 		.sndInput = Read from file... '.filename$'
 		.numChannels = Get number of channels
 		if .numChannels > 1
@@ -1475,30 +1478,36 @@ procedure getOpenFile .openDialogue$
 		.nameLength = rindex(.filename$, ".") - .startName
 		currentSoundName$ = mid$(.filename$, .startName, .nameLength)
 		currentDirectoryName$ = left$(.filename$, .endDirectory)
-	else
-		Create Sound from formula... Speech Mono 0 1 44100 0
+		
+		te.openSound = selected("Sound")
+		recordedSound$ = selected$("Sound")
+		# Keep track of current sound
+		te.recordingTimeStamp$ = ""
+		currentStartTime = 0
+		currentEndTime = Get total duration
+		# Reset selected window
+		selectedStartTime = currentStartTime
+		selectedEndTime = currentEndTime
+		select te.openSound
 	endif
-	te.openSound = selected("Sound")
-	recordedSound$ = selected$("Sound")
-	# Keep track of current sound
-	te.recordingTimeStamp$ = ""
-	currentStartTime = 0
-	currentEndTime = Get total duration
-	# Reset selected window
-	selectedStartTime = currentStartTime
-	selectedEndTime = currentEndTime
-	
-	# If this was loaded from a Speaker Data file, set the Select Window
-	if speakerID$ = ""
+endproc
+
+procedure set_new_speakerdata .newSpeakerID$
+	if .newSpeakerID$ = "" or .newSpeakerID$ = "-"
 		if currentSoundName$ <> ""
-			speakerID$ = currentSoundName$
+			.newSpeakerID$ = currentSoundName$
 		else
-			speakerID$ = recordedSound$
+			.newSpeakerID$ = recordedSound$
 		endif
 	endif
+	speakerID$ = .newSpeakerID$
 	call get_speakerInfo 'speakerID$'
+	speakerInfo$ = get_speakerInfo.text$
+	speakerComments$ = get_speakerInfo.description$
+	pathologicalType = 'get_speakerInfo.ast$'
 	
-	if get_speakerInfo.endTime > 0 
+	# If this was loaded from a Speaker Data file, set the Select Window
+	if get_speakerInfo.row > 0 and get_speakerInfo.endTime > 0 
 		selectedStartTime = get_speakerInfo.startTime
 		selectedEndTime = get_speakerInfo.endTime
 		te.saveAudio = 0
@@ -1511,8 +1520,7 @@ procedure getOpenFile .openDialogue$
 		# If no selection if given, determine it
 		call argMinASTselection
 	endif
-
-	select te.openSound
+	
 endproc
 
 procedure readFromFile .filename$

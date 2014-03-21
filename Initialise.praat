@@ -623,15 +623,16 @@ procedure normalize_speakerData .tableFile$
 endproc
 
 # Non-interactive procedure to load a specific speaker from Speaker Data
-procedure loadSpeaker speakerID$
-	call get_speakerInfo 'speakerID$'
-	speakerID$ = get_speakerInfo.id$
+procedure loadSpeaker .newSpeakerID$
+	call get_speakerInfo '.newSpeakerID$'
+	.newSpeakerID$ = get_speakerInfo.id$
 	speakerInfo$ = get_speakerInfo.text$
 	speakerComments$ = get_speakerInfo.description$
 	te.currentFileName$ = get_speakerInfo.audio$
 	pathologicalType = 'get_speakerInfo.ast$'
 	call getOpenFile 'te.currentFileName$'
 	Rename... Speech
+	call set_new_speakerdata '.newSpeakerID$'
 	.duration = Get total duration
 	call post_processing_sound
 endproc
@@ -785,12 +786,13 @@ procedure ReadSpeakerData .speakerData$
 	endif
 endproc
 
-procedure load_audio_file .fileName$
+procedure load_audio_file .newSpeakerID$ .fileName$
 	if .fileName$ <> "" and fileReadable(.fileName$)
 		call getOpenFile '.fileName$'
 		Rename... Speech
 		recordedSound$ = selected$("Sound")
 		te.openSound = selected("Sound")
+		call set_new_speakerdata '.newSpeakerID$'
 		call post_processing_sound
 		# Draw
 		call init_window

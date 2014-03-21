@@ -924,12 +924,9 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 				speakerID$ = .newSpeakerID$
 				call get_speakerInfo 'speakerID$'
 				if get_speakerInfo.row > 0
-					speakerID$ = get_speakerInfo.id$
-					speakerInfo$ = get_speakerInfo.text$
-					speakerComments$ = get_speakerInfo.description$
-					pathologicalType = 'get_speakerInfo.ast$'
+					.newSpeakerID$ = get_speakerInfo.id$
 					te.currentFileName$ = get_speakerInfo.audio$
-					call load_audio_file 'te.currentFileName$'
+					call load_audio_file '.newSpeakerID$' 'te.currentFileName$'
 					call autoSetPathType
 				else
 					speakerID$ = .newSpeakerID$
@@ -953,21 +950,15 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 			endif
 		elsif clicked = 1
 			call get_previousSpeaker 'speakerID$'
-			speakerID$ = get_previousSpeaker.id$
-			speakerInfo$ = get_previousSpeaker.text$
-			speakerComments$ = get_previousSpeaker.description$
+			.newSpeakerID$ = get_previousSpeaker.id$
 			te.currentFileName$ = get_previousSpeaker.audio$
-			pathologicalType = 'get_previousSpeaker.ast$'
-			call load_audio_file 'te.currentFileName$'
+			call load_audio_file '.newSpeakerID$' 'te.currentFileName$'
 			call autoSetPathType
 		elsif clicked = 3
 			call get_nextSpeaker 'speakerID$'
-			speakerID$ = get_nextSpeaker.id$
-			speakerInfo$ = get_nextSpeaker.text$
-			speakerComments$ = get_nextSpeaker.description$
+			.newSpeakerID$ = get_nextSpeaker.id$
 			te.currentFileName$ = get_nextSpeaker.audio$
-			pathologicalType = 'get_nextSpeaker.ast$'
-			call load_audio_file 'te.currentFileName$'
+			call load_audio_file '.newSpeakerID$' 'te.currentFileName$'
 			call autoSetPathType
 		endif
 		if clicked = 2
@@ -1067,12 +1058,9 @@ procedure processMainPageNextItem .clickX .clickY .pressed$
 		endif
 		call get_nextSpeaker 'speakerID$'
 	endif
-	speakerID$ = get_nextSpeaker.id$
-	speakerInfo$ = get_nextSpeaker.text$
-	speakerComments$ = get_nextSpeaker.description$
+	.newSpeakerID$ = get_nextSpeaker.id$
 	te.currentFileName$ = get_nextSpeaker.audio$
-	pathologicalType = 'get_nextSpeaker.ast$'
-	call load_audio_file 'te.currentFileName$'
+	call load_audio_file '.newSpeakerID$' 'te.currentFileName$'
 	call autoSetPathType
 	if config.speakerSerial$ = "Backw"
 		call Draw_button '.table$' PreviousItem 0
@@ -1155,12 +1143,9 @@ procedure processMainPagePreviousItem .clickX .clickY .pressed$
 		endif
 		call get_previousSpeaker 'speakerID$'
 	endif
-	speakerID$ = get_previousSpeaker.id$
-	speakerInfo$ = get_previousSpeaker.text$
-	speakerComments$ = get_previousSpeaker.description$
+	.newSpeakerID$ = get_previousSpeaker.id$
 	te.currentFileName$ = get_previousSpeaker.audio$
-	pathologicalType = 'get_previousSpeaker.ast$'
-	call load_audio_file 'te.currentFileName$'
+	call load_audio_file '.newSpeakerID$' 'te.currentFileName$'
 	call autoSetPathType
 	if config.speakerSerial$ = "Backw"
 		call Draw_button '.table$' PreviousItem 0
@@ -1179,18 +1164,18 @@ procedure processMainPageFile .clickX .clickY .pressed$
 	.helpText$ = Get value... '.row' Helptext
 	
 	call getOpenFile '.helpText$'
-	Rename... Speech
-	recordedSound$ = selected$("Sound")	
+	call set_new_speakerdata -
 	call post_processing_sound
 	
 	# Reset button
 	call Draw_button '.table$' '.label$' 0
 
 	# Get first item and Draw using the NextItem button
-	if speakerID$ = ""
+	if config.speakerDataTable <= 0 and config.speakerData$ <> "" and fileReadable(config.speakerData$)
+		# New speaker table read
+		call ReadSpeakerData 'config.speakerData$'
 		call processMainPageNextItem 0 0 x
 	else
-		call ReadSpeakerData 'config.speakerData$'
 		call WriteSpeakerData
 		call init_window
 	endif
