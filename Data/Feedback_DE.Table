@@ -29,5 +29,6 @@ SpeakerID	Aufnahme ID oder Zeilennummer
 SpeakerText	Sprecher daten
 SpeakerDefault	Sprecher ID, Namen, Geschlecht, und/oder Alter
 SpeakerComments	Kommentare
+SpeakerAudio	Audio
 VoicingMarker	Stimme
 Ready	Ende der Liste

@@ -838,7 +838,7 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 	select Table '.table$'
 	.helpText$ = Get value... '.row' Helptext
 	clicked = -1
-	while clicked <> 4
+	while clicked <> 5
 		# The speaker Text
 		.speakerID$ = "ID"
 		.speakerIDDefault$ = speakerID$
@@ -892,14 +892,17 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 		call get_feedback_text 'config.language$' SpeakerComments
 		call convert_praat_to_latin1 'get_feedback_text.text$'
 		.buttonText$ = convert_praat_to_latin1.text$
+		call get_feedback_text 'config.language$' SpeakerAudio
+		call convert_praat_to_latin1 'get_feedback_text.text$'
+		.audioText$ = convert_praat_to_latin1.text$
 
 		# The user text input window (beginPause .... endPause)
 		beginPause(.helpText$)
 			text (.speakerID$, .speakerIDDefault$)
 			text (.speakerText$, .speakerDefault$)
 			text (.speakerCommentInput$, .speakerCommentDef$)
-		clicked = endPause ("'.prevText$'", "'.currentText$'", "'.nextText$'", "'.continueText$'", 4, 1)
-		if clicked = 2 or clicked = 4
+		clicked = endPause ("'.audioText$'", "'.prevText$'", "'.currentText$'", "'.nextText$'", "'.continueText$'", 5, 1)
+		if clicked = 3 or clicked = 5
 			# The text of the field name equals the name of the variable! That is, an indirection
 			.speakerID$ = replace_regex$(.speakerID$, ".+", "\l&\$", 0)
 			.speakerText$ = replace_regex$(.speakerText$, ".+", "\l&\$", 0)
@@ -949,19 +952,31 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 				call WriteSpeakerData
 			endif
 		elsif clicked = 1
+			call get_feedback_text 'config.language$' SpeakerAudio
+			call convert_praat_to_latin1 'get_feedback_text.text$'
+			.openDialogue$ = convert_praat_to_latin1.text$
+			.filename$ = chooseReadFile$ (.openDialogue$)
+			if .filename$ <> "" and fileReadable(.filename$)
+				te.currentFileName$ = .filename$
+				call load_audio_file 'speakerID$' 'te.currentFileName$'
+				call autoSetPathType
+				te.currentFileName$ = .filename$
+				call WriteSpeakerData
+			endif
+		elsif clicked = 2
 			call get_previousSpeaker 'speakerID$'
 			.newSpeakerID$ = get_previousSpeaker.id$
 			te.currentFileName$ = get_previousSpeaker.audio$
 			call load_audio_file '.newSpeakerID$' 'te.currentFileName$'
 			call autoSetPathType
-		elsif clicked = 3
+		elsif clicked = 4
 			call get_nextSpeaker 'speakerID$'
 			.newSpeakerID$ = get_nextSpeaker.id$
 			te.currentFileName$ = get_nextSpeaker.audio$
 			call load_audio_file '.newSpeakerID$' 'te.currentFileName$'
 			call autoSetPathType
 		endif
-		if clicked = 2
+		if clicked = 3
 			call ReadSpeakerData 'config.speakerData$'
 			if config.speakerDataTable > 0
 				select config.speakerDataTable
