@@ -497,6 +497,7 @@ procedure processConfigRecordingTime .clickX .clickY .pressed$
 				config.recordingTaskFile$ = ""
 				te.recordingTaskPrompt = 0
 			endif
+			config.recordingTarget$ = ""
 		# Continue
 		elsif clicked = 5
 			# The text of the field name equals the name of the variable! That is, an indirection

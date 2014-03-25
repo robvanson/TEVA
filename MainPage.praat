@@ -1013,6 +1013,9 @@ procedure processMainPageNextItem .clickX .clickY .pressed$
 		.readyText$ = convert_praat_to_latin1.text$
 		call write_text_popup Helvetica 20 '.readyText$'
 		demoWaitForInput()
+		if te.recordingTaskPrompt > 0
+			te.recordingTaskPrompt = 0
+		endif
 	endif
 	
 	# This was the first reference to a speaker, get first empty pos
@@ -1074,8 +1077,19 @@ procedure processMainPageNextItem .clickX .clickY .pressed$
 		call get_nextSpeaker 'speakerID$'
 	endif
 	.newSpeakerID$ = get_nextSpeaker.id$
-	te.currentFileName$ = get_nextSpeaker.audio$
-	call load_audio_file '.newSpeakerID$' 'te.currentFileName$'
+	.newFileName$ = get_nextSpeaker.audio$
+	if te.recordingTaskPrompt > 0
+		te.recordingTaskPrompt += 1
+	endif
+	call reset_analysis
+	speakerID$ = .newSpeakerID$
+	te.currentFileName$ = .newFileName$
+	if te.currentFileName$ <> "" and fileReadable(te.currentFileName$)
+		call load_audio_file '.speakerID$' 'te.currentFileName$
+	else
+		call set_new_speakerdata 'speakerID$'
+		call init_window
+	endif
 	call autoSetPathType
 	if config.speakerSerial$ = "Backw"
 		call Draw_button '.table$' PreviousItem 0
@@ -1102,6 +1116,9 @@ procedure processMainPagePreviousItem .clickX .clickY .pressed$
 		.readyText$ = convert_praat_to_latin1.text$
 		call write_text_popup Helvetica 20 '.readyText$'
 		demoWaitForInput()
+		if te.recordingTaskPrompt > 0
+			te.recordingTaskPrompt = 0
+		endif
 	endif
 	
 	# This was the last reference to a speaker, get last empty pos
@@ -1159,14 +1176,27 @@ procedure processMainPagePreviousItem .clickX .clickY .pressed$
 		call get_previousSpeaker 'speakerID$'
 	endif
 	.newSpeakerID$ = get_previousSpeaker.id$
-	te.currentFileName$ = get_previousSpeaker.audio$
-	call load_audio_file '.newSpeakerID$' 'te.currentFileName$'
+	speakerID$ = .newSpeakerID$
+	.newFileName$ = get_nextSpeaker.audio$
+	if te.recordingTaskPrompt > 0
+		te.recordingTaskPrompt -= 1
+	endif
+	call reset_analysis
+	speakerID$ = .newSpeakerID$
+	te.currentFileName$ = .newFileName$
+	if te.currentFileName$ <> "" and fileReadable(te.currentFileName$)
+		call load_audio_file '.speakerID$' 'te.currentFileName$
+	else
+		call set_new_speakerdata 'speakerID$'
+		call init_window
+	endif
 	call autoSetPathType
 	if config.speakerSerial$ = "Backw"
 		call Draw_button '.table$' PreviousItem 0
 	elsif config.speakerSerial$ = "Forw"
 		call Draw_button '.table$' NextItem 0
 	endif
+	call init_window
 endproc
 
 procedure processMainPageFile .clickX .clickY .pressed$
@@ -1246,6 +1276,7 @@ procedure processMainPageRecord .clickX .clickY .pressed$
 					config.speakerDataBackup$ = ""
 					# If no speaker ID is given, ask for it
 					if speakerID$ = ""
+						call getLanguageTexts '.table$' '.label$'
 						call get_feedback_text 'config.language$' Speaker
 						# Get feedback texts
 						call get_feedback_text 'config.language$' SpeakerID
@@ -1281,8 +1312,10 @@ procedure processMainPageRecord .clickX .clickY .pressed$
 					.postfix$ = Get value... 1 postfix
 					.filename$ = replace_regex$(speakerID$, "[^a-zA-Z0-9\.\-_]", "_", 0)
 					select config.speakerDataTable
+					speakerID$ = "'.filename$''.postfix$'"
 					Set string value... 1 ID '.filename$''.postfix$'
 					Set string value... 1 Audio 'config.recordingTarget$'/'.filename$''.postfix$'_'.datetime$'.wav
+					Set string value... 1 SaveAudio Save
 					for .i from 2 to .numRows
 						select te.recordingTaskTable
 						.postfix$ = Get value... '.i' postfix
@@ -1290,13 +1323,14 @@ procedure processMainPageRecord .clickX .clickY .pressed$
 						Append row
 						Set string value... '.i' ID '.filename$''.postfix$'
 						Set string value... '.i' Audio 'config.recordingTarget$'/'.filename$''.postfix$'_'.datetime$'.wav
-						Set string value... '.i' SaveAudio Save						
-					endfor	
+						Set string value... '.i' SaveAudio Save
+					endfor
 				endif	
 			endif
 
 	    	call record_sound
 			call post_processing_sound
+			call set_new_speakerdata 'speakerID$'
 		else
 			skipNextStep = 1
 		endif

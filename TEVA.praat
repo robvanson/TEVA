@@ -910,7 +910,7 @@ procedure record_sound
     
     # Show a task window
 	.rectime = 'config.recordingTime$'
-    if te.recordingTaskTable > 0 and te.recordingTaskPrompt > 0
+    if te.recordingTaskTable > 0 and te.recordingTaskPrompt > 0		
 		select te.recordingTaskTable
 		.numRows = Get number of rows
 		.timeColumn = Get column index... time
@@ -1505,15 +1505,16 @@ procedure set_new_speakerdata .newSpeakerID$
 	speakerInfo$ = get_speakerInfo.text$
 	speakerComments$ = get_speakerInfo.description$
 	pathologicalType = 'get_speakerInfo.ast$'
+	te.currentFileName$ = get_speakerInfo.audio$
+	te.saveAudio = 0
+	if get_speakerInfo.saveAudio$ = "Save"
+		te.saveAudio = 1
+	endif
 	
 	# If this was loaded from a Speaker Data file, set the Select Window
 	if get_speakerInfo.row > 0 and get_speakerInfo.endTime > 0 
 		selectedStartTime = get_speakerInfo.startTime
 		selectedEndTime = get_speakerInfo.endTime
-		te.saveAudio = 0
-		if get_speakerInfo.saveAudio$ = "Yes"
-			te.saveAudio = 1
-		endif
 		call predictASTvalue
 		predictedPathType = predictASTvalue.ast
 	elsif config.autoSelect
