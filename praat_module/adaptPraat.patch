@@ -246,6 +246,23 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  END
  
  FORM (Sound_resample, L"Sound: Resample", L"Sound: Resample...")
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Ui.cpp demo_praat_sources/sys/Ui.cpp
+--- praat_sources/sys/Ui.cpp	2014-01-27 09:02:44.000000000 +0100
++++ demo_praat_sources/sys/Ui.cpp	2014-03-25 10:52:11.000000000 +0100
+@@ -757,11 +757,11 @@ static void appendColon (void) {
+ void UiForm_finish (I) {
+ 	iam (UiForm);
+ 	if (! my d_dialogParent && ! my isPauseForm) return;
+-
++	int numberOfContinueButtons = my numberOfContinueButtons;
+ 	int size = my numberOfFields;
+ 	int dialogHeight = 0, x = Gui_LEFT_DIALOG_SPACING, y;
+ 	int textFieldHeight = Gui_TEXTFIELD_HEIGHT;
+-	int dialogWidth = 520, dialogCentre = dialogWidth / 2, fieldX = dialogCentre + Gui_LABEL_SPACING / 2;
++	int dialogWidth = REVERT_BUTTON_WIDTH + STOP_BUTTON_WIDTH + 2*Gui_LABEL_SPACING + numberOfContinueButtons*(STANDARDS_BUTTON_WIDTH + Gui_LABEL_SPACING), dialogCentre = dialogWidth / 2, fieldX = dialogCentre + Gui_LABEL_SPACING / 2;
+ 	int labelWidth = fieldX - Gui_LABEL_SPACING - x, fieldWidth = labelWidth, halfFieldWidth = fieldWidth / 2 - 6;
+ 
+ 	GuiForm form;
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/UiPause.cpp demo_praat_sources/sys/UiPause.cpp
 --- praat_sources/sys/UiPause.cpp	2012-09-27 09:10:50.000000000 +0200
 +++ demo_praat_sources/sys/UiPause.cpp	2012-09-27 13:25:18.000000000 +0200
