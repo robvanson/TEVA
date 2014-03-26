@@ -717,6 +717,9 @@ procedure i8n_date
 	.date$ = date$()
 	.dayOfWeek$ = left$(.date$, 3)
 	.month$ = mid$(.date$, 5, 3)
+	.year$ = right$(.date$, 4)
+	.dayOfMonth$ = mid$(.date$, 9, 2)
+	.time$ = mid$(.date$, 12, 8)
 	.rest$ = right$(.date$, length(.date$)-7)
 	# File stamp date
 	
@@ -725,9 +728,11 @@ procedure i8n_date
 	.i8n_dayOfWeek$ = get_printsignal_text.text$
 	call get_printsignal_text 'config.language$' '.month$'
 	.i8n_month$ = get_printsignal_text.text$
+	call get_printsignal_text 'config.language$' num'.month$'
+	.num_month$ = get_printsignal_text.text$
 	.date$ = .i8n_dayOfWeek$ + " " + .i8n_month$ + .rest$
 	# File stamp date
-	.printDate$ = .i8n_month$ + .rest$
+	.printDate$ = .year$+.num_month$+.dayOfMonth$+"_"+.time$
 	.printDate$ = replace_regex$(.printDate$, "[:]", "-", 0)
 	.printDate$ = replace_regex$(.printDate$, "[ ]", "_", 0)
 endproc
@@ -810,7 +815,7 @@ procedure processMainPageHelp .clickX .clickY .pressed$
 	if runningCommandMode = 0
 		call help_loop 'te.buttons$' init_window
 	else
-		skipNextStep = 1
+		te.skipNextStep = 1
 	endif
 	call Draw_button '.table$' '.label$' 0
 endproc
@@ -965,12 +970,18 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 			endif
 		elsif clicked = 2
 			call get_previousSpeaker 'speakerID$'
+			if get_previousSpeaker.reset > 0
+				call unload_RecordingTask
+			endif
 			.newSpeakerID$ = get_previousSpeaker.id$
 			te.currentFileName$ = get_previousSpeaker.audio$
 			call load_audio_file '.newSpeakerID$' 'te.currentFileName$'
 			call autoSetPathType
 		elsif clicked = 4
 			call get_nextSpeaker 'speakerID$'
+			if get_previousSpeaker.reset > 0
+				call unload_RecordingTask
+			endif
 			.newSpeakerID$ = get_nextSpeaker.id$
 			te.currentFileName$ = get_nextSpeaker.audio$
 			call load_audio_file '.newSpeakerID$' 'te.currentFileName$'
@@ -1007,15 +1018,13 @@ procedure processMainPageNextItem .clickX .clickY .pressed$
 	.currentRow = get_nextSpeaker.row
 	
 	# If currentRow < previousRow, you start over. Show a message
-	if .currentRow < .previousRow
+	if .currentRow <= .previousRow
 		call get_feedback_text 'config.language$' Ready
 		call convert_praat_to_latin1 'get_feedback_text.text$'
 		.readyText$ = convert_praat_to_latin1.text$
 		call write_text_popup Helvetica 20 '.readyText$'
 		demoWaitForInput()
-		if te.recordingTaskPrompt > 0
-			te.recordingTaskPrompt = 0
-		endif
+		call unload_RecordingTask
 	endif
 	
 	# This was the first reference to a speaker, get first empty pos
@@ -1110,15 +1119,13 @@ procedure processMainPagePreviousItem .clickX .clickY .pressed$
 	.currentRow = get_previousSpeaker.row
 	
 	# If currentRow > previousRow, you start over. Show a message
-	if .nextRow > 0 and .currentRow > .nextRow
+	if .nextRow > 0 and .currentRow >= .nextRow
 		call get_feedback_text 'config.language$' Ready
 		call convert_praat_to_latin1 'get_feedback_text.text$'
 		.readyText$ = convert_praat_to_latin1.text$
 		call write_text_popup Helvetica 20 '.readyText$'
 		demoWaitForInput()
-		if te.recordingTaskPrompt > 0
-			te.recordingTaskPrompt = 0
-		endif
+		call unload_RecordingTask
 	endif
 	
 	# This was the last reference to a speaker, get last empty pos
@@ -1240,104 +1247,26 @@ procedure processMainPageRecord .clickX .clickY .pressed$
 	.label$ = "Record"
 	
 	if not config.muteOutput
-		if runningCommandMode = 0 and not config.muteOutput
+		if runningCommandMode = 0
 			# If there is an active task, initialize recording
 			if te.recordingTaskTable <= 0 and config.recordingTaskFile$ <> ""
-				if fileReadable(config.recordingTaskFile$)
-					te.recordingTaskTable = Read from file... 'config.recordingTaskFile$'
-				elsif startsWith(config.recordingTaskFile$, "[") and endsWith(config.recordingTaskFile$, "]")
-					.text$ = left$(config.recordingTaskFile$, length(config.recordingTaskFile$) - 1)
-					.text$ = right$(.text$, length(.text$) - 1)
-					te.recordingTaskTable = Create Table with column names... RecordingTaskTable 1 postfix time align font size text
-					Set string value... 1 postfix _rec
-					Set numeric value... 1 time 'config.recordingTime$'
-					Set string value... 1 align centre
-					Set string value... 1 font Helvetica
-					Set numeric value... 1 size 24
-					Set string value... 1 text '.text$'
+				call setup_recordingTask
+				if setup_recordingTask.skiprecording > 0
+					goto SKIPRECORDING
 				endif
-				if te.recordingTaskTable > 0
-					te.recordingTaskPrompt = 1
-					
-					# Switch to serial
-					config.speakerSerial$ = "Forw"
-					# Set up new Speaker table
-					config.speakerData$ = ""
-					if config.speakerDataTable > 0
-						select config.speakerDataTable
-						Remove
-					endif
-					# Initialize Speaker Data
-					config.speakerData$ = ""
-					config.speakerDataTable = -1
-					speakerInfo$ = ""
-					speakerComments$ = ""
-					pathologicalType = 0
-					config.speakerDataBackup$ = ""
-					# If no speaker ID is given, ask for it
-					if speakerID$ = ""
-						call getLanguageTexts '.table$' '.label$'
-						call get_feedback_text 'config.language$' Speaker
-						# Get feedback texts
-						call get_feedback_text 'config.language$' SpeakerID
-						call convert_praat_to_latin1 'get_feedback_text.text$'
-						.inputText$ = convert_praat_to_latin1.text$
-						call get_feedback_text 'config.language$' Cancel
-						call convert_praat_to_latin1 'get_feedback_text.text$'
-						.cancelText$ = convert_praat_to_latin1.text$
-						call get_feedback_text 'config.language$' Continue
-						call convert_praat_to_latin1 'get_feedback_text.text$'
-						.continueText$ = convert_praat_to_latin1.text$
-						clicked = -1
-						beginPause(getLanguageTexts.helpText$)
-							sentence (.inputText$, speakerID$)
-						clicked = endPause ("'.cancelText$'", "'.continueText$'", 2, 1)
-						if clicked = 2
-							.inputText$ = replace_regex$(.inputText$, ".+", "\l&\$", 0)
-							.inputText$ = replace_regex$(.inputText$, "[ ]", "_", 0)
-							.inputText$ = replace_regex$(.inputText$, "\$", "", 0)
-							speakerID$ = '.inputText$'$
-						endif
-					endif
-					if speakerID$ = ""
-						goto SKIPRECORDING
-					endif
-					# Date and time
-					call i8n_date
-					.datetime$ = i8n_date.printDate$
-					# New speakerDataTable
-					config.speakerDataTable = Create Table with column names... Speaker_Data 1 ID Text Description StartTime EndTime Audio SaveAudio AST
-					select te.recordingTaskTable
-					.numRows = Get number of rows
-					.postfix$ = Get value... 1 postfix
-					.filename$ = replace_regex$(speakerID$, "[^a-zA-Z0-9\.\-_]", "_", 0)
-					select config.speakerDataTable
-					speakerID$ = "'.filename$''.postfix$'"
-					Set string value... 1 ID '.filename$''.postfix$'
-					Set string value... 1 Audio 'config.recordingTarget$'/'.filename$''.postfix$'_'.datetime$'.wav
-					Set string value... 1 SaveAudio Save
-					for .i from 2 to .numRows
-						select te.recordingTaskTable
-						.postfix$ = Get value... '.i' postfix
-						select config.speakerDataTable
-						Append row
-						Set string value... '.i' ID '.filename$''.postfix$'
-						Set string value... '.i' Audio 'config.recordingTarget$'/'.filename$''.postfix$'_'.datetime$'.wav
-						Set string value... '.i' SaveAudio Save
-					endfor
-				endif	
 			endif
 
 	    	call record_sound
 			call post_processing_sound
 			call set_new_speakerdata 'speakerID$'
 		else
-			skipNextStep = 1
+			# This is a global variable
+			te.skipNextStep = 1
 		endif
 		# Reset button
 		call Draw_button '.table$' '.label$' 0
 		# Draw
-		label STOPRECORDING
+		label SKIPRECORDING
 		call init_window
 	endif
 endproc
@@ -1460,7 +1389,7 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 	call Draw_button '.table$' Select 2
 	if runningCommandMode = 1
 		# Do nothing
-		skipNextStep = 1
+		te.skipNextStep = 1
 		goto ENDOFDISPLAYSELECT
 	elsif demoKeyPressed() or buttonClicked.label$ = "Select"
 		.firstT = -1

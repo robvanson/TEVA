@@ -681,7 +681,7 @@ procedure processConfigHelp .clickX .clickY .pressed$
 	if runningCommandMode = 0
 		call help_loop	'.table$' Draw_config_page
 	else
-		skipNextStep = 1
+		te.skipNextStep = 1
 	endif
 endproc
 
@@ -722,7 +722,7 @@ procedure processConfigLogging .clickX .clickY .pressed$
         	call start_logging
     	endif
 	else
-		skipNextStep = 1
+		te.skipNextStep = 1
 	endif
 endproc
 

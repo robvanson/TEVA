@@ -447,6 +447,7 @@ procedure write_preferences .preferencesFile$
 endproc
 
 procedure get_nextSpeaker .speakerID$
+	.reset = 0
 	call get_speakerInfo '.speakerID$'
 	.row = get_speakerInfo.row
 	call ReadSpeakerData 'config.speakerData$'
@@ -456,8 +457,10 @@ procedure get_nextSpeaker .speakerID$
 		.row += 1
 		if .row <= 0
 			.row = .numRows
+			.reset = 1
 		elsif .row > .numRows
 			.row = 1
+			.reset = 1
 		endif
 		.speakerID$ = Get value... '.row' ID
 	endif
@@ -472,6 +475,7 @@ procedure get_nextSpeaker .speakerID$
 endproc
 
 procedure get_previousSpeaker .speakerID$
+	.reset = 0
 	call get_speakerInfo '.speakerID$'
 	.row = get_speakerInfo.row
 	call ReadSpeakerData 'config.speakerData$'
@@ -481,8 +485,10 @@ procedure get_previousSpeaker .speakerID$
 		.row -= 1
 		if .row <= 0
 			.row = .numRows
+			.reset = 1
 		elsif .row > .numRows
 			.row = 1
+			.reset = 1
 		endif
 		.speakerID$ = Get value... '.row' ID
 	endif

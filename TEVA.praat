@@ -58,7 +58,6 @@ te.ratingTable = -1
 te.rating$ = ""
 te.useFullASTselection = 1
 te.defaultLanguage$ = "EN"
-# te.recordingTaskTable = Read from file... testprompt.tsv
 config.recordingTaskFile$ = ""
 config.recordingTarget$ = ""
 te.recordingTaskTable = 0
@@ -920,7 +919,9 @@ procedure record_sound
 		if .rectime = undefined or .rectime <= 0
 			.rectime = 'config.recordingTime$'
 		endif
-		call display_prompt 'te.recordingTaskTable' 'te.recordingTaskPrompt'
+		if te.recordingTaskPrompt > 0
+			call display_prompt 'te.recordingTaskTable' 'te.recordingTaskPrompt'
+		endif
     endif
     
     # Record
@@ -972,6 +973,112 @@ procedure record_sound
 	endif
 	
 	select te.openSound
+endproc
+
+procedure setup_recordingTask
+	.skiprecording = 0
+	
+	if fileReadable(config.recordingTaskFile$)
+		te.recordingTaskTable = Read from file... 'config.recordingTaskFile$'
+	elsif startsWith(config.recordingTaskFile$, "[") and endsWith(config.recordingTaskFile$, "]")
+		.text$ = left$(config.recordingTaskFile$, length(config.recordingTaskFile$) - 1)
+		.text$ = right$(.text$, length(.text$) - 1)
+		te.recordingTaskTable = Create Table with column names... RecordingTaskTable 1 postfix time align font size text
+		Set string value... 1 postfix _rec
+		Set numeric value... 1 time 'config.recordingTime$'
+		Set string value... 1 align centre
+		Set string value... 1 font Helvetica
+		Set numeric value... 1 size 24
+		Set string value... 1 text '.text$'
+	endif
+	if te.recordingTaskTable > 0
+		# Reset speaker ID
+		if te.recordingTaskPrompt < 0
+			speakerID$ = ""
+		endif
+		te.recordingTaskPrompt = 1
+		
+		# Switch to serial
+		config.speakerSerial$ = "Forw"
+		# Set up new Speaker table
+		config.speakerData$ = ""
+		if config.speakerDataTable > 0
+			select config.speakerDataTable
+			Remove
+		endif
+		# Initialize Speaker Data
+		config.speakerData$ = ""
+		config.speakerDataTable = -1
+		speakerInfo$ = ""
+		speakerComments$ = ""
+		pathologicalType = 0
+		config.speakerDataBackup$ = ""
+		# If no speaker ID is given, ask for it
+		if speakerID$ = ""
+			.table$ = "MainPage"
+			.label$ = "Record"
+			call getLanguageTexts '.table$' '.label$'
+			call get_feedback_text 'config.language$' Speaker
+			# Get feedback texts
+			call get_feedback_text 'config.language$' SpeakerID
+			call convert_praat_to_latin1 'get_feedback_text.text$'
+			.inputText$ = convert_praat_to_latin1.text$
+			call get_feedback_text 'config.language$' Cancel
+			call convert_praat_to_latin1 'get_feedback_text.text$'
+			.cancelText$ = convert_praat_to_latin1.text$
+			call get_feedback_text 'config.language$' Continue
+			call convert_praat_to_latin1 'get_feedback_text.text$'
+			.continueText$ = convert_praat_to_latin1.text$
+			clicked = -1
+			beginPause(getLanguageTexts.helpText$)
+				sentence (.inputText$, speakerID$)
+			clicked = endPause ("'.cancelText$'", "'.continueText$'", 2, 1)
+			if clicked = 2
+				.inputText$ = replace_regex$(.inputText$, ".+", "\l&\$", 0)
+				.inputText$ = replace_regex$(.inputText$, "[ ]", "_", 0)
+				.inputText$ = replace_regex$(.inputText$, "\$", "", 0)
+				speakerID$ = '.inputText$'$
+			endif
+		endif
+		# If a speaker ID has been supplied
+		if speakerID$ <> ""
+			# Date and time
+			call i8n_date
+			.datetime$ = i8n_date.printDate$
+			# New speakerDataTable
+			config.speakerDataTable = Create Table with column names... Speaker_Data 1 ID Text Description StartTime EndTime Audio SaveAudio AST
+			select te.recordingTaskTable
+			.numRows = Get number of rows
+			.postfix$ = Get value... 1 postfix
+			.filename$ = replace_regex$(speakerID$, "[^a-zA-Z0-9\.\-_]", "_", 0)
+			select config.speakerDataTable
+			speakerID$ = "'.filename$''.postfix$'"
+			Set string value... 1 ID '.filename$''.postfix$'
+			Set string value... 1 Audio 'config.recordingTarget$'/'.filename$''.postfix$'_'.datetime$'.wav
+			Set string value... 1 SaveAudio Save
+			for .i from 2 to .numRows
+				select te.recordingTaskTable
+				.postfix$ = Get value... '.i' postfix
+				select config.speakerDataTable
+				Append row
+				Set string value... '.i' ID '.filename$''.postfix$'
+				Set string value... '.i' Audio 'config.recordingTarget$'/'.filename$''.postfix$'_'.datetime$'.wav
+				Set string value... '.i' SaveAudio Save
+			endfor
+		else
+			.skiprecording = 1
+		endif
+	endif	
+	
+endproc
+
+procedure unload_RecordingTask
+    if te.recordingTaskTable > 0		
+		select te.recordingTaskTable
+		Remove
+		te.recordingTaskTable = 0
+		te.recordingTaskPrompt = -1
+	endif
 endproc
 
 procedure display_prompt .table .number
@@ -1550,8 +1657,8 @@ procedure runCommandFile .filename$
 
 		    		call write_help_text '.helpText$'
 					# Wait for click
-					if 	skipNextStep = 1
-						skipNextStep = 0
+					if 	te.skipNextStep = 1
+						te.skipNextStep = 0
 					else
 						demoWaitForInput()
 					endif
@@ -1575,9 +1682,9 @@ procedure runCommandFile .filename$
 						elsif .table$ = "MainPage"
 							call Draw_config_page
 						endif
-					elsif .command$ = "Help" or skipNextStep = 1
+					elsif .command$ = "Help" or te.skipNextStep = 1
 						# Skip
-						skipNextStep = 0
+						te.skipNextStep = 0
 					else
 						# Wait for click
 						demoWaitForInput()
