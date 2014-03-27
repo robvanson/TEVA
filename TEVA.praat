@@ -61,7 +61,7 @@ te.defaultLanguage$ = "EN"
 config.recordingTaskFile$ = ""
 config.recordingTarget$ = ""
 te.recordingTaskTable = 0
-te.recordingTaskPrompt = 0
+te.restartRecordingTask = 0
 
 # Pop-Up window and other colors
 popUp.bordercolor$ = "{0.5,0.5,1}"
@@ -909,18 +909,27 @@ procedure record_sound
     
     # Show a task window
 	.rectime = 'config.recordingTime$'
-    if te.recordingTaskTable > 0 and te.recordingTaskPrompt > 0		
+	if speakerID$ = ""
+		call get_speakerInfo 1
+		speakerID$ = get_speakerInfo.id$
+	endif
+    if te.recordingTaskTable > 0
+		.recordingTaskPrompt = 1
+		call get_speakerInfo 'speakerID$'
+		if get_speakerInfo.row > 0
+			.recordingTaskPrompt = get_speakerInfo.row
+		endif
 		select te.recordingTaskTable
 		.numRows = Get number of rows
 		.timeColumn = Get column index... time
-		if .timeColumn > 0 and te.recordingTaskPrompt <= .numRows
-			.rectime = Get value... 'te.recordingTaskPrompt' time
+		if .timeColumn > 0 and .recordingTaskPrompt <= .numRows
+			.rectime = Get value... '.recordingTaskPrompt' time
 		endif
 		if .rectime = undefined or .rectime <= 0
 			.rectime = 'config.recordingTime$'
 		endif
-		if te.recordingTaskPrompt > 0
-			call display_prompt 'te.recordingTaskTable' 'te.recordingTaskPrompt'
+		if .recordingTaskPrompt > 0
+			call display_prompt 'te.recordingTaskTable' '.recordingTaskPrompt'
 		endif
     endif
     
@@ -991,13 +1000,7 @@ procedure setup_recordingTask
 		Set numeric value... 1 size 24
 		Set string value... 1 text '.text$'
 	endif
-	if te.recordingTaskTable > 0
-		# Reset speaker ID
-		if te.recordingTaskPrompt < 0
-			speakerID$ = ""
-		endif
-		te.recordingTaskPrompt = 1
-		
+	if te.recordingTaskTable > 0		
 		# Switch to serial
 		config.speakerSerial$ = "Forw"
 		# Set up new Speaker table
@@ -1014,7 +1017,7 @@ procedure setup_recordingTask
 		pathologicalType = 0
 		config.speakerDataBackup$ = ""
 		# If no speaker ID is given, ask for it
-		if speakerID$ = ""
+		if speakerID$ = "" or te.restartRecordingTask != 0
 			.table$ = "MainPage"
 			.label$ = "Record"
 			call getLanguageTexts '.table$' '.label$'
@@ -1031,13 +1034,14 @@ procedure setup_recordingTask
 			.continueText$ = convert_praat_to_latin1.text$
 			clicked = -1
 			beginPause(getLanguageTexts.helpText$)
-				sentence (.inputText$, speakerID$)
+				sentence (.inputText$, "")
 			clicked = endPause ("'.cancelText$'", "'.continueText$'", 2, 1)
 			if clicked = 2
 				.inputText$ = replace_regex$(.inputText$, ".+", "\l&\$", 0)
 				.inputText$ = replace_regex$(.inputText$, "[ ]", "_", 0)
 				.inputText$ = replace_regex$(.inputText$, "\$", "", 0)
 				speakerID$ = '.inputText$'$
+				te.restartRecordingTask = 0
 			endif
 		endif
 		# If a speaker ID has been supplied
@@ -1050,15 +1054,21 @@ procedure setup_recordingTask
 			select te.recordingTaskTable
 			.numRows = Get number of rows
 			.postfix$ = Get value... 1 postfix
+			.prompt$ = Get value... 1 text
 			.filename$ = replace_regex$(speakerID$, "[^a-zA-Z0-9\.\-_]", "_", 0)
 			select config.speakerDataTable
-			speakerID$ = "'.filename$''.postfix$'"
 			Set string value... 1 ID '.filename$''.postfix$'
 			Set string value... 1 Audio 'config.recordingTarget$'/'.filename$''.postfix$'_'.datetime$'.wav
 			Set string value... 1 SaveAudio Save
+			# Initilaise on firts row
+			speakerID$ = "'.filename$''.postfix$'"
+			call set_new_speakerdata 'speakerID$'
+			
+			# Fill other rows
 			for .i from 2 to .numRows
 				select te.recordingTaskTable
 				.postfix$ = Get value... '.i' postfix
+				.prompt$ = Get value... '.i' text
 				select config.speakerDataTable
 				Append row
 				Set string value... '.i' ID '.filename$''.postfix$'
@@ -1077,7 +1087,8 @@ procedure unload_RecordingTask
 		select te.recordingTaskTable
 		Remove
 		te.recordingTaskTable = 0
-		te.recordingTaskPrompt = -1
+		speakerID$ = ""
+		te.restartRecordingTask = 1
 	endif
 endproc
 
@@ -2409,7 +2420,7 @@ procedure reset_analysis
         select te.openSound
         # If this file should be saved, do it now!
 		if te.saveAudio > 0
-			Save as WAV file... 'te.currentFileName$' 
+			Save as WAV file... 'te.currentFileName$'
 		endif
 		if te.pitch > 0
 			plus te.pitch

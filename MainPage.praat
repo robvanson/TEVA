@@ -979,7 +979,7 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 			call autoSetPathType
 		elsif clicked = 4
 			call get_nextSpeaker 'speakerID$'
-			if get_previousSpeaker.reset > 0
+			if get_nextSpeaker.reset > 0
 				call unload_RecordingTask
 			endif
 			.newSpeakerID$ = get_nextSpeaker.id$
@@ -1087,14 +1087,11 @@ procedure processMainPageNextItem .clickX .clickY .pressed$
 	endif
 	.newSpeakerID$ = get_nextSpeaker.id$
 	.newFileName$ = get_nextSpeaker.audio$
-	if te.recordingTaskPrompt > 0
-		te.recordingTaskPrompt += 1
-	endif
 	call reset_analysis
 	speakerID$ = .newSpeakerID$
 	te.currentFileName$ = .newFileName$
 	if te.currentFileName$ <> "" and fileReadable(te.currentFileName$)
-		call load_audio_file '.speakerID$' 'te.currentFileName$
+		call load_audio_file 'speakerID$' 'te.currentFileName$'
 	else
 		call set_new_speakerdata 'speakerID$'
 		call init_window
@@ -1183,16 +1180,12 @@ procedure processMainPagePreviousItem .clickX .clickY .pressed$
 		call get_previousSpeaker 'speakerID$'
 	endif
 	.newSpeakerID$ = get_previousSpeaker.id$
-	speakerID$ = .newSpeakerID$
 	.newFileName$ = get_nextSpeaker.audio$
-	if te.recordingTaskPrompt > 0
-		te.recordingTaskPrompt -= 1
-	endif
 	call reset_analysis
 	speakerID$ = .newSpeakerID$
 	te.currentFileName$ = .newFileName$
 	if te.currentFileName$ <> "" and fileReadable(te.currentFileName$)
-		call load_audio_file '.speakerID$' 'te.currentFileName$
+		call load_audio_file 'speakerID$' 'te.currentFileName$'
 	else
 		call set_new_speakerdata 'speakerID$'
 		call init_window
@@ -1203,7 +1196,6 @@ procedure processMainPagePreviousItem .clickX .clickY .pressed$
 	elsif config.speakerSerial$ = "Forw"
 		call Draw_button '.table$' NextItem 0
 	endif
-	call init_window
 endproc
 
 procedure processMainPageFile .clickX .clickY .pressed$

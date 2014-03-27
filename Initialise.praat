@@ -563,6 +563,7 @@ procedure get_speakerInfo .speakerID$
 						.saveAudio$ = Get value... '.row' SaveAudio
 					endif
 				endif
+				
 				.ast$ = Get value... '.row' AST
 				if index_regex(.ast$, "\d") <= 0
 					if index_regex(.text$, "Type[:=\s]+IV($|[^[IV])")
