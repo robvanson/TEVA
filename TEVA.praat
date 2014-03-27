@@ -895,7 +895,10 @@ procedure play_sound .sound
 endproc
 
 procedure record_sound
+	.currentSpeakerID$ = speakerID$
 	call reset_analysis
+	speakerID$ = .currentSpeakerID$
+	.recordingTaskPrompt = 0
 	
 	# There is a very nasty delay before the first recording starts, do a dummy record
 	if not variableExists("recordingInitialized")
@@ -903,10 +906,7 @@ procedure record_sound
 		Remove
 		recordingInitialized = 1
 	endif
-	# Display a recording light
-    demo Paint circle... Red 'recordingLightX' 'recordingLightY' 2
-    demoShow()
-    
+
     # Show a task window
 	.rectime = 'config.recordingTime$'
 	if speakerID$ = ""
@@ -928,11 +928,21 @@ procedure record_sound
 		if .rectime = undefined or .rectime <= 0
 			.rectime = 'config.recordingTime$'
 		endif
-		if .recordingTaskPrompt > 0
-			call display_prompt 'te.recordingTaskTable' '.recordingTaskPrompt'
+		# When doing a recording task, wipe the screen
+		if reset_analysis.closed
+			call wipeArea 'wipePlotArea$'
 		endif
     endif
     
+	# Display a recording light
+	demo Paint circle... Red 'recordingLightX' 'recordingLightY' 2
+	demoShow()
+    
+    # Display prompt if needed (AFTER the recording light)
+	if .recordingTaskPrompt > 0
+		call display_prompt 'te.recordingTaskTable' '.recordingTaskPrompt'
+	endif
+
     # Record
     noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 44100 '.rectime'
 	# Keep track of current sound
@@ -2416,7 +2426,9 @@ procedure getButtonText .table$ .label$
 endproc
 
 procedure reset_analysis
+	.closed = 0
     if te.openSound > 0
+		.closed = 1
         select te.openSound
         # If this file should be saved, do it now!
 		if te.saveAudio > 0

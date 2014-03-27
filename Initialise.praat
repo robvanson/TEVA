@@ -33,7 +33,12 @@ procedure global_initialization
 	
 	# Define canvas
 	viewportMargin = 5
-	wipeFeedbackArea$ = "demo Paint rectangle... White 0 80 13 20"
+	feedbackYL = 13
+	feedbackXL = 0
+	feedbackXR = 80
+	feedbackYL = 13
+	feedbackYH = 20
+	wipeFeedbackArea$ = "demo Paint rectangle... White 'feedbackXL' 'feedbackXR' 'feedbackYL' 'feedbackYH'"
 	# Note: These are relative to the INNER viewport
 	headerXL = 5
 	headerXR = 85
@@ -48,7 +53,8 @@ procedure global_initialization
 	canvasLeftCorrection = 0.5
 	canvasRightCorrection = -1.5
 	wipeCanvasArea$ = "demo Paint rectangle... White 'canvasXL' 'canvasXR' 'canvasYL' 'canvasYH'"
-	
+	wipePlotArea$ = "demo Paint rectangle... White -5 'canvasXR' 'feedbackYL' 'headerYH'"
+
 	# Pop-Up window and other colors
 	popUp.bordercolor$ = "{0.5,0.5,1}"
 	popUp.backgroundcolor$ = "{0.9,0.9,1}"
@@ -448,6 +454,7 @@ endproc
 
 procedure get_nextSpeaker .speakerID$
 	.reset = 0
+	.numRows = 0
 	call get_speakerInfo '.speakerID$'
 	.row = get_speakerInfo.row
 	call ReadSpeakerData 'config.speakerData$'

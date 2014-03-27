@@ -1019,11 +1019,14 @@ procedure processMainPageNextItem .clickX .clickY .pressed$
 	
 	# If currentRow < previousRow, you start over. Show a message
 	if .currentRow <= .previousRow
-		call get_feedback_text 'config.language$' Ready
-		call convert_praat_to_latin1 'get_feedback_text.text$'
-		.readyText$ = convert_praat_to_latin1.text$
-		call write_text_popup Helvetica 20 '.readyText$'
-		demoWaitForInput()
+		# Do not bother with warning if there is only a single item
+		if get_nextSpeaker.numRows > 1
+			call get_feedback_text 'config.language$' Ready
+			call convert_praat_to_latin1 'get_feedback_text.text$'
+			.readyText$ = convert_praat_to_latin1.text$
+			call write_text_popup Helvetica 20 '.readyText$'
+			demoWaitForInput()
+		endif
 		call unload_RecordingTask
 	endif
 	
@@ -1117,11 +1120,14 @@ procedure processMainPagePreviousItem .clickX .clickY .pressed$
 	
 	# If currentRow > previousRow, you start over. Show a message
 	if .nextRow > 0 and .currentRow >= .nextRow
-		call get_feedback_text 'config.language$' Ready
-		call convert_praat_to_latin1 'get_feedback_text.text$'
-		.readyText$ = convert_praat_to_latin1.text$
-		call write_text_popup Helvetica 20 '.readyText$'
-		demoWaitForInput()
+		# Do not bother with warning if there is only a single item
+		if get_previousSpeaker.numRows > 1
+			call get_feedback_text 'config.language$' Ready
+			call convert_praat_to_latin1 'get_feedback_text.text$'
+			.readyText$ = convert_praat_to_latin1.text$
+			call write_text_popup Helvetica 20 '.readyText$'
+			demoWaitForInput()
+		endif
 		call unload_RecordingTask
 	endif
 	
