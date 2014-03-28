@@ -2849,8 +2849,10 @@ procedure extractRahmonicPart .table .begin .end
 endproc
 procedure calculateCepstralRahmonic
 	.windowsize = 0.025
+	.pitchFloor = 3/.windowsize
 	.timestep = 0.02
 	.maxfreq = 5000
+	.preEmphasis = 50
 	
 	.cutStart = selectedStartTime
 	.cutEnd = selectedStartTime
@@ -2868,8 +2870,8 @@ procedure calculateCepstralRahmonic
 	else
 		select te.openSound
 		.tmpPartSoundID = Extract part... '.cutStart' '.cutEnd' rectangular 1.0 true
-		.cepstrogram = noprogress To Cepstrogram... .windowsize .timestep .maxfreq
-		te.cepstralRahmonic = noprogress To Table (peak prominence)... 0.003 0.025 Cubic 0.001 0 Robust
+		.cepstrogram = noprogress To PowerCepstrogram... .pitchFloor .timestep .maxfreq .preEmphasis
+		te.cepstralRahmonic = noprogress To Table (peak prominence)... 30 300 0.05 Cubic 0.001 0 Straight Robust
 		select .tmpPartSoundID
 		plus .cepstrogram
 		Remove
