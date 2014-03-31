@@ -25,7 +25,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_script.cpp 
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Graphics_text.cpp demo_praat_sources/sys/Graphics_text.cpp
 --- praat_sources/sys/Graphics_text.cpp	2011-09-29 12:27:01.000000000 +0200
 +++ demo_praat_sources/sys/Graphics_text.cpp	2011-10-27 09:14:57.000000000 +0200
-@@ -140,7 +140,7 @@ static HFONT loadFont (GraphicsScreen me
+@@ -139,7 +139,7 @@ static HFONT loadFont (GraphicsScreen me
  		ipaInited = TRUE;
  		if (! charisAvailable && ! doulosAvailable) {
  			/* BUG: The next warning may cause reentry of drawing (on window exposure) and lead to crash. Some code must be non-reentrant !! */
@@ -108,7 +108,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	trace ("after picture window shows: locale is %s", setlocale (LC_ALL, NULL));
  }
  
-@@ -1629,6 +1647,14 @@ void praat_run (void) {
+@@ -1631,6 +1649,14 @@ void praat_run (void) {
  						Melder_flushError (NULL);
  					}
  				}
@@ -126,7 +126,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_picture.cpp demo_praat_sources/sys/praat_picture.cpp
 --- praat_sources/sys/praat_picture.cpp	2012-09-27 09:10:50.000000000 +0200
 +++ demo_praat_sources/sys/praat_picture.cpp	2012-10-15 13:47:43.000000000 +0200
-@@ -1415,8 +1415,10 @@ void praat_picture_open (void) {
+@@ -1432,8 +1432,10 @@ void praat_picture_open (void) {
  		#elif cocoa
  			dialog -> f_show ();
  		#elif motif
@@ -137,7 +137,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_picture.cpp
  		#endif
  		Picture_unhighlight (praat_picture);
  	}
-@@ -1699,7 +1701,9 @@ void praat_picture_init (void) {
+@@ -1717,7 +1719,9 @@ void praat_picture_init (void) {
  		width = height = resolution * 12;
  		scrollWindow = GuiScrolledWindow_createShown (dialog, margin, 0, Machine_getMenuBarHeight () + margin, 0, 1, 1, 0);
  		drawingArea = GuiDrawingArea_createShown (scrollWindow, width, height, NULL, NULL, NULL, NULL, NULL, 0);
