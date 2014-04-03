@@ -91,7 +91,7 @@ config.frequency = 5000
 config.showFormants = 1
 config.speakerSerial$ = "None"
 config.autoSelect = 0
-config.selectionWindow = 1.75
+config.selectionWindow = 2.0
 config.muteOutput = 0
 
 # Parameters for isolating recorded speech from noise

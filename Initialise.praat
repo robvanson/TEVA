@@ -84,7 +84,7 @@ procedure global_initialization
 	config.autoSelect = 0
 	config.showFormants = 1
 	config.muteOutput = 0
-	config.selectionWindow = 1.75
+	config.selectionWindow = 2.0
 	config.ratingForm$ = "Vowel"
 	config.vasScaleTicks = 0
 	#config.pitchalgorithm$ = "VanAs"
