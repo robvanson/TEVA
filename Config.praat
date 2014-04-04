@@ -465,6 +465,8 @@ procedure processConfigRecordingTime .clickX .clickY .pressed$
 		elsif clicked = 2
 			.filename$ = chooseReadFile$ (.inputTaskFile$)
 			if .filename$ <> "" and fileReadable(.filename$)
+				# Clean up existing sound and Table
+				call reset_analysis
 				if te.recordingTaskTable > 0
 					select te.recordingTaskTable
 					Remove
@@ -523,6 +525,14 @@ procedure processConfigRecordingTime .clickX .clickY .pressed$
 					.inputFile$ = right$(.inputFile$, length(.inputFile$) - 1)
 					config.recordingTaskFile$ = "["+.inputFile$+"]"
 				elsif startsWith(.inputFile$, "[") and endsWith(.inputFile$, "]")
+					# Clean up existing sound and Table
+					call reset_analysis
+					if te.recordingTaskTable > 0
+						select te.recordingTaskTable
+						Remove
+						te.recordingTaskTable = 0
+						te.recordingTaskPrompt = 0
+					endif
 					config.recordingTaskFile$ = .inputFile$
 				endif
 			elsif .inputFile$ = ""		

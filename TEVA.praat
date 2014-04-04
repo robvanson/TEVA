@@ -87,8 +87,8 @@ endif
 
 wipeFeedbackArea$ = ""
 sampleFrequency = 44100
-config.frequency = 5000
-config.showFormants = 1
+config.frequency = 1000
+config.showFormants = 0
 config.speakerSerial$ = "None"
 config.autoSelect = 0
 config.selectionWindow = 2.0
@@ -1052,6 +1052,10 @@ procedure setup_recordingTask
 				.inputText$ = replace_regex$(.inputText$, "\$", "", 0)
 				speakerID$ = '.inputText$'$
 				te.restartRecordingTask = 0
+			endif
+			# On Windows, clear the screen
+			if windows
+				call init_window
 			endif
 		endif
 		# If a speaker ID has been supplied

@@ -82,7 +82,7 @@ procedure global_initialization
 	config.speakerDataTable = -1
 	config.speakerSerial$ = "None"
 	config.autoSelect = 0
-	config.showFormants = 1
+	config.showFormants = 0
 	config.muteOutput = 0
 	config.selectionWindow = 2.0
 	config.ratingForm$ = "Vowel"

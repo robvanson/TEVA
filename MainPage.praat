@@ -1253,7 +1253,6 @@ procedure processMainPageRecord .clickX .clickY .pressed$
 					goto SKIPRECORDING
 				endif
 			endif
-
 	    	call record_sound
 			call post_processing_sound
 			call set_new_speakerdata 'speakerID$'
