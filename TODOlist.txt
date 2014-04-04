@@ -1,5 +1,6 @@
 + Formants off default
 + Default frequency on 1000Hz
-- Correct resetting of Speaker ID
-- Correct saving of new sound
- 
++ Correct resetting of Speaker ID
++ Correct saving of new sound
+- End of list for backward stepping
+- Store recordings in patient specific directory

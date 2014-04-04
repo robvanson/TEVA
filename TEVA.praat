@@ -1099,11 +1099,19 @@ endproc
 procedure unload_RecordingTask
     if te.recordingTaskTable > 0		
 		select te.recordingTaskTable
+		if config.speakerDataTable > 0
+			plus config.speakerDataTable
+		endif
 		Remove
+		config.speakerData$ = ""
 		te.recordingTaskTable = 0
-		speakerID$ = ""
+		config.speakerDataTable = 0
 		te.restartRecordingTask = 1
 	endif
+	call reset_analysis
+	call get_speakerInfo 0
+	call get_nextSpeaker 0
+	call get_previousSpeaker 0
 endproc
 
 procedure display_prompt .table .number
@@ -2467,6 +2475,7 @@ procedure reset_analysis
 			plus 'te.formant'
 		endif
 		Remove
+		
 		te.openSound = 0
 		te.pitch = 0
 		te.spectrogram = 0
@@ -2491,6 +2500,7 @@ procedure reset_analysis
 		te.voicingTextGrid = -1
 		gneName$ = ""
 		harmonicityName$ = ""
+		te.currentFileName$ = ""
 		
 		maxTimeIntensity = 0
     endif
