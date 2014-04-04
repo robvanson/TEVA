@@ -1,0 +1,5 @@
++ Formants off default
++ Default frequency on 1000Hz
+- Correct resetting of Speaker ID
+- Correct saving of new sound
+ 
