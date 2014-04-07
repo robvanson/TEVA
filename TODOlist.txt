@@ -3,7 +3,7 @@
 + Correct resetting of Speaker ID
 + Correct saving of new sound
 + Store recordings in patient specific directory
+-/+ Speed up HNR
 - End of list for backward stepping
 - All VAS values in voiceprint
 - Estimate VQ
-- Speed up HNR

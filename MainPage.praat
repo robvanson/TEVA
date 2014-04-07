@@ -2178,7 +2178,7 @@ endproc
 # van Gogh et al. (2005) Acoustical analysis of tracheoesophageal voice. 
 # Speech Communication, 47.
 procedure sound2Harm_low .startpoint .endpoint
-	.timeStep = 0.005
+	.timeStep = 0.01
 	select te.openSound
 	.duration = Get total duration
 	if .endpoint = 0
@@ -2242,7 +2242,7 @@ endproc
 # van Gogh et al. (2005) Acoustical analysis of tracheoesophageal voice. 
 # Speech Communication, 47.
 procedure sound2Harm_high .startpoint .endpoint
-	.timeStep = 0.005
+	.timeStep = 0.01
 	select te.openSound
 	.duration = Get total duration
 	if .endpoint = 0
@@ -2305,7 +2305,12 @@ procedure sound2GNEvalue .startpoint .endpoint
 	# Window and analysis values from C.J. van As 2001 "Tracheoesophageal Speech" p83
 	.windowSize = 0.250
 	# Note link with sample frequency below!
-	.timeStep = 0.01
+	# Only .sampleGNE samples are calcualted for the GNE to reduce the response time
+	.sampleGNE = 30
+	.timeStep = 0.005
+	while (.sampleGNE * .timeStep) < abs(.endpoint - .startpoint)
+		.timeStep += 0.005
+	endwhile
 	select te.openSound
 	.duration = Get total duration
 	if .endpoint = 0
