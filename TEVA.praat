@@ -1070,9 +1070,12 @@ procedure setup_recordingTask
 			.postfix$ = Get value... 1 postfix
 			.prompt$ = Get value... 1 text
 			.filename$ = replace_regex$(speakerID$, "[^a-zA-Z0-9\.\-_]", "_", 0)
+			if .filename$ <> ""
+				createDirectory("'config.recordingTarget$'/'.filename$'")
+			endif
 			select config.speakerDataTable
 			Set string value... 1 ID '.filename$''.postfix$'
-			Set string value... 1 Audio 'config.recordingTarget$'/'.filename$''.postfix$'_'.datetime$'.wav
+			Set string value... 1 Audio 'config.recordingTarget$'/'.filename$'/'.filename$''.postfix$'_'.datetime$'.wav
 			Set string value... 1 SaveAudio Save
 			# Initilaise on firts row
 			speakerID$ = "'.filename$''.postfix$'"

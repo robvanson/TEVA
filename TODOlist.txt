@@ -2,5 +2,8 @@
 + Default frequency on 1000Hz
 + Correct resetting of Speaker ID
 + Correct saving of new sound
++ Store recordings in patient specific directory
 - End of list for backward stepping
-- Store recordings in patient specific directory
+- All VAS values in voiceprint
+- Estimate VQ
+- Speed up HNR
