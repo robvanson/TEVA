@@ -52,6 +52,7 @@ $Rating	Valoraci\o'n		Valoraci\o'n humana del habla
 RatingForm_Vowel	Vocales		Formulario de evaluaci\o'n (VAS) de vocales
 RatingForm_Text	Text		Text evaluation form (VAS) for words and running speech
 RatingForm_INFVo	IINFVo		IINFVo evaluation form (VAS, for Impression, Intelligibility, Noise, Fluency, Voice)
+RatingForm_GRBAS	GRBAS		GRBAS evaluation form (Grade, Roughness, Breathiness, Asthenia, Strain)
 VasScaleTicks	Registros	!	Visualizar registros de escalas para formularios de evaluaci\o'n
 !Logging	Entrar	!	Iniciar regitro de sonidos
 !OpenLog	Seleccionar	!	Seleccionar directorio para guardar los archivos de registro
