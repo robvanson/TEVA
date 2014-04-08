@@ -12,13 +12,15 @@ Frequency	Frekwentie -> Hz
 Hz	Hz
 SPL	SPL dB/Hz
 AST	AST
-CompAST	berek.
-VoiceQuality	Stemkwaliteit
+CompAST	cmp
+Rating.quality	VQ
 CompVQ	cmp
-VoiceImpression	Imp
-VoiceNoise	N
-VoiceContinuity	Cont
-Intelligence	Int
+Rating.impression	Imp
+Rating.fluency	Fl
+Rating.voice	Vo
+Rating.noise	N
+Rating.continuity	Cont
+Rating.intelligibility	Int
 Jitter	Jitter
 Shimmer	Shimmer
 Mean	Mean

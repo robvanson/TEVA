@@ -1603,6 +1603,11 @@ procedure getOpenFile .openDialogue$
 		# Reset all internal structures
 		call reset_analysis
 		
+		# Set up empty speaker data table if none is present
+		if config.speakerDataTable <= 0
+			config.speakerDataTable = Create Table with column names... Speaker_Data 1 ID Text Description Audio AST StartTime EndTime
+		endif
+		
 		.sndInput = Read from file... '.filename$'
 		.numChannels = Get number of channels
 		if .numChannels > 1

@@ -13,12 +13,14 @@ Hz	Hz
 SPL	SPL dB/Hz
 AST	AST
 CompAST	cmp
-VoiceQuality	VQ
+Rating.quality	VQ
 CompVQ	cmp
-VoiceImpression	Imp
-VoiceNoise	N
-VoiceContinuity	Cont
-Intelligence	Int
+Rating.fluency	Fl
+Rating.voice	Vo
+Rating.impression	Imp
+Rating.noise	N
+Rating.continuity	Cont
+Rating.intelligibility	Int
 Jitter	Jitter
 Shimmer	Shimmer
 Mean	Mean

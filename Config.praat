@@ -990,3 +990,75 @@ procedure merge_table_values .currentTable .newTable .colpattern$
 			endif
 		endfor
 endproc
+
+procedure rating_String .speakerID$
+	.subtext$ = ""
+	
+	# Get Ratings
+	# Rating.quality
+	call get_RatingInfo Rating.quality '.speakerID$'
+	if get_RatingInfo.subtext$ <> ""
+		.subtext$ = .subtext$ + " " + get_RatingInfo.subtext$
+	endif
+	call get_printsignal_text 'config.language$' CompVQ
+	.compvqText$ = get_printsignal_text.text$
+	.subtext$ = .subtext$ + ", " + .compvqText$ + ": -"
+	
+	# Rating.continuity
+	call get_RatingInfo Rating.continuity '.speakerID$'
+	if get_RatingInfo.subtext$ <> ""
+		.subtext$ = .subtext$ + "; " + get_RatingInfo.subtext$
+	endif
+	
+	# Rating.impression
+	call get_RatingInfo Rating.impression '.speakerID$'
+	if get_RatingInfo.subtext$ <> ""
+		.subtext$ = .subtext$ + "; " + get_RatingInfo.subtext$
+	endif
+	
+	# Rating.intelligibility
+	call get_RatingInfo Rating.intelligibility '.speakerID$'
+	if get_RatingInfo.subtext$ <> ""
+		.subtext$ = .subtext$ + "; " + get_RatingInfo.subtext$
+	endif
+	
+	# Rating.fluency
+	call get_RatingInfo Rating.fluency '.speakerID$'
+	if get_RatingInfo.subtext$ <> ""
+		.subtext$ = .subtext$ + "; " + get_RatingInfo.subtext$
+	endif
+	
+	# Rating.noise
+	call get_RatingInfo Rating.noise '.speakerID$'
+	if get_RatingInfo.subtext$ <> ""
+		.subtext$ = .subtext$ + "; " + get_RatingInfo.subtext$
+	endif
+	
+	# Rating.voice
+	call get_RatingInfo Rating.voice '.speakerID$'
+	if get_RatingInfo.subtext$ <> ""
+		.subtext$ = .subtext$ + "; " + get_RatingInfo.subtext$
+	endif
+endproc
+
+procedure get_RatingInfo .ratinglabel$ .speakerID$
+	.subtext$ = ""
+	call get_speakerInfo '.speakerID$'
+	if config.speakerDataTable > 0
+		select config.speakerDataTable
+		.col = Get column index... '.ratinglabel$'
+		.rating_value = -1
+		if .col > 0
+			.rating_value = do("Get value...", get_speakerInfo.row, .ratinglabel$)
+			if .rating_value = undefined
+				.rating_value = -1
+			else
+				.rating_value /= 10
+			endif
+		endif
+		if .rating_value >= 0
+			call get_printsignal_text 'config.language$' '.ratinglabel$'
+			.subtext$ = get_printsignal_text.text$ + ": '.rating_value:1'"
+		endif
+	endif
+endproc

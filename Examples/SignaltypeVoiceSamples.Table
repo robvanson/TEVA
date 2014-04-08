@@ -1,7 +1,3 @@
-ID	Text	Description	Audio	AST	StartTime	EndTime
-Speaker1	Speaker1, M 66yo, Type I	?	signaltype1voicesample.wav	1	?	?
-Speaker2	Speaker2, M 48yo, Type II	?	signaltype2voicesample.wav	2	?	?
-Speaker3	Speaker3, F 77yo, Type III	?	signaltype3voicesample.wav	3	?	?
-Speaker4	Speaker4, F 48yo, Type IV	?	signaltype4voicesample.wav	4	?	?
-?	Speaker1, M 66yo, Type I	?	?	1	?	?
-?	Speaker1, M 66yo, Type I	?	?	1	?	?
+ID	Text	Description	Audio	AST	StartTime	EndTime	Rating.quality	Rating.continuity	Rating.noise	Rating.impression	Rating.intelligibility	Rating.fluency	Rating.voice
+?	?	?	?	?	?	?	?	?	?	?	?	?	?
+signaltype2voicesample	?	?	signaltype2voicesample.wav	4	0	1.9993	139	335	509	153	353	842	370
