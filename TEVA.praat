@@ -62,10 +62,13 @@ config.recordingTaskFile$ = ""
 config.recordingTarget$ = ""
 te.recordingTaskTable = 0
 te.restartRecordingTask = 0
+te.waitRecordingTask = 2
 
 # Pop-Up window and other colors
 popUp.bordercolor$ = "{0.5,0.5,1}"
 popUp.backgroundcolor$ = "{0.9,0.9,1}"
+popUp.warncolor$ = "{1,0.9,0.9}"
+popUp.gocolor$ = "{0.9,1,0.9}"
 
 # Voicing markers
 te.voicingcolor$ = "{0.3, 0.3, 0.9}"
@@ -929,18 +932,29 @@ procedure record_sound
 			.rectime = 'config.recordingTime$'
 		endif
 		# When doing a recording task, wipe the screen
-		if reset_analysis.closed
-			call wipeArea 'wipePlotArea$'
-		endif
+		demo Erase all
     endif
     
+    # Display prompt if needed (Warning BEFORE the recording light)
+	if .recordingTaskPrompt > 0
+		.originalPopUpcolor$ = popUp.backgroundcolor$
+		popUp.backgroundcolor$ = popUp.warncolor$
+		call display_prompt 'te.recordingTaskTable' '.recordingTaskPrompt'
+		popUp.backgroundcolor$ = .originalPopUpcolor$
+		# Wait a moment
+    	noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 44100 'te.waitRecordingTask'
+		Remove
+	endif
+
 	# Display a recording light
 	demo Paint circle... Red 'recordingLightX' 'recordingLightY' 2
 	demoShow()
     
     # Display prompt if needed (AFTER the recording light)
 	if .recordingTaskPrompt > 0
+		popUp.backgroundcolor$ = popUp.gocolor$
 		call display_prompt 'te.recordingTaskTable' '.recordingTaskPrompt'
+		popUp.backgroundcolor$ = .originalPopUpcolor$
 	endif
 
     # Record
