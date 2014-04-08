@@ -14,7 +14,11 @@ SPL	SPL dB/Hz
 AST	AST
 CompAST	berechn.
 VoiceQuality	Stimmqualit\a"t
-CompVQ	berechn.
+CompVQ	cmp
+VoiceImpression	Imp
+VoiceNoise	N
+VoiceContinuity	Cont
+Intelligence	Int
 Jitter	Jitter
 Shimmer	Shimmer
 Mean	Mean

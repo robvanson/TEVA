@@ -215,18 +215,15 @@ procedure print_signal .outFileName$
 	.plotyTop = 0.5
 	.labelText$ = ""
 	
-	# Get Voice Quality rating
+	# Get Ratings
 	call get_speakerInfo 'speakerID$'
 	.vq_Rating = -1
 	if config.speakerDataTable > 0
 		select config.speakerDataTable
+		# Rating.quality
 		.vq_Rating = -1
-		.colImpression = Get column index... Rating.impression
 		.colQuality = Get column index... Rating.quality
-		if .colImpression > 0
-			.vq_Rating = do("Get value...", get_speakerInfo.row, "Rating.impression")
-		endif
-		if (.vq_Rating = undefined or .vq_Rating < 0 ) and .colQuality > 0
+		if .colQuality > 0
 			.vq_Rating = do("Get value...", get_speakerInfo.row, "Rating.quality")
 		endif
 		if .vq_Rating = undefined
@@ -234,6 +231,46 @@ procedure print_signal .outFileName$
 		else
 			.vq_Rating /= 10
 		endif
+		
+		# Rating.impression
+		.imp_Rating = -1
+		.colImpression = Get column index... Rating.impression
+		if .colImpression > 0
+			.imp_Rating = do("Get value...", get_speakerInfo.row, "Rating.impression")
+		endif
+		if .imp_Rating = undefined
+			.imp_Rating = -1
+		else
+			.imp_Rating /= 10
+		endif
+		
+		# Rating.continuity
+		.col = Get column index... Rating.continuity
+		.continuity_Rating = -1
+		if .col > 0
+			.continuity_Rating = do("Get value...", get_speakerInfo.row, "Rating.continuity")
+			if .continuity_Rating = undefined
+				.continuity_Rating = -1
+			else
+				.continuity_Rating /= 10
+			endif
+		endif
+		
+		
+		# Rating.noise
+		.col = Get column index... Rating.noise
+		.noise_Rating = -1
+		if .col > 0
+			.noise_Rating = do("Get value...", get_speakerInfo.row, "Rating.noise")
+			if .noise_Rating = undefined
+				.noise_Rating = -1
+			else
+				.noise_Rating /= 10
+			endif
+		endif
+		
+		
+		# Rating.intelligibility
 		.col = Get column index... Rating.intelligibility
 		.intel_Rating = -1
 		if .col > 0
@@ -299,6 +336,8 @@ procedure print_signal .outFileName$
 		.subtext$ = .subtext$ + ", " + .astCompText$ + ": " + .typeCompText$
 	endif
 	
+	# Ratings
+	# Quality
 	call get_printsignal_text 'config.language$' VoiceQuality
 	.vqText$ = get_printsignal_text.text$
 	call get_printsignal_text 'config.language$' CompVQ
@@ -309,6 +348,26 @@ procedure print_signal .outFileName$
 	endif
 	.subtext$ = .subtext$ + "; " + .vqText$ + ": '.vq_RatingText$'"
 	.subtext$ = .subtext$ + ", " + .compvqText$ + ": -"
+	# Impression
+	if .imp_Rating >= 0
+		call get_printsignal_text 'config.language$' VoiceImpression
+		.subtext$ = .subtext$ + "; " + get_printsignal_text.text$ + ": '.imp_Rating:1'"
+	endif
+	# Continuity
+	if .continuity_Rating >= 0
+		call get_printsignal_text 'config.language$' VoiceContinuity
+		.subtext$ = .subtext$ + "; " + get_printsignal_text.text$ + ": '.continuity_Rating:1'"
+	endif
+	# Noise
+	if .noise_Rating >= 0
+		call get_printsignal_text 'config.language$' VoiceNoise
+		.subtext$ = .subtext$ + "; " + get_printsignal_text.text$ + ": '.noise_Rating:1'"
+	endif
+	# Noise
+	if .intel_Rating >= 0
+		call get_printsignal_text 'config.language$' Intelligence
+		.subtext$ = .subtext$ + "; " + get_printsignal_text.text$ + ": '.intel_Rating:1'"
+	endif
 
 	call points_to_wc 11
 	.y -= points_to_wc.wc/2

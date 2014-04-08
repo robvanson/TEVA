@@ -12,9 +12,13 @@ Frequency	Frequency -> Hz
 Hz	Hz
 SPL	SPL dB/Hz
 AST	AST
-CompAST	comp.
+CompAST	cmp
 VoiceQuality	VQ
-CompVQ	comp.
+CompVQ	cmp
+VoiceImpression	Imp
+VoiceNoise	N
+VoiceContinuity	Cont
+Intelligence	Int
 Jitter	Jitter
 Shimmer	Shimmer
 Mean	Mean
