@@ -1,0 +1,12 @@
+Label	Text	Key	Helptext
+!Author	Author	!	R.J.J.H. van Son
+!Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
+!License	License	!	GNU GPL version 2 or later
+!CANVAS	Display	¤	Display area
+$Scales	Chose a grade on the line between left (poor) and right (good) descriptors of speech	#	Visual Analogue rating Scales
+>Grade	Grade	0;1	GRADE
+>Roughness	Roughness	0;1	ROUGHNESS
+>Breathiness	Breathiness	0;1	BREATHINESS
+>Asthenia	Asthenia	  0;1	ASTHENIA
+>Strain	Strain	0;1	STRAIN
+Help	Scale Help	#	Press the scale you want information on, "Help" to continue
