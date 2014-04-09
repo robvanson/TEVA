@@ -1033,6 +1033,8 @@ procedure setup_recordingTask
 			select config.speakerDataTable
 			Remove
 		endif
+		# Set TEVA to store all audio
+		te.saveAudio = 1
 		# Initialize Speaker Data
 		config.speakerData$ = ""
 		config.speakerDataTable = -1
@@ -1087,10 +1089,10 @@ procedure setup_recordingTask
 			if .filename$ <> ""
 				createDirectory("'config.recordingTarget$'/'.filename$'")
 			endif
+			config.speakerData$ = "'config.recordingTarget$'/'.filename$'/'.filename$'_'.datetime$'.Table"
 			select config.speakerDataTable
 			Set string value... 1 ID '.filename$''.postfix$'
 			Set string value... 1 Audio 'config.recordingTarget$'/'.filename$'/'.filename$''.postfix$'_'.datetime$'.wav
-			Set string value... 1 SaveAudio Save
 			# Initilaise on firts row
 			speakerID$ = "'.filename$''.postfix$'"
 			call set_new_speakerdata 'speakerID$'
@@ -1103,8 +1105,7 @@ procedure setup_recordingTask
 				select config.speakerDataTable
 				Append row
 				Set string value... '.i' ID '.filename$''.postfix$'
-				Set string value... '.i' Audio 'config.recordingTarget$'/'.filename$''.postfix$'_'.datetime$'.wav
-				Set string value... '.i' SaveAudio Save
+				Set string value... '.i' Audio 'config.recordingTarget$'/'.filename$'/'.filename$''.postfix$'_'.datetime$'.wav
 			endfor
 		else
 			.skiprecording = 1
@@ -1129,6 +1130,7 @@ procedure unload_RecordingTask
 	call get_speakerInfo 0
 	call get_nextSpeaker 0
 	call get_previousSpeaker 0
+	te.saveAudio = 0
 endproc
 
 procedure display_prompt .table .number
@@ -1617,11 +1619,6 @@ procedure getOpenFile .openDialogue$
 		# Reset all internal structures
 		call reset_analysis
 		
-		# Set up empty speaker data table if none is present
-		if config.speakerDataTable <= 0
-			config.speakerDataTable = Create Table with column names... Speaker_Data 1 ID Text Description Audio AST StartTime EndTime
-		endif
-		
 		.sndInput = Read from file... '.filename$'
 		.numChannels = Get number of channels
 		if .numChannels > 1
@@ -1643,14 +1640,22 @@ procedure getOpenFile .openDialogue$
 		
 		te.openSound = selected("Sound")
 		recordedSound$ = selected$("Sound")
+		
+		# Set up empty speaker data table if none is present
+		if config.speakerDataTable <= 0
+			config.speakerDataTable = Create Table with column names... Speaker_Data 1 ID Text Description Audio AST StartTime EndTime
+			Set string value... 1 ID 'recordedSound$'
+			Set string value... 1 Audio 'te.currentFileName$'
+		endif
+		
 		# Keep track of current sound
+		select te.openSound
 		te.recordingTimeStamp$ = ""
 		currentStartTime = 0
 		currentEndTime = Get total duration
 		# Reset selected window
 		selectedStartTime = currentStartTime
 		selectedEndTime = currentEndTime
-		select te.openSound
 	endif
 endproc
 
@@ -1668,10 +1673,6 @@ procedure set_new_speakerdata .newSpeakerID$
 	speakerComments$ = get_speakerInfo.description$
 	pathologicalType = 'get_speakerInfo.ast$'
 	te.currentFileName$ = get_speakerInfo.audio$
-	te.saveAudio = 0
-	if get_speakerInfo.saveAudio$ = "Save"
-		te.saveAudio = 1
-	endif
 	
 	# If this was loaded from a Speaker Data file, set the Select Window
 	if get_speakerInfo.row > 0 and get_speakerInfo.endTime > 0 
@@ -2466,6 +2467,11 @@ procedure reset_analysis
         select te.openSound
         # If this file should be saved, do it now!
 		if te.saveAudio > 0
+			if config.speakerDataTable > 0 and config.speakerData$ <> ""
+				select config.speakerDataTable
+				Save as tab-separated file... 'config.speakerData$'
+			endif
+			select te.openSound
 			Save as WAV file... 'te.currentFileName$'
 		endif
 		if te.pitch > 0
