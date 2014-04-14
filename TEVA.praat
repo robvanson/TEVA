@@ -94,6 +94,8 @@ config.frequency = 1000
 config.showFormants = 0
 config.speakerSerial$ = "None"
 config.autoSelect = 0
+config.calcGNE = 0
+te.calcLowHighHNR = 0
 config.selectionWindow = 2.0
 config.muteOutput = 0
 

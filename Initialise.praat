@@ -82,6 +82,8 @@ procedure global_initialization
 	config.speakerDataTable = -1
 	config.speakerSerial$ = "None"
 	config.autoSelect = 0
+	config.calcGNE = 0
+	te.calcLowHighHNR = 0
 	config.showFormants = 0
 	config.muteOutput = 0
 	config.selectionWindow = 2.0

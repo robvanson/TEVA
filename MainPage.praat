@@ -2878,7 +2878,7 @@ procedure calculateHarmonicityValues
 		.sdHarmonicity = Get standard deviation... 'selectedStartTime' 'selectedEndTime'
 		
 		# Calculate GNE on segment (if segment is larger than 60ms)
-		if selectedEndTime - selectedStartTime > 0.06
+		if config.calcGNE and selectedEndTime - selectedStartTime > 0.06
 			if .previousHarmonicity != te.harmonicity or .previousSelectedGNEStartTime != selectedStartTime or .previousSelectedGNEEndTime != selectedEndTime
 				call sound2GNEvalue 'selectedStartTime' 'selectedEndTime'
 				.gneID = selected()
@@ -2893,18 +2893,20 @@ procedure calculateHarmonicityValues
 		else
 			te.gneValue = 0
 		endif
-		# Calculate Harmonicity value < 700Hz
-		call sound2Harm_low 'selectedStartTime' 'selectedEndTime'
-		.harmLowID = selected()
-		te.harmLowValue = Get maximum... 0 0 Parabolic
-		select .harmLowID
-		Remove
-		# Calculate 700 < Harmonicity value < 2300Hz
-		call sound2Harm_high 'selectedStartTime' 'selectedEndTime'
-		.harmHighID = selected()
-		te.harmHighValue = Get maximum... 0 0 Parabolic
-		select .harmHighID
-		Remove
+		if te.calcLowHighHNR
+			# Calculate Harmonicity value < 700Hz
+			call sound2Harm_low 'selectedStartTime' 'selectedEndTime'
+			.harmLowID = selected()
+			te.harmLowValue = Get maximum... 0 0 Parabolic
+			select .harmLowID
+			Remove
+			# Calculate 700 < Harmonicity value < 2300Hz
+			call sound2Harm_high 'selectedStartTime' 'selectedEndTime'
+			.harmHighID = selected()
+			te.harmHighValue = Get maximum... 0 0 Parabolic
+			select .harmHighID
+			Remove
+		endif
 	else
 		te.gneValue = 0
 		te.harmLowValue = 0
@@ -2917,7 +2919,11 @@ procedure calculateHarmonicityValues
 	.hnrValues$ = replace$(.hnrValues$, "MINHARMONICITY$", "'.minHarmonicity:1'", 0)
 	.hnrValues$ = replace$(.hnrValues$, "MEANHARMONICITY$", "'.meanHarmonicity:1'", 0)
 	.hnrValues$ = replace$(.hnrValues$, "SDHARMONICITY$", "'.sdHarmonicity:2'", 0)
-	.hnrValues$ = replace$(.hnrValues$, "GNEVALUE$", "'te.gneValue:3'", 0)
+	if config.calcGNE
+		.hnrValues$ = replace$(.hnrValues$, "GNEVALUE$", "'te.gneValue:3'", 0)
+	else
+		.hnrValues$ = replace$(.hnrValues$, "GNEVALUE$", "-", 0)
+	endif
 	.text$ = .hnrValues$
 
 	call get_feedback_text 'config.language$' ShortHarmonicityValues
@@ -2926,7 +2932,11 @@ procedure calculateHarmonicityValues
 	.shortHnrValues$ = replace$(.shortHnrValues$, "MINHARMONICITY$", "'.minHarmonicity:1'", 0)
 	.shortHnrValues$ = replace$(.shortHnrValues$, "MEANHARMONICITY$", "'.meanHarmonicity:1'", 0)
 	.shortHnrValues$ = replace$(.shortHnrValues$, "SDHARMONICITY$", "'.sdHarmonicity:2'", 0)
-	.shortHnrValues$ = replace$(.shortHnrValues$, "GNEVALUE$", "'te.gneValue:3'", 0)
+	if config.calcGNE
+		.shortHnrValues$ = replace$(.shortHnrValues$, "GNEVALUE$", "'te.gneValue:3'", 0)
+	else
+		.shortHnrValues$ = replace$(.shortHnrValues$, "GNEVALUE$", "-", 0)
+	endif
 	.shortText$ = .shortHnrValues$
 
 
@@ -3300,7 +3310,9 @@ procedure predictASTvalue
 	.gne = 0	
 	if .useValues
 		call DrawHarmonicityObject
+		te.calcLowHighHNR = 1
 		call calculateHarmonicityValues
+		te.calcLowHighHNR = 0
 		call getPathParameter 'pathologicalParameters' HNR
 		.hnr = getPathParameter.value
 		call getPathParameter 'pathologicalParameters' HNRlow
