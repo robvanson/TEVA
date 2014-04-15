@@ -626,6 +626,14 @@ procedure processConfigShowFormants .clickX .clickY .pressed$
     call Draw_button 'table$' '.label$' '.displayButton'
 endproc
 
+procedure processConfigCalcGNE .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "CalcGNE"
+	config.calcGNE = not config.calcGNE
+	.displayButton = 2*config.calcGNE
+    call Draw_button 'table$' '.label$' '.displayButton'
+endproc
+
 procedure processConfigInstruction .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "Instruction"

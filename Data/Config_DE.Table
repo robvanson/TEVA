@@ -21,7 +21,6 @@ Frequency_5k	5kHz	5	Wiedergabe bis 5 kHz
 Frequency_3k	3kHz	3	Wiedergabe bis 3 kHz
 Frequency_2k	2kHz	2	Wiedergabe bis 2 kHz
 Frequency_1k	1kHz	1	Wiedergabe bis 1 kHz
-ShowFormants	Formante	F	Zeige Formante im Spektrogramm
 $Pitch	Tonh\o"he	!	Einstellung der Tonh\o"hemessung
 Pitchalgorithm_VanAs	Kompatibel	!	Einstellungen von C.J. van As 2001 "Tracheoesophageal Speech" p83
 Pitchalgorithm_CC300	Tief	!	Reduzierte Oktavenspr\u"nge, f\u"r normale und tiefe Stimmen (<300 Hz)
@@ -33,7 +32,6 @@ SaveSpeaker	Speichern	S	Speichere aktuelle Tabelle mit den Sprecherdaten
 CloseSpeaker	Schlie\ssen	l	Schlie\sse die aktuelle Tabelle und \o"fne eine lehre Tabelle f\u"r die Sprecherdaten
 SpeakerMerge	Kombiniere	K	Kombiniere tabelle mit Sprecherdaten
 SpeakerRevert	Gespeichert	c	Gespeicherte Version der Sprecherdaten wiederherstellen
-AutoSelect	AutoSelect		W\a"hlen Sie das beste Intervall automatisch
 $VoicePrint	Voiceprint	!	Einstellungen VoicePrint Bild
 SaveFMT_PDF	PDF	!	VoicePrint als PDF Datei aufbewahren
 SaveFMT_EPS	EPS	!	VoicePrint als EPS Datei aufbewahren
@@ -43,6 +41,10 @@ SpeakerSerial_None	Einzeln	v	Verarbeite alle Aufnahmen einzeln
 SpeakerSerial_Forw	Seriell >	.>	Verarbeite alle Aufnahmen hintereinander (Sprecher Taste liest n\a"chste Aufnahme)
 SpeakerSerial_Backw	< Seriell	,<	Verarbeite alle Aufnahmen r\u"ckw\a"rt (Sprecher Taste liest vorherige Aufnahme)
 !SelectionWindow	SelectionWindow	!	Urspr\u"ngliche Breite des Auswahl-Fenster (Voreinstellungen Serieller modus)
+$AutomaticTasks	Ausf\u"hren	!	Ausf\u"hrung von zeitintensiven Aufgaben
+ShowFormants	Formante	F	Zeige Formante im Spektrogramm
+AutoSelect	AutoSelect		W\a"hlen Sie das beste Intervall automatisch
+CalcGNE	GNE		Berechne den GNE Wert
 SpeakerSort	Sortiere	o	Sortiere die Liste mit Aufnahmen
 SpeakerRandomize	Shuffle	h	Randomisiere die Liste mit Aufnahmen
 RecordingTime	Aufnahme	e	Aufnahmezeit in Secunden
