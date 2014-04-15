@@ -1047,6 +1047,42 @@ procedure rating_String .speakerID$
 	if get_RatingInfo.subtext$ <> ""
 		.subtext$ = .subtext$ + "; " + get_RatingInfo.subtext$
 	endif
+	
+	# Rating.voice
+	call get_RatingInfo Rating.voice '.speakerID$'
+	if get_RatingInfo.subtext$ <> ""
+		.subtext$ = .subtext$ + "; " + get_RatingInfo.subtext$
+	endif
+
+	# Rating.grade
+	call get_RatingInfo Rating.grade '.speakerID$'
+	if get_RatingInfo.subtext$ <> ""
+		.subtext$ = .subtext$ + "; " + get_RatingInfo.subtext$
+	endif
+
+	# Rating.roughness
+	call get_RatingInfo Rating.roughness '.speakerID$'
+	if get_RatingInfo.subtext$ <> ""
+		.subtext$ = .subtext$ + "; " + get_RatingInfo.subtext$
+	endif
+
+	# Rating.breathiness
+	call get_RatingInfo Rating.breathiness '.speakerID$'
+	if get_RatingInfo.subtext$ <> ""
+		.subtext$ = .subtext$ + "; " + get_RatingInfo.subtext$
+	endif
+
+	# Rating.asthenia
+	call get_RatingInfo Rating.asthenia '.speakerID$'
+	if get_RatingInfo.subtext$ <> ""
+		.subtext$ = .subtext$ + "; " + get_RatingInfo.subtext$
+	endif
+
+	# Rating.strain
+	call get_RatingInfo Rating.strain '.speakerID$'
+	if get_RatingInfo.subtext$ <> ""
+		.subtext$ = .subtext$ + "; " + get_RatingInfo.subtext$
+	endif
 endproc
 
 procedure get_RatingInfo .ratinglabel$ .speakerID$

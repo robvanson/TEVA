@@ -21,6 +21,11 @@ Rating.voice	Vo
 Rating.noise	N
 Rating.continuity	Cont
 Rating.intelligibility	Int
+Rating.grade	G
+Rating.roughness	R
+Rating.breathiness	B
+Rating.asthenia	A
+Rating.strain	S
 Jitter	Jitter
 Shimmer	Shimmer
 Mean	Mean

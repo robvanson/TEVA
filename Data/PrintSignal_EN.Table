@@ -20,6 +20,11 @@ Rating.fluency	Fl
 Rating.voice	Vo
 Rating.continuity	Cont
 Rating.intelligibility	Int
+Rating.grade	G
+Rating.roughness	R
+Rating.breathiness	B
+Rating.asthenia	A
+Rating.strain	S
 CompVQ	cmp
 Jitter	Jitter
 Shimmer	Shimmer
