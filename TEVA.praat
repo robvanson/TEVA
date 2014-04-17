@@ -1136,6 +1136,7 @@ procedure unload_RecordingTask
 endproc
 
 procedure display_prompt .table .number
+	.maxWidth = 95
 	if .table > 0
 		select .table
 		.align$ = "left"
@@ -1150,6 +1151,31 @@ procedure display_prompt .table .number
 			.fontSize = Get value... '.number' size
 			.font$ = extractWord$(.font$, "")
 			.text$ = Get value... '.number' text
+			
+			# Add newlines
+			if index(.text$, "\n") <= 0
+				demo '.font$'
+				call set_font_size '.fontSize'
+	
+				.line$ = ""
+				.newtext$ = " "
+				while index_regex(.text$, "\S") > 0
+					.word$ = replace_regex$(.text$, "^([\S]*[^\S]*[\S]*)(.*$)", "\1", 0)
+					.text$ = replace_regex$(.text$, "^([\S]*[^\S]*[\S]*)(.*$)", "\2", 0)
+					.textWidth = demo Text width (wc)... "'.line$''.word$'"
+					if .textWidth <= .maxWidth
+						.line$ = .line$ + .word$
+					else
+						.newtext$ = .newtext$ + "\n" + .line$
+						.line$ = .word$
+					endif
+				endwhile
+				if index_regex(.line$, "\S") > 0
+					.text$ = .newtext$ + "\n" + .line$
+				endif
+				demo 'defaultFont$'
+				call set_font_size 'defaultFontSize'
+			endif
 			
 			# Write popup
 			call text2popuptable '.align$' '.font$' '.fontSize' "'.text$'"
@@ -1893,8 +1919,8 @@ endproc
 
 # Create a pop-up window with text from a Text Table
 procedure write_text_table .table$
-	.xleft = 10
- 	.xright = 90
+	.xleft = 5
+ 	.xright = 95
   	.ylow = 20
    	.yhigh = 85
 	.lineHeight = 2.5
