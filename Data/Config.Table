@@ -54,8 +54,8 @@ $Rating	70	85	53	58	Black	DrawNull
 RatingForm_Vowel	70	85	47	52	Black	DrawNull
 RatingForm_Text	70	85	41	46	Black	DrawNull
 RatingForm_INFVo	70	85	35	40	Black	DrawNull
-RatingForm_GRBAS	70	85	27	32	Black	DrawNull
-VasScaleTicks	70	85	19	24	{0.65,0.60,0.45}	DrawNull
+RatingForm_GRBAS	70	85	29	34	Black	DrawNull
+VasScaleTicks	70	85	21	26	{0.65,0.60,0.45}	DrawNull
 Instruction	90	100	65	75	Black	DrawInstruction
 Manual	90	100	52.5	62.5	Black	DrawManual
 Credits	90	100	40	50	Black	DrawCredits
