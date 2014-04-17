@@ -47,7 +47,7 @@ AutoSelect	AutoSelect		Selecteer automatisch het "beste" interval
 CalcGNE	GNE		Bereken de GNE waarde 
 SpeakerSort	Sorteer V	V	Sorteer de lijst met opnamen
 SpeakerRandomize	Shuffle	e	Randomiseer de lijst met opnamen
-RecordingTime	Opname	]}	Opnametijd in seconden
+RecordingTime	Opname	]}	Opnametijd in seconden en bestanden voor voorleestaken
 !RecordingTaskFile	RecordingTaskFile	!	Bestand met de opnametaken
 !RecordingTarget	RecordingTarget	!	Map met de opnamen
 $Rating	Beoordeling		Menselijke beoordeling van spraak

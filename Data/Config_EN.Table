@@ -47,7 +47,7 @@ AutoSelect	AutoSelect		Select the "best" interval automatically
 CalcGNE	GNE		Calculate the GNE value 
 SpeakerSort	Sort V	V	Sort the list of recordings
 SpeakerRandomize	Shuffle	u	Randomize the list of recordings
-RecordingTime	Recording	c	Time of recording in seconds
+RecordingTime	Recording	c	Time of recording in seconds and recording tasks
 !RecordingTaskFile	RecordingTaskFile	!	File with recording tasks
 !RecordingTarget	RecordingTarget	!	Directory with the recordings
 $Rating	Rating		Human evaluation of speech

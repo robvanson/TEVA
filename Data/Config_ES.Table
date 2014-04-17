@@ -47,7 +47,7 @@ CalcGNE	GNE		Calculate the GNE value
 ShowFormants	Formantes	F	Dibujo de formantes en el espectograma
 SpeakerSort	Tipo V	V	Clasificar la lista de grabaciones
 SpeakerRandomize	Arrastrar	!	Aleatorizar lista de grabaciones
-RecordingTime	Grabaci\o'n	b	Tiempo de gravaci\o'n en segundos
+RecordingTime	Grabaci\o'n	b	Tiempo de gravaci\o'n en segundos and recording tasks
 !RecordingTaskFile	RecordingTaskFile	!	File with recording tasks
 !RecordingTarget	RecordingTarget	!	Directory with the recordings
 $Rating	Valoraci\o'n		Valoraci\o'n humana del habla

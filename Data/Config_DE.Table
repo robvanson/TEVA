@@ -47,7 +47,7 @@ AutoSelect	AutoSelect		W\a"hlen Sie das beste Intervall automatisch
 CalcGNE	GNE		Berechne den GNE Wert
 SpeakerSort	Sortiere	o	Sortiere die Liste mit Aufnahmen
 SpeakerRandomize	Shuffle	h	Randomisiere die Liste mit Aufnahmen
-RecordingTime	Aufnahme	e	Aufnahmezeit in Secunden
+RecordingTime	Aufnahme	e	Aufnahmezeit in Secunden und  Datei mit Aufnahmeaufgaben
 !RecordingTaskFile	RecordingTaskFile	!	Die Datei mit den Aufnahmeaufgaben
 !RecordingTarget	RecordingTarget	!	Die Mappe mit den Aufnahmen
 $Rating	Beurteilung		Menschliche Beurteilung de Sprache

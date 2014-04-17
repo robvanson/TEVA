@@ -1013,8 +1013,41 @@ endproc
 procedure setup_recordingTask
 	.skiprecording = 0
 	
-	if fileReadable(config.recordingTaskFile$)
+	# Read a list of prompts from a text file and create a default recording task table
+	if fileReadable(config.recordingTaskFile$) and index_regex(config.recordingTaskFile$, "\.(txt|TXT|text)$") > 0
+		.strings = Read Strings from raw text file: config.recordingTaskFile$
+		.numStrings = Get number of strings
+		.text$ = Get string: 1
+		te.recordingTaskTable = Create Table with column names... RecordingTaskTable 1 postfix time align font size text
+		Set string value... 1 postfix _p1
+		Set numeric value... 1 time 'config.recordingTime$'
+		Set string value... 1 align centre
+		Set string value... 1 font Helvetica
+		Set numeric value... 1 size 24
+		Set string value... 1 text '.text$'
+		.w = 1
+		for .s from 2 to .numStrings
+			select .strings
+			.text$ = Get string: .s
+			# Skip empty lines
+			if index_regex(.text$, "\S")
+				select te.recordingTaskTable
+				Append row
+				.w += 1
+				Set string value... .w postfix _p'.s'
+				Set numeric value... .w time 'config.recordingTime$'
+				Set string value... .w align centre
+				Set string value... .w font Helvetica
+				Set numeric value... .w size 24
+				Set string value... .w text '.text$'
+			endif
+		endfor
+		select .strings
+		Remove
+	# Read a recording task
+	elsif fileReadable(config.recordingTaskFile$)
 		te.recordingTaskTable = Read from file... 'config.recordingTaskFile$'
+	# Create a recording task from a single line of text
 	elsif startsWith(config.recordingTaskFile$, "[") and endsWith(config.recordingTaskFile$, "]")
 		.text$ = left$(config.recordingTaskFile$, length(config.recordingTaskFile$) - 1)
 		.text$ = right$(.text$, length(.text$) - 1)
