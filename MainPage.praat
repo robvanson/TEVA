@@ -246,6 +246,10 @@ procedure print_signal .outFileName$
 	.y += points_to_wc.wc/4
 	do("Text special...", .x, "centre", .y, "top", "Helvetica", 9, "0", .subtext$)
 
+	# Get predictions
+	call predictASTvalue
+	predictedPathType = predictASTvalue.ast
+
 	# Get subtext
 	.subtext$ = ""
 	.typeASTText$ = "-"
@@ -3196,40 +3200,24 @@ procedure calculateSpectrogramValues
 	endif
 endproc
 
-# Predict AST from "learned" formulas
+# Predict AST and VQ from "learned" formulas
 
-# Linear Model
-# if .vf >= 0.96
-# 
-# Coefficients:
-# (Intercept)          MVD        CRmax          HNR  
-#     3.89077     -0.12629     -0.07447     -0.04621  
-# 
-# if 0 < .vf < 0.96
-# 
-# Coefficients:
-# (Intercept)          MVD           VF        CRmax          HNR  
-#    3.524306    -0.057493    -1.744350     0.004475     0.042697  
-# 
-# if .vf = 0
-# 
-# Coefficients:
-# (Intercept)          QF3          BED  
-#   3.7900154   -0.0423776   -0.0005477  
-# 
-procedure predictLM .vf .mvd .hnr .hnrLow  .hnrHigh .shimmer .jitter .crmax .gne .bed .qf3
-	.ast = 0
-	if .vf >= 0.96
-		.ast = 3.89077 + -0.12629*.mvd + -0.07447*.crmax + -0.04621*.hnr
-	elsif .vf > 0
-		.ast = 3.524306 + -0.057493*.mvd + -1.744350*.vf + 0.004475*.crmax + 0.042697*.hnr
-	else
-		.ast = 3.7900154  + -0.0423776*.qf3 + -0.0005477*.bed 
+procedure predictVQ_LM .vf .hnr .pitch
+	.vq = 0
+	.i_vq = 0
+	if .vf > 0
+		.i_vq = 1.457596 * .vf - 0.042732 * .hnr - 0.008651 * .pitch + 2.015532
+		.vq = (.i_vq - 1) * 250 + 125
+		if .vq < 0
+			.vq = 0
+		elsif .vq > 1000
+			.vq = 1000
+		endif
 	endif
 endproc
 
 # Recursive Partitioning
-procedure predictRPart .vf .mvd .hnr .hnrLow  .hnrHigh .shimmer .jitter .crmax .gne .bed .qf3
+procedure predictAST_RPart .vf .mvd .hnr .hnrLow  .hnrHigh .shimmer .jitter .crmax .gne .bed .qf3
 	.ast = 0
 	if .vf > 0.0001
 		# With Pitch
@@ -3253,6 +3241,44 @@ procedure predictRPart .vf .mvd .hnr .hnrLow  .hnrHigh .shimmer .jitter .crmax .
 	else
 		.ast = 4
 	endif
+endproc
+
+procedure predictVQvalue
+	.drawingSetting = noDrawingOrWriting
+	noDrawingOrWriting = 1
+	# Get current values
+	# AST ~ VF + HNR + Pitch
+	# Use:
+	# lm
+	# AST ~ VF + HNR + Pitch
+
+	# MVD + VF + Pitch + Jitter + Shimmer
+	call DrawPitchObject
+	call calculatePitchValues
+	call getPathParameter 'pathologicalParameters' MVD
+	.mvd = getPathParameter.value
+	call getPathParameter 'pathologicalParameters' VoicedFraction
+	.vf = getPathParameter.value
+	call getPathParameter 'pathologicalParameters' Pitch
+	.pitch = getPathParameter.value
+	call getPathParameter 'pathologicalParameters' Jitter
+	.jitter = getPathParameter.value
+	call getPathParameter 'pathologicalParameters' Shimmer
+	.shimmer = getPathParameter.value
+	
+	# HNR, HNRlow/high etc
+	.hnr = 0
+	call DrawHarmonicityObject
+	call calculateHarmonicityValues
+	call getPathParameter 'pathologicalParameters' HNR
+	.hnr = getPathParameter.value
+	
+	# The Formula
+	call predictVQ_LM .vf .hnr .pitch
+	.vq = predictVQ_LM.vq
+	
+	noDrawingOrWriting = .drawingSetting
+	
 endproc
 
 procedure predictASTvalue
@@ -3349,8 +3375,8 @@ procedure predictASTvalue
 	.astRPart = -1
 	# call predictLM .vf .mvd .hnr .hnrLow  .hnrHigh .shimmer .jitter .crmax .gne .bed .qf3
 	# .astLM = predictLM.ast
-	call predictRPart .vf .mvd .hnr .hnrLow  .hnrHigh .shimmer .jitter .crmax .gne .bed .qf3
-	.astRPart = predictRPart.ast
+	call predictAST_RPart .vf .mvd .hnr .hnrLow  .hnrHigh .shimmer .jitter .crmax .gne .bed .qf3
+	.astRPart = predictAST_RPart.ast
 	
 	.ast = .astRPart
 	noDrawingOrWriting = .drawingSetting
