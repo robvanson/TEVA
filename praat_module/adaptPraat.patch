@@ -35,8 +35,8 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Graphics_text.cpp
  			ipaAvailable = true;
  		}
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_praat_sources/sys/praat.cpp
---- praat_sources/sys/praat.cpp	2012-10-15 10:41:10.000000000 +0200
-+++ demo_praat_sources/sys/praat.cpp	2012-10-15 13:47:24.000000000 +0200
+--- praat_sources/sys/praat.cpp	2014-04-22 11:09:57.000000000 +0200
++++ demo_praat_sources/sys/praat.cpp	2014-04-22 11:53:58.000000000 +0200
 @@ -1188,9 +1188,9 @@ void praat_init (const char *title, unsi
  		 * Make sure that the program's private directory exists.
  		 */
@@ -83,7 +83,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
 +		#endif
  
  		#ifdef macintosh
-			#if ! useCarbon
+ 			#if ! useCarbon
 @@ -1348,7 +1359,9 @@ void praat_init (const char *title, unsi
  		trace ("creating the dynamic menu in the Objects window");
  		praat_actions_createDynamicMenu (raam);
@@ -92,7 +92,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		raam -> f_show ();
 +#endif
  	//Melder_fatal ("stop");
- 		#ifdef UNIX
+ 		#if defined (UNIX) && ! defined (NO_GRAPHICS)
  			try {
 @@ -1377,7 +1390,12 @@ void praat_init (const char *title, unsi
  
