@@ -1013,6 +1013,17 @@ endproc
 procedure setup_recordingTask
 	.skiprecording = 0
 	
+	# Initialize TEVA
+	call unload_RecordingTask
+	
+	# Update config.recordingTaskFile$
+	if not fileReadable(config.recordingTaskFile$) and fileReadable("'defaultDirectory$'/'config.recordingTaskFile$'")
+		config.recordingTaskFile$ = "'defaultDirectory$'/'config.recordingTaskFile$'"
+		if index_regex(config.recordingTarget$, "^[a-zA-Z0-9]") and not index(config.recordingTarget$, defaultDirectory$)
+			config.recordingTarget$ = "'defaultDirectory$'/'config.recordingTarget$'"
+		endif
+	endif
+	
 	# Read a list of prompts from a text file and create a default recording task table
 	if fileReadable(config.recordingTaskFile$) and index_regex(config.recordingTaskFile$, "\.(txt|TXT|text)$") > 0
 		.strings = Read Strings from raw text file: config.recordingTaskFile$
@@ -1818,11 +1829,24 @@ endproc
 
 procedure load_local_preferences .dataDir$
 	.dataDir$ = replace_regex$(.dataDir$, "[/:\\]$", "", 0)
-	if fileReadable("'.dataDir$'/.tevarc") or fileReadable("'.dataDir$'/TEVApreferences.tsv")
+	# Reset default directory
+	defaultDirectory$ = .dataDir$
+	
+	# Default preferences file
+	.localPrefs$ = "'.dataDir$'/TEVApreferences.tsv"
+	
+	# Look for a suitable preferences file in the current or parent directory
+	if fileReadable("'.dataDir$'/TEVApreferences.tsv")
 		.localPrefs$ = "'.dataDir$'/TEVApreferences.tsv"
-		if fileReadable("'.dataDir$'/.tevarc")
-			.localPrefs$ = "'.dataDir$'/.tevarc"
-		endif
+	elsif fileReadable("'.dataDir$'/.tevarc")
+		.localPrefs$ = "'.dataDir$'/.tevarc"
+	elsif fileReadable("'.dataDir$'/../TEVApreferences.tsv")
+		.localPrefs$ = "'.dataDir$'/../TEVApreferences.tsv"
+	elsif fileReadable("'.dataDir$'/../.tevarc")
+		.localPrefs$ = "'.dataDir$'/../.tevarc"
+	endif
+
+	if fileReadable(.localPrefs$)
 		call write_preferences ""
 		call read_preferences '.localPrefs$'
 		call switch_speaker_next_button 'config.speakerSerial$'
