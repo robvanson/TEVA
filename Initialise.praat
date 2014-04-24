@@ -143,6 +143,7 @@ procedure global_initialization
 	preferencesScriptsDir$ = "'preferencesAppDir$'/scripts"
 	defaultFontSize = 12
 	defaultFont$ = "Helvetica"
+	defaultFontColor$ = "Black"
 	defaultLineWidth = 1
 	currentSoundName$ = ""
 	speakerID$ = ""
@@ -235,7 +236,7 @@ procedure init_window
 	demo Line width... 'defaultLineWidth'
 	demo 'defaultFont$'
 	call set_font_size 'defaultFontSize'
-	demo Black
+	demo 'defaultFontColor$'
 	call reset_viewport
 	# Set canvas (if available)
 	call findLabel 'te.buttons$' !CANVAS
@@ -324,7 +325,7 @@ procedure print_window
 	demo Line width... 'defaultLineWidth'
 	demo 'defaultFont$'
 	call set_font_size 'defaultFontSize'
-	demo Black
+	demo 'defaultFontColor$'
 	call reset_viewport
 	call autoSetPathType
 	# Draw something

@@ -114,6 +114,7 @@ buttonbevel = 0
 viewportMargin = 5
 defaultFontSize = 12
 defaultFont$ = "Helvetica"
+defaultFontColor$ = "Black"
 defaultLineWidth = 1
 recordingLightX = 0
 recordingLightY = 100
@@ -620,7 +621,7 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 
 	# Reset
 	call set_font_size 'defaultFontSize'
-    demo Black
+    demo 'defaultFontColor$'
     demo Line width... 'defaultLineWidth'
     
     label NOBUTTON
@@ -941,7 +942,11 @@ procedure record_sound
 	if .recordingTaskPrompt > 0
 		.originalPopUpcolor$ = popUp.backgroundcolor$
 		popUp.backgroundcolor$ = popUp.warncolor$
+		.origFontColor$ = defaultFontColor$
+		defaultFontColor$ = "Grey"
 		call display_prompt 'te.recordingTaskTable' '.recordingTaskPrompt'
+		defaultFontColor$ = .origFontColor$
+		demo 'defaultFontColor$'
 		popUp.backgroundcolor$ = .originalPopUpcolor$
 		# Wait a moment
     	noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 44100 'te.waitRecordingTask'
@@ -1018,17 +1023,26 @@ procedure setup_recordingTask
 	
 	# Update config.recordingTaskFile$
 	if not fileReadable(config.recordingTaskFile$) and fileReadable("'defaultDirectory$'/'config.recordingTaskFile$'")
-		config.recordingTaskFile$ = "'defaultDirectory$'/'config.recordingTaskFile$'"
-		if index_regex(config.recordingTarget$, "^[a-zA-Z0-9]") and not index(config.recordingTarget$, defaultDirectory$)
+		if config.recordingTarget$ = ""
+			.filenameStart = rindex_regex(config.recordingTaskFile$, "[\\/:]+[^\\/:]+$")
+			config.recordingTarget$ = left$(config.recordingTaskFile$, .filenameStart - 1)
+			config.recordingTarget$ = "'defaultDirectory$'/'config.recordingTarget$'"
+		elsif startsWith(config.recordingTaskFile$, config.recordingTarget$)
 			config.recordingTarget$ = "'defaultDirectory$'/'config.recordingTarget$'"
 		endif
+		config.recordingTaskFile$ = "'defaultDirectory$'/'config.recordingTaskFile$'"
 	endif
 	
 	# Read a list of prompts from a text file and create a default recording task table
 	if fileReadable(config.recordingTaskFile$) and index_regex(config.recordingTaskFile$, "\.(txt|TXT|text)$") > 0
 		.strings = Read Strings from raw text file: config.recordingTaskFile$
 		.numStrings = Get number of strings
-		.text$ = Get string: 1
+		.s = 1
+		.text$ = Get string: .s
+		while startsWith(.text$, "//")
+			.s += 1
+			.text$ = Get string: .s
+		endwhile
 		te.recordingTaskTable = Create Table with column names... RecordingTaskTable 1 postfix time align font size text
 		Set string value... 1 postfix _p1
 		Set numeric value... 1 time 'config.recordingTime$'
@@ -1036,12 +1050,13 @@ procedure setup_recordingTask
 		Set string value... 1 font Helvetica
 		Set numeric value... 1 size 24
 		Set string value... 1 text '.text$'
+		.start = .s + 1
 		.w = 1
-		for .s from 2 to .numStrings
+		for .s from .start to .numStrings
 			select .strings
 			.text$ = Get string: .s
 			# Skip empty lines
-			if index_regex(.text$, "\S")
+			if index_regex(.text$, "\S") and not startsWith(.text$, "//")
 				select te.recordingTaskTable
 				Append row
 				.w += 1
@@ -1616,7 +1631,7 @@ procedure write_help_text .table$ .label$
 	demo Draw arrow... '.xstart' '.ystart' '.xend' '.yend'
 	demo Line width... 'defaultLineWidth'
 	demo Arrow size... 1
-	demo Black
+	demo 'defaultFontColor$'
 	demo Text... '.xtext' Left '.ytext' Bottom '.helpText$'
 	demoShow()
 	call set_font_size 'defaultFontSize'
@@ -1995,6 +2010,7 @@ procedure write_text_table .table$
 	.maxWidth = 0
 	.maxHeight = .lineHeight
 	.currentHeight = .lineHeight
+	.currentColor$= defaultFontColor$
 	for .l to .numLines
 		select '.instructionText'
 		.currentText$ = Get value... '.l' text
@@ -2004,6 +2020,15 @@ procedure write_text_table .table$
 
 		.font$ = Get value... '.l' font
 		.fontSize = Get value... '.l' size
+		# Get optional font color
+		.currentColor$ = defaultFontColor$
+		.colorColumn = Get column index... color
+		if .colorColumn > 0
+			.currentColor$ = Get value... '.l' color
+			if index_regex(.currentColor$, "[^ \-\?]") <= 0
+				.currentColor$ = defaultFontColor$
+			endif
+		endif
 		# Get optional line height
 		.heightColumn = Get column index... height
 		if .heightColumn > 0
@@ -2063,7 +2088,7 @@ procedure write_text_table .table$
 	demo Paint rectangle... 'popUp.backgroundcolor$' '.xleft' '.xright' '.ylow' '.yhigh'
 	demo Draw rectangle... '.xleft' '.xright' '.ylow' '.yhigh'
 	demo Line width... 'defaultLineWidth'
-	demo Black
+	demo '.currentColor$'
  	.ytext = .yhigh - 2 - .dy
 	for .i to .numRows
 		select '.instructionText'
@@ -2102,6 +2127,7 @@ procedure write_text_table .table$
 	endfor	
 	demoShow()	
 	call set_font_size 'defaultFontSize'
+	demo 'defaultFontColor$'
 	
 	select '.instructionText'
 	Remove
@@ -2142,7 +2168,7 @@ procedure write_text_popup .font$ .size .text$
 	demo Paint rectangle... 'popUp.backgroundcolor$' '.xleft' '.xright' '.ylow' '.yhigh'
 	demo Draw rectangle... '.xleft' '.xright' '.ylow' '.yhigh'
 	demo Line width... 'defaultLineWidth'
-	demo Black
+	demo 'defaultFontColor$'
  	.ytext = .yhigh - 2 - .dy
 	# Write text
 	demo Text special... '.xmid' Centre '.ytext' Bottom '.font$' '.popupFontSize' 0 '.text$'
@@ -2288,7 +2314,7 @@ procedure draw_background .table$
 	.textright = .xright - 2
 	.textmid = (.xright - .xleft)/2
 	
-	demo Black
+	demo 'defaultFontColor$'
  	.ytext = .yhigh - 2 - .dy
 	for .i to .numRows
 		select '.backgroundText'
@@ -2369,7 +2395,7 @@ procedure draw_background .table$
 			demo '.line$'
 		endif
 	endfor	
-	demo Black
+	demo 'defaultFontColor$'
 	demoShow()	
 	call set_font_size 'defaultFontSize'
 	
