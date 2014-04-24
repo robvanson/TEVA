@@ -1399,6 +1399,8 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 	endif
 	
 	call Draw_button '.table$' Select 2
+	select te.openSound
+	.soundLength = Get total duration
 	# Set second border
 	while demoWaitForInput()
 		.clickX = -1
@@ -1447,7 +1449,14 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 				noDrawingSelection = 0
 				call Draw_button '.table$' Select 2
 				.firstT -= .windowSize / 2
+				if .firstT <= 0
+					.firstT = 0
+				endif
 				.secondT = .firstT + .windowSize
+				if .secondT > .soundLength
+					.secondT = .soundLength
+					.firstT = .secondT - .windowSize
+				endif
 				selectionIsDrawn = 1
 				goto ENDOFDISPLAYSELECT
 			else
@@ -1468,10 +1477,10 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
     	select te.openSound
 		.soundLength = Get total duration
 		selectedStartTime = min(.firstT, .secondT)
+		selectedEndTime = max(.firstT, .secondT)
 		if selectedStartTime < 0
 			selectedStartTime = 0
 		endif
-		selectedEndTime = max(.firstT, .secondT)
 		if selectedEndTime > .soundLength
 			selectedEndTime = .soundLength
 		endif
