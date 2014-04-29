@@ -971,8 +971,15 @@ procedure record_sound
 	te.recordingTimeStamp$ = getTimeStamp.string$
 	te.currentFileName$ = ""
 	
-    demo Paint circle... White 'recordingLightX' 'recordingLightY'  2.5
-    call wipeArea 'wipeFeedbackArea$'
+    # Remove prompt if needed (Warning BEFORE the recording light)
+	if .recordingTaskPrompt > 0
+		# When doing a recording task, wipe the screen
+		demo Erase all
+	else
+		# Remove recording light
+		demo Paint circle... White 'recordingLightX' 'recordingLightY'  2.5
+	    call wipeArea 'wipeFeedbackArea$'
+	endif
 
 	call draw_recording_level
 
