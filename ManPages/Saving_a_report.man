@@ -37,8 +37,7 @@ and contains the graphics in %wmf or %pdf format."
 
 <script> 4.5 2.5 "
 	Axes... 0 100 0 100
-	Insert picture from file... Save_screenshotTop.png 10 10 0 100
-	Insert picture from file... Save_screenshotBottom.png 90 90 0 100
+	Insert picture from file... signaltype3voice_example.png 10 10 0 100
 "
 
 <entry> "Next:"
