@@ -45,6 +45,7 @@ alertText$ = ""
 config.input$ = "Microphone"
 config.ratingForm$ = "Vowel"
 config.vasScaleTicks = 0
+te.defaultSampleFreq = 22050
 te.recordingTimeStamp$ = ""
 te.currentFileName$ = ""
 te.saveAudio = 0
@@ -905,6 +906,10 @@ procedure record_sound
 	call reset_analysis
 	speakerID$ = .currentSpeakerID$
 	.recordingTaskPrompt = 0
+	.sampleFreq = te.defaultSampleFreq
+	if config.frequency <= 5000
+		.sampleFreq = 11025
+	endif
 	
 	# There is a very nasty delay before the first recording starts, do a dummy record
 	if not variableExists("recordingInitialized")
@@ -965,7 +970,17 @@ procedure record_sound
 	endif
 
     # Record
-    noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 44100 '.rectime'
+    .recording = noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 44100 '.rectime'
+    # Downsample for speed
+    if .sampleFreq <> 44100
+		.downsampled = Resample... '.sampleFreq' 50
+		select .recording
+		Remove
+		.recording = .downsampled
+		select .recording
+		.downsampled = -1
+    endif
+    
 	# Keep track of current sound
 	call getTimeStamp
 	te.recordingTimeStamp$ = getTimeStamp.string$
@@ -984,6 +999,7 @@ procedure record_sound
 	call draw_recording_level
 
 	# Process sound
+	select .recording
     Rename... Tmp
     Resample... 'sampleFrequency' 50
     Rename... Speech
