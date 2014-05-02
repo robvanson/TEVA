@@ -389,7 +389,8 @@ procedure PrintSpectrogramObject (.plotWidth, .plotyTop, .plotHeight, .labelText
 			te.spectrogram = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Spectrogram
 		else
 			select te.openSound
-			.nyquistFrequency = sampleFrequency / 2
+			.currentSampleFrequency = Get sampling frequency
+			.nyquistFrequency = .currentSampleFrequency / 2
 			te.spectrogram = noprogress To Spectrogram... 0.1 '.nyquistFrequency' 0.001 10 Gaussian
 			# Write file to cache
 			if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")
@@ -2406,7 +2407,8 @@ procedure DrawSpectrogramObject
 			te.spectrogram = Read from file... 'currentDirectoryName$''localCacheDir$'/'currentSoundName$'.Spectrogram
 		else
 			select te.openSound
-			.nyquistFrequency = sampleFrequency / 2
+			.currentSampleFrequency = Get sampling frequency
+			.nyquistFrequency = .currentSampleFrequency / 2
 			te.spectrogram = noprogress To Spectrogram... 0.1 '.nyquistFrequency' 0.001 10 Gaussian
 			# Write file to cache
 			if config.useCache >=0 and fileReadable("'currentDirectoryName$''localCacheDir$'")

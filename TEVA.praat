@@ -45,7 +45,6 @@ alertText$ = ""
 config.input$ = "Microphone"
 config.ratingForm$ = "Vowel"
 config.vasScaleTicks = 0
-te.defaultSampleFreq = 22050
 te.recordingTimeStamp$ = ""
 te.currentFileName$ = ""
 te.saveAudio = 0
@@ -90,7 +89,8 @@ else
 endif
 
 wipeFeedbackArea$ = ""
-sampleFrequency = 44100
+te.recordingSampleFrequency = 44100
+te.defaultSampleFreq = 22050
 config.frequency = 1000
 config.showFormants = 0
 config.speakerSerial$ = "None"
@@ -913,7 +913,7 @@ procedure record_sound
 	
 	# There is a very nasty delay before the first recording starts, do a dummy record
 	if not variableExists("recordingInitialized")
-    	noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 44100 0.1
+    	noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 'te.recordingSampleFrequency' 0.1
 		Remove
 		recordingInitialized = 1
 	endif
@@ -954,7 +954,7 @@ procedure record_sound
 		demo 'defaultFontColor$'
 		popUp.backgroundcolor$ = .originalPopUpcolor$
 		# Wait a moment
-    	noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 44100 'te.waitRecordingTask'
+    	noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 'te.recordingSampleFrequency' 'te.waitRecordingTask'
 		Remove
 	endif
 
@@ -970,17 +970,7 @@ procedure record_sound
 	endif
 
     # Record
-    .recording = noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 44100 '.rectime'
-    # Downsample for speed
-    if .sampleFreq <> 44100
-		.downsampled = Resample... '.sampleFreq' 50
-		select .recording
-		Remove
-		.recording = .downsampled
-		select .recording
-		.downsampled = -1
-    endif
-    
+    .recording = noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 'te.recordingSampleFrequency' '.rectime'
 	# Keep track of current sound
 	call getTimeStamp
 	te.recordingTimeStamp$ = getTimeStamp.string$
@@ -996,17 +986,23 @@ procedure record_sound
 	    call wipeArea 'wipeFeedbackArea$'
 	endif
 
+    # Downsample for speed
+    if .sampleFreq <> te.recordingSampleFrequency
+		.downsampled = Resample... '.sampleFreq' 50
+		select .recording
+		Remove
+		.recording = .downsampled
+		select .recording
+		.downsampled = -1
+    endif
+    
 	call draw_recording_level
 
 	# Process sound
 	select .recording
-    Rename... Tmp
-    Resample... 'sampleFrequency' 50
     Rename... Speech
 	te.openSound = selected("Sound")
     recordedSound$ = selected$("Sound")
-    select Sound Tmp
-    Remove
     select te.openSound
 	currentStartTime = 0
 	currentEndTime = Get total duration
@@ -1049,8 +1045,6 @@ procedure setup_recordingTask
 		if config.recordingTarget$ = ""
 			.filenameStart = rindex_regex(config.recordingTaskFile$, "[\\/:]+[^\\/:]+$")
 			config.recordingTarget$ = left$(config.recordingTaskFile$, .filenameStart - 1)
-			config.recordingTarget$ = "'defaultDirectory$'/'config.recordingTarget$'"
-		elsif startsWith(config.recordingTaskFile$, config.recordingTarget$)
 			config.recordingTarget$ = "'defaultDirectory$'/'config.recordingTarget$'"
 		endif
 		config.recordingTaskFile$ = "'defaultDirectory$'/'config.recordingTaskFile$'"
