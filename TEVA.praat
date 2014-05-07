@@ -62,7 +62,7 @@ config.recordingTaskFile$ = ""
 config.recordingTarget$ = ""
 te.recordingTaskTable = 0
 te.restartRecordingTask = 0
-te.waitRecordingTask = 2
+te.waitRecordingTask = 1
 
 # Pop-Up window and other colors
 popUp.bordercolor$ = "{0.5,0.5,1}"
