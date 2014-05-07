@@ -1,0 +1,17 @@
+ManPagesTextFile
+"Recording" "R.J.J.H. van Son" 20140507 0
+<intro> "Recording tasks"
+
+<script> 4.5 4 "
+	Axes... 0 100 0 100
+	Insert picture from file... Recording_screenshot.png 50 50 0 100
+"
+
+<entry> "The Recording window"
+<normal> "TEVA allows for simple @@Recording your own voice|recordings@. 
+The recording time can be set to any duration. TEVA will try to remove 
+silence at the margins of the recording. Recorded sounds are not stored. 
+To store sounds, you must set up a %%Recording Task%."
+
+<entry> "Recording tasks"
+
