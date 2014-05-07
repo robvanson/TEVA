@@ -1,6 +1,6 @@
 ManPagesTextFile
-"INFVo and GRBAS rating scales (EN)" "R.J.J.H. van Son" 20120810 0
-<intro> "Visual Analogue rating Scales."
+"VAS rating scales (EN)" "R.J.J.H. van Son" 20120810 0
+<intro> "Visual Analogue rating Scales for IINFVo and GRBAS."
 
 <script> 4.5 4 "
 	Axes... 0 100 0 100

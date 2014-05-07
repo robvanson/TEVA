@@ -6,7 +6,7 @@ ManPagesTextFile
 <normal> "Traditionally, voice evaluations are done on sustained vowels and articulated speech, e.g., words, sentences, and read stories. For TE speech, the basic evaluations can be done on sustained vowels, most importantly, sustained /a/. "
 
 <entry> "Perceptual evaluation of voice"
-<normal> "Several perceptual dimensions are traditionally distinguished to evaluate voice and speech quality. These voice and speech evaluations are implemented in ##[NKI TE-VOICE ANALYSIS tool (EN)|TEVA]# as Visual Analogue Scales (VAS) on the ##[INFVo rating scales (EN)|Rating]# page. For TE speech, three scales can express the most important qualities of the /a/ (under the %%Vowels% Rating): "
+<normal> "Several perceptual dimensions are traditionally distinguished to evaluate voice and speech quality. These voice and speech evaluations are implemented in ##[NKI TE-VOICE ANALYSIS tool (EN)|TEVA]# as Visual Analogue Scales (VAS) on the ##[VAS rating scales (EN)|Rating]# page. For TE speech, three scales can express the most important qualities of the /a/ (under the %%Vowels% Rating): "
 <list_item> "\bu ##Quality#: The overall similarity to normal voice quality"
 <list_item> "\bu ##Continuity#: The continuity of phonation/voicing, i.e. proportion of vowel that is voiced in \% "
 <list_item> "\bu ##Noise#: The amount of audible noise during speech "

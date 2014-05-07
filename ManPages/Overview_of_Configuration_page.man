@@ -58,7 +58,7 @@ with speaker data. A backup of this file, with a tilde '~' appended to the name,
 <list_item> "[7] ##EndTime# End of the window used for AST (optional)"
 <list_item> "[8] Prepared columns with @@Acoustic Signal Typing|Acoustic Signal Type@ (%%1-4%) (optional)"
 <normal> "If given, the recording will be automatically loaded if this speaker is selected 
-in the main page. Additional columns are used for specific functions, e.g., ##@@INFVo rating scales (EN)|VAS rating scales@#. "
+in the main page. Additional columns are used for specific functions, e.g., ##@@VAS rating scales (EN)|VAS rating scales@#. "
 
 <entry> "%%Selection% of speakers or recordings from the speaker data table"
 <list_item> "\bu ##Individual#: [i] Select individual recordings (%Speaker button changes to black %Speaker)"
@@ -79,11 +79,11 @@ in the main page. Additional columns are used for specific functions, e.g., ##@@
 
 
 <entry> "%%Rating% screens"
-<list_item> "\bu ##Vowels#: Use ##@@INFVo rating scales (EN)|VAS rating@# for long vowel realizations"
-<list_item> "\bu ##Text#: Use ##@@INFVo rating scales (EN)|VAS rating@# for text reading realizations"
-<list_item> "\bu ##IINFVo#: Use ##@@INFVo rating scales (EN)|VAS rating@# for running speech"
-<list_item> "\bu ##GRBAS#: Use ##@@INFVo rating scales (EN)|GRBAS rating@# for voice"
-<list_item> "\bu ##Markers#: ##@@INFVo rating scales (EN)|VAS@# scale markers display On/Off"
+<list_item> "\bu ##Vowels#: Use ##@@VAS rating scales (EN)|VAS rating@# for long vowel realizations"
+<list_item> "\bu ##Text#: Use ##@@VAS rating scales (EN)|VAS rating@# for text reading realizations"
+<list_item> "\bu ##IINFVo#: Use ##@@VAS rating scales (EN)|VAS rating@# for running speech"
+<list_item> "\bu ##GRBAS#: Use ##@@VAS rating scales (EN)|GRBAS rating@# for voice"
+<list_item> "\bu ##Markers#: ##@@VAS rating scales (EN)|VAS@# scale markers display On/Off"
 
 
 <entry> "Miscelaneous"

@@ -64,7 +64,7 @@ The extension of the file should be %%.tsv% or %%.Table%."
 <list_item> "5: Manually entered @@Acoustic Signal Typing|Acoustic Signal Type@, i.e., %1, %2, %3, or %4"
 <list_item> "6: Start time of interval for which the @@Acoustic Signal Typing|AST@ was entered"
 <list_item> "7: End time of interval for which the @@Acoustic Signal Typing|AST@ was entered"
-<list_item> "8+: Any number of values for @@INFVo rating scales (EN)|rating scales@"
+<list_item> "8+: Any number of values for @@VAS rating scales (EN)|rating scales@"
 <normal> "If the table contains a path to a sound file, this file will be opened automatically 
 when the record is chosen"
 <normal> "Missing columns are automatically generated when the table is read. So, if a table without the %Description and 
