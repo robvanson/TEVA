@@ -51,7 +51,7 @@ of the voice such as pleasant/unpleasant to listen to, fluent or cut, good volum
 
 <list_item> "\bu ##Intelligibility#"
 <list_item> "The impression of intelligibility. It is an answer to the question ""how much effort do you 
-think it would take to understand this person when he or she was trying to make a conversation with you?"""
+think it would take to understand this person when he or she was trying to make a conversation with you?"" "
 
 <list_item> "\bu ##Fluency#"
 <list_item> "The perceived smoothness of the sound production. Samples containing a lot of hesitations between 
