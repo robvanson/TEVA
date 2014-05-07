@@ -3,8 +3,9 @@ ManPagesTextFile
 <intro> "TEVA is used by clicking buttons on the current page. Here is a list of the buttons on the Configuration page with a 
 description of their use. English labels will be used here. The keyboard shortcuts are given between the []-brackets (might depend on language).
 See also the @@Overview of Main page@."
-<normal> "Man buttons are radio type push buttons. When clicked, they remain ""pushed down"" until another button is pushed. The state 
-of these button is remembered between invocations of TEVA. "
+<normal> "Many of buttons are radio type push buttons. When clicked, they remain ""pushed down"" until another button is pushed. The state 
+of these button is remembered between invocations of TEVA. Buttons on a (light) gray background are grouped together, like the language choice buttons or the  
+%%Frequency% buttons. "
 
 <script> 4.5 4 "
 	Axes... 0 100 0 100
@@ -20,7 +21,9 @@ of these button is remembered between invocations of TEVA. "
 
 <entry> "%%Frequency%: Spectral display"
 <normal> "The display of spectral features should be reduced to exclude irrelevant detail. 
-Set the maximal frequency to a frequency that just includes all the relevant features"
+Set the maximal frequency to a frequency that just includes all the relevant features. The 
+sample frequency of recordings are adjusted to this display frequency. If the display frequency 
+is set to 5 kHz or below, the sample frequency will be set to 11.025 kHz (down from 22.050 kHz). "
 <list_item> "\bu ##10kHz#: [01] Display up to 10 kHz"
 <list_item> "\bu ##8kHz#: [8] Display up to 8 kHz"
 <list_item> "\bu ##5kHz#: [5] Display up to 5 kHz"
@@ -45,7 +48,7 @@ with speaker data. A backup of this file, with a tilde '~' appended to the name,
 <list_item> "\bu ##Sort#: [V] Sort the list of recordings"
 <list_item> "\bu ##Shuffle#: [u] Randomize the list of recordings"
 <list_item> "\bu ##Revert#: [c] Revert speaker data to saved version"
-<normal> "Each row in the speaker table contains five fields separated by tabs:"
+<normal> "Each row in the speaker table contains at least five fields separated by tabs:"
 <list_item> "[1] ##ID# Speaker, or Recording, ID (must be unique)"
 <list_item> "[2] ##Text# Speaker description (age, sex, etc)"
 <list_item> "[3] ##Description# Comments"
@@ -55,7 +58,7 @@ with speaker data. A backup of this file, with a tilde '~' appended to the name,
 <list_item> "[7] ##EndTime# End of the window used for AST (optional)"
 <list_item> "[8] Prepared columns with @@Acoustic Signal Typing|Acoustic Signal Type@ (%%1-4%) (optional)"
 <normal> "If given, the recording will be automatically loaded if this speaker is selected 
-in the main page."
+in the main page. Additional columns are used for specific functions, e.g., ##@@INFVo rating scales (EN)|VAS rating scales@#. "
 
 <entry> "%%Selection% of speakers or recordings from the speaker data table"
 <list_item> "\bu ##Individual#: [i] Select individual recordings (%Speaker button changes to black %Speaker)"
@@ -63,10 +66,10 @@ in the main page."
 <list_item> "\bu ##< Serial#: [<] Step backwards through all recordings in sequence (%%< Speaker% button changes to blue %Spk, previous recording)"
 
 <entry> "%%Voiceprint% output format"
-<normal> "The format to write the voicprint image to. Not all formats are available for all platforms"
+<normal> "The format to write the voicprint image to. Not all formats are available on all platforms"
 <list_item> "\bu ##EPS#: [ ] Encapsulated Postscript picture format"
-<list_item> "\bu ##PNG#: [ ] bitmap picture format"
-<list_item> "\bu ##PDF#: [ ] picture format (not on MS Windows)"
+<list_item> "\bu ##PNG#: [ ] Portable network graphics bitmap picture format"
+<list_item> "\bu ##PDF#: [ ] Portable document picture format (not on MS Windows)"
 
 
 <entry> "%%Execute% automatic analysis that might be time consuming"

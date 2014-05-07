@@ -1,15 +1,14 @@
 ManPagesTextFile
-"INFVo rating scales (EN)" "R.J.J.H. van Son" 20120810 0
-<intro> "Impression, Intelligibility, Noise, Fluency, and Voice (INFVo) Visual Analogue rating Scales."
+"INFVo and GRBAS rating scales (EN)" "R.J.J.H. van Son" 20120810 0
+<intro> "Visual Analogue rating Scales."
 
 <script> 4.5 4 "
 	Axes... 0 100 0 100
 	Insert picture from file... VAS_display.png 50 50 0 100
 "
-<normal> "##(I)INFV0# is a standard for rating voices used in Speech Therapy. TEVA will primarily be used to 
+<normal> "##(I)INFV0# and ##GRBAS# are standards for rating voices used in Speech Therapy. TEVA will primarily be used to 
 study voicing in sustained vowels. In these circumstances, the standard %Impression, %Intelligibility, and %Fluency 
-scales of ##(I)INFVo# would be of little use. Therefore, the TEVA Rating screen includes also a derived set of the scales 
-optimized for vowels (#Vowels). In addition, there is a simplified subset for the evaluation of running speech (#Text)"
+scales of ##(I)INFVo# would be of little use. Therefore, the TEVA Rating screen also includes derived sets of the scales."
 
 <entry> "Visual Analogue Scale (VAS) rating"
 <normal> "In VAS rating, the judges have to indicate the severety of some condition as a mark on a line. 
@@ -21,43 +20,60 @@ parameter, that is, %Least like a normal voice. The words %Least and %Most are p
 <normal> "When a parameter has not yet been marked, a vertical gray line will appear in the center of the scale. 
 When a parameter has been marked, a vertical red line will appear on that position."
 
-<entry> "Scales"
+<entry> "Vowel Scales"
 
-<entry> "Voice Quality (similarity to normal speech)"
-<normal> "Is a judgment of the overall voice quality. Comparable to Grade from the GRBAS scale: Overall grade of 
+<list_item> "\bu ##Voice Quality# (similarity to normal speech)"
+<list_item> "Is a judgment of the overall voice quality. Comparable to Grade from the GRBAS scale: Overall grade of 
 voice deviancy or pathology."
 
-<entry> "Noise"
-<normal> "Noise: Unintended additive noise reflects the amount of annoyance caused by the audibility of all 
+<list_item> "\bu ##Noise#"
+<list_item> "Unintended additive noise reflects the amount of annoyance caused by the audibility of all 
 sorts of uncontrolled noises, such as bubbly noise, breathy noise, clicks, etc., produced during speech."
 
-<entry> "Phonation continuity (proportion of vowel)"
-<normal> "Voice: For vowels, this scale refers to the stability of phonation/voicing (i.e. proportion of vowel that is voiced). 
+<list_item> "\bu ##Phonation continuity# (proportion of vowel)"
+<list_item> "For vowels, this scale refers to the stability of phonation/voicing (i.e. proportion of vowel that is voiced). 
 In general speech, quality of voicing means that voicing is voiced or unvoiced where it is supposed to be voiced or 
 unvoiced. As such, voices that produce a lot of breathy noise and contain little or no voiced segments score badly. 
 Voices that produce a lot of hesitations (e.g., because of spasms) and cannot produce prolonged voiced segments score 
 in the middle of the VAS"
 
-<entry> "Phonation stability (Unsteady to Steady)"
-<normal> "Voice: Is voicing steady or does the pitch change uncontrollable."
+<list_item> "\bu ##Phonation stability# (Unsteady to Steady)"
+<list_item> "Is voicing steady or does the pitch change uncontrollable."
 
-<entry> "%%Hyper%- and %%Hypo%tonicity"
-<normal> "Two scales: From %%Hyper%tone to normal and from %%Hypo%tone to normal."
+<list_item> "\bu ##%%Hyper%- and %%Hypo%tonicity#"
+<list_item> "Two scales: From %%Hyper%tone to normal and from %%Hypo%tone to normal."
 
-<entry> "Other scales"
-<normal> "The other (I)INFVo scales are:"
+<entry> "Other (I)INFVo scales"
 
-<entry> "Impression"
-<normal> "Impression: The overall voice quality. This parameter is the combined impression caused by all the properties 
-of the voice such as pleasant/unpleasant to listen to, ﬂuent or cut, good volume or not, intelligible or not, etc."
+<list_item> "\bu ##Impression#"
+<list_item> "The overall voice quality. This parameter is the combined impression caused by all the properties 
+of the voice such as pleasant/unpleasant to listen to, fluent or cut, good volume or not, intelligible or not, etc."
 
-<entry> "Intelligibility"
-<normal> "Intelligibility: The impression of intelligibility. It is an answer to the question ‘how much effort do you 
-think it would take to understand this person when he or she was trying to make a conversation with you?’"
+<list_item> "\bu ##Intelligibility#"
+<list_item> "The impression of intelligibility. It is an answer to the question ""how much effort do you 
+think it would take to understand this person when he or she was trying to make a conversation with you?"""
 
-<entry> "Fluency"
-<normal> "Fluency: The perceived smoothness of the sound production. Samples containing a lot of hesitations between 
+<list_item> "\bu ##Fluency#"
+<list_item> "The perceived smoothness of the sound production. Samples containing a lot of hesitations between 
 successive sounds and within continuant sounds (e.g., vowels and some consonants) score badly. "
+
+<entry> "GRBAS scales"
+<normal> "Standard GRBAS rating scales"
+
+<list_item> "\bu ##Grade#"
+<list_item> "The degree of hoarseness, amount of noise in the produced sound"
+
+<list_item> "\bu ##Roughness#"
+<list_item> "The grade of roughness, in relation to the irregular fluctuation of the fundamental frequency"
+
+<list_item> "\bu ##Breathiness#"
+<list_item> "Grade of breathiness, the fraction of the non-modulated turbulence noise in the produced sound"
+
+<list_item> "\bu ##Asthenia#"
+<list_item> "The overall weakness of voice and"
+
+<list_item> "\bu ##Strain#"
+<list_item> "Strained quality, (tenseness of voice, overall muscular tension)"
 
 <entry> "Consensus ratings"
 <normal> "Sometimes it is necessary to combine ratings from two or more raters into a single consensus rating. This can be 
@@ -68,4 +84,4 @@ VAScale will generate the single consensus rating in Red."
 <entry> "References"
 <list_item> "M. B. J. Moerman, J. P. Martens, M. J. Van der Borgt, M. Peleman, M. Gillis, P. H. Dejonckere (2006).
 'Perceptual evaluation of substitution voices: development and evaluation of the (I)INFVo rating scale', 
-%%Eur Arch Otorhinolaryngol%, 263: 183–187."
+%%Eur Arch Otorhinolaryngol%, 263: 183-87."
