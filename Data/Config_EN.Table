@@ -41,15 +41,18 @@ SpeakerSerial_None	Individual	i	Select individual recordings
 SpeakerSerial_Forw	Serial >	.>	Step through all recordings in sequence (Speaker button reads next recording)
 SpeakerSerial_Backw	< Serial	,<	Step through all recordings in reverse order (Speaker button reads previous recording)
 !SelectionWindow	SelectionWindow	!	Initial width of the selection window (Preferences Serial mode)
+$AudioCollection	Archive	!	Recording and collection of audio
+SaveAudio	Audio	!	Save audio file
+SaveAll	With audio	!	Save recordings together with %%Voice Print%
+RecordingTime	Recording	c	Time of recording in seconds and recording tasks
+!RecordingTaskFile	RecordingTaskFile	!	File with recording tasks
+!RecordingTarget	RecordingTarget	!	Directory with the recordings
 $AutomaticTasks	Execute	!	Execution of time consuming tasks
 ShowFormants	Formants	F	Draw formants in spectrogram
 AutoSelect	AutoSelect		Select the "best" interval automatically
 CalcGNE	GNE		Calculate the GNE value 
 SpeakerSort	Sort V	V	Sort the list of recordings
 SpeakerRandomize	Shuffle	u	Randomize the list of recordings
-RecordingTime	Recording	c	Time of recording in seconds and recording tasks
-!RecordingTaskFile	RecordingTaskFile	!	File with recording tasks
-!RecordingTarget	RecordingTarget	!	Directory with the recordings
 $Rating	Rating		Human evaluation of speech
 RatingForm_Vowel	Vowels		Evaluation form (VAS) for vowels
 RatingForm_Text	Text		Text evaluation form (VAS) for words and running speech

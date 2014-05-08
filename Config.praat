@@ -325,6 +325,37 @@ procedure processConfigSaveSpeaker .clickX .clickY .pressed$
     call Draw_button 'table$' '.label$' 0
 endproc
 
+procedure processConfigSaveAudio .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "SaveAudio"
+	# Get help text
+	if te.openSound > 0
+		call getLanguageTexts '.table$' '.label$'
+		.writeDialogue$ = getLanguageTexts.helpText$
+		call convert_praat_to_latin1 '.writeDialogue$'
+		.writeDialogue$ = convert_praat_to_latin1.text$
+		.filename$ = chooseWriteFile$ (.writeDialogue$, "'te.currentFileName$'")
+		if .filename$ <> ""
+			te.currentFileName$ = .filename$
+			select te.openSound
+			.tmpPartSoundID = Extract part... 'selectedStartTime' 'selectedStartTime' rectangular 1.0 true
+			Save as WAV file... '.filename$'
+			Remove
+		endif
+	endif
+    call Draw_button 'table$' '.label$' 0
+endproc
+
+procedure processConfigSaveAll .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "SaveAll"
+
+	config.saveAll = not config.saveAll
+
+	.displayButton = 2*config.saveAll
+    call Draw_button 'table$' '.label$' '.displayButton'
+endproc
+
 procedure processConfigCloseSpeaker .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "CloseSpeaker"

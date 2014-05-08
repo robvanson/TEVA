@@ -2617,6 +2617,15 @@ procedure saveSound .table$ .label$
 		.filename$ = chooseWriteFile$ (.writeDialogue$, "'.currentID$'.'.outExtension$'")
 		if .filename$ <> ""
 			call print_signal '.filename$'
+			
+			# Save audio file
+			if config.saveAll
+				.audioFilename$ = replace_regex$(.filename$, "\.[^\.]+$", ".wav", 0)
+				select te.openSound
+				.tmpPartSoundID = Extract part... 'selectedStartTime' 'selectedEndTime' rectangular 1.0 true
+				Save as WAV file... '.audioFilename$'
+				Remove
+			endif
 		endif
 	endif
 endproc

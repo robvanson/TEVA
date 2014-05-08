@@ -81,6 +81,7 @@ procedure global_initialization
 	config.createBackup = 0
 	config.speakerDataTable = -1
 	config.speakerSerial$ = "None"
+	config.saveAll = 0
 	config.autoSelect = 0
 	config.calcGNE = 0
 	te.calcLowHighHNR = 0

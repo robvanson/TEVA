@@ -94,6 +94,7 @@ te.defaultSampleFreq = 22050
 config.frequency = 1000
 config.showFormants = 0
 config.speakerSerial$ = "None"
+config.saveAll = 0
 config.autoSelect = 0
 config.calcGNE = 0
 te.calcLowHighHNR = 0

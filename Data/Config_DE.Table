@@ -41,15 +41,18 @@ SpeakerSerial_None	Einzeln	v	Verarbeite alle Aufnahmen einzeln
 SpeakerSerial_Forw	Seriell >	.>	Verarbeite alle Aufnahmen hintereinander (Sprecher Taste liest n\a"chste Aufnahme)
 SpeakerSerial_Backw	< Seriell	,<	Verarbeite alle Aufnahmen r\u"ckw\a"rt (Sprecher Taste liest vorherige Aufnahme)
 !SelectionWindow	SelectionWindow	!	Urspr\u"ngliche Breite des Auswahl-Fenster (Voreinstellungen Serieller modus)
+$AudioCollection	Aufbewahren	!	Aufnahme un aufbewahren von audio
+SaveAudio	Audio	!	Audio in einer Datei schreiben
+SaveAll	Mit Audio	!	Aufnahme zusammen mit %%Voice Print% aufbewahren
+RecordingTime	Aufnahme	e	Aufnahmezeit in Secunden und  Datei mit Aufnahmeaufgaben
+!RecordingTaskFile	RecordingTaskFile	!	Die Datei mit den Aufnahmeaufgaben
+!RecordingTarget	RecordingTarget	!	Die Mappe mit den Aufnahmen
 $AutomaticTasks	Ausf\u"hren	!	Ausf\u"hrung von zeitintensiven Aufgaben
 ShowFormants	Formante	F	Zeige Formante im Spektrogramm
 AutoSelect	AutoSelect		W\a"hlen Sie das beste Intervall automatisch
 CalcGNE	GNE		Berechne den GNE Wert
 SpeakerSort	Sortiere	o	Sortiere die Liste mit Aufnahmen
 SpeakerRandomize	Shuffle	h	Randomisiere die Liste mit Aufnahmen
-RecordingTime	Aufnahme	e	Aufnahmezeit in Secunden und  Datei mit Aufnahmeaufgaben
-!RecordingTaskFile	RecordingTaskFile	!	Die Datei mit den Aufnahmeaufgaben
-!RecordingTarget	RecordingTarget	!	Die Mappe mit den Aufnahmen
 $Rating	Beurteilung		Menschliche Beurteilung de Sprache
 RatingForm_Vowel	Vokallaut		Beurteilungsformular f\u"r Vokallaute
 RatingForm_Text	Text		Tekst Beurteilungsformular f\u"r W\o"rter und S\a"tze
