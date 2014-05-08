@@ -47,7 +47,7 @@ RecordingTime	50	60	59	64	Black	DrawNull
 $AutomaticTasks	50	60	50	54	Black	DrawNull
 ShowFormants	50	60	45	50	{0.65,0.60,0.45}	DrawNull
 AutoSelect	50	60	39	44	{0.65,0.60,0.45}	DrawNull
-CalcGNE	50	60	29	34	{0.65,0.60,0.45}	DrawNull
+CalcGNE	50	60	33	38	{0.65,0.60,0.45}	DrawNull
 ShowBackground	70	85	95	100	{0.65,0.60,0.45}	DrawNull
 Input_Microphone	70	85	87	92	Black	DrawNull
 Input_Line	70	85	81	86	Black	DrawNull
