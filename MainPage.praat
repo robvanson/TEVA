@@ -2535,6 +2535,7 @@ procedure DrawRatingObject
 		te.ratingTable = loadLanguageTable.tableID
 		select te.ratingTable
 		te.rating$ = selected$("Table")
+		call relative2absolutePosition 'te.rating$'
 	endif
 	call get_RatingValues 'config.speakerDataTable' 'te.ratingTable'
 	call Draw_all_buttons 'te.ratingTable'
