@@ -5,7 +5,7 @@
 #
 # Load for non-interactive use with initialization
 non_interactive_initialize = 1
-include TEanalysisexpanded.praat
+include TEVAexpanded.praat
 # Supress drawing
 noDrawingOrWriting = 1
 mainPage.outputPraatObject$ = "Draw"

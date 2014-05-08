@@ -687,10 +687,12 @@ procedure set_language .lang$
     call loadLanguageTable 'buttonsTableName$' 'config.language$'
     select loadLanguageTable.tableID
     te.buttons$ = selected$("Table")
+    call relative2absolutePosition 'te.buttons$'
     # Load configuration table
     call loadLanguageTable 'configTableName$' 'config.language$'
     select loadLanguageTable.tableID
     te.config$ = selected$("Table")
+    call relative2absolutePosition 'te.config$'
     
     # Hide platform specific buttons on load
 	if windows
@@ -745,6 +747,49 @@ endproc
 # Button Processing Routines
 #
 ###############################################################
+# Convert relative button positions to absolute button positions
+procedure relative2absolutePosition .table$
+	select Table '.table$'
+	.numRows = Get number of rows
+	
+	for .row to .numRows
+		select Table '.table$'
+		# Get button values
+		.leftXtxt$ = Get value... '.row' LeftX
+		.rightXtxt$ = Get value... '.row' RightX
+		.lowYtxt$ = Get value... '.row' LowY
+		.highYtxt$ = Get value... '.row' HighY
+		if index_regex(.rightXtxt$, "^[+-]")
+			call r2aConversionOfValue2 '.leftXtxt$' '.rightXtxt$'
+			select Table '.table$'
+			Set numeric value... '.row' RightX 'r2aConversionOfValue2.result'
+		elsif index_regex(.leftXtxt$, "^[+-]")
+			call r2aConversionOfValue2 '.rightXtxt$' '.leftXtxt$'
+			select Table '.table$'
+			Set numeric value... '.row' LeftX 'r2aConversionOfValue2.result'
+		endif
+		if index_regex(.highYtxt$, "^[+-]")
+			call r2aConversionOfValue2 '.lowYtxt$' '.highYtxt$'
+			select Table '.table$'
+			Set numeric value... '.row' HighY 'r2aConversionOfValue2.result'
+		elsif index_regex(.lowYtxt$, "^[+-]")
+			call r2aConversionOfValue2 '.highYtxt$' '.lowYtxt$'
+			select Table '.table$'
+			Set numeric value... '.row' LowY 'r2aConversionOfValue2.result'
+		endif
+	endfor
+endproc
+
+procedure r2aConversionOfValue2 .value1$ .value2$
+	.result = 0
+	if index_regex(.value2$, "^[+-]")
+		.sign$ = replace_regex$(.value2$, "^([+-]).*$", "\1", 0)
+		.newValue$ = replace_regex$(.value2$, "^[+-](.*)$", "\1", 0)
+		.result = '.value1$' '.sign$' '.newValue$'
+	else
+		.result = '.value2$'
+	endif
+endproc
 
 # Hide and UnHide buttons by manipulating the ! marker in the table
 procedure hide_button .table$ .label$

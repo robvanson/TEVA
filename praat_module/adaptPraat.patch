@@ -45,7 +45,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
 +			swprintf (name, 256, L".%ls", Melder_utf8ToWcs (praatP.title));   /* For example .myProg-dir */
  		#elif defined (macintosh)
 -			swprintf (name, 256, L"%ls Prefs", Melder_utf8ToWcs (praatP.title));   /* For example MyProg Prefs */
-+			swprintf (name, 256, L"%ls", L"TEanalysis");   /* For example MyProg Prefs */
++			swprintf (name, 256, L"%ls", L"TEVA");   /* For example MyProg Prefs */
  		#elif defined (_WIN32)
  			swprintf (name, 256, L"%ls", Melder_utf8ToWcs (praatP.title));   /* For example MyProg */
  		#endif

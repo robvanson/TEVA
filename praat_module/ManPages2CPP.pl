@@ -34,7 +34,7 @@ my $Header <<= "
 
 #include \"ManPagesM.h\"
 
-void manual_TEanalysis_init (ManPages me);
+void manual_TEVA_init (ManPages me);
 void manual_TEanalsyis_init (ManPages me) {
 
 ";
