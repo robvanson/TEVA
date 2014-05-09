@@ -37,6 +37,27 @@ is set to 5 kHz or below, the sample frequency will be set to 11.025 kHz (down f
 <list_item> "\bu ##High#: [ ] Reduced octave jumps, for high pitches (<600 Hz)"
 <list_item> "\bu ##Compatible#: [ ] Settings from C.J. van As 2001 ""Tracheoesophageal Speech"" p83"
 
+<entry> "%%Archive% recording and collection of audio"
+<list_item> "\bu ##Audio#: [!] Save current audio selection to file"
+<list_item> "\bu ##Recording#: [c] Time of recording in seconds or recording tasks"
+
+<entry> "%%Execute% automatic analysis that might be time consuming"
+<list_item> "\bu ##Formants#: [F] Calculate and draw formants in spectrogram"
+<list_item> "\bu ##AutoSelect#: [ ] Select the ""best"" interval automatically"
+<list_item> "\bu ##GNE#: [ ] Calculate the GNE value"
+
+<entry> "%%Voiceprint% output format"
+<normal> "The format to write the voicprint image to. Not all formats are available on all platforms"
+<list_item> "\bu ##EPS#: [ ] Encapsulated Postscript picture format"
+<list_item> "\bu ##PNG#: [ ] Portable network graphics bitmap picture format"
+<list_item> "\bu ##PDF#: [ ] Portable document picture format (not on MS Windows)"
+<list_item> "\bu ##With audio#: [ ] Save recordings together with %%Voiceprint% (same name, but with WAV extension)"
+
+<entry> "%%Selection% of speakers or recordings from the speaker data table"
+<list_item> "\bu ##Individual#: [i] Select individual recordings (%Speaker button changes to black %Speaker)"
+<list_item> "\bu ##Serial >#: [>] Step through all recordings in sequence (%Speaker button changes to blue %Spk, next recording)"
+<list_item> "\bu ##< Serial#: [<] Step backwards through all recordings in sequence (%%< Speaker% button changes to blue %Spk, previous recording)"
+
 <entry> "%%Speakers%: Speaker data tables and recording duration"
 <normal> "It is useful to have a list of speaker data available. TEVA can read and write Tab delimited tables (tsv) 
 with speaker data. A backup of this file, with a tilde '~' appended to the name, is created if the data are changed."
@@ -60,24 +81,6 @@ with speaker data. A backup of this file, with a tilde '~' appended to the name,
 <normal> "If given, the recording will be automatically loaded if this speaker is selected 
 in the main page. Additional columns are used for specific functions, e.g., ##@@VAS rating scales (EN)|VAS rating scales@#. "
 
-<entry> "%%Selection% of speakers or recordings from the speaker data table"
-<list_item> "\bu ##Individual#: [i] Select individual recordings (%Speaker button changes to black %Speaker)"
-<list_item> "\bu ##Serial >#: [>] Step through all recordings in sequence (%Speaker button changes to blue %Spk, next recording)"
-<list_item> "\bu ##< Serial#: [<] Step backwards through all recordings in sequence (%%< Speaker% button changes to blue %Spk, previous recording)"
-
-<entry> "%%Voiceprint% output format"
-<normal> "The format to write the voicprint image to. Not all formats are available on all platforms"
-<list_item> "\bu ##EPS#: [ ] Encapsulated Postscript picture format"
-<list_item> "\bu ##PNG#: [ ] Portable network graphics bitmap picture format"
-<list_item> "\bu ##PDF#: [ ] Portable document picture format (not on MS Windows)"
-
-
-<entry> "%%Execute% automatic analysis that might be time consuming"
-<list_item> "\bu ##Formants#: [F] Calculate and draw formants in spectrogram"
-<list_item> "\bu ##AutoSelect#: [ ] Select the ""best"" interval automatically"
-<list_item> "\bu ##GNE#: [ ] Calculate the GNE value"
-
-
 <entry> "%%Rating% screens"
 <list_item> "\bu ##Vowels#: Use ##@@VAS rating scales (EN)|VAS rating@# for long vowel realizations"
 <list_item> "\bu ##Text#: Use ##@@VAS rating scales (EN)|VAS rating@# for text reading realizations"
@@ -85,12 +88,10 @@ in the main page. Additional columns are used for specific functions, e.g., ##@@
 <list_item> "\bu ##GRBAS#: Use ##@@VAS rating scales (EN)|GRBAS rating@# for voice"
 <list_item> "\bu ##Markers#: ##@@VAS rating scales (EN)|VAS@# scale markers display On/Off"
 
-
 <entry> "Miscelaneous"
 <list_item> "\bu ##Background#: [B] Show background or not"
 <list_item> "\bu ##Microphone#: [h] Use the built-in microphone for recording"
 <list_item> "\bu ##Line input |#: [|+] Use the line-input for recording"
-<list_item> "\bu ##Recording#: [c] Time of recording in seconds or recording tasks"
 <list_item> "\bu ##Mute x#: [x] Mute output sound"
 <list_item> "\bu ##Test recording#: [T] Test recording level"
 <normal> "##Recording# sets the duration of live recordings. It also allows to set complex recording tasks"

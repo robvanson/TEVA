@@ -36,14 +36,14 @@ $VoicePrint	Voiceprint	!	Instellingen van de VoicePrint afbeelding
 SaveFMT_PDF	PDF	!	Bewaar VoicePrint als PDF bestand
 SaveFMT_EPS	EPS	!	Bewaar VoicePrint als EPS bestand
 SaveFMT_PNG	PNG	!	Bewaar VoicePrint als PNG bestand
+SaveAll	Met audio	!	Bewaar geluidsbestand samen met %%Voiceprint% (zelfde naam, maar met WAV extensie)
 $SpeakerSelect	Verwerking	!	Selectie en verwerking van opnamen
 SpeakerSerial_None	Individueel	r	Selecteer individuele opnamen
 SpeakerSerial_Forw	Serieel >	.>	Verwerk alle opnamen in volgorde (Spreker knop leest volgende opname)
 SpeakerSerial_Backw	< Serieel	,<	Verwerk alle opnamen in omgekeerde volgorde (Spreker knop leest vorige opname)
 !SelectionWindow	SelectionWindow	!	Beginlengte van het selectie venster (Voorkeursinstelling Serieel mode)
 $AudioCollection	Bewaren	!	Opnemen en bewaren van audio
-SaveAudio	Audio	!	Bewaar geluidsbestand
-SaveAll	Met audio	!	Bewaar geluidsbestand samen met %%Voice Print%
+SaveAudio	Audio	!	Bewaar huidige selectie van geluid naar bestand
 RecordingTime	Opname	]}	Opnametijd in seconden en bestanden voor voorleestaken
 !RecordingTaskFile	RecordingTaskFile	!	Bestand met de opnametaken
 !RecordingTarget	RecordingTarget	!	Map met de opnamen

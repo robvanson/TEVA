@@ -36,14 +36,14 @@ $VoicePrint	Voiceprint	!	Settings of VoicePrint image
 SaveFMT_PDF	PDF	!	Save VoicePrint as PDF file
 SaveFMT_PNG	PNG	!	Save VoicePrint as PNG file
 SaveFMT_EPS	EPS	!	Save VoicePrint as EPS file
+SaveAll	With audio	!	Save recordings together with %%Voiceprint% (same name, but with WAV extension)
 $SpeakerSelect	Selection	!	Selection of recordings
 SpeakerSerial_None	Individual	i	Select individual recordings
 SpeakerSerial_Forw	Serial >	.>	Step through all recordings in sequence (Speaker button reads next recording)
 SpeakerSerial_Backw	< Serial	,<	Step through all recordings in reverse order (Speaker button reads previous recording)
 !SelectionWindow	SelectionWindow	!	Initial width of the selection window (Preferences Serial mode)
 $AudioCollection	Archive	!	Recording and collection of audio
-SaveAudio	Audio	!	Save audio file
-SaveAll	With audio	!	Save recordings together with %%Voice Print%
+SaveAudio	Audio	!	Save current audio selection to file
 RecordingTime	Recording	c	Time of recording in seconds and recording tasks
 !RecordingTaskFile	RecordingTaskFile	!	File with recording tasks
 !RecordingTarget	RecordingTarget	!	Directory with the recordings

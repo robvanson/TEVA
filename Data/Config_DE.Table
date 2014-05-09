@@ -36,14 +36,14 @@ $VoicePrint	Voiceprint	!	Einstellungen VoicePrint Bild
 SaveFMT_PDF	PDF	!	VoicePrint als PDF Datei aufbewahren
 SaveFMT_EPS	EPS	!	VoicePrint als EPS Datei aufbewahren
 SaveFMT_PNG	PNG	!	VoicePrint als PNG Datei aufbewahren
+SaveAll	Mit Audio	!	Aufnahme zusammen mit %%Voiceprint% aufbewahren (selber Name)
 $SpeakerSelect	Verarbeitung	!	Selection und Verarbeitung von Aufnahmen
 SpeakerSerial_None	Einzeln	v	Verarbeite alle Aufnahmen einzeln
 SpeakerSerial_Forw	Seriell >	.>	Verarbeite alle Aufnahmen hintereinander (Sprecher Taste liest n\a"chste Aufnahme)
 SpeakerSerial_Backw	< Seriell	,<	Verarbeite alle Aufnahmen r\u"ckw\a"rt (Sprecher Taste liest vorherige Aufnahme)
 !SelectionWindow	SelectionWindow	!	Urspr\u"ngliche Breite des Auswahl-Fenster (Voreinstellungen Serieller modus)
 $AudioCollection	Aufbewahren	!	Aufnahme un aufbewahren von audio
-SaveAudio	Audio	!	Audio in einer Datei schreiben
-SaveAll	Mit Audio	!	Aufnahme zusammen mit %%Voice Print% aufbewahren
+SaveAudio	Audio	!	Audiovenster in einer Datei schreiben
 RecordingTime	Aufnahme	e	Aufnahmezeit in Secunden und  Datei mit Aufnahmeaufgaben
 !RecordingTaskFile	RecordingTaskFile	!	Die Datei mit den Aufnahmeaufgaben
 !RecordingTarget	RecordingTarget	!	Die Mappe mit den Aufnahmen

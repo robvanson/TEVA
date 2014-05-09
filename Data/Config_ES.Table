@@ -36,6 +36,10 @@ $VoicePrint	Voiceprint	!	Settings of VoicePrint image
 SaveFMT_PDF	PDF	!	Save VoicePrint as PDF file
 SaveFMT_EPS	EPS	!	Save VoicePrint as EPS file
 SaveFMT_PNG	PNG	!	Save VoicePrint as PNG file
+SaveAll	With audio	!	Save recordings together with %%Voiceprint% (same name, but with WAV extension)
+$AudioCollection	Archive	!	Recording and collection of audio
+SaveAudio	Audio	!	Save current audio selection to file
+RecordingTime	Grabaci\o'n	b	Tiempo de gravaci\o'n en segundos and recording tasks
 $SpeakerSelect	Selection	!	Selection of recordings
 SpeakerSerial_None	Individual	l	Select individual recordings
 SpeakerSerial_Forw	Series >	.>	Acceder a todas las gabaciones en secuencia (Boton del Hablante lee nueva grabacion)
@@ -47,7 +51,6 @@ CalcGNE	GNE		Calculate the GNE value
 ShowFormants	Formantes	F	Dibujo de formantes en el espectograma
 SpeakerSort	Tipo V	V	Clasificar la lista de grabaciones
 SpeakerRandomize	Arrastrar	!	Aleatorizar lista de grabaciones
-RecordingTime	Grabaci\o'n	b	Tiempo de gravaci\o'n en segundos and recording tasks
 !RecordingTaskFile	RecordingTaskFile	!	File with recording tasks
 !RecordingTarget	RecordingTarget	!	Directory with the recordings
 $Rating	Valoraci\o'n		Valoraci\o'n humana del habla
