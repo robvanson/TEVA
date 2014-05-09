@@ -70,7 +70,7 @@ successive sounds and within continuant sounds (e.g., vowels and some consonants
 <list_item> "Grade of breathiness, the fraction of the non-modulated turbulence noise in the produced sound"
 
 <list_item> "\bu ##Asthenia#"
-<list_item> "The overall weakness of voice and"
+<list_item> "The overall weakness of voice"
 
 <list_item> "\bu ##Strain#"
 <list_item> "Strained quality, (tenseness of voice, overall muscular tension)"

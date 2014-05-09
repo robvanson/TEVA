@@ -4,9 +4,9 @@ Label	Text	Key	Helptext
 !License	License	!	GNU GPL version 2 or later
 !CANVAS	Display	¤	Display area
 $Scales	Chose a grade on the line between left (poor) and right (good) descriptors of speech	#	Visual Analogue rating Scales
->Grade	Grade	0;1	GRADE
->Roughness	Roughness	0;1	ROUGHNESS
->Breathiness	Breathiness	0;1	BREATHINESS
->Asthenia	Asthenia	  0;1	ASTHENIA
->Strain	Strain	0;1	STRAIN
+>Grade	Grade	0;1	GRADE: The degree of hoarseness, amount of noise in the produced sound
+>Roughness	Roughness	0;1	ROUGHNESS: The grade of roughness, in relation to the irregular fluctuation of the fundamental frequency
+>Breathiness	Breathiness	0;1	BREATHINESS: Grade of breathiness, the fraction of the non-modulated turbulence noise in the produced sound
+>Asthenia	Asthenia	  0;1	ASTHENIA: The overall weakness of voice
+>Strain	Strain	0;1	STRAIN: Strained quality, (tenseness of voice, overall muscular tension)
 Help	Scale Help	#	Press the scale you want information on, "Help" to continue
