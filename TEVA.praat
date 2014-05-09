@@ -753,8 +753,46 @@ procedure relative2absolutePosition .table$
 	.numRows = Get number of rows
 	
 	for .row to .numRows
+		# Get button values, between lines
+		# ^+/-x means "add/subtract x to/from value on the previous row"
+		if .row > 1
+			.prevRow = .row - 1
+			select Table '.table$'
+			.leftXtxt$ = Get value... '.row' LeftX
+			.rightXtxt$ = Get value... '.row' RightX
+			.lowYtxt$ = Get value... '.row' LowY
+			.highYtxt$ = Get value... '.row' HighY
+			if startsWith(.leftXtxt$, "^")
+				.prevValuetxt$ = Get value... '.prevRow' LeftX
+				.leftXtxt$ = right$(.leftXtxt$, length(.leftXtxt$) - 1)
+				call r2aConversionOfValue2 '.prevValuetxt$' '.leftXtxt$'
+				select Table '.table$'
+				Set numeric value... '.row' LeftX 'r2aConversionOfValue2.result'
+			elsif startsWith(.rightXtxt$, "^")
+				.prevValuetxt$ = Get value... '.prevRow' RightX
+				.rightXtxt$ = right$(.rightXtxt$, length(.rightXtxt$) - 1)
+				call r2aConversionOfValue2 '.prevValuetxt$' '.rightXtxt$'
+				select Table '.table$'
+				Set numeric value... '.row' RightX 'r2aConversionOfValue2.result'
+			endif
+			if startsWith(.lowYtxt$, "^")
+				.prevValuetxt$ = Get value... '.prevRow' LowY
+				.lowYtxt$ = right$(.lowYtxt$, length(.lowYtxt$) - 1)
+				call r2aConversionOfValue2 '.prevValuetxt$' '.lowYtxt$'
+				select Table '.table$'
+				Set numeric value... '.row' LowY 'r2aConversionOfValue2.result'
+			elsif startsWith(.highYtxt$, "^")
+				.prevValuetxt$ = Get value... '.prevRow' HighY
+				.highYtxt$ = right$(.highYtxt$, length(.highYtxt$) - 1)
+				call r2aConversionOfValue2 '.prevValuetxt$' '.highYtxt$'
+				select Table '.table$'
+				Set numeric value... '.row' HighY 'r2aConversionOfValue2.result'
+			endif
+		endif
+		
+		# Get button values, per line
+		# +/-x means "add/subtract x to/from value of other edge"
 		select Table '.table$'
-		# Get button values
 		.leftXtxt$ = Get value... '.row' LeftX
 		.rightXtxt$ = Get value... '.row' RightX
 		.lowYtxt$ = Get value... '.row' LowY
@@ -2067,7 +2105,7 @@ procedure write_text_table .table$
 	.numLines = Get number of rows
 	.instructionFontSize = 14
 	.referenceText$ = ""
-	.maxlenght = 0
+	.maxlength = 0
 	.maxLine = 0
 	.maxFontSize = 0
 	.maxWidth = 0
@@ -2311,7 +2349,7 @@ procedure draw_background .table$
 	.numLines = Get number of rows
 	.backgroundFontSize = 28
 	.referenceText$ = ""
-	.maxlenght = 0
+	.maxlength = 0
 	.maxLine = 0
 	.maxFontSize = 0
 	.maxWidth = 0
