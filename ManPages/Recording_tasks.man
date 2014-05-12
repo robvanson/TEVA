@@ -18,7 +18,7 @@ message appears (only when there are more than one prompts). After you clicked
 anywhere in the window, you can start a new recording session. "
 
 
-<script> 4 3.5 "
+<script> 4.5 2 "
 	Axes... 0 100 0 100
 	Insert picture from file... Recording_tasks_window.png 50 50 0 100
 "
