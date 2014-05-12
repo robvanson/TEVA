@@ -2098,6 +2098,7 @@ procedure write_text_table .table$
    	.yhigh = 85
 	.lineHeight = 2.5
 	.align$ = "Left"
+	.tabString$ = "mmmmmm"
 
 	# Get table with text and longest line
 	call loadTable '.table$'
@@ -2151,6 +2152,10 @@ procedure write_text_table .table$
 	endfor
 	select '.instructionText'
 	.referenceText$ = Get value... '.maxLine' text
+	# Handle tabs
+	.testTabString$ = left$(.tabString$, ceiling(length(.tabString$)/2))
+	.referenceText$ = replace$(.referenceText$, "<tab>", .testTabString$, 0)
+	
 	.maxLineFont$ = Get value... '.maxLine' font
 	.instructionFontSize = Get value... '.maxLine' size
 	.lineHeight = .maxHeight
@@ -2168,6 +2173,8 @@ procedure write_text_table .table$
 	endif
 	call set_font_size '.instructionFontSize'
 	.fontSizeFactor = .instructionFontSize / .origFontSize
+	
+	.tabSize = demo Text width (wc)... '.tabString$'
 	
 	# Adjust width to size of text
 	.textWidth = demo Text width (wc)... '.referenceText$' + 4
@@ -2223,7 +2230,62 @@ procedure write_text_table .table$
 		.line$ = expand_praat_variables.text$
 
 		# Display text
-		demo Text special... '.textXAnchor' '.align$' '.ytext' Bottom '.font$' '.fontSize' 0 '.line$'
+		if index(.line$, "<tab>") <= 0
+			demo Text special... '.textXAnchor' '.align$' '.ytext' Bottom '.font$' '.fontSize' 0 '.line$'
+		else
+			if index_regex(.align$, "(?icentre)")
+				.leftAnchor = .textleft
+				.currentAnchor = .leftAnchor
+				while index_regex(.line$, "\S")
+					if index(.line$, "<tab>")
+						.tabline$ = left$(.line$, index(.line$, "<tab>") - 1)
+						.line$ = right$(.line$, length(.line$) - index(.line$, "<tab>") - 4)
+					else
+						.tabline$ = .line$
+						.line$ = ""
+					endif
+					.textWidth = demo Text width (wc)... '.tabline$'
+					.centerAnchor = .tabSize * ceiling((.currentAnchor + .textWidth/2)/.tabSize)
+					demo Text special... '.centerAnchor' '.align$' '.ytext' Bottom '.font$' '.fontSize' 0 '.tabline$'
+					.currentAnchor += .textWidth
+					.currentAnchor = .leftAnchor + .tabSize * ceiling((.currentAnchor - .leftAnchor)/.tabSize)
+					# Prevent overlap
+					if .currentAnchor < .centerAnchor + .textWidth/2
+						.currentAnchor = .centerAnchor + .textWidth/2
+					endif
+				endwhile
+			elsif index_regex(.align$, "(?iright)")
+				.currentAnchor = .textXAnchor
+				while index_regex(.line$, "\S")
+					if rindex(.line$, "<tab>")
+						.tabline$ = right$(.line$, length(.line$) - rindex(.line$, "<tab>") - 4)
+						.line$ = left$(.line$, rindex(.line$, "<tab>") - 1)
+					else
+						.tabline$ = .line$
+						.line$ = ""
+					endif
+					.textWidth = demo Text width (wc)... '.tabline$'
+					demo Text special... '.currentAnchor' '.align$' '.ytext' Bottom '.font$' '.fontSize' 0 '.tabline$'
+					.currentAnchor -= .textWidth
+					.currentAnchor = .textXAnchor - .tabSize * ceiling((.textXAnchor - .currentAnchor)/.tabSize)
+				endwhile
+			else
+				.currentAnchor = .textXAnchor
+				while index_regex(.line$, "\S")
+					if index(.line$, "<tab>")
+						.tabline$ = left$(.line$, index(.line$, "<tab>") - 1)
+						.line$ = right$(.line$, length(.line$) - index(.line$, "<tab>") - 4)
+					else
+						.tabline$ = .line$
+						.line$ = ""
+					endif
+					.textWidth = demo Text width (wc)... '.tabline$'
+					demo Text special... '.currentAnchor' '.align$' '.ytext' Bottom '.font$' '.fontSize' 0 '.tabline$'
+					.currentAnchor += .textWidth
+					.currentAnchor = .textXAnchor + .tabSize * ceiling((.currentAnchor - .textXAnchor)/.tabSize)
+				endwhile
+			endif
+		endif
 		.ytext -= .currentHeight
 	endfor	
 	demoShow()	
