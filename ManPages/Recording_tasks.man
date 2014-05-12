@@ -23,28 +23,28 @@ anywhere in the window, you can start a new recording session. "
 	Insert picture from file... Recording_tasks_window.png 50 50 0 100
 "
 
-<entry>"Recording task window"
-<normal>"When clicking %%Recording% on the 
+<entry> "Recording task window"
+<normal> "When clicking %%Recording% on the 
 @@Overview of Configuration page|Configuration page@ a small window appears. 
 This window asks for three pieces of information: "
 <list_item> "\bu #Recording: Default duration of recordings (4 s)"
 <list_item> "\bu #Task: The prompt, either in []-brackets for text, or a file with lines of text, or a Table with prompts"
-<list_item> "\bu #Store: The directory where the recordings will be stored."
+<list_item> "\bu #Store: The directory where the recordings will be stored"
 
-<entry>"Recording"
-<normal>"The number of seconds recorded. This is a default time that can 
+<entry> "Recording"
+<normal> "The number of seconds recorded. This is a default time that can 
 be changed in a table with recording prompts. Defaults to 4 seconds."
 
-<entry>"Task"
-<normal>"The prompt text in %%Praat% ##[Text styles]# format. Alternatively, 
+<entry> "Task"
+<normal> "The prompt text in %%Praat% ##[Text styles]# format. Alternatively, 
 a text or table file with prompts can be selected by pressing the %%Task% button. 
 Each line in a (ASCII|DOS) text file will be displayed as a single prompt screen. 
 Each line will give rise to a numbered recording. If the %%Task% file is a (tsv, 
 or tab-separated values) table, the size and formating of the prompts can be 
 controlled. "
 
-<entry>"Store"
-<normal>"The directory where the recordings are stored. Each recording is 
+<entry> "Store"
+<normal> "The directory where the recordings are stored. Each recording is 
 stored in a sub-directory with the ID or name of the %%Speaker%. File names 
 are constructed from the ID or name of the %%Speaker%, the number of name of 
 the prompt screen, and a time stamp. "

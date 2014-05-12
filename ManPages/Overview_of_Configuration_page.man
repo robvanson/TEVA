@@ -39,7 +39,7 @@ is set to 5 kHz or below, the sample frequency will be set to 11.025 kHz (down f
 
 <entry> "%%Archive% recording and collection of audio"
 <list_item> "\bu ##Audio#: [!] Save current audio selection to file"
-<list_item> "\bu ##Recording#: [c] Time of recording in seconds or @@Recording tasks@"
+<list_item> "\bu ##Recording#: [c] Time of recording in seconds or @@Recording tasks@ "
 
 <entry> "%%Execute% automatic analysis that might be time consuming"
 <list_item> "\bu ##Formants#: [F] Calculate and draw formants in spectrogram"
