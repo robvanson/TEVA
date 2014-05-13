@@ -1042,9 +1042,15 @@ procedure rating_String .speakerID$
 	if get_RatingInfo.subtext$ <> ""
 		.subtext$ = .subtext$ + " " + get_RatingInfo.subtext$
 	else
-		# There is always a computed value
 		call get_printsignal_text 'config.language$' Rating.quality
-		.subtext$ = .subtext$ + " " + get_printsignal_text.text$ + ": -"
+		.vq$ = get_printsignal_text.text$
+		call get_RatingInfo Rating.impression '.speakerID$'
+		if get_RatingInfo.subtext$ <> ""
+			.subtext$ = .subtext$ + " " + .vq$ + "/" + get_RatingInfo.subtext$
+		else
+			# There is always a computed value
+			.subtext$ = .subtext$ + " " + get_printsignal_text.text$ + ": -"
+		endif
 	endif
 	call get_printsignal_text 'config.language$' CompVQ
 	.compvqText$ = get_printsignal_text.text$

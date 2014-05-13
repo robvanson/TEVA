@@ -237,7 +237,7 @@ procedure print_signal .outFileName$
 	
 	.x = 50
 	.y = 0
-	do("Select outer viewport...", 0, 7.27, 0, 0.5)
+	do("Select outer viewport...", 0, 7.27, 0, 0.45)
 	do("Axes...", 0, 100, 0, 1)
 	do("Text special...", .x, "centre", .y, "bottom", "Helvetica", 14, "0", .titleText$)
 	# Print Date and Time of print
@@ -3523,8 +3523,17 @@ procedure set_RatingValues .speakerDataTable .variable$ .value$
 	if .speakerDataTable > 0
 		call get_speakerInfo 'speakerID$'
 		.row = get_speakerInfo.row
-		.tableValue = ('.value$'*999) + 1
 		select .speakerDataTable
+		.numRows = Get number of rows
+		if .row <= 0 or .row > .numRows
+			.row = 1
+		endif
+		.tableValue = ('.value$'*999) + 1
+		# Check if column exists
+		.col = Get column index: .variable$
+		if .col <= 0
+			Append column: .variable$
+		endif
 		Set numeric value... .row '.variable$' '.tableValue:0'
 		
 		call WriteSpeakerData

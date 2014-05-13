@@ -190,6 +190,11 @@ procedure global_setup
 	# Set Speaker color
 	call switch_speaker_next_button 'config.speakerSerial$'
 	
+	# Set up speaker data table, if needed
+	if config.speakerDataTable <= 0
+		config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST StartTime EndTime
+	endif
+	
 	# Load local preferences if present
 
 endproc
@@ -829,8 +834,14 @@ procedure WriteSpeakerData
 		.row = get_speakerInfo.row
 	else
 		select config.speakerDataTable
-		Append row
-		.row = Get number of rows
+		.id$ = Get value... 1 ID
+		.numRows = Get number of rows
+		if .numRows = 1 and (.id$ = "" or .id$ <> "?")
+			.row = 1
+		else		
+			Append row
+			.row = Get number of rows
+		endif
 	endif
 	select config.speakerDataTable
 	Set string value... '.row' ID 'speakerID$'
