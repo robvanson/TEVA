@@ -379,6 +379,10 @@ procedure processConfigCloseSpeaker .clickX .clickY .pressed$
 		speakerComments$ = ""
 		pathologicalType = 0
 		config.speakerDataBackup$ = ""
+		# Set up new speaker data table
+		if config.speakerDataTable <= 0
+			config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST StartTime EndTime
+		endif
 	endif
     call Draw_button 'table$' '.label$' 0
 endproc
