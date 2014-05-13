@@ -762,6 +762,7 @@ procedure ReadSpeakerData .speakerData$
 				config.speakerDataTable = -1
 				speakerID$ = ""
 			endif
+			config.speakerDataBackup$ = ""
 			config.speakerData$ = .speakerData$
 			# Create new SpeakerData table
 			.rawStrings = Read Strings from raw text file... '.speakerData$'
@@ -826,6 +827,7 @@ procedure WriteSpeakerData
 	call get_speakerInfo 'speakerID$'
 	# Table does not exist
 	if config.speakerDataTable <= 0
+		config.speakerDataBackup$ = ""
 		config.speakerData$ = ""
 		config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST StartTime EndTime
 		select config.speakerDataTable

@@ -1190,7 +1190,6 @@ procedure setup_recordingTask
 		# Switch to serial
 		config.speakerSerial$ = "Forw"
 		# Set up new Speaker table
-		config.speakerData$ = ""
 		if config.speakerDataTable > 0
 			select config.speakerDataTable
 			Remove
@@ -1199,6 +1198,7 @@ procedure setup_recordingTask
 		te.saveAudio = 1
 		# Initialize Speaker Data
 		config.speakerData$ = ""
+		config.speakerDataBackup$ = ""
 		config.speakerDataTable = -1
 		speakerInfo$ = ""
 		speakerComments$ = ""
@@ -1283,9 +1283,10 @@ procedure unload_RecordingTask
 			plus config.speakerDataTable
 		endif
 		Remove
+		config.speakerDataBackup$ = ""
 		config.speakerData$ = ""
-		te.recordingTaskTable = 0
-		config.speakerDataTable = 0
+		te.recordingTaskTable = -1
+		config.speakerDataTable = -1
 		te.restartRecordingTask = 1
 	endif
 	call reset_analysis
@@ -1790,6 +1791,7 @@ procedure getOpenFile .openDialogue$
 		# Reset all internal structures
 		call reset_analysis
 		
+		config.speakerDataBackup$ = ""
 		config.speakerData$ = .filename$
 		.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
 		call load_local_preferences '.dataDir$'

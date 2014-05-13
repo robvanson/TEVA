@@ -166,6 +166,7 @@ procedure processConfigSpeakerData .clickX .clickY .pressed$
 		select config.speakerDataTable
 		Remove
 	endif
+	config.speakerDataBackup$ = ""
 	config.speakerData$ = .newFile$
 	# Set local preferences
 	.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
@@ -190,7 +191,8 @@ procedure processConfigSpeakerDirectory .clickX .clickY .pressed$
 		# Data table is not yet read!
 		config.speakerDataTable = -1
 		config.speakerData$ = ""
-	speakerID$ = ""
+		config.speakerDataBackup$ = ""
+		speakerID$ = ""
 	endif
 	# Set local preferences
 	call load_local_preferences '.dataDir$'
@@ -319,6 +321,7 @@ procedure processConfigSaveSpeaker .clickX .clickY .pressed$
 			select normalize_speakerData.table
 			Save as tab-separated file... '.filename$'
 			Remove
+			config.speakerDataBackup$ = ""
 			config.speakerData$ = .filename$
 		endif
 	endif
@@ -373,12 +376,12 @@ procedure processConfigCloseSpeaker .clickX .clickY .pressed$
 		endif
 		# Initialize Speaker Data
 		config.speakerData$ = ""
+		config.speakerDataBackup$ = ""
 		config.speakerDataTable = -1
 		speakerID$ = ""
 		speakerInfo$ = ""
 		speakerComments$ = ""
 		pathologicalType = 0
-		config.speakerDataBackup$ = ""
 		# Set up new speaker data table
 		if config.speakerDataTable <= 0
 			config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST StartTime EndTime
