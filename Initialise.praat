@@ -756,13 +756,7 @@ procedure ReadSpeakerData .speakerData$
 			call load_local_preferences '.dataDir$'
 		else
 			# Reset SpeakerData table
-			if  config.speakerDataTable > 0
-				select config.speakerDataTable
-				Remove
-				config.speakerDataTable = -1
-				speakerID$ = ""
-			endif
-			config.speakerDataBackup$ = ""
+			call initializeSpeakerData
 			config.speakerData$ = .speakerData$
 			# Create new SpeakerData table
 			.rawStrings = Read Strings from raw text file... '.speakerData$'
@@ -821,6 +815,18 @@ procedure load_audio_file .newSpeakerID$ .fileName$
 		# Draw
 		call init_window
 	endif
+endproc
+
+procedure initializeSpeakerData
+	.speakerID$ = speakerID$
+	if  config.speakerDataTable > 0
+		select config.speakerDataTable
+		Remove
+	endif
+	speakerID$ = ""
+	config.speakerDataBackup$ = ""
+	config.speakerData$ = ""
+	config.speakerDataTable = -1
 endproc
 
 procedure WriteSpeakerData

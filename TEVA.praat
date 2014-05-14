@@ -1190,52 +1190,44 @@ procedure setup_recordingTask
 		# Switch to serial
 		config.speakerSerial$ = "Forw"
 		# Set up new Speaker table
-		if config.speakerDataTable > 0
-			select config.speakerDataTable
-			Remove
-		endif
+		call initializeSpeakerData
 		# Set TEVA to store all audio
 		te.saveAudio = 1
 		# Initialize Speaker Data
-		config.speakerData$ = ""
-		config.speakerDataBackup$ = ""
-		config.speakerDataTable = -1
 		speakerInfo$ = ""
 		speakerComments$ = ""
 		pathologicalType = 0
-		config.speakerDataBackup$ = ""
-		# If no speaker ID is given, ask for it
-		if speakerID$ = "" or te.restartRecordingTask != 0
-			.table$ = "MainPage"
-			.label$ = "Record"
-			call getLanguageTexts '.table$' '.label$'
-			call get_feedback_text 'config.language$' Speaker
-			# Get feedback texts
-			call get_feedback_text 'config.language$' SpeakerID
-			call convert_praat_to_latin1 'get_feedback_text.text$'
-			.inputText$ = convert_praat_to_latin1.text$
-			call get_feedback_text 'config.language$' Cancel
-			call convert_praat_to_latin1 'get_feedback_text.text$'
-			.cancelText$ = convert_praat_to_latin1.text$
-			call get_feedback_text 'config.language$' Continue
-			call convert_praat_to_latin1 'get_feedback_text.text$'
-			.continueText$ = convert_praat_to_latin1.text$
-			clicked = -1
-			beginPause(getLanguageTexts.helpText$)
-				sentence (.inputText$, "")
-			clicked = endPause ("'.cancelText$'", "'.continueText$'", 2, 1)
-			if clicked = 2
-				.inputText$ = replace_regex$(.inputText$, ".+", "\l&\$", 0)
-				.inputText$ = replace_regex$(.inputText$, "[ ]", "_", 0)
-				.inputText$ = replace_regex$(.inputText$, "\$", "", 0)
-				speakerID$ = '.inputText$'$
-				te.restartRecordingTask = 0
-			endif
-			# On Windows, clear the screen
-			if windows
-				call init_window
-			endif
+		# Ask for speaker ID
+		.table$ = "MainPage"
+		.label$ = "Record"
+		call getLanguageTexts '.table$' '.label$'
+		call get_feedback_text 'config.language$' Speaker
+		# Get feedback texts
+		call get_feedback_text 'config.language$' SpeakerID
+		call convert_praat_to_latin1 'get_feedback_text.text$'
+		.inputText$ = convert_praat_to_latin1.text$
+		call get_feedback_text 'config.language$' Cancel
+		call convert_praat_to_latin1 'get_feedback_text.text$'
+		.cancelText$ = convert_praat_to_latin1.text$
+		call get_feedback_text 'config.language$' Continue
+		call convert_praat_to_latin1 'get_feedback_text.text$'
+		.continueText$ = convert_praat_to_latin1.text$
+		clicked = -1
+		beginPause(getLanguageTexts.helpText$)
+			sentence (.inputText$, "")
+		clicked = endPause ("'.cancelText$'", "'.continueText$'", 2, 1)
+		if clicked = 2
+			.inputText$ = replace_regex$(.inputText$, ".+", "\l&\$", 0)
+			.inputText$ = replace_regex$(.inputText$, "[ ]", "_", 0)
+			.inputText$ = replace_regex$(.inputText$, "\$", "", 0)
+			speakerID$ = '.inputText$'$
+			te.restartRecordingTask = 0
 		endif
+		# On Windows, clear the screen
+		if windows
+			call init_window
+		endif
+
 		# If a speaker ID has been supplied
 		if speakerID$ <> ""
 			# Date and time
@@ -1279,14 +1271,8 @@ endproc
 procedure unload_RecordingTask
     if te.recordingTaskTable > 0		
 		select te.recordingTaskTable
-		if config.speakerDataTable > 0
-			plus config.speakerDataTable
-		endif
-		Remove
-		config.speakerDataBackup$ = ""
-		config.speakerData$ = ""
+		call initializeSpeakerData
 		te.recordingTaskTable = -1
-		config.speakerDataTable = -1
 		te.restartRecordingTask = 1
 	endif
 	call reset_analysis
@@ -1790,17 +1776,11 @@ procedure getOpenFile .openDialogue$
 	if .filename$ <> "" and fileReadable(.filename$) and index_regex(.filename$, "(?i\.(txt|tsv|table)$)")
 		# Reset all internal structures
 		call reset_analysis
+		call initializeSpeakerData
 		
-		config.speakerDataBackup$ = ""
 		config.speakerData$ = .filename$
 		.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
 		call load_local_preferences '.dataDir$'
-		if config.speakerDataTable > 0
-			select config.speakerDataTable
-			Remove
-		endif
-		config.speakerDataTable = -1
-		speakerID$ = ""
 		.filename$ = ""
 	endif
 	
@@ -2748,7 +2728,10 @@ procedure reset_analysis
 				Save as tab-separated file... 'config.speakerData$'
 			endif
 			select te.openSound
+			.tmpPartSoundID = Extract part... 'selectedStartTime' 'selectedEndTime' rectangular 1.0 true
 			Save as WAV file... 'te.currentFileName$'
+			plus te.openSound
+			Remove
 		endif
 		if te.pitch > 0
 			plus te.pitch
