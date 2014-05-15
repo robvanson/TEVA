@@ -1223,6 +1223,7 @@ procedure processMainPageRecord .clickX .clickY .pressed$
 			endif
 	    	call record_sound
 			call post_processing_sound
+			# The old ratings should be wiped!!!!
 			call set_new_speakerdata 'speakerID$'
 		else
 			# This is a global variable
