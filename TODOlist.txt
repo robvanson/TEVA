@@ -1,8 +1,1 @@
-- Estimate VQ
-+ All VAS values in voiceprint
-+ Formants off default
-+ Default frequency on 1000Hz
-+ Correct resetting of Speaker ID
-+ Correct saving of new sound
-+ Store recordings in patient specific directory
-+ Speed up HNR
+
