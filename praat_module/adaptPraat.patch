@@ -413,3 +413,14 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_
  		_GuiObject_setUserData (my d_widget, me);
  	#endif
  
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/DemoEditor.cpp demo_praat_sources/sys/DemoEditor.cpp
+--- praat_sources/sys/DemoEditor.cpp	2014-05-09 08:59:02.000000000 +0200
++++ demo_praat_sources/sys/DemoEditor.cpp	2014-05-16 10:30:28.000000000 +0200
+@@ -253,6 +253,7 @@ void Demo_waitForInput (Interpreter inte
+ 	if (theDemoEditor -> userWantsToClose) {
+ 		Interpreter_stop (interpreter);
+ 		forget (theDemoEditor);
++		exit (0);
+ 		Melder_throw ("You interrupted the script.");
+ 	}
+ }

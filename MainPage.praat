@@ -198,7 +198,7 @@ procedure print_signal .outFileName$
 		.outFileType$ = "PDF file"
 	elsif config.saveFMT$ = "PNG"
 		.outExtension$ = "png"
-		.outFileType$ = "600-dpi PNG file"
+		.outFileType$ = "300-dpi PNG file"
 	elsif config.saveFMT$ = "EMF"
 		.outExtension$ = "emf"
 		.outFileType$ = "Windows metafile"
