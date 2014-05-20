@@ -239,12 +239,11 @@ procedure print_signal .outFileName$
 	.y = 0
 	do("Select outer viewport...", 0, 7.27, 0, 0.45)
 	do("Axes...", 0, 100, 0, 1)
-	do("Text special...", .x, "centre", .y, "bottom", "Helvetica", 14, "0", .titleText$)
 	# Print Date and Time of print
 	.subtext$ = .datetime$
-	call points_to_wc 10
-	.y += points_to_wc.wc/4
-	do("Text special...", .x, "centre", .y, "top", "Helvetica", 9, "0", .subtext$)
+	do("Text special...", 108, "right", .y+1, "bottom", "Helvetica", 9, "0", .subtext$)
+	
+	do("Text special...", .x, "centre", .y, "bottom", "Helvetica", 14, "0", .titleText$)
 
 	# Get predictions
 	call predictASTvalue
@@ -279,17 +278,18 @@ procedure print_signal .outFileName$
 	# Print text
 	call points_to_wc 11
 	.y -= points_to_wc.wc/2
-	do("Text special...", .x, "centre", .y, "top", "Helvetica", 11, "0",  .subtext$)	
+	do("Text special...", .x, "centre", .y, "half", "Helvetica", 11, "0",  .subtext$)	
 	
 	# Waveform
 	call get_printsignal_text 'config.language$' Waveform
 	.labelText$ = get_printsignal_text.text$
 	.duration = selectedEndTime - selectedStartTime
-	@PrintSoundObject(.plotWidth, .plotyTop, .plotHeight, .labelText$ + " ('.duration:3's)")
+	
+	@PrintSoundObject(.plotWidth, .plotyTop + 0.1, .plotHeight, .labelText$ + " ('.duration:3's)")
 	# Select 0.1 second from the center
 	.start = (selectedEndTime + selectedStartTime)/2 - 0.05
 	.end = (selectedEndTime + selectedStartTime)/2 + 0.05
-	@draw_SelectionLines (.plotWidth, .plotyTop, .plotHeight, .start, .end)
+	@draw_SelectionLines (.plotWidth, .plotyTop + 0.1, .plotHeight, .start, .end)
 
 	# Waveform (selection)
 	call get_printsignal_text 'config.language$' Waveform
@@ -627,8 +627,8 @@ procedure draw_SelectionLines (.plotWidth, .plotyTop, .plotHeight, .start, .end)
 	do("Draw line...", .end, 0, .end, 1)
 	
 	do("Line width...", 1)
-	do("Draw line...", .start, 0, (.start+selectedStartTime)/2, -0.6)
-	do("Draw line...", .end, 0, (.end+selectedEndTime)/2, -0.6)
+	do("Draw line...", .start, 0, (.start+selectedStartTime)/2, -0.5)
+	do("Draw line...", .end, 0, (.end+selectedEndTime)/2, -0.5)
 
 	
 	do("Colour...", "Black")
