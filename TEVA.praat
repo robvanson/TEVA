@@ -57,6 +57,7 @@ te.formant = 0
 te.ratingTable = -1
 te.rating$ = ""
 te.useFullASTselection = 1
+te.useAnnotationInterface = 0
 te.defaultLanguage$ = "EN"
 config.recordingTaskFile$ = ""
 config.recordingTarget$ = ""

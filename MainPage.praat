@@ -1031,7 +1031,9 @@ procedure processMainPageNextItem .clickX .clickY .pressed$
 			else
 				speakerID$ = ""
 			endif
-		else
+		elsif te.useAnnotationInterface
+			# Code to start speaker data tables at first empty position
+			# Has to be handled by a Configuration settings
 			.astCol = Get column index... AST
 			.colLabel$ = Get column label... .numCols
 			.ast_row = 0
