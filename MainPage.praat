@@ -3131,7 +3131,6 @@ procedure calculateLtasValues
 	call get_feedback_text 'config.language$' ShortLtasValues
 	.shortLtasValues$ = get_feedback_text.text$
 	.shortLtasValues$ = replace$(.shortLtasValues$, "MAXFREQUENCY$", "'.maxFrequency:0'", 0)
-	.shortLtasValues$ = replace$(.shortLtasValues$, "MINFREQUENCY$", "'.minFrequency:0'", 0)
 	.shortLtasValues$ = replace$(.shortLtasValues$, "BED$", "'.bed:1'", 0)
 	.shortLtasValues$ = replace$(.shortLtasValues$, "COG$", "'.cog:0'", 0)
 	.shortText$ = .shortLtasValues$

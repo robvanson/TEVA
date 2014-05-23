@@ -1,4 +1,2 @@
 
 Ltas: Max peak frequency Remove min
-
-Titel altijd boven scherm.
