@@ -1235,6 +1235,7 @@ procedure setup_recordingTask
 			call i8n_date
 			.datetime$ = i8n_date.printDate$
 			# New speakerDataTable
+			config.speakerData$ = ""
 			config.speakerDataTable = Create Table with column names... Speaker_Data 1 ID Text Description StartTime EndTime Audio SaveAudio AST
 			select te.recordingTaskTable
 			.numRows = Get number of rows
@@ -1816,6 +1817,7 @@ procedure getOpenFile .openDialogue$
 		
 		# Set up empty speaker data table if none is present
 		if config.speakerDataTable <= 0
+			config.speakerData$ = ""
 			config.speakerDataTable = Create Table with column names... Speaker_Data 1 ID Text Description Audio AST StartTime EndTime
 			Set string value... 1 ID 'recordedSound$'
 			Set string value... 1 Audio 'te.currentFileName$'

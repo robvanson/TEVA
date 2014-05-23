@@ -192,6 +192,7 @@ procedure global_setup
 	
 	# Set up speaker data table, if needed
 	if config.speakerDataTable <= 0
+		config.speakerData$ = ""
 		config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST StartTime EndTime
 	endif
 	
