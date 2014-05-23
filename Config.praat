@@ -359,6 +359,7 @@ procedure processConfigCloseSpeaker .clickX .clickY .pressed$
 		comment(getLanguageTexts.helpText$)
 	clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2, 1)
 	if clicked = 2
+		call reset_analysis
 		# Initialize Speaker Data
 		call initializeSpeakerData
 		speakerInfo$ = ""

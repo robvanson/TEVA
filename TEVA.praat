@@ -1272,11 +1272,11 @@ endproc
 procedure unload_RecordingTask
     if te.recordingTaskTable > 0		
 		select te.recordingTaskTable
-		call initializeSpeakerData
 		te.recordingTaskTable = -1
 		te.restartRecordingTask = 1
 	endif
 	call reset_analysis
+	call initializeSpeakerData
 	call get_speakerInfo 0
 	call get_nextSpeaker 0
 	call get_previousSpeaker 0
@@ -1778,6 +1778,7 @@ procedure getOpenFile .openDialogue$
 		# Reset all internal structures
 		call reset_analysis
 		call initializeSpeakerData
+		call unload_RecordingTask
 		
 		config.speakerData$ = .filename$
 		.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)

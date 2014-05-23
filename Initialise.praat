@@ -300,7 +300,7 @@ procedure init_window
 	endif
 	# Set automatic Pathological type and write header
 	call autoSetPathType
-	if pathologicalType > 0 or index_regex(otherASTentries$, "[0-9A-Za-z]")
+	if speakerID$ <> ""
 		call get_speakerInfo 'speakerID$'
 		.speakerNumber = get_speakerInfo.row
 		if .speakerNumber > 0
@@ -519,6 +519,11 @@ procedure get_previousSpeaker .speakerID$
 endproc
 
 procedure get_speakerInfo .speakerID$
+	# 0 is a reset
+	if .speakerID$ = "0"
+		.speakerID$ = ""
+	endif
+	
 	.id$ = .speakerID$
 	.text$ = speakerInfo$
 	.description$ = speakerComments$
