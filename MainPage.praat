@@ -995,7 +995,10 @@ procedure processMainPageNextItem .clickX .clickY .pressed$
 			call write_text_popup Helvetica 20 '.readyText$'
 			demoWaitForInput()
 		endif
-		call unload_RecordingTask
+		# Get rid of speaker table in running recording task
+		if te.recordingTaskTable > 0
+			call unload_RecordingTask
+		endif
 	endif
 	
 	# This was the first reference to a speaker, get first empty pos

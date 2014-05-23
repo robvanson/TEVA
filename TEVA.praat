@@ -1272,11 +1272,12 @@ endproc
 procedure unload_RecordingTask
     if te.recordingTaskTable > 0		
 		select te.recordingTaskTable
+		Remove
 		te.recordingTaskTable = -1
 		te.restartRecordingTask = 1
 	endif
-	call reset_analysis
 	call initializeSpeakerData
+	call reset_analysis
 	call get_speakerInfo 0
 	call get_nextSpeaker 0
 	call get_previousSpeaker 0
