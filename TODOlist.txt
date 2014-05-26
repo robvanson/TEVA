@@ -1,4 +1,1 @@
 
-# Backward step stops at 1 and unloads
-# IINFVo has Vo printed twice on voiceprint
-# Numbering of text list recording tasks
