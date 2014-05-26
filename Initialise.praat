@@ -526,7 +526,6 @@ procedure get_speakerInfo .speakerID$
 		speakerInfo$ = ""
 		speakerComments$ = ""
 		pathologicalType = 0
-		te.currentFileName$ = ""
 	endif
 	
 	.id$ = .speakerID$

@@ -1082,12 +1082,6 @@ procedure rating_String .speakerID$
 		.subtext$ = .subtext$ + "; " + get_RatingInfo.subtext$
 	endif
 	
-	# Rating.voice
-	call get_RatingInfo Rating.voice '.speakerID$'
-	if get_RatingInfo.subtext$ <> ""
-		.subtext$ = .subtext$ + "; " + get_RatingInfo.subtext$
-	endif
-
 	# Rating.grade
 	call get_RatingInfo Rating.grade '.speakerID$'
 	if get_RatingInfo.subtext$ <> ""

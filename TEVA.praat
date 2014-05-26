@@ -1163,7 +1163,7 @@ procedure setup_recordingTask
 				select te.recordingTaskTable
 				Append row
 				.w += 1
-				Set string value... .w postfix _p'.s'
+				Set string value... .w postfix _p'.w'
 				Set numeric value... .w time 'config.recordingTime$'
 				Set string value... .w align centre
 				Set string value... .w font Helvetica
