@@ -523,6 +523,10 @@ procedure get_speakerInfo .speakerID$
 	# 0 is a reset
 	if .speakerID$ = "0"
 		.speakerID$ = ""
+		speakerInfo$ = ""
+		speakerComments$ = ""
+		pathologicalType = 0
+		te.currentFileName$ = ""
 	endif
 	
 	.id$ = .speakerID$
@@ -829,7 +833,7 @@ procedure initializeSpeakerData
 		select config.speakerDataTable
 		Remove
 	endif
-	speakerID$ = ""
+	call get_speakerInfo 0
 	config.speakerDataBackup$ = ""
 	config.speakerData$ = ""
 	config.speakerDataTable = -1

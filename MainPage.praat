@@ -1032,7 +1032,7 @@ procedure processMainPageNextItem .clickX .clickY .pressed$
 			if .firstRow > 0 and .firstRow <=  .numRows
 				speakerID$ = Get value... '.firstRow' ID
 			else
-				speakerID$ = ""
+				call get_speakerInfo 0
 			endif
 		elsif te.useAnnotationInterface
 			# Code to start speaker data tables at first empty position
@@ -1131,7 +1131,7 @@ procedure processMainPagePreviousItem .clickX .clickY .pressed$
 			if .lastRow > 0 and .lastRow <=  .numRows
 				speakerID$ = Get value... '.lastRow' ID
 			else
-				speakerID$ = ""
+				call get_speakerInfo 0
 			endif
 		else
 			.astCol = Get column index... AST

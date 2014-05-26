@@ -1121,7 +1121,8 @@ endproc
 
 procedure setup_recordingTask
 	.skiprecording = 0
-	
+	.noPostfix = 0
+
 	# Initialize TEVA
 	call unload_RecordingTask
 	
@@ -1175,6 +1176,29 @@ procedure setup_recordingTask
 	# Read a recording task
 	elsif fileReadable(config.recordingTaskFile$)
 		te.recordingTaskTable = Read from file... 'config.recordingTaskFile$'
+		# Do a sanity check
+		.fullName$ = selected$ ()
+		.type$ = extractWord$(.fullName$, "")
+		if .type$ <> "Table"
+			Remove
+			te.recordingTaskTable = -1
+			config.recordingTaskFile$ = ""
+			.skiprecording = 1
+		else
+			.textIndex = Get column index: "text"
+			if .textIndex <= 0
+				Remove
+				te.recordingTaskTable = -1
+				config.recordingTaskFile$ = ""
+				.skiprecording = 1
+			else
+				.textIndex = Get column index: "postfix"
+				if .textIndex <= 0
+				.noPostfix = 1
+				endif
+			endif
+			
+		endif
 	# Create a recording task from a single line of text
 	elsif startsWith(config.recordingTaskFile$, "[") and endsWith(config.recordingTaskFile$, "]")
 		.text$ = left$(config.recordingTaskFile$, length(config.recordingTaskFile$) - 1)
@@ -1239,7 +1263,11 @@ procedure setup_recordingTask
 			config.speakerDataTable = Create Table with column names... Speaker_Data 1 ID Text Description StartTime EndTime Audio SaveAudio AST
 			select te.recordingTaskTable
 			.numRows = Get number of rows
-			.postfix$ = Get value... 1 postfix
+			if .noPostfix
+				.postfix = "rec1"
+			else
+				.postfix$ = Get value... 1 postfix
+			endif
 			.prompt$ = Get value... 1 text
 			.filename$ = replace_regex$(speakerID$, "[^a-zA-Z0-9\.\-_]", "_", 0)
 			if .filename$ <> ""
@@ -1249,14 +1277,18 @@ procedure setup_recordingTask
 			select config.speakerDataTable
 			Set string value... 1 ID '.filename$''.postfix$'
 			Set string value... 1 Audio 'config.recordingTarget$'/'.filename$'/'.filename$''.postfix$'_'.datetime$'.wav
-			# Initilaise on firts row
+			# Initilaise on first row
 			speakerID$ = "'.filename$''.postfix$'"
 			call set_new_speakerdata 'speakerID$'
 			
 			# Fill other rows
 			for .i from 2 to .numRows
 				select te.recordingTaskTable
-				.postfix$ = Get value... '.i' postfix
+				if .noPostfix
+					.postfix = "rec'.i'"
+				else
+					.postfix$ = Get value... '.i' postfix
+				endif
 				.prompt$ = Get value... '.i' text
 				select config.speakerDataTable
 				Append row
@@ -2781,7 +2813,8 @@ procedure reset_analysis
 		
         recordedSound$ = ""
         currentSoundName$ = ""
-        speakerID$ = ""
+		call get_speakerInfo 0
+        
 		pitchName$ = ""
 		pitchTierName$ = ""
 		ltasName$ = ""
