@@ -1101,63 +1101,12 @@ procedure processMainPagePreviousItem .clickX .clickY .pressed$
 			call write_text_popup Helvetica 20 '.readyText$'
 			demoWaitForInput()
 		endif
-		call unload_RecordingTask
+		# Get rid of speaker table in running recording task
+		if te.recordingTaskTable > 0
+			call unload_RecordingTask
+		endif
 	endif
 	
-	# This was the last reference to a speaker, get last empty pos
-	if speakerID$ = "" and config.speakerDataTable > 0
-		select config.speakerDataTable
-		.numRows = Get number of rows
-		.numCols = Get number of columns
-		if mainPage.draw$ = "Rating"
-			.lastRow = 0
-			for .c to .numCols
-				select config.speakerDataTable
-				.currentColLabel$ = Get column label... '.c'
-				if startsWith(.currentColLabel$, "Rating.")
-					.r = 1
-					while .r <= .numRows
-						.currentValue$ = Get value... '.r' '.currentColLabel$'
-						if index(.currentValue$, ";")
-							.lastRow = .r
-						endif
-						.r += 1
-					endwhile
-				endif
-			endfor
-			if .lastRow >= 0 and .lastRow <=  .numRows
-				.lastRow += 1				
-			endif
-			if .lastRow > 0 and .lastRow <=  .numRows
-				speakerID$ = Get value... '.lastRow' ID
-			else
-				call get_speakerInfo 0
-			endif
-		else
-			.astCol = Get column index... AST
-			.colLabel$ = Get column label... .numCols
-			.ast_row = 0
-			.last_row = 0
-			.i = 1
-			# Iterate over all 
-			for .i to .numRows
-				.lastValue$ = Get value... '.i' '.colLabel$'
-				if length(.lastValue$) > 0 and index_regex(.lastValue$, "[^?\-\s]") > 0
-					.last_row = .i
-				endif
-				.astValue$ = Get value... '.i' AST
-				if length(.astValue$) > 0 and index_regex(.astValue$, "[^?\-\s]") > 0
-					.ast_row = .i
-				endif
-			endfor
-			if .ast_row > 0 and .ast_row <  .numRows
-				speakerID$ = Get value... '.ast_row' ID
-			elsif .last_row > 0 and .last_row <  .numRows
-				speakerID$ = Get value... '.last_row' ID
-			endif
-		endif
-		call get_previousSpeaker 'speakerID$'
-	endif
 	.newSpeakerID$ = get_previousSpeaker.id$
 	.newFileName$ = get_nextSpeaker.audio$
 	call reset_analysis
