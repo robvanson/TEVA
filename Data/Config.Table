@@ -33,7 +33,7 @@ $VoicePrint	35	+10	46	+4	Black	DrawNull
 SaveFMT_EPS	35	+10	^-5	+5	Black	DrawNull
 SaveFMT_PNG	35	+10	^-6	+5	Black	DrawNull
 SaveFMT_PDF	35	+10	^-6	+5	Black	DrawNull
-SaveAll	35	+10	^-8	+5	Black	DrawNull
+SaveAll	35	+10	^-8	+5	{0.6,0.55,0.4}	DrawNull
 $SpeakerSelect	50	+10	96	+4	Black	DrawNull
 SpeakerSerial_None	50	+10	^-5	+5	Black	DrawNull
 SpeakerSerial_Forw	50	+10	^-6	+5	Black	DrawNull

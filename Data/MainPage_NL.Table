@@ -4,7 +4,7 @@ Label	Text	Key	Helptext
 !License	Licentie	¤	GNU GPL version 2 or later
 !WindowTitle	NKI TE-VOICE ANALYSIS tool: Hoofdpagina 	¤	NKI TE-VOICE ANALYSIS tool: Hoofdpagina
 !CANVAS	Venster	¤	Tekenvenster
-!PathologicalType	- Pathologisch type:	012349	Pathologisch type in venstertitel I-IV, 0 wist
+!PathologicalType	- Pathologisch type:	012349	Pathologisch signaal type (AST) in venstertitel I-IV, toets 1-4, 0 wist
 Speaker	!90!Spreker	r	Invoer spreker gegevens
 !NextItem	Spr	x|\\	Volgende opname bij %%seri\e"le% verwerking
 !PreviousItem	Spr	x|\\	Vorige opname bij %%seri\e"le% verwerking

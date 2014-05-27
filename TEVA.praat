@@ -338,7 +338,7 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 	.topBackGroundColorUp$ = "{0.93,0.93,0.93}"
 	.topLineColorUp$ = "Black"
 	.topLineWidthUp = 1.5
-	.topBackGroundColorDown$ = "{0.89,0.89,0.94}"
+	.topBackGroundColorDown$ = "{0.82,0.82,0.9}"
 	.topLineColorDown$ = "{0.3,0.3,0.3}"
 	.topLineWidthDown = 1.5
 	.topBackGroundColorDisabled$ = "{0.90,0.90,0.90}"

@@ -1,5 +1,5 @@
 font	size	text
-Times	16	Pathology Types
+Times	16	Acoustic Signal Types
 Times	10	(Pathology types will be displayed in the main window, press a number key to set the type)
 Times	12	  
 Times	14	%%Type I - Stable \&  Harmonic% \s{(press 1)}
