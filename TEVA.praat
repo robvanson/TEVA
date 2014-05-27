@@ -1,5 +1,5 @@
 #
-# TEVA 0.1
+# TEVA 1.1
 # 
 # Master Praat script
 #
@@ -362,6 +362,11 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
     .buttonColor$ = Get value... '.row' Color
     .buttonDraw$ = Get value... '.row' Draw
     .buttonKey$ = Get value... '.row' Key
+    
+    # No visible button
+    if .leftX <= 0 and .rightX <= 0 and .lowY <= 0 and .highY <= 0
+    	goto NOBUTTON
+    endif
 
 	.rotation = 0
 	if index_regex(.buttonText$, "^![0-9\.]+!")

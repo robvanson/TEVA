@@ -11,6 +11,7 @@ Input_Line	Entrada Linea |	|\+	Utilice la entrada de la linea para la grabacion
 Instruction	Patologia	P	Informacion acerca de los tipos de patologia
 Manual	Manual	M	Manual de la aplicaci\o'n
 Credits	Acerca	i	Informacion acerca de la herramienta NKI TE-VOICE ANALYSIS
+Refresh	Refresh	 	Redraw the current screen, the space-bar always refreshes screen
 Help	Ayuda	?/	Presione el boton para acceder a informacion, "Ayuda" para continuar
 MuteOutput	Silencio [x]	x	Salida silencio sonido
 Test	Prueba grabacion	r	Prueba de nivel de grabacion

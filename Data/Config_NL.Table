@@ -11,6 +11,7 @@ Input_Line	Lijn ingang |	|\+	Gebruik de lijn-ingang voor de spraakopnamen
 Instruction	Pathologie	P	Informatie over pathologische types
 Manual	Handleiding	H	Handleiding van de applicatie
 Credits	Over	iC	Informatie over NKI TE-VOICE ANALYSIS tool
+Refresh	Ververs	 	Ververs de huidige pagina, de spatiebalk ververst altijd de pagina
 Help	Help	?/	klik op de knop waar u informatie over wilt hebben, "Help" als u verder wilt
 MuteOutput	Mute [x]	x	Geen geluidsweergave
 Test	Test opname	o	Test opname niveau

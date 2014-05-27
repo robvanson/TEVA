@@ -1,5 +1,5 @@
 #
-# TEVA 0.1
+# TEVA 1.1
 # 
 # Intializing Praat script
 #

@@ -11,6 +11,7 @@ Input_Line	Line input |	|\+	Use the line-input for recording
 Instruction	Pathology	P	Information about pathological types
 Manual	Manual	M	Manual of the application
 Credits	About	iA	Information about NKI TE-VOICE ANALYSIS tool
+Refresh	Refresh	 	Redraw the current screen, the space-bar always refreshes screen
 Help	Help	?/	Press the button you want information on, "Help" to continue
 MuteOutput	Mute [x]	x	Mute output sound
 Test	Test recording	T	Test recording level
