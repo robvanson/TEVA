@@ -11,7 +11,7 @@ HarmonicityValues	Harmonizit\a"t - Max.: MAXHARMONICITY$ dB, Min.: MINHARMONICIT
 ShortHarmonicityValues	HNR: MEANHARMONICITY$ dB, SD: SDHARMONICITY$ dB, GNE: GNEVALUE$
 IntensityValues	Intensit\a"t - Max.: MAXINTENSITY$ dB, Min.: MININTENSITY$ dB, Mean: MEANINTENSITY$ dB, SD: SDINTENSITY$ dB
 LtasValues	Ltas - Max.: MAXFREQUENCY$ Hz, Min.: MINFREQUENCY$ Hz, BED: BED$ dB, CoG: COG$ Hz  [SELECTEDSTARTTIME$; SELECTEDENDTIME$] S
-ShortLtasValues	Max.: MAXFREQUENCY$ Hz, BED: BED$ dB, CoG: COG$ Hz
+ShortLtasValues	Ltas Max.: MAXFREQUENCY$ Hz, BED: BED$ dB, CoG: COG$ Hz
 TimeValues	Zeitinterval: SELECTEDSTARTTIME$ - SELECTEDENDTIME$ S (SELECTEDINTERVAL$ S)
 Recording	Aufname
 RecordingTask	Aufgaben
