@@ -1,1 +1,3 @@
+- Add Description and Text fields to ID field in prompted recordings
+- Add Description and Text fields to Voiceprints
 
