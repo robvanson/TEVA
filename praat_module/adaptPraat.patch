@@ -424,3 +424,16 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/DemoEditor.cpp de
  		Melder_throw ("You interrupted the script.");
  	}
  }
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/melder.h praat_mingw/sys/melder.h
+--- praat_sources/sys/melder.h	2014-07-03 09:47:02.000000000 +0200
++++ demo_praat_sources/sys/melder.h	2014-07-08 15:50:21.000000000 +0200
+@@ -34,8 +34,7 @@
+ #include <stddef.h>
+ #include <wchar.h>
+ #ifdef __MINGW32__
+-	#undef swprintf
+-	#define swprintf  __mingw_snwprintf
++	#define swprintf  _snwprintf
+ #endif
+ #include <stdbool.h>
+ #include <stdint.h>
