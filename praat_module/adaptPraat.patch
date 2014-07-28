@@ -1,10 +1,10 @@
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/stat/praat_Stat.cpp demo_praat_sources/stat/praat_Stat.cpp
 --- praat_sources/stat/praat_Stat.cpp	2011-10-01 13:32:45.000000000 +0200
 +++ demo_praat_sources/stat/praat_Stat.cpp	2011-11-18 08:55:32.000000000 +0100
-@@ -414,7 +414,9 @@ DO
- END
+@@ -424,7 +424,9 @@ DO
+ END2 }
  
- DIRECT (Table_edit)
+ DIRECT2 (Table_edit) {
 +#ifndef DEMOAPP
  	if (theCurrentPraatApplication -> batch) Melder_throw ("Cannot edit a Table from batch.");
 +#endif
