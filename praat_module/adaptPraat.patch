@@ -37,18 +37,6 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Graphics_text.cpp
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_praat_sources/sys/praat.cpp
 --- praat_sources/sys/praat.cpp	2014-04-22 11:09:57.000000000 +0200
 +++ demo_praat_sources/sys/praat.cpp	2014-04-22 11:53:58.000000000 +0200
-@@ -1192,9 +1192,9 @@ void praat_init (const char *title, unsi
- 		 * Make sure that the program's private directory exists.
- 		 */
- 		#if defined (UNIX)
--			swprintf (name, 256, L".%ls-dir", Melder_utf8ToWcs (programName));   /* For example .myProg-dir */
-+			swprintf (name, 256, L".%ls", Melder_utf8ToWcs (praatP.title));   /* For example .myProg-dir */
- 		#elif defined (macintosh)
--			swprintf (name, 256, L"%ls Prefs", Melder_utf8ToWcs (praatP.title));   /* For example MyProg Prefs */
-+			swprintf (name, 256, L"%ls", L"TEVA");   /* For example MyProg Prefs */
- 		#elif defined (_WIN32)
- 			swprintf (name, 256, L"%ls", Melder_utf8ToWcs (praatP.title));   /* For example MyProg */
- 		#endif
 @@ -1267,6 +1267,12 @@ void praat_init (const char *title, unsi
  
  	GuiWindow raam = NULL;
@@ -153,7 +141,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
 @@ -825,7 +825,9 @@ static void cb_TextGridEditor_publicatio
  	}
  }
- DIRECT (TextGrid_edit)
+ DIRECT2 (TextGrid_edit) {
 +#ifndef DEMOAPP
  	if (theCurrentPraatApplication -> batch) Melder_throw ("Cannot view or edit a TextGrid from batch.");
 +#endif
@@ -161,9 +149,9 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
  	LOOP {
  		if (CLASS == classSound) sound = (Sound) OBJECT;   // may stay NULL
 @@ -839,7 +841,9 @@ DIRECT (TextGrid_edit)
- END
+ END2 }
  
- DIRECT (TextGrid_LongSound_edit)
+ DIRECT2 (TextGrid_LongSound_edit) {
 +#ifndef DEMOAPP
  	if (theCurrentPraatApplication -> batch) Melder_throw ("Cannot view or edit a TextGrid from batch.");
 +#endif
@@ -171,9 +159,9 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
  	int ilongSound = 0;
  	LOOP {
 @@ -855,7 +859,9 @@ DIRECT (TextGrid_LongSound_edit)
- END
+ END2 }
  
- DIRECT (TextGrid_SpellingChecker_edit)
+ DIRECT2 (TextGrid_SpellingChecker_edit) {
 +#ifndef DEMOAPP
  	if (theCurrentPraatApplication -> batch) Melder_throw ("Cannot view or edit a TextGrid from batch.");
 +#endif
@@ -181,9 +169,9 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
  	int ispellingChecker = 0;
  	Sound sound = NULL;
 @@ -872,7 +878,9 @@ DIRECT (TextGrid_SpellingChecker_edit)
- END
+ END2 }
  
- DIRECT (TextGrid_LongSound_SpellingChecker_edit)
+ DIRECT2 (TextGrid_LongSound_SpellingChecker_edit) {
 +#ifndef DEMOAPP
  	if (theCurrentPraatApplication -> batch) Melder_throw ("Cannot view or edit a TextGrid from batch.");
 +#endif
@@ -194,9 +182,9 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
 --- praat_sources/fon/praat_Sound_init.cpp	2012-10-11 10:39:47.000000000 +0200
 +++ demo_praat_sources/fon/praat_Sound_init.cpp	2012-10-18 15:09:22.000000000 +0200
 @@ -172,7 +172,9 @@ DO
- END
+ END2 }
  
- DIRECT (LongSound_view)
+ DIRECT2 (LongSound_view) {
 +#ifndef DEMOAPP
  	if (theCurrentPraatApplication -> batch) Melder_throw ("Cannot view or edit a LongSound from batch.");
 +#endif
@@ -206,7 +194,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
 @@ -718,7 +720,9 @@ static void cb_SoundEditor_publication (
  	}
  }
- DIRECT (Sound_edit)
+ DIRECT2 (Sound_edit) {
 +#ifndef DEMOAPP
  	if (theCurrentPraatApplication -> batch) Melder_throw ("Cannot view or edit a Sound from batch.");
 +#endif
@@ -226,7 +214,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  			theSoundRecorder -> raise ();
 @@ -1448,10 +1454,21 @@ FORM (Sound_recordFixedTime, L"Record So
  	POSITIVE (L"Duration (seconds)", L"1.0")
- 	OK
+ 	OK2
  DO
 +#if defined (_WIN32) && defined (DEMOAPP)
 +	UINT numberOfDevices = waveInGetNumDevs (), i;
@@ -243,9 +231,9 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
 +	praat_new (me.transfer(), L"untitled");	
 +	};
 +#endif
- END
+ END2 }
  
- FORM (Sound_resample, L"Sound: Resample", L"Sound: Resample...")
+ FORM (Sound_resample, L"Sound: Resample", L"Sound: Resample...") {
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Ui.cpp demo_praat_sources/sys/Ui.cpp
 --- praat_sources/sys/Ui.cpp	2014-01-27 09:02:44.000000000 +0100
 +++ demo_praat_sources/sys/Ui.cpp	2014-03-27 12:22:58.000000000 +0100
@@ -424,16 +412,3 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/DemoEditor.cpp de
  		Melder_throw ("You interrupted the script.");
  	}
  }
-diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/melder.h praat_mingw/sys/melder.h
---- praat_sources/sys/melder.h	2014-07-03 09:47:02.000000000 +0200
-+++ demo_praat_sources/sys/melder.h	2014-07-08 15:50:21.000000000 +0200
-@@ -34,8 +34,7 @@
- #include <stddef.h>
- #include <wchar.h>
- #ifdef __MINGW32__
--	#undef swprintf
--	#define swprintf  __mingw_snwprintf
-+	#define swprintf  _snwprintf
- #endif
- #include <stdbool.h>
- #include <stdint.h>

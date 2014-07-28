@@ -40,33 +40,17 @@ elif [[ ${UNAME} == "Darwin" ]]; then
 fi
 
 # This is a dry run!
-MAKECMD=ls
+MAKECMD=echo
 
 # Patch Praat
 cd ${PRAATSOURCES}
 if [[ -s ${CURRENTWORKINGDIR}/adaptPraat.patch ]]; then
 	patch --strip=1 < ${CURRENTWORKINGDIR}/adaptPraat.patch
+	patch --strip=1 < ${CURRENTWORKINGDIR}/sys_praat_name.patch
 fi
 
 # Add demopraatapplication.h
 cd main/
-rm -f demopraatapplication.h
-if [[ ${1:-Normal} == "MinGW" && ${2:-Normal} == "XP" ]]; then
-	cat ${CURRENTWORKINGDIR}/${APPLICATIONNAME}expanded.h | sed 's/\(\"build_SHA\$ \= \\\"[^\\]*\)/\1 XP/g' > ${CURRENTWORKINGDIR}/${APPLICATIONNAME}expandedXP.h
-	ln -s ${CURRENTWORKINGDIR}/${APPLICATIONNAME}expandedXP.h ./demopraatapplication.h
-else
-	ln -s ${CURRENTWORKINGDIR}/${APPLICATIONNAME}expanded.h ./demopraatapplication.h
-fi
-# Create a file containing the Build number
-grep 'build_SHA$ = "' ${CURRENTWORKINGDIR}/TEVAexpanded.praat | grep ':' | perl -ane '/\"([A-F0-9]+)\s+([\d\-]+)(.*)\"/;print "<i>$1</i> <b>$2</b>$3\n";' > ${CURRENTWORKINGDIR}/Build_SHA.html
-
-# Get the manual into the tutorials manual
-cp ../fon/manual_tutorials.cpp ../fon/manual_tutorials.cppORIGINAL
-NUMLINES=$(grep -n '}' ../fon/manual_tutorials.cpp|tail -1|sed 's/\:.*//g'|perl -ane 'print $_-1;')
-TAILLINES=$(wc -l ../fon/manual_tutorials.cpp|perl -ane "print \$_ - ${NUMLINES}")
-head -n ${NUMLINES} ../fon/manual_tutorials.cppORIGINAL > ../fon/manual_tutorials.cpp
-cat  ${CURRENTWORKINGDIR}/manual_${APPLICATIONNAME}.cpp >> ../fon/manual_tutorials.cpp
-tail -${TAILLINES} ../fon/manual_tutorials.cppORIGINAL >> ../fon/manual_tutorials.cpp
 
 touch main_Praat.cpp
 
@@ -85,11 +69,10 @@ fi
 # Undo patches
 if [[ -s ${CURRENTWORKINGDIR}/adaptPraat.patch ]]; then
 	patch -R --strip=1 < ${CURRENTWORKINGDIR}/adaptPraat.patch
+	patch -R --strip=1 < ${CURRENTWORKINGDIR}/sys_praat_name.patch
 fi
 
 cd main/
-rm -f demopraatapplication.h ../fon/manual_tutorials.cpp
-mv ../fon/manual_tutorials.cppORIGINAL ../fon/manual_tutorials.cpp
 if [[ -s ${CURRENTWORKINGDIR}/main_Praat.patch ]]; then
 	patch -R main_Praat.cpp ${CURRENTWORKINGDIR}/main_Praat.patch
 fi

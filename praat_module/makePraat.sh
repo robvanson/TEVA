@@ -44,6 +44,9 @@ cd ${PRAATSOURCES}
 if [[ -s ${CURRENTWORKINGDIR}/adaptPraat.patch ]]; then
 	patch --strip=1 < ${CURRENTWORKINGDIR}/adaptPraat.patch
 fi
+if [[ -s ${CURRENTWORKINGDIR}/sys_praat_name.patch ]]; then
+	patch --strip=1 < ${CURRENTWORKINGDIR}/sys_praat_name.patch
+fi
 
 # Add demopraatapplication.h
 cd main/
@@ -82,6 +85,9 @@ fi
 # Undo patches
 if [[ -s ${CURRENTWORKINGDIR}/adaptPraat.patch ]]; then
 	patch -R --strip=1 < ${CURRENTWORKINGDIR}/adaptPraat.patch
+fi
+if [[ -s ${CURRENTWORKINGDIR}/sys_praat_name.patch ]]; then
+	patch -R --strip=1 < ${CURRENTWORKINGDIR}/sys_praat_name.patch
 fi
 
 cd main/

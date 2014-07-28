@@ -685,6 +685,12 @@ procedure set_language .lang$
 	call checkTable 'buttonsTableName$'_'.lang$'
 	if checkTable.available
 		config.language$ = .lang$
+		
+		if config.language$ = "JP"
+			CJK font style preferences: "Japanese"
+		elsif config.language$ = "ZH"
+			CJK font style preferences: "Chinese"
+		endif
 	else
 		config.language$ = "EN"
 	endif

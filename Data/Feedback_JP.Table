@@ -1,0 +1,34 @@
+Key	Text
+!Author	Author R.J.J.H. van Son
+!Copyright	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
+!License	License GNU GPL version 2 or later
+Select1	Select new start time (or press Select or a key to continue)
+Select2	Select new end time, #- or #+ for a 1 or 2 sec window (cancel with %%Select% or another key)
+SpectrumValues	Formants - QF_1: QUALITYF1$ , QF_2: QUALITYF2$ , QF_3: QUALITYF3$ , QF_4: QUALITYF4$ [Median(F_i)/Median(B_i)]
+PitchValues	Pitch - MVD: MAXIMUMVOICINGDUR$ , Voiced: VOICEDFRACTIONS$ , Jitter: JITTER$ , Shimmer: SHIMMER$ , Mean: MEANPITCH$ Hz, SD: SDPITCH$ Hz, Median: MEDIANPITCH$ Hz
+ShortPitchValues	VF: VOICEDFRACTIONS$ , Jitter: JITTER$ , Shimmer: SHIMMER$ , Mean: MEANPITCH$ Hz, SD: SDPITCH$ Hz
+HarmonicityValues	Harmonicity - Max.: MAXHARMONICITY$ dB, Min.: MINHARMONICITY$ dB, Mean: MEANHARMONICITY$ dB, SD: SDHARMONICITY$ dB, GNE: GNEVALUE$
+ShortHarmonicityValues	HNR: MEANHARMONICITY$ dB, SD: SDHARMONICITY$ dB, GNE: GNEVALUE$
+IntensityValues	Intensity - Max.: MAXINTENSITY$ dB, Min.: MININTENSITY$ dB, Mean: MEANINTENSITY$ dB, SD: SDINTENSITY$ dB
+LtasValues	Ltas - Max.: MAXFREQUENCY$ Hz, Min.: MINFREQUENCY$ Hz, BED: BED$ dB, CoG: COG$ Hz  [SELECTEDSTARTTIME$; SELECTEDENDTIME$] S
+ShortLtasValues	Ltas Max.: MAXFREQUENCY$ Hz, BED: BED$ dB, CoG: COG$ Hz
+TimeValues	Time interval: SELECTEDSTARTTIME$ - SELECTEDENDTIME$ S (SELECTEDINTERVAL$ S)
+Recording	Recording
+RecordingTask	Task
+RecordingClear	Clear
+RecordingTarget	Store
+Cancel	Cancel
+Continue	Continue
+Unsaved	Unsaved changes
+BrokenTable	Incomplete or corrupted table
+Next	>
+Previous	<
+Current	=
+Speaker	Speaker ID
+SpeakerID	Recording ID or row number
+SpeakerText	Speaker info
+SpeakerDefault	Speaker ID, name, sex, and/or age
+SpeakerComments	Comments
+SpeakerAudio	Audio
+VoicingMarker	Voice
+Ready	End of list
