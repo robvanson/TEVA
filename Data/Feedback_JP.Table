@@ -23,7 +23,7 @@ Unsaved	変更を保存しない
 BrokenTable	不完全または破損した表
 Next	>
 Previous	<
-Current	#ERROR!:parse
+Current	現在
 Speaker	被験者
 SpeakerID	被験者IDまたは整列した数字
 SpeakerText	被験者情報

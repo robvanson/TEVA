@@ -18,7 +18,7 @@ Help	ヘルプ	?/	知りたい情報があればヘルプボタンを押して�
 Save	印刷 #	#	プリンタ形式でレポートを保存する
 Draw_Sound	音声	S	音声を描画する
 Draw_Pitch	ピッチ	t	ピッチを描画する
-Draw_Harmonicity	調和音　　	H	調和雑音比を描画する
+Draw_Harmonicity	調和音	H	調和雑音比を描画する
 Draw_Spectrogram	スペクトログラム	L	ナローバンドスペクトログラム（100ms）とフォルマントを合わせる
 Draw_Ltas	長時間平均スペクトル	L	長時間平均スペクトル
 Draw_Intensity	強さ	I	強度を描画する
