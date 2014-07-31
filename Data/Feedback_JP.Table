@@ -1,34 +1,34 @@
 Key	Text
-!Author	Author R.J.J.H. van Son
-!Copyright	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
-!License	License GNU GPL version 2 or later
-Select1	Select new start time (or press Select or a key to continue)
-Select2	Select new end time, #- or #+ for a 1 or 2 sec window (cancel with %%Select% or another key)
-SpectrumValues	Formants - QF_1: QUALITYF1$ , QF_2: QUALITYF2$ , QF_3: QUALITYF3$ , QF_4: QUALITYF4$ [Median(F_i)/Median(B_i)]
-PitchValues	Pitch - MVD: MAXIMUMVOICINGDUR$ , Voiced: VOICEDFRACTIONS$ , Jitter: JITTER$ , Shimmer: SHIMMER$ , Mean: MEANPITCH$ Hz, SD: SDPITCH$ Hz, Median: MEDIANPITCH$ Hz
+!Author	著者R.J.J.H. van Son
+!Copyright	著作権 \co 2010-2012 R.J.J.H. van Son \& the NKI
+!License	ライセンス GNU GPL version 2 or later
+Select1	新しい開始時間の選択 (もしくはSelectボタンを押して続ける)
+Select2	新しい終了時間の選択, #- or #+ for a 1 or 2 sec window (キャンセルをする場合は%%Select%もしくは他のボタンを押す)
+SpectrumValues	フォルマント - QF_1: QUALITYF1$ , QF_2: QUALITYF2$ , QF_3: QUALITYF3$ , QF_4: QUALITYF4$ [Median(F_i)/Median(B_i)]
+PitchValues	ピッチ - MVD: 最長発声持続時間MAXIMUMVOICINGDUR$ , Voiced有声音: 有声音の一部分VOICEDFRACTIONS$ , Jitter: ジッターJITTER$ , Shimmer: シマ―SHIMMER$ , Mean平均: ピッチ平均MEANPITCH$ Hz, SD: SDPITCH$ Hz, Median: MEDIANPITCH$ Hz
 ShortPitchValues	VF: VOICEDFRACTIONS$ , Jitter: JITTER$ , Shimmer: SHIMMER$ , Mean: MEANPITCH$ Hz, SD: SDPITCH$ Hz
-HarmonicityValues	Harmonicity - Max.: MAXHARMONICITY$ dB, Min.: MINHARMONICITY$ dB, Mean: MEANHARMONICITY$ dB, SD: SDHARMONICITY$ dB, GNE: GNEVALUE$
-ShortHarmonicityValues	HNR: MEANHARMONICITY$ dB, SD: SDHARMONICITY$ dB, GNE: GNEVALUE$
-IntensityValues	Intensity - Max.: MAXINTENSITY$ dB, Min.: MININTENSITY$ dB, Mean: MEANINTENSITY$ dB, SD: SDINTENSITY$ dB
-LtasValues	Ltas - Max.: MAXFREQUENCY$ Hz, Min.: MINFREQUENCY$ Hz, BED: BED$ dB, CoG: COG$ Hz  [SELECTEDSTARTTIME$; SELECTEDENDTIME$] S
-ShortLtasValues	Ltas Max.: MAXFREQUENCY$ Hz, BED: BED$ dB, CoG: COG$ Hz
-TimeValues	Time interval: SELECTEDSTARTTIME$ - SELECTEDENDTIME$ S (SELECTEDINTERVAL$ S)
-Recording	Recording
-RecordingTask	Task
-RecordingClear	Clear
-RecordingTarget	Store
-Cancel	Cancel
-Continue	Continue
-Unsaved	Unsaved changes
-BrokenTable	Incomplete or corrupted table
+HarmonicityValues	調和音 - Max.: 最大調和音MAXHARMONICITY$ dB, Min.: 最小調和音MINHARMONICITY$ dB, Mean: 平均調和音MEANHARMONICITY$ dB, SD: 調和音標準偏差SDHARMONICITY$ dB, GNE: $
+ShortHarmonicityValues	HNR: 平均調和音MEANHARMONICITY$ dB, SD: SDHARMONICITY$ dB, GNE: GNEVALUE$
+IntensityValues	強度 - Max.: 最大強度MAXINTENSITY$ dB, Min.: 最小強度MININTENSITY$ dB, Mean: 平均強度MEANINTENSITY$ dB, SD: 強度標準偏差SDINTENSITY$ dB
+LtasValues	長期持続平均スペクトラム - Max.: 最大周波数MAXFREQUENCY$ Hz, Min.: 最小周波数MINFREQUENCY$ Hz, BED: BED$ dB, CoG: COG$ Hz [SELECTEDSTARTTIME$; SELECTEDENDTIME$] S
+ShortLtasValues	長期持続平均スぺクラム最大Ltas Max.: 最大周波数MAXFREQUENCY$ Hz, BED: BED$ dB, CoG: COG$ Hz
+TimeValues	間隔Time interval: 開始時間の選択SELECTEDSTARTTIME$ - 終了時間の選択SELECTEDENDTIME$ S (SELECTEDINTERVAL$ S)
+Recording	録音
+RecordingTask	タスク
+RecordingClear	消去
+RecordingTarget	保存
+Cancel	キャンセル
+Continue	続ける
+Unsaved	変更を保存しない
+BrokenTable	不完全または破損した表
 Next	>
 Previous	<
-Current	=
-Speaker	Speaker ID
-SpeakerID	Recording ID or row number
-SpeakerText	Speaker info
-SpeakerDefault	Speaker ID, name, sex, and/or age
-SpeakerComments	Comments
-SpeakerAudio	Audio
-VoicingMarker	Voice
-Ready	End of list
+Current	#ERROR!:parse
+Speaker	被験者
+SpeakerID	被験者IDまたは整列した数字
+SpeakerText	被験者情報
+SpeakerDefault	被験者ID、氏名、性別／年齢
+SpeakerComments	コメント
+SpeakerAudio	オーディオ
+VoicingMarker	声
+Ready	リストの終了

@@ -1,65 +1,65 @@
 Label	Text	Key	Helptext
-!Author	Author	!	R.J.J.H. van Son
-!Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
-!License	License	!	GNU GPL version 2 or later
-!WindowTitle	NKI TE-VOICE ANALYSIS tool: Change settings	!	NKI TE-VOICE ANALYSIS tool: Change settings
-Return	Return	R	Go back to %%Main% page
-!Language_JP	日本	!	日本語版 (Japanese language version)
-ShowBackground	Background	B	Show background
-Input_Microphone	Microphone	h	Use the build-in microphone for recording
-Input_Line	Line input |	|\+	Use the line-input for recording
-Instruction	Pathology	P	Information about pathological types
-Manual	Manual	M	Manual of the application
-Credits	About	iA	Information about NKI TE-VOICE ANALYSIS tool
-Refresh	Refresh	 	Redraw the current screen, the space-bar always refreshes screen
-Help	Help	?/	Press the button you want information on, "Help" to continue
-MuteOutput	Mute [x]	x	Mute output sound
-Test	Test recording	T	Test recording level
-$MaxFrequency	Frequency	!	Highest frequency shown
-Frequency_10k	10kHz	10	Display up to 10 kHz
-Frequency_8k	8kHz	8	Display up to 8 kHz
-Frequency_5k	5kHz	5	Display up to 5 kHz
-Frequency_3k	3kHz	3	Display up to 3 kHz
-Frequency_2k	2kHz	2	Display up to 2 kHz
-Frequency_1k	1kHz	1	Display up to 1 kHz
-$Pitch	Pitch	!	Set pitch extraction algorithm
-Pitchalgorithm_VanAs	Compatible	!	Settings from C.J. van As 2001 "Tracheoesophageal Speech" p83
-Pitchalgorithm_CC300	Low	!	Reduced octave jumps, for normal and low pitches (<300 Hz)
-Pitchalgorithm_CC600	High	!	Reduced octave jumps, for high pitches (<600 Hz)
-$Speaker	Speakers	!	Table with speaker data
-SpeakerData	Data	D	Read table with speaker data
-SpeakerDirectory	Directory	y	Create a table from all recordings in a directory
-SaveSpeaker	Save	v	Write current table with speaker data
-CloseSpeaker	Close	o	Close current table and open a new, empty table
-SpeakerMerge	Merge	g	Merge new table with current speaker data
-SpeakerRevert	Revert	c	Revert speaker data to saved version
-$VoicePrint	Voiceprint	!	Settings of VoicePrint image
-SaveFMT_PDF	PDF	!	Save VoicePrint as PDF file
-SaveFMT_PNG	PNG	!	Save VoicePrint as PNG file
-SaveFMT_EPS	EPS	!	Save VoicePrint as EPS file
-SaveAll	With audio	!	Save recordings together with %%Voiceprint% (same name, but with WAV extension)
-$SpeakerSelect	Selection	!	Selection of recordings
-SpeakerSerial_None	Individual	i	Select individual recordings
-SpeakerSerial_Forw	Serial >	.>	Step through all recordings in sequence (Speaker button reads next recording)
-SpeakerSerial_Backw	< Serial	,<	Step through all recordings in reverse order (Speaker button reads previous recording)
-!SelectionWindow	SelectionWindow	!	Initial width of the selection window (Preferences Serial mode)
-$AudioCollection	Archive	!	Recording and collection of audio
-SaveAudio	Audio	!	Save current audio selection to file
-RecordingTime	Recording	c	Time of recording in seconds and recording tasks
-!RecordingTaskFile	RecordingTaskFile	!	File with recording tasks
-!RecordingTarget	RecordingTarget	!	Directory with the recordings
-$AutomaticTasks	Execute	!	Execution of time consuming tasks
-ShowFormants	Formants	F	Draw formants in spectrogram
-AutoSelect	AutoSelect		Select the "best" interval automatically
-CalcGNE	GNE		Calculate the GNE value 
-SpeakerSort	Sort V	V	Sort the list of recordings
-SpeakerRandomize	Shuffle	u	Randomize the list of recordings
-$Rating	Rating		Human evaluation of speech
-RatingForm_Vowel	Vowels		Evaluation form (VAS) for vowels
-RatingForm_Text	Text		Text evaluation form (VAS) for words and running speech
-RatingForm_INFVo	IINFVo		IINFVo evaluation form (VAS, for Impression, Intelligibility, Noise, Fluency, Voice)
-RatingForm_GRBAS	GRBAS		GRBAS evaluation form (Grade, Roughness, Breathiness, Asthenia, Strain)
-VasScaleTicks	Markers		Display scale markers for evaluations forms
-!Logging	Log on	L	Start logging sounds
-!OpenLog	Select	S	Select directory to store the logging file
-!Run	!Run	n	!Run command file (replay Log file)
+!Author	著者	!	R.J.J.H. van Son
+!Copyright	著作権	!	Copyright \co 2010-2012 R.J.J.H. van Son \& the NKI
+!License	ライセンス	!	GNU GPL version 2 or later
+!WindowTitle	NKI TE-VOICE ANALYSIS tool: 設定を変える	!	NKI TE-VOICE ANALYSIS tool: Change settings
+Return	リターン	R	%%Main% メインページへ戻る
+Language_JP	日本語	E	日本語版
+ShowBackground	背景	B	背景を表示
+Input_Microphone	マイク	h	内蔵型マイクを録音に使用する
+Input_Line	インプットライン 	|\+	インプットラインを録音に使用する
+Instruction	病理	P	病理タイプについての情報
+Manual	マニュアル	M	アプリケーションマニュアル
+Credits	TEVAについて	iA	オランダがんセンター音声分析ツールについて
+Refresh	リフレッシュ		現在のスクリーンを再描画します,スペースバーは常に画面をリフレッシュします
+Help	ヘルプ	?/	知りたい情報があればヘルプボタンを押して下さい
+MuteOutput	消音 [x]	x	音声を消す
+Test	テスト録音	T	テスト録音レベル
+$MaxFrequency	周波数	!	最大周波数を表示する
+Frequency_10k	10kHz	10	10 kHzまでを表示する
+Frequency_8k	8kHz	8	8 kHzまでを表示する
+Frequency_5k	5kHz	5	5 kHzまでを表示する
+Frequency_3k	3kHz	3	3 kHzまでを表示する
+Frequency_2k	2kHz	2	2 kHzまでを表示する
+Frequency_1k	1kHz	1	1 kHzまでを表示する
+$Pitch	ピッチ	!	ピッチからアルゴリズムを抽出する
+Pitchalgorithm_VanAs	互換性あり	!	C.J. van As 2001 "Tracheoesophageal Speech" p83からの設定
+Pitchalgorithm_CC300	低い	!	ノーマルと低いピッチの為にオクターブの飛躍を減らす (<300 Hz)
+Pitchalgorithm_CC600	高い	!	高いピッチの為にオクターブの飛躍を減らす (<600 Hz)
+$Speaker	話者	!	話者データ一覧
+SpeakerData	データ	D	話者データを読む
+SpeakerDirectory	ディレクトリ	y	ディレクトリ中の全てのデータから新しい表を作成する
+SaveSpeaker	保存	v	現在の表に話者データを書き込む
+CloseSpeaker	閉じる	o	現在の表を閉じて新規を開く
+SpeakerMerge	併合する	g	現在の話者データと新しい表を併合する
+SpeakerRevert	戻る	c	話者のデータを保存された状態に戻す
+$VoicePrint	声紋	!	声紋の画像設定
+SaveFMT_PDF	PDF	!	PDFファイルで声紋を保存する
+SaveFMT_PNG	PNG	!	PNGファイルで声紋を保存する
+SaveFMT_EPS	EPS	!	EPSファイルで声紋を保存する
+SaveAll	オーディオと	!	録音を%%声紋%と一緒に保存する (同じ名前, WAV拡張で)
+$SpeakerSelect	選択	!	録音の選択
+SpeakerSerial_None	個別	i	個別の録音を選択する
+SpeakerSerial_Forw	連続 >	.>	順に全ての録音をステップスルー (スピーカーボタンで次の録音へ)
+SpeakerSerial_Backw	< 連続	,<	逆順で全ての録音をステップスルー (スピーカーボタンで前の録音へ)
+!SelectionWindow	画面選択	!	初期画面設定の選択(環境設定シリアルモード)
+$AudioCollection	アーカイブ	!	オーディオの録音とコレクション
+SaveAudio	オーディオ	!	現在選択されているオーディオをファイルに保存
+RecordingTime	録音	c	録音時間の秒数と録音タスク
+!RecordingTaskFile	タスクファイルの録音	!	ファイルと録音タスク
+!RecordingTarget	録音ターゲット	!	ディレクトリと録音
+$AutomaticTasks	実行	!	時間のかかるタスクの実行
+ShowFormants	フォルマント	F	スペクトログラムのフォルマントを描出する
+AutoSelect	自動選択		自動で「最適な」間隔を選択する
+CalcGNE	GNE		GNE値を計算する
+SpeakerSort	Sort V	V	録音リストをソートする
+SpeakerRandomize	シャッフル	u	録音リストをランダム化する
+$Rating	評価		音声のヒューマン評価
+RatingForm_Vowel	母音		母音からの評価(VAS) 
+RatingForm_Text	テキスト		単語や実行中の音声のテキスト評価フォーム（VAS)
+RatingForm_INFVo	IINFVo		IINFVo評価フォーム (印象, 明瞭度, 雑音, 流暢さ, 声質によるVAS)
+RatingForm_GRBAS	GRBAS		GRBAS 評価フォーム(嗄声の全般的な程度, 粗造性, 気息性, 無力性, 努力性による評価)
+VasScaleTicks	マーカー		評価フォームのディスプレイ尺度マーカー
+!Logging	ログオン	L	音のログオンを開始する
+!OpenLog	選択	S	ディレクトリを選択してログファイルを保存する
+!Run	!実行	n	!コマンドファイル実行 (ログファイルをリプレイ)

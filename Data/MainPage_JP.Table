@@ -1,31 +1,31 @@
 Label	Text	Key	Helptext
-!Author	Author	!	R.J.J.H. van Son
-!Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
-!License	License	!	GNU GPL version 2 or later
-!WindowTitle	NKI TE-VOICE ANALYSIS tool: Main page	!	NKI TE-VOICE ANALYSIS tool: Main page
-!CANVAS	Display	¤	Display area
-!PathologicalType	- Signal Type:	012349	Pathological Signal Type (AST) in window title I-IV, type 1-4, 0 erases
-Speaker	!90!Speaker	k	Input speaker data
-!NextItem	Spk	x|\\	Next recording in %serial mode
-!PreviousItem	Spk	x|\\	Previous recording in %serial mode
-File	Open	O	Open sound file
-Record	記録	R	Record your speech. You have 4 seconds, watch the recording "light"
-Play	再生	P	Play back of your recorded pronunciation
-Quit	やめる	Q	Quit TEVA
-Config	設定	S	Go to %%Configuration% page
-Refresh	Refresh	h	Redraw the current screen, the space-bar always refreshes screen
-Help	助け	?/	Press the button you want information on, "Help" to continue
-Save	Print \# 	#	Save a report in printer format
-Draw_Sound	聞こえる	S	Draw the Sound
-Draw_Pitch	ピッチ	t	Draw Pitch
-Draw_Harmonicity	Harmonicity	H	Draw the Harmonicity to Noise ratio
-Draw_Spectrogram	Spectrogram	L	Narrow band spectrogram (100 ms) with formants superimposed
-Draw_Ltas	Ltas	L	Long time average spectrum
-Draw_Intensity	Intensity	I	Draw Intensity
-Draw_Rating	Rating	#	Rate the speech on scales 
-Select	Select	e	Select new start and endtime
-ToSelection	To selection	c	Go to selected start and endtime
-ZoomOut	Zoom out -	u\-_	Double the current time window
-ZoomIn	Zoom in +	n+=	Halve the current time window
-Previous	< Previous	\<\,	Previous interval, or shift current time window to the left
-Next	Next >	\>\.	Next interval, or shift the current time window to the right
+!Author	著者	!	R.J.J.H. van Son
+!Copyright	著作権	!	Copyright \co 2010-2012 R.J.J.H. van Son \& the NKI
+!License	ライセンス	!	GNU GPL version 2 or later
+!WindowTitle	NKI TE-VOICE ANALYSIS tool: メインページ	!	NKI TE-VOICE ANALYSIS tool: メインページ
+!CANVAS	ディスプレイ	¬§	ディスプレイ範囲
+!PathologicalType	シグナルタイプ	12349	病理シグナルタイプ (AST) ウィンドウタイトル I-IV, タイプ 1-4, 0 消去
+Speaker	!90!話者 	k	話者データ入力
+!NextItem	被験者	x|\\	次の録音 %serial mode
+!PreviousItem	被験者	x|\\	前の録音 %serial mode
+File	開く	O	音声データファイルを開く
+Record	録音	R	録音できます. 4秒間録音可能です, 録音 "ライト"を見て下さい。
+Play	再生	P	録音した音声を再生
+Quit	中断	Q	TEVAを中断する
+Config	設定	S	 %%Configuration% ページへ
+Refresh	リフレッシュ	h	現在のスクリーンを再描画します,スペースバーは常に画面をリフレッシュします
+Help	ヘルプ	?/	知りたい情報があればヘルプボタンを押して下さい
+Save	印刷 #	#	プリンタ形式でレポートを保存する
+Draw_Sound	音声	S	音声を描画する
+Draw_Pitch	ピッチ	t	ピッチを描画する
+Draw_Harmonicity	調和音　　	H	調和雑音比を描画する
+Draw_Spectrogram	スペクトログラム	L	ナローバンドスペクトログラム（100ms）とフォルマントを合わせる
+Draw_Ltas	長時間平均スペクトル	L	長時間平均スペクトル
+Draw_Intensity	強さ	I	強度を描画する
+Draw_Rating	評価	#	スピーチを評価する
+Select	選択	e	新しい開始時間と終了時間を選ぶ
+ToSelection	選択	c	新い開始時間と終了時間の選択へ
+ZoomOut	ズームアウト -	u\-_	二画面表示
+ZoomIn	ズームイン +	n+=	二分割画面
+Previous	< 前	\<\,	前のインターバルもしくは現在の画面を左へ移動する
+Next	次 >	\>\.	次のインターバルもしくは現在の画面を右へ移動する
