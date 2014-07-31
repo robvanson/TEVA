@@ -1,5 +1,5 @@
 ManPagesTextFile
-"VAS rating scales (EN)" "R.J.J.H. van Son" 20120810 0
+"VAS rating scales (JP)" "R.J.J.H. van Son" 20120810 0
 <intro> "Visual Analogue rating Scales for IINFVo and GRBAS."
 
 <script> 4.5 4 "
