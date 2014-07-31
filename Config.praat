@@ -387,15 +387,9 @@ procedure processConfigSaveFMT .fmt$ .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "SaveFMT"
 
-	if windows and index("EMF EPS", .fmt$) <= 0
-		.fmt$ = config.saveFMT$
-	elsif not windows and index("EMF", .fmt$) > 0
-		.fmt$ = config.saveFMT$
-	else
-		call Draw_button '.table$' SaveFMT_'config.saveFMT$' 0
-		config.saveFMT$ = .fmt$
-		call Draw_button '.table$' SaveFMT_'config.saveFMT$' 2
-	endif
+	call Draw_button '.table$' SaveFMT_'config.saveFMT$' 0
+	config.saveFMT$ = .fmt$
+	call Draw_button '.table$' SaveFMT_'config.saveFMT$' 2
 
 endproc
 
