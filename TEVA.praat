@@ -686,7 +686,7 @@ procedure set_language .lang$
 	if checkTable.available
 		config.language$ = .lang$
 		
-		if config.language$ = "JP"
+		if config.language$ = "JA"
 			CJK font style preferences: "Japanese"
 		elsif config.language$ = "ZH"
 			CJK font style preferences: "Chinese"
