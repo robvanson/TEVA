@@ -4,7 +4,7 @@ Label	Text	Key	Helptext
 !License	ライセンス	!	GNU GPL version 2 or later
 !WindowTitle	NKI TE-VOICE ANALYSIS tool: 設定を変える	!	NKI TE-VOICE ANALYSIS tool: Change settings
 Return	リターン	R	%%Main% メインページへ戻る
-Language_JP	日本語	E	日本語版
+Language_JA	日本語	E	日本語版
 ShowBackground	背景	B	背景を表示
 Input_Microphone	マイク	h	内蔵型マイクを録音に使用する
 Input_Line	インプットライン 	|\+	インプットラインを録音に使用する

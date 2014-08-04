@@ -6,7 +6,7 @@ Label	LeftX	RightX	LowY	HighY	Color	Draw
 Help	90	+10	90	+10	Black	DrawHelp
 Return	90	+10	77.5	+10	Black	DrawReturn
 Language_EN	0	15	95	+5	Black	DrawNull
-Language_JP	0	15	^-6	+5	Black	DrawNull
+Language_JA	0	15	^-6	+5	Black	DrawNull
 Language_DE	0	15	^-6	+5	Black	DrawNull
 Language_NL	0	15	^-6	+5	Black	DrawNull
 !Language_ES	0	15	71	+5	Black	DrawNull
