@@ -20,11 +20,11 @@ Draw_Sound	音声	S	音声を描画する
 Draw_Pitch	ピッチ	t	ピッチを描画する
 Draw_Harmonicity	調和音	H	調和雑音比を描画する
 Draw_Spectrogram	スペクトログラム	L	ナローバンドスペクトログラム（100ms）とフォルマントを合わせる
-Draw_Ltas	長時間平均スペクトル	L	長時間平均スペクトル
+Draw_Ltas	Ltas	L	長時間平均スペクトル
 Draw_Intensity	強さ	I	強度を描画する
 Draw_Rating	評価	#	スピーチを評価する
 Select	選択	e	新しい開始時間と終了時間を選ぶ
-ToSelection	選択	c	新い開始時間と終了時間の選択へ
+ToSelection	選択	c	選択した時間窓のみ表示する
 ZoomOut	ズームアウト -	u\-_	二画面表示
 ZoomIn	ズームイン +	n+=	二分割画面
 Previous	< 前	\<\,	前のインターバルもしくは現在の画面を左へ移動する
