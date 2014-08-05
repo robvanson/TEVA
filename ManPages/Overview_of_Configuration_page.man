@@ -16,6 +16,7 @@ of these button is remembered between invocations of TEVA. Buttons on a (light) 
 <list_item> "\bu #Help: [?] Press the button you want information on, press %%Help% again to continue"
 <list_item> "\bu #Return: [R] Go back to %Main page"
 <list_item> "\bu #English: [E] Use English labels and help"
+<list_item> "\bu #日本語: [D] Use Japanese labels and help"
 <list_item> "\bu #Deutsch: [D] Use German labels and help"
 <list_item> "\bu #Nederlands: [N] Use Dutch labels and help"
 
