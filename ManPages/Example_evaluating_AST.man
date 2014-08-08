@@ -33,7 +33,7 @@ completely and replace it with a single dash ##-#, the current record will be re
 "
 
 <normal> "Put a single %%3% in the top field of the Speaker window to select the third entry in the Table. 
-Then Click the %Ready button. You now see a display of the recording of the fourth speaker. You see the ID of this 
+Then Click the %Continue button. You now see a display of the recording of the fourth speaker. You see the ID of this 
 speaker and the @@Acoustic Signal Typing|Pathological Type@ as it was recorded in the Table."
 
 <entry> "Find a stable interval"
