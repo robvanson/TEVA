@@ -37,7 +37,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Graphics_text.cpp
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_praat_sources/sys/praat.cpp
 --- praat_sources/sys/praat.cpp	2014-04-22 11:09:57.000000000 +0200
 +++ demo_praat_sources/sys/praat.cpp	2014-04-22 11:53:58.000000000 +0200
-@@ -1267,6 +1267,12 @@ void praat_init (const char *title, unsi
+@@ -1268,6 +1268,12 @@ void praat_init (const char *title, unsi
  
  	GuiWindow raam = NULL;
  	if (Melder_batch) {
@@ -50,7 +50,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#if defined (UNIX) || defined (macintosh) || defined (_WIN32) && defined (CONSOLE_APPLICATION)
  			MelderString_empty (& theCurrentPraatApplication -> batchName);
  			for (unsigned int i = iarg_batchName; i < argc; i ++) {
-@@ -1313,9 +1319,11 @@ void praat_init (const char *title, unsi
+@@ -1314,9 +1320,11 @@ void praat_init (const char *title, unsi
  		#if motif
  			GuiApp_setApplicationShell (theCurrentPraatApplication -> topShell -> d_xmShell);
  		#endif
@@ -62,7 +62,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	}
  	Thing_recognizeClassesByName (classCollection, classStrings, classManPages, classSortedSetOfString, NULL);
  	if (Melder_batch) {
-@@ -1325,6 +1333,9 @@ void praat_init (const char *title, unsi
+@@ -1326,6 +1334,9 @@ void praat_init (const char *title, unsi
  		trace ("adding fixed buttons without GUI");
  		praat_addFixedButtons (NULL);
  	} else {
@@ -72,7 +72,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  
  		#ifdef macintosh
  			#if ! useCarbon
-@@ -1352,7 +1363,9 @@ void praat_init (const char *title, unsi
+@@ -1353,7 +1364,9 @@ void praat_init (const char *title, unsi
  		trace ("creating the dynamic menu in the Objects window");
  		praat_actions_createDynamicMenu (raam);
  		trace ("showing the Objects window");
@@ -82,7 +82,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	//Melder_fatal ("stop");
  		#if defined (UNIX) && ! defined (NO_GRAPHICS)
  			try {
-@@ -1381,7 +1394,12 @@ void praat_init (const char *title, unsi
+@@ -1382,7 +1395,12 @@ void praat_init (const char *title, unsi
  
  	trace ("creating the Picture window");
  	trace ("before picture window shows: locale is %s", setlocale (LC_ALL, NULL));
@@ -96,7 +96,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	trace ("after picture window shows: locale is %s", setlocale (LC_ALL, NULL));
  }
  
-@@ -1650,6 +1668,14 @@ void praat_run (void) {
+@@ -1651,6 +1669,14 @@ void praat_run (void) {
  						s ++;
  					}
  				}
@@ -148,7 +148,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
  	Sound sound = NULL;
  	LOOP {
  		if (CLASS == classSound) sound = (Sound) OBJECT;   // may stay NULL
-@@ -839,7 +841,9 @@ DIRECT (TextGrid_edit)
+@@ -856,7 +858,9 @@ DIRECT (TextGrid_edit)
  END2 }
  
  DIRECT2 (TextGrid_LongSound_edit) {
@@ -158,7 +158,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
  	LongSound longSound = NULL;
  	int ilongSound = 0;
  	LOOP {
-@@ -855,7 +859,9 @@ DIRECT (TextGrid_LongSound_edit)
+@@ -872,7 +876,9 @@ DIRECT (TextGrid_LongSound_edit)
  END2 }
  
  DIRECT2 (TextGrid_SpellingChecker_edit) {
@@ -168,7 +168,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
  	SpellingChecker spellingChecker = NULL;
  	int ispellingChecker = 0;
  	Sound sound = NULL;
-@@ -872,7 +878,9 @@ DIRECT (TextGrid_SpellingChecker_edit)
+@@ -889,7 +895,9 @@ DIRECT (TextGrid_SpellingChecker_edit)
  END2 }
  
  DIRECT2 (TextGrid_LongSound_SpellingChecker_edit) {

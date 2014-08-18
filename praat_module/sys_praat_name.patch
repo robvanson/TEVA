@@ -1,7 +1,7 @@
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_praat_sources/sys/praat.cpp
 --- praat_sources/sys/praat.cpp	2014-04-22 11:09:57.000000000 +0200
 +++ demo_praat_sources/sys/praat.cpp	2014-04-22 11:53:58.000000000 +0200
-@@ -1192,9 +1192,9 @@ void praat_init (const char *title, unsi
+@@ -1193,9 +1193,9 @@ void praat_init (const char *title, unsi
  		 * Make sure that the program's private directory exists.
  		 */
  		#if defined (UNIX)
