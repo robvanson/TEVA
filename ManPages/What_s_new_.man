@@ -2,6 +2,13 @@ ManPagesTextFile
 "What's new?" "R.J.J.H. van Son" 20120215 0
 <intro> "Latest changes in TEVA."
 
+<normal> "##21 September 2014#"
+<list_item> "\bu Added a recording option that allows prompts to appear on the screen with automatic save."
+<list_item> "\bu Japanese translation."
+<list_item> "\bu Changed the print command to generate a PNG and PDF pages with all graphics."
+<list_item> "\bu VAS now include GRBAS and full IINFVo."
+<list_item> "\bu Support for several pitch detecting settings (high/low and compatible)."
+<list_item> "\bu ."
 <normal> "##24 September 2013#"
 <list_item> "\bu Added a backward option to Serial."
 <normal> "##17 January 2013#"
