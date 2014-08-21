@@ -85,4 +85,4 @@ table and saved (if backups are set, %%~.tsv%). Backup files too will be saved a
 
 <entry> "Next:"
 <list_item> "\bu @@Determine pathological type@"
-<list_item> "\bu @@Saving a report@"
+<list_item> "\bu @@VoicePrints@"

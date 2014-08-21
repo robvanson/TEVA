@@ -84,7 +84,7 @@ is saved into a backup file with the same name as the original file and an added
 the table, this backup file is removed. Otherwise, it will remain until you open the table again and change something in it. 
 If you accidently forgot to save the table, you can simply open the backup file and save it under the old, or a new, name."
 
-<normal> "To save the complete analysis of a single recording, use the @@Saving a report|Save@ button on the 
+<normal> "To save the complete analysis of a single recording, use the @@VoicePrints|Print@ button on the 
 @@Overview of Main page|Main page@. This will ask for a place and name to save a directory with all the displays and 
 all the analysis data for the current time interval."
 

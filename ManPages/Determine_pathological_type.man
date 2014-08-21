@@ -34,4 +34,4 @@ has been shown (calculated). So it will change until all the relevant displays h
 The median AST will be calculated when a report is generated."
 
 <entry> "Next:"
-<list_item> "\bu @@Saving a report@"
+<list_item> "\bu @@VoicePrints@"

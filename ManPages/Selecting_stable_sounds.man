@@ -45,4 +45,4 @@ clicking on %%To selection%."
 
 <entry> "Next:"
 <list_item> "\bu @@Determine pathological type@"
-<list_item> "\bu @@Saving a report@"
+<list_item> "\bu @@VoicePrints@"
