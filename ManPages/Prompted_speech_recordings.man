@@ -1,0 +1,38 @@
+ManPagesTextFile
+"Prompted speech recordings" "R.J.J.H. van Son" 20140822 0
+<intro> "Use on-screen @@Recording tasks|prompts@ to record speech."
+<normal> "When collecting speech from informants or patients, it is very useful to be able to direct them through the 
+recording session with @@Recording tasks|prompt@ screens. "
+
+<entry> "Set up a simple prompt screen: #a as in %hat"
+<normal> "On the @@Overview of Configuration page|configuration page@, click the %Recording button under the Archive 
+heading. A window will appear. "
+
+<script> 4.5 2 "
+	Axes... 0 100 0 100
+	Insert picture from file... Recording_tasks_window.png 10 10 0 100
+"
+
+<list_item> "\bu 1 In the %Recording field, enter the default duration of the recording in seconds, e.g., 4"
+<list_item> "\bu 2 In the %Task field, enter [\# \# a\#  as in \% \% hat\% ], including the []-brackets"
+<list_item> "\bu 3 Press the %Store button and select the directory or map you want to store the recorded speech in. "
+<list_item> "\bu 3 Press %Continue"
+
+<entry> "Record speech"
+<normal> "Go back to the @@Overview of Main page|main page@. When you press the %Record button, a window will appear. 
+Enter the recording ID and press %Continue."
+
+<script> 4.5 2 "
+	Axes... 0 100 0 100
+	Insert picture from file... RecordingID_Window.png 10 10 0 100
+"
+
+<list_item> "\bu 1 The prompt text will appear in a blank window on a red background."
+<list_item> "\bu 2 Recording starts when the background switches to green and the red dot appears at the top-left."
+<list_item> "\bu 3 The audio selection is stored to file when you click on the blue %Spk button or if you quit TEVA."
+
+<script> 4.5 4 "
+	Axes... 0 100 0 100
+	Insert picture from file... RecordingTask_Single.png 10 10 0 100
+"
+
