@@ -3,6 +3,12 @@ ManPagesTextFile
 <intro> "Use on-screen @@Recording tasks|prompts@ to record speech."
 <normal> "When collecting speech from informants or patients, it is very useful to be able to direct them through the 
 recording session with @@Recording tasks|prompt@ screens. "
+<list_item> "\bu @@Recording your own voice@"
+<list_item> "\bu @@Opening an existing recording@"
+<list_item> "\bu @@Selecting stable sounds@"
+<list_item> "\bu @@Adding speaker information@"
+<list_item> "\bu @@Determine pathological type@"
+<list_item> "\bu @@VoicePrints@"
 
 <entry> "Set up a simple prompt screen: #a as in %hat"
 <normal> "On the @@Overview of Configuration page|configuration page@, click the %Recording button under the Archive 
@@ -20,9 +26,9 @@ heading. A window will appear. "
 
 <entry> "Record speech"
 <normal> "Go back to the @@Overview of Main page|main page@. When you press the %Record button, a window will appear. 
-Enter the recording ID and press %Continue."
+Enter the recording ID or filename and press %Continue."
 
-<script> 4.5 2 "
+<script> 4.5 1.5 "
 	Axes... 0 100 0 100
 	Insert picture from file... RecordingID_Window.png 10 10 0 100
 "

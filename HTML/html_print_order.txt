@@ -10,12 +10,13 @@ Recording_tasks.html
 Adding_speaker_information.html
 Selecting_stable_sounds.html
 Determine_pathological_type.html
-Saving_a_report.html
+Perceptual_rating_of_a_vowel.html
+VoicePrints.html
+Prompted_speech_recordings.html
 Example_evaluating_AST.html
 Example_evaluating_a_Corpus.html
 Analysis.html
 Acoustic_Signal_Typing.html
 AST_categories.html
 VAS_rating_scales__EN_.html
-VoicePrints.html
 TEVA_license.html

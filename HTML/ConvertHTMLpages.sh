@@ -31,6 +31,14 @@ sed -i ""  's/Example_evaluating_a_Corpus_2.png/Main_page_serial_detail_Nxt.png/
 rm -f Example_evaluating_a_Corpus_2.png
 sed -i ""  's/Example_evaluating_a_Corpus_3.png/Configure_page_serial_detail.png/g' Example_evaluating_a_Corpus.html
 rm -f Example_evaluating_a_Corpus_3.png
+sed -i ""  's/Perceptual_rating_of_a_vowel_1.png/VAS_display.png/g' Perceptual_rating_of_a_vowel.html
+rm -f Perceptual_rating_of_a_vowel_1.png
+sed -i ""  's/Prompted_speech_recordings_1.png/Recording_tasks_window.png/g' Prompted_speech_recordings.html
+rm -f Prompted_speech_recordings_1.png
+sed -i ""  's/Prompted_speech_recordings_2.png/RecordingID_Window.png/g' Prompted_speech_recordings.html
+rm -f Prompted_speech_recordings_2.png
+sed -i ""  's/Prompted_speech_recordings_3.png/RecordingTask_Single.png/g' Prompted_speech_recordings.html
+rm -f Prompted_speech_recordings_3.png
 
 perl -i'' -ne 'if(m!(<a href\=\"NKI_TE-VOICE_ANALYSIS_tool__EN__1.png\" target\=\"_blank\"><img height=\d+ width=\d+ src=NKI_TE-VOICE_ANALYSIS_tool__EN__1.png></a>)!){$a = $1;$b = $a;$a=~s/NKI_TE-VOICE_ANALYSIS_tool__EN__1.png/Main_page_screenshot.png/g;$b=~s/NKI_TE-VOICE_ANALYSIS_tool__EN__1.png/Configure_page_screenshot.png/g;s!(<a href="NKI_TE-VOICE_ANALYSIS_tool__EN__1.png" target="_blank"><img height=250 width=450 src=NKI_TE-VOICE_ANALYSIS_tool__EN__1.png></a>)!$a$b!g;};print $_' NKI_TE-VOICE_ANALYSIS_tool__EN_.html
 rm -f NKI_TE-VOICE_ANALYSIS_tool__EN__1.png
