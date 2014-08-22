@@ -32,3 +32,4 @@ These automatic evaluations are displayed in the @@VoicePrints@. "
 
 <entry> "Next:"
 <list_item> "\bu @@VoicePrints@"
+<list_item> "\bu @@Prompted speech recordings@"

@@ -16,7 +16,7 @@ ManPagesTextFile
 <normal> "Van As-Brooks has developed a four grade ##[Acoustic Signal Typing]# of voice that is based on visual 
 inspection of the ##[Spectrogram]#. The ##[Acoustic Signal Typing|AST]# categories can be entered using the number 
 keys 1-4, the key 0 removes the ##[Acoustic Signal Typing|AST]# category. ##[Acoustic Signal Typing|AST]# categories are 
-displayed as Roman numerals on the ##[Overview of Main page|main]# page."
+displayed as Roman numerals on the @@Overview of Main page|main@ page."
 
 <entry> "Acoustic measures of voice"
 

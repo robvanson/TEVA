@@ -6,7 +6,7 @@ sequences with formatted text. A recording task is defined by setting the
 %%Task% field in the Recording window of the 
 @@Overview of Configuration page|Configuration page@. The recording sessions 
 is started by clicking the %%Record%  button on the @@Overview of Main page|Main page@. "
-<list_item> "\bu Each recording sessions starts with a  window that asks 
+<list_item> "\bu Each recording session starts with a  window that asks 
 for the ID or name of the speaker"
 <list_item> "\bu After an ID or name is entered, the first prompt is displayed. 
 While you are not satisfied with a recording, you can re-record by 
@@ -14,7 +14,7 @@ clicking the %%Record% button."
 <list_item> "\bu When satisfied with the recording, click the (blue) %%Nxt% 
 button for the next prompt. "
 <list_item> "\bu When all the prompts have been displayed, an %%end of list% 
-message appears (only when there are more than one prompts). After you clicked 
+message appears (only when there is more than one prompts). After you clicked 
 anywhere in the window, you can start a new recording session. "
 
 
