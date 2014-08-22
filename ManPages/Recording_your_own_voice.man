@@ -43,7 +43,8 @@ replaces the existing recording."
 <entry> "Other displays and analysis"
 <normal> "When you click on any of the buttons on the right side below %Sound, e.g., %Pitch, %Spectrogram, %Ltas, %Intensity, or %Harmonicity, 
 these will be displayed instead. Calculation of some of these displays might take some time, so be patient. Below all of the windows, except 
-%Sound and %Spectrogram, text will appear with statistics of these analysis types."
+%Sound and %Spectrogram, text will appear with statistics of these analysis types. The button labeled %Rating will display 
+##@@VAS rating scales (EN)|Visual Analogue Scales (VAS)@# for perceptual rating of the sounds. "
 
 <entry> "Next:"
 <list_item> "\bu @@Opening an existing recording@"

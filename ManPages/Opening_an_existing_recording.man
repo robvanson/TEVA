@@ -8,7 +8,7 @@ ManPagesTextFile
 "
 
 <entry> "Audio formats"
-<normal> "TEVA can handle all ##[Sound files|audio file formats]## that Praat can read. 
+<normal> "TEVA can handle all ##[Sound files|audio file formats]## that %Praat can read. 
 This includes, among others, WAV, AIFF/C, FLAC, and MP3 files."
 
 <entry> "Open a file"

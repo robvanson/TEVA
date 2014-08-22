@@ -1,6 +1,6 @@
 ManPagesTextFile
 "Determine pathological type" "R.J.J.H. van Son" 20111220 0
-<intro> "How to determine the @@Acoustic Signal Typing|pathological type and read the acoustic signal typing@"
+<intro> "How to determine the @@Acoustic Signal Typing|pathological type@ (acoustic signal typing)"
 <normal> "Record or Open an /a/ sound, select a stable part of the recording and add information 
 about the speaker and recording:"
 <list_item> "\bu @@Recording your own voice@"
@@ -24,14 +24,9 @@ type will be printed over the display and stored together with the boundaries of
 in the table with speaker data. Pressing 0 will erase the type and the boundaries. Pressing 9 will set 
 the boundaries but will not change the type." 
 
-<entry> "Acoustic signal typing"
-<normal> "There is also an @@AST categories|automatic evaluation of pathological type@. The displays 
-for %Pitch, %Ltas, and %Harmonicity contain pathological type estimates preceded by ""AST:"" 
-(@@Acoustic Signal Typing@) based on individual @@AST categories|acoustic measures@. 
-The median value of these measures is displayed in arabic numerals (1-4) as long as no pathological type has 
-been entered by hand. Note that the automatic AST will only be calculated from measures for which the display 
-has been shown (calculated). So it will change until all the relevant displays have been shown. 
-The median AST will be calculated when a report is generated."
+<entry> "Acoustic signal typing and Voice Quality"
+<normal> "There are also experimental @@AST categories|automatic evaluation of pathological type@ and %%Voice Quality%.  
+Thess automatic evaluations are displayed in the @@VoicePrints@. "
 
 <entry> "Next:"
 <list_item> "\bu @@VoicePrints@"
