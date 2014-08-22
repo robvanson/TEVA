@@ -26,7 +26,8 @@ the boundaries but will not change the type."
 
 <entry> "Acoustic signal typing and Voice Quality"
 <normal> "There are also experimental @@AST categories|automatic evaluation of pathological type@ and %%Voice Quality%.  
-Thess automatic evaluations are displayed in the @@VoicePrints@. "
+These automatic evaluations are displayed in the @@VoicePrints@. "
 
 <entry> "Next:"
+<list_item> "\bu @@Perceptual rating of a vowel@"
 <list_item> "\bu @@VoicePrints@"

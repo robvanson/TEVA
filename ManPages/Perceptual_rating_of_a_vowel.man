@@ -1,0 +1,34 @@
+ManPagesTextFile
+"Perceptual rating of a vowel" "R.J.J.H. van Son" 20140822 0
+<intro> "How to determine the perceptual quality of a vowel using @@VAS rating scales (EN)|VAS rating@."
+<normal> "Record or Open an /a/ sound, select a stable part of the recording and add information 
+about the speaker and recording:"
+<list_item> "\bu @@Recording your own voice@"
+<list_item> "\bu @@Opening an existing recording@"
+<list_item> "\bu @@Selecting stable sounds@"
+<list_item> "\bu @@Adding speaker information@"
+<list_item> "\bu @@Determine pathological type@"
+
+<entry> "Perceptual rating using Visual Analogue Scales"
+<normal> "On the @@Overview of Main page|main@ page, select the %Rating button (bottom right). The screen will 
+show a number of horizontal bars with titles and qualifications to the left and right of each bar. To change the 
+type evaluations, go to the @@Overview of Configuration page|Configuration page@ and select one of the buttons 
+labeled %Vowels, %Text, %IINFVo, or %GRBAS (see @@VAS rating scales (EN)|VAS rating@)."
+
+<normal> "Listen to the sound by pressing the %Play button. Click on the position in the Visual Analogue Scale 
+that corresponds to the relative quality of the speech. Default, there will be a grey mark at the center of each 
+scale. When a selection is made, a red mark will be visible at the indicated position. Use the @@VoicePrints|Print@ 
+button to save and print the evaluation. It is best to leave the scale %Markers off when evaluating speech. These 
+scale %Markers are useful when inspecting evaluation scores. "
+
+<entry> "Acoustic signal typing and Voice Quality"
+<normal> "There are also experimental @@AST categories|automatic evaluation of pathological type@ and %%Voice Quality%.  
+These automatic evaluations are displayed in the @@VoicePrints@. "
+
+<script> 4.5 4 "
+	Axes... 0 100 0 100
+	Insert picture from file... VAS_display.png 10 10 0 100
+"
+
+<entry> "Next:"
+<list_item> "\bu @@VoicePrints@"
