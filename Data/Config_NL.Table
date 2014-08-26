@@ -48,6 +48,7 @@ SaveAudio	Audio	!	Bewaar huidige selectie van geluid naar bestand
 RecordingTime	Opname	]}	Opnametijd in seconden en bestanden voor voorleestaken
 !RecordingTaskFile	RecordingTaskFile	!	Bestand met de opnametaken
 !RecordingTarget	RecordingTarget	!	Map met de opnamen
+!RecordingScreen	RecordingScreen	!	Gebruikt de speciale opnamepagina
 $AutomaticTasks	Uitvoeren	!	Uitvoering van tijdrovende taken
 ShowFormants	Formanten	F	Teken formanten in spectrogram
 AutoSelect	AutoSelect		Selecteer automatisch het "beste" interval

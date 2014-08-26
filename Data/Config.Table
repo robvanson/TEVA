@@ -26,6 +26,7 @@ SaveAudio	35	+10	^-5	+5	Black	DrawNull
 RecordingTime	35	+10	^-6	+5	Black	DrawNull
 !RecordingTaskFile	0	0	0	0	Black	DrawNull
 !RecordingTarget	0	0	0	0	Black	DrawNull
+!RecordingScreen	0	0	0	0	Black	DrawNull
 $AutomaticTasks	35	+10	74	+4	Black	DrawNull
 ShowFormants	35	+10	^-5	+5	{0.65,0.60,0.45}	DrawNull
 AutoSelect	35	+10	^-6	+5	{0.65,0.60,0.45}	DrawNull

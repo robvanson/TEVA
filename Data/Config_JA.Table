@@ -48,6 +48,7 @@ SaveAudio	オーディオ	!	現在選択されているオーディオをファ�
 RecordingTime	録音	c	録音時間の秒数と録音タスク
 !RecordingTaskFile	タスクファイルの録音	!	ファイルと録音タスク
 !RecordingTarget	録音ターゲット	!	ディレクトリと録音
+!RecordingScreen	RecordingScreen	!	Use the recording page
 $AutomaticTasks	実行	!	時間のかかるタスクの実行
 ShowFormants	フォルマント	F	スペクトログラムのフォルマントを描出する
 AutoSelect	自動選択		自動で「最適な」間隔を選択する

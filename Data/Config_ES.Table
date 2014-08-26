@@ -54,6 +54,7 @@ SpeakerSort	Tipo V	V	Clasificar la lista de grabaciones
 SpeakerRandomize	Arrastrar	!	Aleatorizar lista de grabaciones
 !RecordingTaskFile	RecordingTaskFile	!	File with recording tasks
 !RecordingTarget	RecordingTarget	!	Directory with the recordings
+!RecordingScreen	RecordingScreen	!	Use the recording page
 $Rating	Valoraci\o'n		Valoraci\o'n humana del habla
 RatingForm_Vowel	Vocales		Formulario de evaluaci\o'n (VAS) de vocales
 RatingForm_Text	Text		Text evaluation form (VAS) for words and running speech
