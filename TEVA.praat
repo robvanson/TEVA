@@ -32,7 +32,8 @@ endif
 
 # These are simply "useful" defaults
 localTableDir$ = "Data"
-buttonsTableName$ = "MainPage"
+defaultButtonsTableName$ = "MainPage"
+buttonsTableName$ = defaultButtonsTableName$
 configTableName$ = "Config"
 feedbackTablePrefix$ = "Feedback"
 feedbackTableName$ = ""

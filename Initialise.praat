@@ -386,7 +386,7 @@ procedure read_preferences .preferencesFile$
 				'.variableName$' = "'.variableValue$'"
 			endif
 		endfor
-		
+pause 'buttonsTableName$'
 		select Table '.preferenceTable$'
 		Remove
 		
@@ -456,6 +456,16 @@ procedure write_preferences .preferencesFile$
 		endfor
 	endfor
 	
+	# Last, write the name of the current buttons table
+	if buttonsTableName$ != defaultButtonsTableName$
+		select Table Preferences
+		Append row
+		.row += 1
+		Set string value... '.row' Key ButtonsTableName
+		Set string value... '.row' Value 'buttonsTableName$'
+	endif
+	
+	# Write out
 	select Table Preferences
 	Write to table file... '.preferencesFile$'
 	Remove
