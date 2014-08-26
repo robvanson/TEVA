@@ -61,6 +61,7 @@ te.useAnnotationInterface = 0
 te.defaultLanguage$ = "EN"
 config.recordingTaskFile$ = ""
 config.recordingTarget$ = ""
+config.recordingScreen$ = ""
 te.recordingTaskTable = 0
 te.restartRecordingTask = 0
 te.waitRecordingTask = 1

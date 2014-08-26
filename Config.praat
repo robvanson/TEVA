@@ -455,6 +455,7 @@ procedure processConfigRecordingTime .clickX .clickY .pressed$
 	.orig_recordingTime$ = config.recordingTime$
 	.orig_recordingTaskFile$ = config.recordingTaskFile$
 	.orig_recordingTarget$ = config.recordingTarget$
+	.orig_recordingScreen$ = config.recordingScreen$
 	# Get feedback texts
 	call getLanguageTexts '.table$' '.label$'
 	.inputText$ = getLanguageTexts.text$
@@ -468,7 +469,7 @@ procedure processConfigRecordingTime .clickX .clickY .pressed$
 	while clicked <> 5 and clicked <> 1
 		beginPause(getLanguageTexts.helpText$)
 			positive (.inputText$, config.recordingTime$)
-			sentence (.inputTaskFile$, config.recordingTaskFile$)
+			sentence (.inputTaskFile$, config.recordingScreen$ + config.recordingTaskFile$)
 			sentence (.inputTarget$, config.recordingTarget$)
 		clicked = endPause ("'getLanguageTexts.cancelText$'", "'.inputTaskFile$'", "'.inputTarget$'", "'.inputTaskClear$'", "'getLanguageTexts.continueText$'", 5, 1)
 		# Cancel
@@ -476,6 +477,7 @@ procedure processConfigRecordingTime .clickX .clickY .pressed$
 			config.recordingTime$ = .orig_recordingTime$
 			config.recordingTaskFile$ = .orig_recordingTaskFile$
 			config.recordingTarget$ = .orig_recordingTarget$
+			config.recordingScreen$ = .orig_recordingScreen$
 		# Input task file
 		elsif clicked = 2
 			.filename$ = chooseReadFile$ (.inputTaskFile$)
@@ -527,6 +529,10 @@ procedure processConfigRecordingTime .clickX .clickY .pressed$
 			.inputTaskFile$ = replace_regex$(.inputTaskFile$, "\$", "", 0)
 			.inputFile$ = '.inputTaskFile$'$
 			if .inputFile$ <> ""
+				if startsWith(.inputFile$, "*")
+					config.recordingScreen$ = left$(.inputFile$, 1)
+					.inputFile$ = right$(.inputFile$, length(.inputFile$) - 1)
+				endif
 				if fileReadable(.inputFile$)
 					if te.recordingTaskTable > 0
 						select te.recordingTaskTable
