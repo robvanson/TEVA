@@ -81,6 +81,7 @@ procedure global_initialization
 	config.createBackup = 0
 	config.speakerDataTable = -1
 	config.speakerSerial$ = "None"
+	# config.speakerSerial$ = "Forw"
 	config.saveAll = 0
 	config.autoSelect = 0
 	config.calcGNE = 0
@@ -386,7 +387,6 @@ procedure read_preferences .preferencesFile$
 				'.variableName$' = "'.variableValue$'"
 			endif
 		endfor
-pause 'buttonsTableName$'
 		select Table '.preferenceTable$'
 		Remove
 		
@@ -455,15 +455,6 @@ procedure write_preferences .preferencesFile$
 			endif
 		endfor
 	endfor
-	
-	# Last, write the name of the current buttons table
-	if buttonsTableName$ != defaultButtonsTableName$
-		select Table Preferences
-		Append row
-		.row += 1
-		Set string value... '.row' Key ButtonsTableName
-		Set string value... '.row' Value 'buttonsTableName$'
-	endif
 	
 	# Write out
 	select Table Preferences

@@ -30,10 +30,15 @@ if not variableExists("build_SHA$")
 	build_SHA$ = "-"
 endif
 
+# A special purpose Recording page layout for the Main Page 
+# buttonsFileName$ = "RecPage"
+
+# The standard Main Page layout
+buttonsFileName$ = "MainPage"
+
 # These are simply "useful" defaults
 localTableDir$ = "Data"
-defaultButtonsTableName$ = "MainPage"
-buttonsTableName$ = defaultButtonsTableName$
+buttonsTableName$ = "MainPage"
 configTableName$ = "Config"
 feedbackTablePrefix$ = "Feedback"
 feedbackTableName$ = ""
@@ -684,7 +689,12 @@ procedure set_language .lang$
     endif
     
     # Set language
-	call checkTable 'buttonsTableName$'_'.lang$'
+	call checkTable 'buttonsFileName$'_'.lang$'
+	# Handle alternative Main Page layout
+	if not checkTable.available
+		call checkTable 'buttonsTableName$'_'.lang$'
+	endif
+	
 	if checkTable.available
 		config.language$ = .lang$
 		
@@ -2075,23 +2085,32 @@ endproc
 # build-in scripted tables
 procedure loadTable .tableName$
 	.table = -1
+	.tableFileName$ = .tableName$
+	if .tableName$ = "MainPage"
+		.tableFileName$ = buttonsFileName$
+	endif
+	
 	# Search for the table in local, preference, and global directories
-	if fileReadable("'localTableDir$'/'.tableName$'.Table")
-    	.table = Read from file... 'localTableDir$'/'.tableName$'.Table
-	elsif fileReadable("'preferencesTableDir$'/'.tableName$'.Table")
-    	.table = Read from file... 'preferencesTableDir$'/'.tableName$'.Table
-	elsif fileReadable("'globaltablelists$'/'.tableName$'.Table")
-    	.table = Read from file... 'globaltablelists$'/'.tableName$'.Table
+	if fileReadable("'localTableDir$'/'.tableFileName$'.Table")
+    	.table = Read from file... 'localTableDir$'/'.tableFileName$'.Table
+    	Rename: .tableName$
+	elsif fileReadable("'preferencesTableDir$'/'.tableFileName$'.Table")
+    	.table = Read from file... 'preferencesTableDir$'/'.tableFileName$'.Table
+    	Rename: .tableName$
+	elsif fileReadable("'globaltablelists$'/'.tableFileName$'.Table")
+    	.table = Read from file... 'globaltablelists$'/'.tableFileName$'.Table
+    	Rename: .tableName$
 	elsif variableExists(.tableName$)
 		.tableID = '.tableName$'
 		select .tableID
 		.table = .tableID
 	# Load them from script
-	elsif variableExists("procCreate'.tableName$'$")
-		call Create'.tableName$'
+	elsif variableExists("procCreate'.tableFileName$'$")
+		call Create'.tableFileName$'
+    	Rename: .tableName$
 		.table = selected("Table")
 	else
-		call emergency_table_exit '.tableName$' cannot be found
+		call emergency_table_exit '.tableFileName$' cannot be found
 	endif
 endproc
 
@@ -2111,13 +2130,23 @@ procedure checkTable .tableName$
     endif
 endproc
 
+
 procedure check_and_load_language .tableName$ .language$
-	call checkTable '.tableName$'_'.language$'
+	.tableFileName$ = .tableName$
+	# Handle alternative Main Page layouts
+	if .tableName$ = "MainPage"
+		call checkTable 'buttonsFileName$'_'.language$'
+		if checkTable.available
+			.tableFileName$ = buttonsFileName$
+		endif
+	endif
+	
+	call checkTable '.tableFileName$'_'.language$'
 	.table = -1
 	if checkTable.available
-		call loadTable '.tableName$'_'.language$'
+		call loadTable '.tableFileName$'_'.language$'
 	else
-		call loadTable '.tableName$'_'te.defaultLanguage$'
+		call loadTable '.tableFileName$'_'te.defaultLanguage$'
 	endif
 	.table = loadTable.table
 endproc
