@@ -30,9 +30,6 @@ if not variableExists("build_SHA$")
 	build_SHA$ = "-"
 endif
 
-# A special purpose Recording page layout for the Main Page 
-# buttonsFileName$ = "RecPage"
-
 # The standard Main Page layout
 buttonsFileName$ = "MainPage"
 
@@ -130,6 +127,17 @@ recordingLightX = 0
 recordingLightY = 100
 printerName$ = "BHK301"
 printerPresets$ = "Standard"
+
+##########################################################
+# 
+# Setup for alternative Recording layout for the Main Page
+# 
+##########################################################
+
+buttonsFileName$ = "RecPage"
+config.speakerSerial$ = "Forw"
+config.recordingTaskFile$ = "[#a as in %%hat%<newline>##ee# as in %%heed%<newline>##oo# as in %%hood%]"
+config.recordingTarget$ = "'homeDirectory$'/Desktop"
 
 ##########################################################
 # 
@@ -1227,12 +1235,31 @@ procedure setup_recordingTask
 		.text$ = left$(config.recordingTaskFile$, length(config.recordingTaskFile$) - 1)
 		.text$ = right$(.text$, length(.text$) - 1)
 		te.recordingTaskTable = Create Table with column names... RecordingTaskTable 1 postfix time align font size text
-		Set string value... 1 postfix _rec
-		Set numeric value... 1 time 'config.recordingTime$'
-		Set string value... 1 align centre
-		Set string value... 1 font Helvetica
-		Set numeric value... 1 size 24
-		Set string value... 1 text '.text$'
+		.lineEnd = index(.text$, "<newline>")
+		.i = 1
+		repeat
+			select te.recordingTaskTable
+			.numRows = Get number of rows
+			if .numRows < .i
+				Append row
+			endif
+			if .lineEnd > 0
+				.currentLine$ = left$(.text$, .lineEnd - 1)
+				.text$ = right$(.text$, length(.text$) - (.lineEnd + 8))
+				.lineEnd = index(.text$, "<newline>")
+			else
+				.currentLine$ = .text$
+				.text$ = ""
+				.lineEnd = 0
+			endif
+			Set string value... '.i' postfix _rec'.i'
+			Set numeric value... '.i' time 'config.recordingTime$'
+			Set string value... '.i' align centre
+			Set string value... '.i' font Helvetica
+			Set numeric value... '.i' size 24
+			Set string value... '.i' text '.currentLine$'
+			.i += 1
+		until length(.text$) <= 0
 	endif
 	if te.recordingTaskTable > 0		
 		# Switch to serial
