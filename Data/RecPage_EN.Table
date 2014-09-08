@@ -1,0 +1,31 @@
+Label	Text	Key	Helptext
+!Author	Author	!	R.J.J.H. van Son
+!Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
+!License	License	!	GNU GPL version 2 or later
+!WindowTitle	NKI TE-VOICE ANALYSIS tool: Main page	!	NKI TE-VOICE ANALYSIS tool: Main page
+!CANVAS	Display	¤	Display area
+!PathologicalType	- Signal Type:	012349	Pathological Signal Type (AST) in window title I-IV, type 1-4, 0 erases
+Speaker	Speaker	k	Input speaker data
+!NextItem	Next	x|\\	Next recording in %serial mode
+!PreviousItem	Spk	x|\\	Previous recording in %serial mode
+File	Open	O	Open sound file
+Record	Record	R	Record your speech. You have 4 seconds, watch the recording "light"
+Play	Play	P	Play back of your recorded pronunciation
+Quit	Quit	Q	Quit TEVA
+Config	Settings	S	Go to %%Configuration% page
+Refresh	Refresh	h	Redraw the current screen, the space-bar always refreshes screen
+Help	Help	?/	Press the button you want information on, "Help" to continue
+Save	Print \# 	#	Save a report in printer format
+Draw_Sound	Sound	S	Draw the Sound
+Draw_Pitch	Pitch	t	Draw Pitch
+Draw_Harmonicity	Harmonicity	H	Draw the Harmonicity to Noise ratio
+Draw_Spectrogram	Spectrogram	L	Narrow band spectrogram (100 ms) with formants superimposed
+Draw_Ltas	Ltas	L	Long time average spectrum
+Draw_Intensity	Intensity	I	Draw Intensity
+Draw_Rating	Rating	#	Rate the speech on scales 
+Select	Select	e	Select new start and endtime
+ToSelection	To selection	c	Go to selected start and endtime
+ZoomOut	Zoom out -	u\-_	Double the current time window
+ZoomIn	Zoom in +	n+=	Halve the current time window
+Previous	< Previous	\<\,	Previous interval, or shift current time window to the left
+Next	Next >	\>\.	Next interval, or shift the current time window to the right
