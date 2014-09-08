@@ -80,8 +80,11 @@ procedure global_initialization
 	config.speakerDataBackup$ = ""
 	config.createBackup = 0
 	config.speakerDataTable = -1
-	config.speakerSerial$ = "None"
-	# config.speakerSerial$ = "Forw"
+	if te.recordingMode
+		config.speakerSerial$ = "Forw"
+	else
+		config.speakerSerial$ = "None"
+	endif
 	config.saveAll = 0
 	config.autoSelect = 0
 	config.calcGNE = 0

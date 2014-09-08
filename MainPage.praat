@@ -2558,7 +2558,7 @@ procedure saveSound .table$ .label$
 		.currentID$ = replace_regex$(speakerID$, "^\W*([\w\- ]+).*$", "\1", 0)
 		.currentID$ = replace_regex$(.currentID$, " ", "_", 0)
 	else
-		.currentID$ = "TEVA"
+		.currentID$ = demoAppName$
 	endif
 	.filename$ = ""
 	if currentSoundName$ <> ""

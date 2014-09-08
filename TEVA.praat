@@ -23,7 +23,12 @@
 #     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 # 
 
-demoAppName$ = "TEVA"
+te.recordingMode = 0
+if te.recordingMode
+	demoAppName$ = "RecTEVA"
+else
+	demoAppName$ = "TEVA"
+endif
 
 # Define variable that might be reset in Initialise*.praat
 if not variableExists("build_SHA$")
@@ -133,11 +138,12 @@ printerPresets$ = "Standard"
 # Setup for alternative Recording layout for the Main Page
 # 
 ##########################################################
-
-buttonsFileName$ = "RecPage"
-config.speakerSerial$ = "Forw"
-config.recordingTaskFile$ = "[#a as in %%hat%<newline>##ee# as in %%heed%<newline>##oo# as in %%hood%]"
-config.recordingTarget$ = "'homeDirectory$'/Desktop"
+if te.recordingMode
+	buttonsFileName$ = "RecPage"
+	config.speakerSerial$ = "Forw"
+	config.recordingTaskFile$ = "[#a as in %%hat%<newline>##ee# as in %%heed%<newline>##oo# as in %%hood%]"
+	config.recordingTarget$ = "'homeDirectory$'/Desktop"
+endif
 
 ##########################################################
 # 
@@ -1594,7 +1600,7 @@ endproc
 ######################################################
 procedure config_page
     demo Erase all
-    demoWindowTitle("TEVA: Change settings")
+    demoWindowTitle("'demoAppName$': Change settings")
     .label$ = ""
     call Draw_config_page
     
@@ -2018,15 +2024,15 @@ procedure load_local_preferences .dataDir$
 	defaultDirectory$ = .dataDir$
 	
 	# Default preferences file
-	.localPrefs$ = "'.dataDir$'/TEVApreferences.tsv"
+	.localPrefs$ = "'.dataDir$'/'demoAppName$'preferences.tsv"
 	
 	# Look for a suitable preferences file in the current or parent directory
-	if fileReadable("'.dataDir$'/TEVApreferences.tsv")
-		.localPrefs$ = "'.dataDir$'/TEVApreferences.tsv"
+	if fileReadable("'.dataDir$'/'demoAppName$'preferences.tsv")
+		.localPrefs$ = "'.dataDir$'/'demoAppName$'preferences.tsv"
 	elsif fileReadable("'.dataDir$'/.tevarc")
 		.localPrefs$ = "'.dataDir$'/.tevarc"
-	elsif fileReadable("'.dataDir$'/../TEVApreferences.tsv")
-		.localPrefs$ = "'.dataDir$'/../TEVApreferences.tsv"
+	elsif fileReadable("'.dataDir$'/../'demoAppName$'preferences.tsv")
+		.localPrefs$ = "'.dataDir$'/../'demoAppName$'preferences.tsv"
 	elsif fileReadable("'.dataDir$'/../.tevarc")
 		.localPrefs$ = "'.dataDir$'/../.tevarc"
 	endif

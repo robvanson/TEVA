@@ -900,7 +900,7 @@ procedure write_credits
 	.xleft += 2
  	.dy = .lineHeight
  	.ytext = .yhigh - 2 - .dy
- 	demo Text... '.xleft' Left '.ytext' Bottom TEVA version 0.1
+ 	demo Text... '.xleft' Left '.ytext' Bottom 'demoAppName$' version 0.1
 	.ytext -= 2*.dy
  	demo Text... '.xleft' Left '.ytext' Bottom For more information, visit our website: http://www.
 	.ytext -= .dy
