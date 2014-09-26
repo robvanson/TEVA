@@ -728,7 +728,8 @@ procedure ReadSpeakerData .speakerData$
 					for .row to .numRows
 						select config.speakerDataTable
 						.id$ = Get value... '.row' ID
-						if index_regex(.idList$, "\t'.id$'\t")
+						.exists = index_regex(.idList$, "\t'.id$'\t")
+						if .exists != undefined and .exists > 0
 							.copyNum = 1
 							while index_regex(.idList$, "\t'.id$'_'.copyNum'\t")
 								.copyNum += 1
@@ -895,10 +896,21 @@ procedure WriteSpeakerData
 			if index_regex(config.speakerDataBackup$, "\.(?itsv|table)") <= 0
 				config.speakerDataBackup$ = replace_regex$(config.speakerDataBackup$, "\.\w+$", ".tsv", 0)
 			endif
-			.tmpTable = Read from file... 'config.speakerData$'
-			Save as tab-separated file... 'config.speakerDataBackup$'
-			select .tmpTable
-			Remove
+			.tmpTable = nocheck Read from file... 'config.speakerData$'
+			if .tmpTable != undefined and .tmpTable > 0
+				Save as tab-separated file... 'config.speakerDataBackup$'
+				select .tmpTable
+				Remove
+			else
+				call get_feedback_text 'config.language$' BrokenTable
+				call convert_praat_to_latin1 'get_feedback_text.text$'
+				.brokenTableText$ = convert_praat_to_latin1.text$
+				call getLanguageTexts Config SpeakerData
+				.inputText$ = getLanguageTexts.inputText$
+				beginPause(".inputText$")
+					comment("'getLanguageTexts.helpText$': '.brokenTableText$'")
+				clicked = endPause ("'getLanguageTexts.continueText$'", 1, 1)
+			endif
 		endif
 		select config.speakerDataTable
 		Save as tab-separated file... 'config.speakerData$'
