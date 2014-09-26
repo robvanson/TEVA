@@ -1875,9 +1875,8 @@ procedure getOpenFile .openDialogue$
 		call load_local_preferences '.dataDir$'
 		.filename$ = ""
 	endif
-	
-	# Get the file
-	if .filename$ <> "" and fileReadable(.filename$)
+	# Get the file. We insist on the correct extention as we cannot check for "incorrect" files in other ways.
+	if .filename$ <> "" and fileReadable(.filename$) and index_regex(.filename$, "(?i\.(wav|au|snd|aif[fc]?|flac|mp3))$") > 0
 		# Reset all internal structures
 		call reset_analysis
 		

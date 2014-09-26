@@ -784,15 +784,17 @@ procedure ReadSpeakerData .speakerData$
 					select config.speakerDataTable
 					Append row
 					if index_regex(.currentString$, "\t")
-						
 						.column = 1
 						while index_regex(.currentString$, "\S")
 							.nextEnd = index_regex(.currentString$, "[\t\n]")
-							.nextEnd -= 1
+							if .nextEnd <= 0
+								.nextEnd = length(.currentString$) + 1
+							endif
 							.colLabel$ = Get column label... '.column'
 							.nextValue$ = left$(.currentString$, (.nextEnd - 1))
 							.currentString$ = right$(.currentString$, (length(.currentString$) - .nextEnd))
 							Set string value... '.row' '.colLabel$' '.currentString$'
+							.column += 1
 						endwhile
 					else
 						Set string value... '.row' ID Item'.row'

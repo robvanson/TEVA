@@ -194,7 +194,7 @@ procedure processConfigSpeakerDirectory .clickX .clickY .pressed$
 		for .file to .numFiles
 			select .fileList
 			.fileName$ = Get string... '.file'
-			if index_regex(.fileName$, "(?i\.(wav|au|snd|aif[fc]?|flac)$)")
+			if index_regex(.fileName$, "(?i\.(wav|au|snd|aif[fc]?|flac|mp3)$)")
 				# Create a unique ID
 				.id$ = replace_regex$(.fileName$, "\.[^\.]*$", "", 0)
 				if index_regex(.idList$, "\t'.id$'\t")
