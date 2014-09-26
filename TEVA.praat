@@ -1212,7 +1212,8 @@ procedure setup_recordingTask
 		Remove
 	# Read a recording task
 	elsif fileReadable(config.recordingTaskFile$)
-		te.recordingTaskTable = Read from file... 'config.recordingTaskFile$'
+		call readTable 'config.recordingTaskFile$'
+		te.recordingTaskTable = readTable.tableID
 		# Do a sanity check
 		.fullName$ = selected$ ()
 		.type$ = extractWord$(.fullName$, "")
@@ -1950,7 +1951,7 @@ procedure set_new_speakerdata .newSpeakerID$
 endproc
 
 procedure readFromFile .filename$
-	if .filename$ <> "" and fileReadable(.filename$)
+	if .filename$ <> "" and fileReadable(.filename$) and index_regex(.filename$, "(?i\.(wav|au|snd|aif[fc]?|flac|mp3))$") > 0
 		Read from file... '.filename$'
 		currentStartTime = 0
 		currentEndTime = Get total duration
@@ -2124,13 +2125,13 @@ procedure loadTable .tableName$
 	
 	# Search for the table in local, preference, and global directories
 	if fileReadable("'localTableDir$'/'.tableFileName$'.Table")
-    	.table = Read from file... 'localTableDir$'/'.tableFileName$'.Table
+    	.table = nocheck Read from file... 'localTableDir$'/'.tableFileName$'.Table
     	Rename: .tableName$
 	elsif fileReadable("'preferencesTableDir$'/'.tableFileName$'.Table")
-    	.table = Read from file... 'preferencesTableDir$'/'.tableFileName$'.Table
+    	.table = nocheck Read from file... 'preferencesTableDir$'/'.tableFileName$'.Table
     	Rename: .tableName$
 	elsif fileReadable("'globaltablelists$'/'.tableFileName$'.Table")
-    	.table = Read from file... 'globaltablelists$'/'.tableFileName$'.Table
+    	.table = nocheck Read from file... 'globaltablelists$'/'.tableFileName$'.Table
     	Rename: .tableName$
 	elsif variableExists(.tableName$)
 		.tableID = '.tableName$'
@@ -2143,6 +2144,10 @@ procedure loadTable .tableName$
 		.table = selected("Table")
 	else
 		call emergency_table_exit '.tableFileName$' cannot be found
+	endif
+	
+	if .table <= 0
+		call emergency_table_exit '.tableFileName$' corrupted or cannot be found
 	endif
 endproc
 
@@ -2988,3 +2993,33 @@ procedure extend_directory_path .root$ .path$
 	endwhile
 endproc
 
+
+# Safely read a table
+procedure readTable .filename$
+	.tableID = -1
+	if fileReadable(.filename$)
+		.tableID = nocheck Read from file... '.filename$'
+		if .tableID = undefined or .tableID <= 0
+			.tableID = -1
+		else
+			.fullName$ = selected$ ()
+			.type$ = extractWord$(.fullName$, "")
+			if .type$ <> "Table"
+				Remove
+				.tableID = -1
+			endif
+		endif
+		
+		# No table has been read
+		if .tableID <= 0
+			call get_feedback_text 'config.language$' BrokenTable
+			call convert_praat_to_latin1 'get_feedback_text.text$'
+			.brokenTableText$ = convert_praat_to_latin1.text$
+			call getLanguageTexts Config SpeakerData
+			.inputText$ = getLanguageTexts.inputText$
+			beginPause(".inputText$")
+				comment("'getLanguageTexts.helpText$': '.brokenTableText$'")
+			clicked = endPause ("'getLanguageTexts.continueText$'", 1, 1)
+		endif
+	endif
+endproc

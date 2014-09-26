@@ -362,36 +362,38 @@ procedure read_preferences .preferencesFile$
 		.preferencesFile$ = preferencesAppFile$
 	endif
 	if fileReadable(.preferencesFile$)
-		Read from file... '.preferencesFile$'
-		.preferenceTable$ = selected$("Table")
-		.numPrefKeys = Get number of rows
-
-		for .row to .numPrefKeys
-			.variableName$ = Get value... '.row' Key
-			if variableExists(.variableName$)
-				.variableValue = Get value... '.row' Value
-				if .variableValue <> undefined
-					'.variableName$' = '.variableValue'
-				endif
-			elsif variableExists(.variableName$+"$")
-				.variableValue$ = Get value... '.row' Value
-				# Double check language!!!!
-				if .variableName$ = "config.language"
-					.buttonsTable$ = te.buttons$
-					if .buttonsTable$ = ""
-						.buttonsTable$ = buttonsTableName$
+		call readTable '.preferencesFile$'
+		if readTable.tableID > 0
+			.preferenceTable$ = selected$("Table")
+			.numPrefKeys = Get number of rows
+	
+			for .row to .numPrefKeys
+				.variableName$ = Get value... '.row' Key
+				if variableExists(.variableName$)
+					.variableValue = Get value... '.row' Value
+					if .variableValue <> undefined
+						'.variableName$' = '.variableValue'
 					endif
-					call checkTable '.buttonsTable$'_'.variableValue$'
-					if not checkTable.available
-						.variableValue$ = te.defaultLanguage$
+				elsif variableExists(.variableName$+"$")
+					.variableValue$ = Get value... '.row' Value
+					# Double check language!!!!
+					if .variableName$ = "config.language"
+						.buttonsTable$ = te.buttons$
+						if .buttonsTable$ = ""
+							.buttonsTable$ = buttonsTableName$
+						endif
+						call checkTable '.buttonsTable$'_'.variableValue$'
+						if not checkTable.available
+							.variableValue$ = te.defaultLanguage$
+						endif
 					endif
+					.variableName$ = .variableName$+"$"
+					'.variableName$' = "'.variableValue$'"
 				endif
-				.variableName$ = .variableName$+"$"
-				'.variableName$' = "'.variableValue$'"
-			endif
-		endfor
-		select Table '.preferenceTable$'
-		Remove
+			endfor
+			select Table '.preferenceTable$'
+			Remove
+		endif
 		
 		# Reset variables
 		if te.ratingTable > 0
@@ -699,17 +701,10 @@ procedure ReadSpeakerData .speakerData$
 			else
 				.currentSelected = -1
 			endif
-			config.speakerDataTable = nocheck Read from file... '.speakerData$'
+			call readTable '.speakerData$'
+			config.speakerDataTable = readTable.tableID
 			if config.speakerDataTable <= 0 or .currentSelected = config.speakerDataTable
 				config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST StartTime EndTime
-				call get_feedback_text 'config.language$' BrokenTable
-				call convert_praat_to_latin1 'get_feedback_text.text$'
-				.brokenTableText$ = convert_praat_to_latin1.text$
-				call getLanguageTexts Config SpeakerData
-				.inputText$ = getLanguageTexts.inputText$
-				beginPause(".inputText$")
-					comment("'getLanguageTexts.helpText$': '.brokenTableText$'")
-				clicked = endPause ("'getLanguageTexts.continueText$'", 1, 1)
 			else
 				# Complete columns
 				.col = Get column index... ID
@@ -896,20 +891,12 @@ procedure WriteSpeakerData
 			if index_regex(config.speakerDataBackup$, "\.(?itsv|table)") <= 0
 				config.speakerDataBackup$ = replace_regex$(config.speakerDataBackup$, "\.\w+$", ".tsv", 0)
 			endif
-			.tmpTable = nocheck Read from file... 'config.speakerData$'
+			call readTable 'config.speakerData$'
+			.tmpTable = readTable.tableID
 			if .tmpTable != undefined and .tmpTable > 0
 				Save as tab-separated file... 'config.speakerDataBackup$'
 				select .tmpTable
 				Remove
-			else
-				call get_feedback_text 'config.language$' BrokenTable
-				call convert_praat_to_latin1 'get_feedback_text.text$'
-				.brokenTableText$ = convert_praat_to_latin1.text$
-				call getLanguageTexts Config SpeakerData
-				.inputText$ = getLanguageTexts.inputText$
-				beginPause(".inputText$")
-					comment("'getLanguageTexts.helpText$': '.brokenTableText$'")
-				clicked = endPause ("'getLanguageTexts.continueText$'", 1, 1)
 			endif
 		endif
 		select config.speakerDataTable

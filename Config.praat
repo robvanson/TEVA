@@ -240,7 +240,8 @@ procedure processConfigSpeakerMerge .clickX .clickY .pressed$
 	.newFile$ = chooseReadFile$ (getLanguageTexts.helpText$)
 	# Read new file
 	if .newFile$ != "" and fileReadable(.newFile$)
-		.tmpNewSpeakerData = Read from file... '.newFile$'
+		call readTable '.newFile$'
+		.tmpNewSpeakerData = readTable.tableID
 		# Make sure data table is read
 		if config.speakerDataTable <= 0 and config.speakerData$ <> ""
 			call get_speakerInfo 1
@@ -279,10 +280,13 @@ procedure processConfigSpeakerRevert .clickX .clickY .pressed$
 			endif
 		endif
 		if config.speakerDataTable <= 0 and config.speakerDataBackup$ <> "" and fileReadable(config.speakerDataBackup$)
-			config.speakerDataTable = Read from file... 'config.speakerDataBackup$'
-			config.createBackup = 1
-			select config.speakerDataTable
-			Save as tab-separated file... 'config.speakerData$'
+			call readTable 'config.speakerDataBackup$'
+			if readTable.tableID > 0
+				config.speakerDataTable = readTable.tableID
+				config.createBackup = 1
+				select config.speakerDataTable
+				Save as tab-separated file... 'config.speakerData$'
+			endif
 		endif
 	endif
 	
