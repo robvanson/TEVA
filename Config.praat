@@ -242,21 +242,23 @@ procedure processConfigSpeakerMerge .clickX .clickY .pressed$
 	if .newFile$ != "" and fileReadable(.newFile$)
 		call readTable '.newFile$'
 		.tmpNewSpeakerData = readTable.tableID
-		# Make sure data table is read
-		if config.speakerDataTable <= 0 and config.speakerData$ <> ""
-			call get_speakerInfo 1
+		if .tmpNewSpeakerData > 0
+			# Make sure data table is read
+			if config.speakerDataTable <= 0 and config.speakerData$ <> ""
+				call get_speakerInfo 1
+			endif
+			# Merge AST values as new columns
+			call merge_AST_values config.speakerDataTable .tmpNewSpeakerData
+			
+			# Merge Rating values
+			call merge_table_values config.speakerDataTable .tmpNewSpeakerData "^Rating\."
+			
+			# Save result
+			call WriteSpeakerData
+			
+			select .tmpNewSpeakerData
+			Remove
 		endif
-		# Merge AST values as new columns
-		call merge_AST_values config.speakerDataTable .tmpNewSpeakerData
-		
-		# Merge Rating values
-		call merge_table_values config.speakerDataTable .tmpNewSpeakerData "^Rating\."
-		
-		# Save result
-		call WriteSpeakerData
-		
-		select .tmpNewSpeakerData
-		Remove
 	endif
     call Draw_button 'table$' '.label$' 0
 endproc

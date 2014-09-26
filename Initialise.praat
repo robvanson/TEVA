@@ -893,7 +893,7 @@ procedure WriteSpeakerData
 			endif
 			call readTable 'config.speakerData$'
 			.tmpTable = readTable.tableID
-			if .tmpTable != undefined and .tmpTable > 0
+			if .tmpTable > 0
 				Save as tab-separated file... 'config.speakerDataBackup$'
 				select .tmpTable
 				Remove

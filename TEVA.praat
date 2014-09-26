@@ -1215,27 +1215,29 @@ procedure setup_recordingTask
 		call readTable 'config.recordingTaskFile$'
 		te.recordingTaskTable = readTable.tableID
 		# Do a sanity check
-		.fullName$ = selected$ ()
-		.type$ = extractWord$(.fullName$, "")
-		if .type$ <> "Table"
-			Remove
-			te.recordingTaskTable = -1
-			config.recordingTaskFile$ = ""
-			.skiprecording = 1
-		else
-			.textIndex = Get column index: "text"
-			if .textIndex <= 0
+		if te.recordingTaskTable > 0
+			.fullName$ = selected$ ()
+			.type$ = extractWord$(.fullName$, "")
+			if .type$ <> "Table"
 				Remove
 				te.recordingTaskTable = -1
 				config.recordingTaskFile$ = ""
 				.skiprecording = 1
 			else
-				.textIndex = Get column index: "postfix"
+				.textIndex = Get column index: "text"
 				if .textIndex <= 0
-				.noPostfix = 1
+					Remove
+					te.recordingTaskTable = -1
+					config.recordingTaskFile$ = ""
+					.skiprecording = 1
+				else
+					.textIndex = Get column index: "postfix"
+					if .textIndex <= 0
+					.noPostfix = 1
+					endif
 				endif
+				
 			endif
-			
 		endif
 	# Create a recording task from a single line of text
 	elsif startsWith(config.recordingTaskFile$, "[") and endsWith(config.recordingTaskFile$, "]")
@@ -1877,11 +1879,12 @@ procedure getOpenFile .openDialogue$
 		.filename$ = ""
 	endif
 	# Get the file. We insist on the correct extention as we cannot check for "incorrect" files in other ways.
-	if .filename$ <> "" and fileReadable(.filename$) and index_regex(.filename$, "(?i\.(wav|au|snd|aif[fc]?|flac|mp3))$") > 0
+	call readAudio '.filename$'
+	.sndInput = readAudio.audioID
+	if .sndInput > 0
 		# Reset all internal structures
 		call reset_analysis
 		
-		.sndInput = Read from file... '.filename$'
 		.numChannels = Get number of channels
 		if .numChannels > 1
 			.monoInput= Convert to mono
@@ -1951,8 +1954,9 @@ procedure set_new_speakerdata .newSpeakerID$
 endproc
 
 procedure readFromFile .filename$
-	if .filename$ <> "" and fileReadable(.filename$) and index_regex(.filename$, "(?i\.(wav|au|snd|aif[fc]?|flac|mp3))$") > 0
-		Read from file... '.filename$'
+	call readAudio '.filename$'
+	.sndInput = readAudio.audioID
+	if .sndInput > 0
 		currentStartTime = 0
 		currentEndTime = Get total duration
 		Rename... Speech
@@ -2994,10 +2998,40 @@ procedure extend_directory_path .root$ .path$
 endproc
 
 
+# Safely read an audio file
+procedure readAudio .filename$
+	.audioID = -1
+	if .filename$ <> "" and fileReadable(.filename$) and index_regex(.filename$, "(?i\.(wav|au|snd|aif[fc]?|flac|mp3))$") > 0
+		.audioID = nocheck Read from file... '.filename$'
+		if .audioID = undefined or .audioID <= 0
+			.audioID = -1
+		else
+			.fullName$ = selected$ ()
+			.type$ = extractWord$(.fullName$, "")
+			if .type$ <> "Sound"
+				Remove
+				.audioID = -1
+			endif
+		endif
+		
+		# No audio file has been read
+		if .audioID <= 0
+			call get_feedback_text 'config.language$' BrokenTable
+			call convert_praat_to_latin1 'get_feedback_text.text$'
+			.brokenTableText$ = convert_praat_to_latin1.text$
+			call getLanguageTexts Config SpeakerData
+			.inputText$ = getLanguageTexts.inputText$
+			beginPause(".inputText$")
+				comment("'getLanguageTexts.helpText$': '.brokenTableText$'")
+			clicked = endPause ("'getLanguageTexts.continueText$'", 1, 1)
+		endif
+	endif
+endproc
+
 # Safely read a table
 procedure readTable .filename$
 	.tableID = -1
-	if fileReadable(.filename$)
+	if .filename$ <> "" and fileReadable(.filename$) and index_regex(.filename$, "(?i\.(tsv|table|csv))$") > 0
 		.tableID = nocheck Read from file... '.filename$'
 		if .tableID = undefined or .tableID <= 0
 			.tableID = -1
