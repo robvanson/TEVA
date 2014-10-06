@@ -1,7 +1,7 @@
 --- praat_sources/main/main_Praat.cpp	2013-06-26 09:06:04.000000000 +0200
 +++ demo_praat_sources/main/main_Praat.cpp	2013-06-28 14:47:39.000000000 +0200
 @@ -44,10 +44,12 @@ static void logo (Graphics g) {
- 	Graphics_text (g, 0.5, 0.16, L"Copyright \\co 1992-" xstr(PRAAT_YEAR) " by Paul Boersma and David Weenink");
+ 	Graphics_text (g, 0.5, 0.16, L"Copyright © 1992–" xstr(PRAAT_YEAR) " by Paul Boersma and David Weenink");
  }
  
 +#include "demopraatapplication.h"
