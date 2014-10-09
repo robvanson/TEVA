@@ -688,6 +688,40 @@ procedure processConfigManual .clickX .clickY .pressed$
     call Draw_config_page
 endproc
 
+procedure processConfigChangeSource .clickX .clickY .pressed$
+	.table$ = "Config"
+	.label$ = "ChangeSource"
+	.file$ = ""
+	# Original values
+	# Get feedback texts
+	call getLanguageTexts '.table$' '.label$'
+	.helpText$ = getLanguageTexts.text$
+	call get_feedback_text 'config.language$' SpeakerAudio
+	.inputFile$ = get_feedback_text.text$
+	clicked = -1
+	while clicked <> 3 and clicked <> 1
+		beginPause(getLanguageTexts.helpText$)
+			sentence (.inputFile$, .file$)
+		clicked = endPause ("'getLanguageTexts.cancelText$'", .inputFile$, "'getLanguageTexts.continueText$'", 5, 1)
+		# Cancel
+		if clicked = 1
+			.file$ = ""
+		# Input source file
+		elsif clicked = 2
+			.filename$ = chooseReadFile$ (.file$)
+			if .filename$ <> "" and fileReadable(.filename$)
+				.file$ = .filename$
+			endif
+		# Continue
+		elsif clicked = 3
+			if .file$ <> ""
+				printline "['.file$']"
+			endif
+		endif
+	endwhile
+    call Draw_button 'table$' '.label$' 0
+endproc
+
 ###############################################################
 #
 # Obligatory button Processing Routines

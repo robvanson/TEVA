@@ -26,6 +26,8 @@ $Pitch	Tonh\o"he	!	Einstellung der Tonh\o"hemessung
 Pitchalgorithm_VanAs	Kompatibel	!	Einstellungen von C.J. van As 2001 "Tracheoesophageal Speech" p83
 Pitchalgorithm_CC300	Tief	!	Reduzierte Oktavenspr\u"nge, f\u"r normale und tiefe Stimmen (<300 Hz)
 Pitchalgorithm_CC600	Hoch	!	Reduzierte Oktavenspr\u"nge, f\u"r hohe Stimmen (<600 Hz)
+$Source	Stimme	!	Change speech sound source characteristics
+ChangeSource	Neu	!	Replace the source of the speech and resynthesize
 $Speaker	Sprecher	!	Tabelle mit den Sprecherdaten
 SpeakerData	Daten	t	Lese Tabelle mit den Sprecherdaten
 SpeakerDirectory	Mappe	t	Construiere eine Tabelle mit alle Aufnahmen in einer Mappe

@@ -21,6 +21,8 @@ $Pitch	20	+10	52	57	Black	DrawNull
 Pitchalgorithm_CC300	20	+10	47	52	Black	DrawNull
 Pitchalgorithm_CC600	20	+10	41	46	Black	DrawNull
 Pitchalgorithm_VanAs	20	+10	35	40	Black	DrawNull
+$Source	20	+10	^-10	+5	Black	DrawNull
+ChangeSource	20	+10	^-5	+5	Black	DrawNull
 $AudioCollection	33	+14	96	+5	Black	DrawNull
 SaveAudio	35	+10	^-5	+5	Black	DrawNull
 RecordingTime	35	+10	^-6	+5	Black	DrawNull

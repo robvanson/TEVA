@@ -173,6 +173,8 @@ endif
 call reset_viewport
 
 # Load supporting scripts
+include lib/LPCsourceLib.praat
+
 # Set up system and load preferences
 include Initialise.praat
 # Include the main page buttons and procedures

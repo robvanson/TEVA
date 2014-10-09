@@ -26,6 +26,8 @@ $Pitch	ピッチ	!	ピッチからアルゴリズムを抽出する
 Pitchalgorithm_VanAs	互換性あり	!	C.J. van As 2001 "Tracheoesophageal Speech" p83からの設定
 Pitchalgorithm_CC300	低い	!	ノーマルと低いピッチの為にオクターブの飛躍を減らす (<300 Hz)
 Pitchalgorithm_CC600	高い	!	高いピッチの為にオクターブの飛躍を減らす (<600 Hz)
+$Source	Voice	!	Change speech sound source characteristics
+ChangeSource	Change	!	Replace the source of the speech and resynthesize
 $Speaker	話者	!	話者データ一覧
 SpeakerData	データ	D	話者データを読む
 SpeakerDirectory	ディレクトリ	y	ディレクトリ中の全てのデータから新しい表を作成する
