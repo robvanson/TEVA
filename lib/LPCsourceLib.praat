@@ -166,6 +166,140 @@ __END__
 endproc
 #################################################################
 #
+# Resynthesize an utterrance with a TE voice from a sustained /a/
+#
+procedure resynthesize_with_TE_source .origFile$ .teSourcefile$
+	# Set up original recording
+	.originalRecording = Read from file: .origFile$
+	.origDuration = Get total duration
+	
+	selectObject: .originalRecording
+	.origPoint = noprogress To PointProcess (periodic, cc): 75, 600
+	.origVoicing = noprogress To TextGrid (vuv): 0.02, 0.01
+	Rename: "OriginalVoicing"
+	
+	# Clean up
+	select .origPoint
+	Remove
+	
+	selectObject: .originalRecording
+	.origPitch = noprogress To Pitch: 0, 75, 600
+	.origPitchTier = Down to PitchTier
+
+	# Clean up
+	select .origPitch
+	Remove
+	
+	selectObject: .originalRecording
+	call extract_DiffLPC_source
+	.origSource = selected: "Sound"
+	Rename: "OriginalSource"
+	
+	selectObject: .origSource
+	call intensityTier_from_LPC_source
+	.origIntensity = selected: "IntensityTier"
+	
+	selectObject: .originalRecording
+	call extract_LPC_filter
+	.origFilter = selected: "LPC"
+	
+	# Set up TE source recording
+	.teSourceRecording  = Read from file: .teSourcefile$
+	.teSourceDuration = Get total duration
+	
+	selectObject: .teSourceRecording
+	.teTextGrid = noprogress To TextGrid (silences): 80, 0, -15, 0.1, 0.1, "silent", "sounding"
+	
+	selectObject: .teSourceRecording
+	call extract_DiffLPC_source
+	.teSource = selected: "Sound"
+	
+	selectObject: .teSourceRecording
+	call extract_LPC_filter
+	.teFilter = selected: "LPC"
+	
+	# Replace Original source with TE source
+	
+	# Construct a source signal that is long enough
+	.teSourceCopy = -1
+	.durationOfCopy = 0
+	while .durationOfCopy + 0.001 < .origDuration
+		selectObject: .teTextGrid
+		.numSoundIntervals = Get number of intervals: 1
+		for .i to .numSoundIntervals
+			selectObject: .teTextGrid
+			.label$ = Get label of interval: 1, .i
+			if .label$ = "sounding" and .durationOfCopy + 0.001 < .origDuration
+				.start = Get start point: 1, .i
+				.end = Get end point: 1, .i
+				.duration = .end - .start
+				selectObject: .teSource
+				if .durationOfCopy + .duration > .origDuration
+					.end = .origDuration - .durationOfCopy + .start
+				endif
+				.tmp = Extract part: .start, .end, "rectangular", 1.0, "no"
+				if .teSourceCopy > 0
+					selectObject: .teSourceCopy
+					plusObject: .tmp
+					.new = Concatenate
+					selectObject: .teSourceCopy
+					plusObject: .tmp
+					Remove
+					.teSourceCopy = .new
+				else
+					.teSourceCopy = .tmp
+				endif
+				.tmp = -1
+				.new = -1
+				selectObject: .teSourceCopy
+				.durationOfCopy = Get total duration
+			endif
+		endfor
+	endwhile
+	selectObject: .teSourceCopy
+	Rename: "CroppedSource"
+	
+	# Scale intensity
+	selectObject: .teSourceCopy
+	plusObject: .origIntensity
+	.scaledTEsource = Multiply: 0.9
+	Rename: "ScaledSource"
+	
+	# Replace voiced parts of original with new voice
+	selectObject: .origSource
+	.newSource = Copy: "NewSource"
+	call replace_samples ScaledSource NewSource OriginalVoicing 1 V
+	
+	selectObject: .origFilter
+	plusObject: .newSource
+	.newSound = Filter: "no"
+	Scale intensity: 70.0
+	Rename: "OriginalWithTE"
+
+	# Clean up
+	select .originalRecording
+	plus .origPitchTier
+	plus .origIntensity
+	plus .origFilter
+	plus .origSource
+	plus .origVoicing
+	plus .teSourceRecording
+	plus .teTextGrid
+	plus .teSource
+	plus .scaledTEsource
+	plus .teSourceCopy
+	plus .teFilter
+	plus .newSource
+	Remove
+	
+	select .newSound 
+endproc
+
+
+
+
+
+#
 # Generate stimuli from Sound+TextGrid
 # Replace unvoiced parts with originals
 # AR: Analysis-Resynthesis
@@ -703,6 +837,22 @@ procedure integrate_DiffLPC_source
 endproc
 
 #
+# Extract an LPC filter 
+# Selected Sound
+procedure extract_LPC_filter
+    .basename$ = selected$("Sound")
+    Resample... 11000 50
+    .tmp = Rename... '.basename$'_DownSampled
+    noprogress To LPC (autocorrelation)... 10 0.025 0.005 50
+    Rename... '.basename$'_LPC
+    
+    select .tmp
+    Remove
+    
+    select LPC '.basename$'_LPC
+endproc
+
+#
 # Extract an LPC source based on the inverse filtering of
 # the selected Sound with its LPC
 # Selected Sound
@@ -710,7 +860,7 @@ procedure extract_DiffLPC_source
     .basename$ = selected$("Sound")
     Resample... 11000 50
     Rename... '.basename$'_DownSampled
-    To LPC (autocorrelation)... 10 0.025 0.005 50
+    noprogress To LPC (autocorrelation)... 10 0.025 0.005 50
     Rename... '.basename$'_LPC
     select Sound '.basename$'_DownSampled
     plus LPC '.basename$'_LPC
