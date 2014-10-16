@@ -168,9 +168,9 @@ endproc
 #
 # Resynthesize an utterrance with a TE voice from a sustained /a/
 #
-procedure resynthesize_with_TE_source .origFile$ .teSourcefile$
+procedure resynthesize_with_TE_source .originalRecording .teSourceRecording
 	# Set up original recording
-	.originalRecording = Read from file: .origFile$
+	selectObject: .originalRecording
 	.origDuration = Get total duration
 	
 	selectObject: .originalRecording
@@ -204,7 +204,7 @@ procedure resynthesize_with_TE_source .origFile$ .teSourcefile$
 	.origFilter = selected: "LPC"
 	
 	# Set up TE source recording
-	.teSourceRecording  = Read from file: .teSourcefile$
+	selectObject: .teSourceRecording
 	.teSourceDuration = Get total duration
 	
 	selectObject: .teSourceRecording
@@ -277,13 +277,11 @@ procedure resynthesize_with_TE_source .origFile$ .teSourcefile$
 	Rename: "OriginalWithTE"
 
 	# Clean up
-	select .originalRecording
-	plus .origPitchTier
+	select .origPitchTier
 	plus .origIntensity
 	plus .origFilter
 	plus .origSource
 	plus .origVoicing
-	plus .teSourceRecording
 	plus .teTextGrid
 	plus .teSource
 	plus .scaledTEsource

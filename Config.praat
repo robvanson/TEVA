@@ -698,6 +698,11 @@ procedure processConfigChangeSource .clickX .clickY .pressed$
 	.helpText$ = getLanguageTexts.text$
 	call get_feedback_text 'config.language$' SpeakerAudio
 	.inputFile$ = get_feedback_text.text$
+	if config.changeSource$ <> "" and fileReadable(config.changeSource$)
+		.file$ = config.changeSource$
+	else
+		.file$ = ""
+	endif
 	clicked = -1
 	while clicked <> 3 and clicked <> 1
 		beginPause(getLanguageTexts.helpText$)
@@ -714,8 +719,20 @@ procedure processConfigChangeSource .clickX .clickY .pressed$
 			endif
 		# Continue
 		elsif clicked = 3
-			if .file$ <> ""
-				printline "['.file$']"
+			.inputFile$ = replace_regex$(.inputFile$, "^(.)", "\l\1", 0)
+			.file$ = '.inputFile$'$
+			if .file$ <> "" and fileReadable(.file$)
+				config.changeSource$ = .file$
+				te.source = Read from file: config.changeSource$
+				.sourceType$ = selected$()
+				.sourceType$ = extractWord$(.sourceType$, "")
+				if .sourceType$ <> "Sound"
+					select te.source
+					Remove
+					te.source = -1
+				else
+					@copy_source_into_target
+				endif
 			endif
 		endif
 	endwhile

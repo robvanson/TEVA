@@ -57,6 +57,8 @@ te.recordingTimeStamp$ = ""
 te.currentFileName$ = ""
 te.saveAudio = 0
 te.openSound = 0
+te.originalRecording = 0
+te.source = 0
 te.spectrogram = 0
 te.harmonicity = 0
 te.gneSound = 0
@@ -1864,6 +1866,8 @@ endproc
 procedure getOpenFile .openDialogue$
 	if fileReadable(.openDialogue$)
 		.filename$ = .openDialogue$
+	elsif index_regex(.openDialogue$, "[^0-9]") <= 0
+		.filename$ = .openDialogue$
 	else
 		call convert_praat_to_latin1 '.openDialogue$'
 		.openDialogue$ = convert_praat_to_latin1.text$
@@ -1887,6 +1891,7 @@ procedure getOpenFile .openDialogue$
 		# Reset all internal structures
 		call reset_analysis
 		
+		select .sndInput
 		.numChannels = Get number of channels
 		if .numChannels > 1
 			.monoInput= Convert to mono
@@ -2852,8 +2857,7 @@ procedure reset_analysis
 			select te.openSound
 			.tmpPartSoundID = Extract part... 'selectedStartTime' 'selectedEndTime' rectangular 1.0 true
 			Save as WAV file... 'te.currentFileName$'
-			plus te.openSound
-			Remove
+			select te.openSound
 		endif
 		if te.pitch > 0
 			plus te.pitch
@@ -2913,6 +2917,8 @@ procedure reset_analysis
 		te.currentFileName$ = ""
 		
 		maxTimeIntensity = 0
+		
+		call reset_sourcemanipulations
     endif
 endproc
 
@@ -3027,6 +3033,14 @@ procedure readAudio .filename$
 				comment("'getLanguageTexts.helpText$': '.brokenTableText$'")
 			clicked = endPause ("'getLanguageTexts.continueText$'", 1, 1)
 		endif
+	elsif .filename$ <> "" and index_regex(.filename$, "[^0-9]") <= 0
+		select '.filename$'
+		.fullName$ = selected$ ()
+		.type$ = extractWord$(.fullName$, "")
+		.name$ = extractWord$(.fullName$, " ")
+		if .type$ = "Sound"
+			.audioID = Copy: .name$
+		endif
 	endif
 endproc
 
@@ -3058,4 +3072,42 @@ procedure readTable .filename$
 			clicked = endPause ("'getLanguageTexts.continueText$'", 1, 1)
 		endif
 	endif
+endproc
+
+########################################################################
+# 
+# Convert signal source
+# 
+########################################################################
+procedure reset_sourcemanipulations
+	if te.originalRecording > 0
+		select te.originalRecording
+		Remove
+		te.originalRecording = 0
+	endif
+	if te.source > 0
+		select te.source
+		Remove
+		te.source = 0
+	endif
+endproc
+
+procedure copy_source_into_target
+	if te.originalRecording <= 0
+		select te.openSound
+		te.originalRecording = Copy: "OriginalSound"
+	endif
+	.originalRecording = te.originalRecording
+	te.originalRecording = -1
+	.source = te.source
+	te.source = -1
+	# Reset everything and load the file again
+	@getOpenFile: "'.originalRecording'"
+	te.originalRecording = .originalRecording
+	te.source = .source
+	
+	@resynthesize_with_TE_source: te.openSound, te.source
+	select te.openSound
+	Remove
+	te.openSound = resynthesize_with_TE_source.newSound
 endproc
