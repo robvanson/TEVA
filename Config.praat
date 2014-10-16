@@ -688,55 +688,74 @@ procedure processConfigManual .clickX .clickY .pressed$
     call Draw_config_page
 endproc
 
-procedure processConfigChangeSource .clickX .clickY .pressed$
+procedure processConfigSource .change$ .clickX .clickY .pressed$
 	.table$ = "Config"
-	.label$ = "ChangeSource"
+	.label$ = "Source_'.change$'"
 	.file$ = ""
-	# Original values
-	# Get feedback texts
-	call getLanguageTexts '.table$' '.label$'
-	.helpText$ = getLanguageTexts.text$
-	call get_feedback_text 'config.language$' SpeakerAudio
-	.inputFile$ = get_feedback_text.text$
-	if config.changeSource$ <> "" and fileReadable(config.changeSource$)
-		.file$ = config.changeSource$
+	
+    call Draw_button '.table$' Source_'config.source$' 0
+    if te.openSound > 0
+		config.source$ = .change$
 	else
-		.file$ = ""
+		config.source$ = "Original"
 	endif
-	clicked = -1
-	while clicked <> 3 and clicked <> 1
-		beginPause(getLanguageTexts.helpText$)
-			sentence (.inputFile$, .file$)
-		clicked = endPause ("'getLanguageTexts.cancelText$'", .inputFile$, "'getLanguageTexts.continueText$'", 5, 1)
-		# Cancel
-		if clicked = 1
+	# Original values
+	if .change$ = "Original"
+		if te.originalRecording > 0
+			.originalRecording = te.originalRecording
+			te.originalRecording = -1
+			# Reset everything and load the file again
+			@getOpenFile: "'.originalRecording'"
+			te.originalRecording = .originalRecording
+		endif
+	else
+		# Get feedback texts
+		call getLanguageTexts '.table$' '.label$'
+		.helpText$ = getLanguageTexts.text$
+		call get_feedback_text 'config.language$' SpeakerAudio
+		.inputFile$ = get_feedback_text.text$
+		if config.sourceFile$ <> "" and fileReadable(config.sourceFile$)
+			.file$ = config.sourceFile$
+		else
 			.file$ = ""
-		# Input source file
-		elsif clicked = 2
-			.filename$ = chooseReadFile$ (.file$)
-			if .filename$ <> "" and fileReadable(.filename$)
-				.file$ = .filename$
-			endif
-		# Continue
-		elsif clicked = 3
-			.inputFile$ = replace_regex$(.inputFile$, "^(.)", "\l\1", 0)
-			.file$ = '.inputFile$'$
-			if .file$ <> "" and fileReadable(.file$)
-				config.changeSource$ = .file$
-				te.source = Read from file: config.changeSource$
-				.sourceType$ = selected$()
-				.sourceType$ = extractWord$(.sourceType$, "")
-				if .sourceType$ <> "Sound"
-					select te.source
-					Remove
-					te.source = -1
-				else
-					@copy_source_into_target
+		endif
+		clicked = -1
+		while clicked <> 3 and clicked <> 1
+			beginPause(getLanguageTexts.helpText$)
+				sentence (.inputFile$, .file$)
+			clicked = endPause ("'getLanguageTexts.cancelText$'", .inputFile$, "'getLanguageTexts.continueText$'", 3, 1)
+			# Cancel
+			if clicked = 1
+				.file$ = ""
+			# Input source file
+			elsif clicked = 2
+				.filename$ = chooseReadFile$ (.file$)
+				if .filename$ <> "" and fileReadable(.filename$)
+					.file$ = .filename$
+				endif
+			# Continue
+			elsif clicked = 3
+				.inputFile$ = replace_regex$(.inputFile$, "^(.)", "\l\1", 0)
+				.file$ = '.inputFile$'$
+				if .file$ <> "" and fileReadable(.file$)
+					config.sourceFile$ = .file$
+					te.source = Read from file: config.sourceFile$
+					.sourceType$ = selected$()
+					.sourceType$ = extractWord$(.sourceType$, "")
+					if .sourceType$ <> "Sound"
+						select te.source
+						Remove
+						te.source = -1
+						call Draw_button '.table$' Source_'config.source$' 1
+						config.source$ = "Original"
+					elsif te.openSound > 0
+						@copy_source_into_target
+					endif
 				endif
 			endif
-		endif
-	endwhile
-    call Draw_button 'table$' '.label$' 0
+		endwhile
+	endif
+    call Draw_button '.table$' Source_'config.source$' 2
 endproc
 
 ###############################################################

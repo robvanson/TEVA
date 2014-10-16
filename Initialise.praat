@@ -96,7 +96,8 @@ procedure global_initialization
 	config.vasScaleTicks = 0
 	#config.pitchalgorithm$ = "VanAs"
 	config.pitchalgorithm$ = "CC300"
-	config.changeSource$ = ""
+	config.source$ = "Original"
+	config.sourceFile$ = ""
 	# config.useCache
 	# config.useCache > 0 : Enforce a cache
 	# config.useCache = 0 : Use cache if present

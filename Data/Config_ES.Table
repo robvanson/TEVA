@@ -26,8 +26,10 @@ $Pitch	Pitch	!	Set pitch extraction algorithm
 Pitchalgorithm_VanAs	Compatible	!	Settings from C.J. van As 2001 "Tracheoesophageal Speech" p83
 Pitchalgorithm_CC300	Low	!	Reduced octave jumps, for normal and low pitches (<300 Hz)
 Pitchalgorithm_CC600	High	!	Reduced octave jumps, for high pitches (<600 Hz)
-$Source	Voice	!	Change speech sound source characteristics
-ChangeSource	Change	!	Replace the source of the speech and resynthesize
+$SourceText	Voice	!	Change speech sound source characteristics
+Source_Original	Original	!	Reset to original recording
+Source_Change	Change	!	Replace the source of the speech and resynthesize
+!SourceFile	SourceFile	!	The file with the selected source recording
 $Speaker	Hablantes	!	Tabla con los datos del hablante
 SpeakerData	Datos	D	Tabla leida con los datos del hablante
 SpeakerDirectory	Directorio	t	Crear una tabla de todos los grabaciones en un directorio

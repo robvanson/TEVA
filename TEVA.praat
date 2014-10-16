@@ -3090,6 +3090,7 @@ procedure reset_sourcemanipulations
 		Remove
 		te.source = 0
 	endif
+	config.source$ = "Original"
 endproc
 
 procedure copy_source_into_target
@@ -3110,4 +3111,5 @@ procedure copy_source_into_target
 	select te.openSound
 	Remove
 	te.openSound = resynthesize_with_TE_source.newSound
+	config.source$ = "Change"
 endproc

@@ -26,8 +26,10 @@ $Pitch	Toonhoogte	!	Stel de bepaling de toonhoogtemeting in
 Pitchalgorithm_VanAs	Compatibel	!	Instellingen volgens C.J. van As 2001 "Tracheoesophageal Speech" p83
 Pitchalgorithm_CC300	Laag	!	Verminderde oktaafsprongen, voor normale en lage stemmen (<300 Hz)
 Pitchalgorithm_CC600	Hoog	!	Verminderde oktaafsprongen, voor hoge stemmen (<600 Hz)
-$Source	Stem	!	Change speech sound source characteristics
-ChangeSource	Nieuw	!	Replace the source of the speech and resynthesize
+$SourceText	Stem	!	Change speech sound source characteristics
+Source_Original	Origineel	!	Terugzetten naar originele opname
+Source_Change	Nieuw	!	Vervang de bron van de spraak en synthetiseer het geluid opnieuw
+!SourceFile	SourceFile	!	Het bestand met een opname van de gewenste bron
 $Speaker	Sprekers	!	Tabel met spreker gegevens
 SpeakerData	Data	D	Lees tabel met sprekergegevens
 SpeakerDirectory	Map+	+	Maak een tabel met alle opnamen uit een map
