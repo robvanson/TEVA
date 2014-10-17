@@ -265,10 +265,31 @@ procedure resynthesize_with_TE_source .originalRecording .teSourceRecording
 	.scaledTEsource = Multiply: 0.9
 	Rename: "ScaledSource"
 	
+	# Superimpose Pitch of original over new source
+	select .scaledTEsource
+	.newSourceManipulation = noprogress To Manipulation: 0.01, 75, 600
+	.newSourcePitch = Extract pitch tier
+	.meanSourcePitch = Get mean (curve): 0, 0
+	# Reduce pitch movements
+	select .origPitchTier
+	.meanTargetPitch = Get mean (curve): 0, 0
+	if .meanTargetPitch > 0
+		Formula... self * (.meanSourcePitch / .meanTargetPitch)
+	endif
+	plus .newSourceManipulation
+	Replace pitch tier
+	select .newSourceManipulation
+	.intonatedTEsource = Get resynthesis (overlap-add)
+	Rename: "IntonatedSource"
+	
+	select .newSourceManipulation
+	plus .newSourcePitch
+	Remove
+	
 	# Replace voiced parts of original with new voice
 	selectObject: .origSource
 	.newSource = Copy: "NewSource"
-	call replace_samples ScaledSource NewSource OriginalVoicing 1 V
+	call replace_samples IntonatedSource NewSource OriginalVoicing 1 V
 	
 	selectObject: .origFilter
 	plusObject: .newSource
@@ -285,6 +306,7 @@ procedure resynthesize_with_TE_source .originalRecording .teSourceRecording
 	plus .teTextGrid
 	plus .teSource
 	plus .scaledTEsource
+	plus .intonatedTEsource
 	plus .teSourceCopy
 	plus .teFilter
 	plus .newSource
