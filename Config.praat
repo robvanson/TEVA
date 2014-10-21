@@ -714,6 +714,8 @@ procedure processConfigSource .change$ .clickX .clickY .pressed$
 		.helpText$ = getLanguageTexts.text$
 		call get_feedback_text 'config.language$' SpeakerAudio
 		.inputFile$ = get_feedback_text.text$
+		.inputProsody$ = "Prosody"
+		.prosody = 0.8
 		if config.sourceFile$ <> "" and fileReadable(config.sourceFile$)
 			.file$ = config.sourceFile$
 		else
@@ -723,6 +725,7 @@ procedure processConfigSource .change$ .clickX .clickY .pressed$
 		while clicked <> 3 and clicked <> 1
 			beginPause(getLanguageTexts.helpText$)
 				sentence (.inputFile$, .file$)
+				positive (.inputProsody$, .prosody)
 			clicked = endPause ("'getLanguageTexts.cancelText$'", .inputFile$, "'getLanguageTexts.continueText$'", 3, 1)
 			# Cancel
 			if clicked = 1
@@ -736,7 +739,9 @@ procedure processConfigSource .change$ .clickX .clickY .pressed$
 			# Continue
 			elsif clicked = 3
 				.inputFile$ = replace_regex$(.inputFile$, "^(.)", "\l\1", 0)
+				.inputProsody$ = replace_regex$(.inputProsody$, "^(.)", "\l\1", 0)
 				.file$ = '.inputFile$'$
+				.prosody = '.inputProsody$'
 				if .file$ <> "" and fileReadable(.file$)
 					config.sourceFile$ = .file$
 					te.source = Read from file: config.sourceFile$
@@ -749,7 +754,7 @@ procedure processConfigSource .change$ .clickX .clickY .pressed$
 						call Draw_button '.table$' Source_'config.source$' 1
 						config.source$ = "Original"
 					elsif te.openSound > 0
-						@copy_source_into_target
+						@copy_source_into_target: .prosody
 					endif
 				endif
 			endif
