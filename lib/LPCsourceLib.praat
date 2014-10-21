@@ -168,7 +168,13 @@ endproc
 #
 # Resynthesize an utterrance with a TE voice from a sustained /a/
 #
-procedure resynthesize_with_TE_source .originalRecording .teSourceRecording
+procedure resynthesize_with_TE_source .prosody .originalRecording .teSourceRecording
+
+	# Scale prosody
+	if .prosody > 1
+		.prosody /= 100
+	endif
+
 	# Set up original recording
 	selectObject: .originalRecording
 	.origDuration = Get total duration
@@ -185,6 +191,12 @@ procedure resynthesize_with_TE_source .originalRecording .teSourceRecording
 	selectObject: .originalRecording
 	.origPitch = noprogress To Pitch: 0, 75, 600
 	.origPitchTier = Down to PitchTier
+	.origMeanPitch = Get mean (curve): 0, 0
+	# Scale original intensity countour
+	if .prosody <> 1
+		select .origPitchTier
+		Formula... .prosody*self + (1-.prosody)*.origMeanPitch
+	endif
 
 	# Clean up
 	select .origPitch
@@ -198,7 +210,13 @@ procedure resynthesize_with_TE_source .originalRecording .teSourceRecording
 	selectObject: .origSource
 	call intensityTier_from_LPC_source
 	.origIntensity = selected: "IntensityTier"
-	
+	.origMeanInt = intensityTier_from_LPC_source.energy
+	# Scale original intensity countour
+	if .prosody <> 1
+		select .origIntensity
+		Formula... .prosody*self + (1-.prosody)*.origMeanInt
+	endif
+
 	selectObject: .originalRecording
 	call extract_LPC_filter
 	.origFilter = selected: "LPC"
@@ -785,6 +803,9 @@ endproc
 procedure intensityTier_from_LPC_source
     .basename$ = selected$("Sound")
 	   To Intensity... 40 0 yes
+	   .energy = Get mean: 0, 0, "energy"
+	   .sones = Get mean: 0, 0, "sones"
+	   .dB = Get mean: 0, 0, "dB"
 	   Down to IntensityTier
     select Intensity '.basename$'
     Remove
