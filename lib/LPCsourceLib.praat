@@ -202,10 +202,12 @@ procedure resynthesize_with_TE_source .prosody .speed .originalRecording .teSour
 	select .scaledOriginalRecording
 	.origDuration = Get total duration
 	
-	selectObject: .scaledOriginalRecording
+	# Work on ORIGINAL, not resynthesis
+	selectObject: .originalRecording
 	.origPoint = noprogress To PointProcess (periodic, cc): 75, 600
 	.origVoicing = noprogress To TextGrid (vuv): 0.02, 0.01
 	Rename: "OriginalVoicing"
+	Scale times by: .scaleDuration
 	
 	# Clean up
 	select .origPoint
