@@ -3093,7 +3093,7 @@ procedure reset_sourcemanipulations
 	config.source$ = "Original"
 endproc
 
-procedure copy_source_into_target .prosody
+procedure copy_source_into_target .prosody .speed
 	if te.originalRecording <= 0
 		select te.openSound
 		te.originalRecording = Copy: "OriginalSound"
@@ -3106,7 +3106,7 @@ procedure copy_source_into_target .prosody
 	@getOpenFile: "'.originalRecording'"
 	te.originalRecording = .originalRecording
 	te.source = .source
-	@resynthesize_with_TE_source: .prosody, te.openSound, te.source
+	@resynthesize_with_TE_source: .prosody, .speed, te.openSound, te.source
 	select te.openSound
 	Remove
 	te.openSound = resynthesize_with_TE_source.newSound

@@ -692,56 +692,71 @@ procedure processConfigSource .change$ .clickX .clickY .pressed$
 	.table$ = "Config"
 	.label$ = "Source_'.change$'"
 	.file$ = ""
-	
     call Draw_button '.table$' Source_'config.source$' 0
-    if te.openSound > 0
-		config.source$ = .change$
-	else
+    # No open Sound, nothing to do
+    if te.openSound <= 0
 		config.source$ = "Original"
-	endif
-	# Original values
-	if .change$ = "Original"
+		.change$ = "Original"
 		if te.originalRecording > 0
-			.originalRecording = te.originalRecording
-			te.originalRecording = -1
-			# Reset everything and load the file again
-			@getOpenFile: "'.originalRecording'"
-			te.originalRecording = .originalRecording
+			select te.originalRecording
+			Remove
 		endif
+	endif
+	
+	# Get original sound
+	if te.originalRecording > 0
+		.originalRecording = te.originalRecording
+		te.originalRecording = -1
+		# Reset everything and load the file again
+		@getOpenFile: "'.originalRecording'"
+		# Restore the original recording
+		te.originalRecording = .originalRecording
 	else
+		select te.openSound
+		te.originalRecording = Copy: "OriginalRecording"
+	endif
+
+	# Change original sound
+	if .change$ <> "Original"
+		config.source$ = .change$
 		# Get feedback texts
 		call getLanguageTexts '.table$' '.label$'
 		.helpText$ = getLanguageTexts.text$
 		call get_feedback_text 'config.language$' SpeakerAudio
 		.inputFile$ = get_feedback_text.text$
 		.inputProsody$ = "Prosody"
+		.inputSpeed$ = "Speed"
 		.prosody = 0.8
+		.speed = 0.8
 		if config.sourceFile$ <> "" and fileReadable(config.sourceFile$)
 			.file$ = config.sourceFile$
 		else
 			.file$ = ""
 		endif
-		clicked = -1
-		while clicked <> 3 and clicked <> 1
+		.clicked = -1
+		while .clicked <> 3 and .clicked <> 1
 			beginPause(getLanguageTexts.helpText$)
 				sentence (.inputFile$, .file$)
 				positive (.inputProsody$, .prosody)
-			clicked = endPause ("'getLanguageTexts.cancelText$'", .inputFile$, "'getLanguageTexts.continueText$'", 3, 1)
+				positive (.inputSpeed$, .speed)
+			.clicked = endPause ("'getLanguageTexts.cancelText$'", .inputFile$, "'getLanguageTexts.continueText$'", 3, 1)
 			# Cancel
-			if clicked = 1
+			if .clicked = 1
 				.file$ = ""
 			# Input source file
-			elsif clicked = 2
+			elsif .clicked = 2
 				.filename$ = chooseReadFile$ (.file$)
 				if .filename$ <> "" and fileReadable(.filename$)
 					.file$ = .filename$
 				endif
 			# Continue
-			elsif clicked = 3
+			elsif .clicked = 3
 				.inputFile$ = replace_regex$(.inputFile$, "^(.)", "\l\1", 0)
 				.inputProsody$ = replace_regex$(.inputProsody$, "^(.)", "\l\1", 0)
+				.inputSpeed$ = replace_regex$(.inputSpeed$, "^(.)", "\l\1", 0)
 				.file$ = '.inputFile$'$
 				.prosody = '.inputProsody$'
+				.speed = '.inputSpeed$'
 				if .file$ <> "" and fileReadable(.file$)
 					config.sourceFile$ = .file$
 					te.source = Read from file: config.sourceFile$
@@ -751,10 +766,15 @@ procedure processConfigSource .change$ .clickX .clickY .pressed$
 						select te.source
 						Remove
 						te.source = -1
-						call Draw_button '.table$' Source_'config.source$' 1
 						config.source$ = "Original"
 					elsif te.openSound > 0
-						@copy_source_into_target: .prosody
+						@copy_source_into_target: .prosody, .speed
+						.originalRecording = te.originalRecording
+						te.originalRecording = -1
+						@getOpenFile: "'te.openSound'"
+						config.source$ = "Change"
+						# Restore the original recording
+						te.originalRecording = .originalRecording
 					endif
 				endif
 			endif

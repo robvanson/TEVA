@@ -168,18 +168,41 @@ endproc
 #
 # Resynthesize an utterrance with a TE voice from a sustained /a/
 #
-procedure resynthesize_with_TE_source .prosody .originalRecording .teSourceRecording
+procedure resynthesize_with_TE_source .prosody .speed .originalRecording .teSourceRecording
 
 	# Scale prosody
 	if .prosody > 1
 		.prosody /= 100
 	endif
+	
+	# Scale speed
+	.scaleDuration = 1
+	if .speed > 0
+		.scaleDuration = 1/.speed		
+	endif
 
-	# Set up original recording
+	# Set up original recording and scale duration
 	selectObject: .originalRecording
+	.newOriginalManipulation = noprogress To Manipulation: 0.01, 75, 600
+	.newOriginalDurTier = Extract duration tier
+	Add point: 0, .scaleDuration
+	plus .newOriginalManipulation
+	Replace duration tier
+	select .newOriginalManipulation
+	.origPitchTier = Extract pitch tier
+	.origMeanPitch = Get mean (curve): 0, 0
+
+	select .newOriginalManipulation
+	.scaledOriginalRecording = Get resynthesis (overlap-add)
+	# Clean up
+	select .newOriginalManipulation
+	plus .newOriginalDurTier
+	Remove
+	
+	select .scaledOriginalRecording
 	.origDuration = Get total duration
 	
-	selectObject: .originalRecording
+	selectObject: .scaledOriginalRecording
 	.origPoint = noprogress To PointProcess (periodic, cc): 75, 600
 	.origVoicing = noprogress To TextGrid (vuv): 0.02, 0.01
 	Rename: "OriginalVoicing"
@@ -188,21 +211,13 @@ procedure resynthesize_with_TE_source .prosody .originalRecording .teSourceRecor
 	select .origPoint
 	Remove
 	
-	selectObject: .originalRecording
-	.origPitch = noprogress To Pitch: 0, 75, 600
-	.origPitchTier = Down to PitchTier
-	.origMeanPitch = Get mean (curve): 0, 0
 	# Scale original intensity countour
 	if .prosody <> 1
 		select .origPitchTier
 		Formula... .prosody*self + (1-.prosody)*.origMeanPitch
 	endif
 
-	# Clean up
-	select .origPitch
-	Remove
-	
-	selectObject: .originalRecording
+	selectObject: .scaledOriginalRecording
 	call extract_DiffLPC_source
 	.origSource = selected: "Sound"
 	Rename: "OriginalSource"
@@ -217,10 +232,10 @@ procedure resynthesize_with_TE_source .prosody .originalRecording .teSourceRecor
 		Formula... .prosody*self + (1-.prosody)*.origMeanInt
 	endif
 
-	selectObject: .originalRecording
+	selectObject: .scaledOriginalRecording
 	call extract_LPC_filter
 	.origFilter = selected: "LPC"
-	
+
 	# Set up TE source recording
 	selectObject: .teSourceRecording
 	.teSourceDuration = Get total duration
@@ -299,7 +314,6 @@ procedure resynthesize_with_TE_source .prosody .originalRecording .teSourceRecor
 	select .newSourceManipulation
 	.intonatedTEsource = Get resynthesis (overlap-add)
 	Rename: "IntonatedSource"
-	
 	select .newSourceManipulation
 	plus .newSourcePitch
 	Remove
