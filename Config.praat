@@ -725,9 +725,9 @@ procedure processConfigSource .change$ .clickX .clickY .pressed$
 		call get_feedback_text 'config.language$' SpeakerAudio
 		.inputFile$ = get_feedback_text.text$
 		.inputProsody$ = "Prosody"
-		.inputSpeed$ = "Speed"
+		.inputAR$ = "Syll sec"
 		.prosody = 0.8
-		.speed = 0.8
+		.articulationRate = 3.5
 		if config.sourceFile$ <> "" and fileReadable(config.sourceFile$)
 			.file$ = config.sourceFile$
 		else
@@ -738,7 +738,7 @@ procedure processConfigSource .change$ .clickX .clickY .pressed$
 			beginPause(getLanguageTexts.helpText$)
 				sentence (.inputFile$, .file$)
 				positive (.inputProsody$, .prosody)
-				positive (.inputSpeed$, .speed)
+				positive (.inputAR$, .articulationRate)
 			.clicked = endPause ("'getLanguageTexts.cancelText$'", .inputFile$, "'getLanguageTexts.continueText$'", 3, 1)
 			# Cancel
 			if .clicked = 1
@@ -753,10 +753,11 @@ procedure processConfigSource .change$ .clickX .clickY .pressed$
 			elsif .clicked = 3
 				.inputFile$ = replace_regex$(.inputFile$, "^(.)", "\l\1", 0)
 				.inputProsody$ = replace_regex$(.inputProsody$, "^(.)", "\l\1", 0)
-				.inputSpeed$ = replace_regex$(.inputSpeed$, "^(.)", "\l\1", 0)
+				.inputAR$ = replace_regex$(.inputAR$, "^(.)", "\l\1", 0)
+				.inputAR$ = replace_regex$(.inputAR$, "[^a-zA-Z0-9_\-]", "\_", 0)
 				.file$ = '.inputFile$'$
 				.prosody = '.inputProsody$'
-				.speed = '.inputSpeed$'
+				.articulationRate = '.inputAR$'
 				if .file$ <> "" and fileReadable(.file$)
 					config.sourceFile$ = .file$
 					te.source = Read from file: config.sourceFile$
@@ -768,7 +769,7 @@ procedure processConfigSource .change$ .clickX .clickY .pressed$
 						te.source = -1
 						config.source$ = "Original"
 					elsif te.openSound > 0
-						@copy_source_into_target: .prosody, .speed
+						@copy_source_into_target: .prosody, .articulationRate
 						.originalRecording = te.originalRecording
 						te.originalRecording = -1
 						@getOpenFile: "'te.openSound'"

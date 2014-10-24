@@ -356,14 +356,14 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	Replace duration tier
 
 	select .newSoundManipulation
-	.newOA = noprogress Get resynthesis (overlap-add)
+	.newSound = noprogress Get resynthesis (overlap-add)
 		
 	select .newSoundManipulation
 	plus  .newSoundDurTier
 	plus .speedSound
 	Remove
 	
-	select .newOA 
+	select .newSound 
 endproc
 
 
