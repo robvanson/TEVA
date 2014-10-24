@@ -168,58 +168,55 @@ endproc
 #
 # Resynthesize an utterrance with a TE voice from a sustained /a/
 #
-procedure resynthesize_with_TE_source .prosody .speed .originalRecording .teSourceRecording
+procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teSourceRecording
 
+	# Determine articulation rate etc in original
+	call syllable_nuclei -25 2 0.3 1 .originalRecording
+	.articulationrate = syllable_nuclei.articulationrate
+	.speed = 1
+	if syllable_nuclei.voicedcount > 4 and .articulationrate >= 2 and .articulationrate <= 6
+		.speed = .targetAR/.articulationrate
+	endif
+
+	# Scale duration
+	.scaleDuration = 1
+	if .speed > 0
+		.scaleDuration = 1/.speed
+	endif
+	
 	# Scale prosody
 	if .prosody > 1
 		.prosody /= 100
 	endif
-	
-	# Scale speed
-	.scaleDuration = 1
-	if .speed > 0
-		.scaleDuration = 1/.speed		
-	endif
 
-	# Set up original recording and scale duration
+	# Set up original recording
 	selectObject: .originalRecording
-	.newOriginalManipulation = noprogress To Manipulation: 0.01, 75, 600
-	.newOriginalDurTier = Extract duration tier
-	Add point: 0, .scaleDuration
-	plus .newOriginalManipulation
-	Replace duration tier
-	select .newOriginalManipulation
-	.origPitchTier = Extract pitch tier
-	.origMeanPitch = Get mean (curve): 0, 0
-
-	select .newOriginalManipulation
-	.scaledOriginalRecording = Get resynthesis (overlap-add)
-	# Clean up
-	select .newOriginalManipulation
-	plus .newOriginalDurTier
-	Remove
-	
-	select .scaledOriginalRecording
 	.origDuration = Get total duration
 	
-	# Work on ORIGINAL, not resynthesis
 	selectObject: .originalRecording
 	.origPoint = noprogress To PointProcess (periodic, cc): 75, 600
 	.origVoicing = noprogress To TextGrid (vuv): 0.02, 0.01
 	Rename: "OriginalVoicing"
-	Scale times by: .scaleDuration
 	
 	# Clean up
 	select .origPoint
 	Remove
 	
+	selectObject: .originalRecording
+	.origPitch = noprogress To Pitch: 0, 75, 600
+	.origPitchTier = Down to PitchTier
+	.origMeanPitch = Get mean (curve): 0, 0
 	# Scale original intensity countour
 	if .prosody <> 1
 		select .origPitchTier
 		Formula... .prosody*self + (1-.prosody)*.origMeanPitch
 	endif
 
-	selectObject: .scaledOriginalRecording
+	# Clean up
+	select .origPitch
+	Remove
+	
+	selectObject: .originalRecording
 	call extract_DiffLPC_source
 	.origSource = selected: "Sound"
 	Rename: "OriginalSource"
@@ -234,10 +231,10 @@ procedure resynthesize_with_TE_source .prosody .speed .originalRecording .teSour
 		Formula... .prosody*self + (1-.prosody)*.origMeanInt
 	endif
 
-	selectObject: .scaledOriginalRecording
+	selectObject: .originalRecording
 	call extract_LPC_filter
 	.origFilter = selected: "LPC"
-
+	
 	# Set up TE source recording
 	selectObject: .teSourceRecording
 	.teSourceDuration = Get total duration
@@ -316,6 +313,7 @@ procedure resynthesize_with_TE_source .prosody .speed .originalRecording .teSour
 	select .newSourceManipulation
 	.intonatedTEsource = Get resynthesis (overlap-add)
 	Rename: "IntonatedSource"
+	
 	select .newSourceManipulation
 	plus .newSourcePitch
 	Remove
@@ -327,7 +325,7 @@ procedure resynthesize_with_TE_source .prosody .speed .originalRecording .teSour
 	
 	selectObject: .origFilter
 	plusObject: .newSource
-	.newSound = Filter: "no"
+	.speedSound = Filter: "no"
 	Scale intensity: 70.0
 	Rename: "OriginalWithTE"
 
@@ -346,7 +344,26 @@ procedure resynthesize_with_TE_source .prosody .speed .originalRecording .teSour
 	plus .newSource
 	Remove
 	
-	select .newSound 
+	# Change duration
+	select .speedSound
+	.newSoundManipulation = noprogress To Manipulation: 0.01, 60, 300
+	.newSoundDurTier = Extract duration tier
+	Add point: 0, .scaleDuration
+	
+	# Synthesize
+	select .newSoundManipulation
+	plus .newSoundDurTier
+	Replace duration tier
+
+	select .newSoundManipulation
+	.newOA = noprogress Get resynthesis (overlap-add)
+		
+	select .newSoundManipulation
+	plus  .newSoundDurTier
+	plus .speedSound
+	Remove
+	
+	select .newOA 
 endproc
 
 
@@ -1063,3 +1080,255 @@ procedure accents_tier_number
     
     select TextGrid '.basename$'
 endproc
+
+###########################################################################
+#                                                                         #
+#  Praat Script Syllable Nuclei                                           #
+#  Copyright (C) 2008  Nivja de Jong and Ton Wempe                        #
+#                                                                         #
+#    This program is free software: you can redistribute it and/or modify #
+#    it under the terms of the GNU General Public License as published by #
+#    the Free Software Foundation, either version 3 of the License, or    #
+#    (at your option) any later version.                                  #
+#                                                                         #
+#    This program is distributed in the hope that it will be useful,      #
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of       #
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
+#    GNU General Public License for more details.                         #
+#                                                                         #
+#    You should have received a copy of the GNU General Public License    #
+#    along with this program.  If not, see http://www.gnu.org/licenses/   #
+#                                                                         #
+###########################################################################
+#
+# modified 2010.09.17 by Hugo Quené, Ingrid Persoon, & Nivja de Jong
+# Overview of changes:
+# + change threshold-calculator: rather than using median, use the almost maximum
+#     minus 25dB. (25 dB is in line with the standard setting to detect silence
+#     in the "To TextGrid (silences)" function.
+#     Almost maximum (.99 quantile) is used rather than maximum to avoid using
+#     irrelevant non-speech sound-bursts.
+# + add silence-information to calculate articulation rate and ASD (average syllable
+#     duration.
+#     NB: speech rate = number of syllables / total time
+#         articulation rate = number of syllables / phonation time
+# + remove max number of syllable nuclei
+# + refer to objects by unique identifier, not by name
+# + keep track of all created intermediate objects, select these explicitly,
+#     then Remove
+# + provide summary output in Info window
+# + do not save TextGrid-file but leave it in Object-window for inspection
+#     (if requested in startup-form)
+# + allow Sound to have starting time different from zero
+#      for Sound objects created with Extract (preserve times)
+# + programming of checking loop for mindip adjusted
+#      in the orig version, precedingtime was not modified if the peak was rejected !!
+#      var precedingtime and precedingint renamed to .currenttime and .currentint
+#
+# + bug fixed concerning summing total pause, feb 28th 2011
+#
+# modified 2014.10.24 by Rob van Son
+# Overview of changes:
+# + Converted to a function form. Can be called as -
+# call syllable_nuclei -25 2 0.3 1 .soundFile
+#   where .soundFile is the ID of an open soundfile
+# + Added noprogress and cleaned up object id assignment
+# 
+###########################################################################
+
+# counts syllables of sound utterances
+# NB unstressed syllables are sometimes overlooked
+# NB filter sounds that are quite noisy beforehand
+# NB use Silence threshold (dB) = -25 (or -20?)
+# NB use Minimum .dip between peaks (dB) = between 2-4 (you can first try;
+#                                                      For clean and filtered: 4)
+# syllable_nuclei.soundname$	- Name of sound object
+# syllable_nuclei.voicedcount	- Count of vocied segments
+# syllable_nuclei.npause		- Count of pauses
+# syllable_nuclei.originaldur	- Original duration
+# syllable_nuclei.speakingtot	- Duration of speech
+# syllable_nuclei.speakingrate	- Syllable per second, gross
+# syllable_nuclei.articulationrate - Syllables per speaking time
+# syllable_nuclei.asd			- Average syllable duration
+# 
+# Arguments
+# real .silence_threshold -25 (dB)
+# real .minimum_dip_between_peaks 2 (dB)
+# real .minimum_pause_duration 0.3 (s)
+# boolean .keep_Soundfiles_and_Textgrids 1
+# fileID .soundFile
+#
+# Example 
+# call syllable_nuclei -25 2 0.3 1 .originalRecording
+
+procedure syllable_nuclei .silence_threshold .minimum_dip_between_peaks .minimum_pause_duration .keep_Soundfiles_and_Textgrids .soundid
+
+	# Get object name
+	select .soundid
+	.soundname$ = selected$("Sound")
+
+	# shorten variables
+	.silencedb = .silence_threshold
+	.mindip = .minimum_dip_between_peaks
+	.showtext = .keep_Soundfiles_and_Textgrids
+	.minpause = .minimum_pause_duration
+
+	.originaldur = Get total duration
+	# allow non-zero starting time
+	.bt = Get starting time
+
+	# Use intensity to get .threshold
+	.intid = noprogress To Intensity... 50 0 yes
+	.start = Get time from frame number... 1
+	.nframes = Get number of frames
+	.end = Get time from frame number... '.nframes'
+
+	# estimate noise floor
+	select .intid
+	.minint = Get minimum... 0 0 Parabolic
+	# estimate noise max
+	.maxint = Get maximum... 0 0 Parabolic
+	#get .99 quantile to get maximum (without influence of non-speech sound bursts)
+	.max99int = Get quantile... 0 0 0.99
+
+	# estimate Intensity .threshold
+	.threshold = .max99int + .silencedb
+	.threshold2 = .maxint - .max99int
+	.threshold3 = .silencedb - .threshold2
+	if .threshold < .minint
+	    .threshold = .minint
+	endif
+
+	# get pauses (silences) and speakingtime
+	select .soundid
+	.textgridid = noprogress To TextGrid (silences)... 80 0 '.threshold3' '.minpause' 0.1 silent sounding
+	.silencetierid = Extract tier... 1
+	.silencetableid = Down to TableOfReal... sounding
+	nsounding = Get number of rows
+	.npauses = 'nsounding'
+	.speakingtot = 0
+	for ipause from 1 to .npauses
+	   beginsound = Get value... 'ipause' 1
+	   endsound = Get value... 'ipause' 2
+	   speakingdur = 'endsound' - 'beginsound'
+	   .speakingtot = 'speakingdur' + '.speakingtot'
+	endfor
+
+	select '.intid'
+	Down to Matrix
+	.matid = selected("Matrix")
+	# Convert intensity to sound
+	.sndintid = noprogress To Sound (slice)... 1
+
+	# use total duration, not .end time, to find out duration of .intdur
+	# in order to allow nonzero starting times.
+	.intdur = Get total duration
+	intmax = Get maximum... 0 0 Parabolic
+
+	# estimate peak positions (all peaks)
+	.ppid = noprogress To PointProcess (extrema)... Left yes no Sinc70
+
+	numpeaks = Get number of points
+
+	# fill array with time points
+	for .i from 1 to numpeaks
+	    t'.i' = Get time from index... '.i'
+	endfor
+
+
+	# fill array with intensity values
+	select '.sndintid'
+	.peakcount = 0
+	for .i from 1 to numpeaks
+	    value = Get value at time... t'.i' Cubic
+	    if value > .threshold
+	          .peakcount += 1
+	          int'.peakcount' = value
+	          .timepeaks'.peakcount' = t'.i'
+	    endif
+	endfor
+
+
+	# fill array with valid peaks: only intensity values if preceding
+	# .dip in intensity is greater than .mindip
+	select '.intid'
+	.validpeakcount = 0
+	.currenttime = .timepeaks1
+	.currentint = int1
+
+	for .p to .peakcount-1
+	   .following = .p + 1
+	   .followingtime = .timepeaks'.following'
+	   .dip = Get minimum... '.currenttime' '.followingtime' None
+	   .diffint = abs(.currentint - .dip)
+
+	   if .diffint > .mindip
+	      .validpeakcount += 1
+	      validtime'.validpeakcount' = .timepeaks'.p'
+	   endif
+	      .currenttime = .timepeaks'.following'
+	      .currentint = Get value at time... .timepeaks'.following' Cubic
+	endfor
+
+
+	# Look for only voiced parts
+	select '.soundid'
+	.pitchid = noprogress To Pitch (ac)... 0.02 30 4 no 0.03 0.25 0.01 0.35 0.25 450
+
+	.voicedcount = 0
+	for .i from 1 to .validpeakcount
+	   .querytime = validtime'.i'
+
+	   select '.textgridid'
+	   .whichinterval = Get interval at time... 1 '.querytime'
+	   .whichlabel$ = Get label of interval... 1 '.whichinterval'
+
+	   select '.pitchid'
+	   value = Get value at time... '.querytime' Hertz Linear
+
+	   if value <> undefined
+	      if .whichlabel$ = "sounding"
+	          .voicedcount = .voicedcount + 1
+	          voicedpeak'.voicedcount' = validtime'.i'
+	      endif
+	   endif
+	endfor
+
+	# calculate time correction due to shift in time for Sound object versus
+	# intensity object
+	.timecorrection = .originaldur/.intdur
+
+	# Insert voiced peaks in TextGrid
+	if .showtext > 0
+	   select '.textgridid'
+	   Insert point tier... 1 syllables
+	  
+	   for .i from 1 to .voicedcount
+	       position = voicedpeak'.i' * .timecorrection
+	       Insert point... 1 position '.i'
+	   endfor
+	endif
+
+	# clean up before next sound file is opened
+	select .intid
+	plus .matid
+	plus .sndintid
+	plus .ppid
+	plus .pitchid
+	plus .silencetierid
+	plus .silencetableid
+	plus .textgridid
+	Remove
+	if .showtext < 1
+	   select '.soundid'
+	   plus '.textgridid'
+	   Remove
+	endif
+
+	# summarize results in Info window
+	.speakingrate = '.voicedcount'/'.originaldur'
+	.articulationrate = '.voicedcount'/'.speakingtot'
+	.npause = '.npauses'-1
+	.asd = '.speakingtot'/'.voicedcount'
+endproc
+
