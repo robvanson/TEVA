@@ -174,7 +174,9 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	call syllable_nuclei -25 2 0.3 1 .originalRecording
 	.articulationrate = syllable_nuclei.articulationrate
 	.speed = 1
-	if syllable_nuclei.voicedcount > 4 and .articulationrate >= 2 and .articulationrate <= 6
+	if .targetAR > 0 and .targetAR < 2
+		.speed = .targetAR
+	elsif syllable_nuclei.voicedcount > 4 and .articulationrate >= 2 and .articulationrate <= 6
 		.speed = .targetAR/.articulationrate
 	endif
 
@@ -365,9 +367,6 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	
 	select .newSound 
 endproc
-
-
-
 
 
 #
