@@ -208,7 +208,7 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	.origPitch = noprogress To Pitch: 0, 75, 600
 	.origPitchTier = Down to PitchTier
 	.origMeanPitch = Get mean (curve): 0, 0
-	# Scale original intensity countour
+	# Scale original pitch countour
 	if .prosody <> 1
 		select .origPitchTier
 		Formula... .prosody*self + (1-.prosody)*.origMeanPitch
