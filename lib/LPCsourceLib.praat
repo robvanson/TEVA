@@ -191,70 +191,102 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 		.prosody /= 100
 	endif
 
-	# Set up original recording
+	###################################################################
+	#
+	# Set up original recording and generate original parameters
+	#
+	###################################################################
+	
 	selectObject: .originalRecording
 	.origDuration = Get total duration
 	
+	# Voicing
 	selectObject: .originalRecording
 	.origPoint = noprogress To PointProcess (periodic, cc): 75, 600
 	.origVoicing = noprogress To TextGrid (vuv): 0.02, 0.01
 	Rename: "OriginalVoicing"
 	
-	# Clean up
-	select .origPoint
-	Remove
-	
+	# Pitch
 	selectObject: .originalRecording
 	.origPitch = noprogress To Pitch: 0, 75, 600
 	.origPitchTier = Down to PitchTier
 	.origMeanPitch = Get mean (curve): 0, 0
+
+	# Source
+	selectObject: .originalRecording
+	call extract_DiffLPC_source
+	.origSource = selected: "Sound"
+	Rename: "OriginalSource"
+	
+	# Source Intensity
+	selectObject: .origSource
+	call intensityTier_from_LPC_source
+	.origIntensity = selected: "IntensityTier"
+	.origMeanInt = intensityTier_from_LPC_source.energy
+
+	# Original filter
+	selectObject: .originalRecording
+	call extract_LPC_filter
+	.origFilter = selected: "LPC"
+	
+	# Clean up
+	select .origPoint
+	plus .origPitch
+	Remove
+	
+	###################################################################
+	#
+	# Scale parameters of original speech against mean 
+	#
+	###################################################################
+	
 	# Scale original pitch countour
 	if .prosody <> 1
 		select .origPitchTier
 		Formula... .prosody*self + (1-.prosody)*.origMeanPitch
 	endif
 
-	# Clean up
-	select .origPitch
-	Remove
-	
-	selectObject: .originalRecording
-	call extract_DiffLPC_source
-	.origSource = selected: "Sound"
-	Rename: "OriginalSource"
-	
-	selectObject: .origSource
-	call intensityTier_from_LPC_source
-	.origIntensity = selected: "IntensityTier"
-	.origMeanInt = intensityTier_from_LPC_source.energy
-	# Scale original intensity countour
+	# Scale original (source) intensity countour
 	if .prosody <> 1
 		select .origIntensity
 		Formula... .prosody*self + (1-.prosody)*.origMeanInt
 	endif
 
-	selectObject: .originalRecording
-	call extract_LPC_filter
-	.origFilter = selected: "LPC"
-	
+	###################################################################
+	#
+	# Set up source recording and generate source parameters
+	#
+	###################################################################
+
 	# Set up TE source recording
 	selectObject: .teSourceRecording
 	.teSourceDuration = Get total duration
 	
+	# Determine segments with speech
 	selectObject: .teSourceRecording
 	.teTextGrid = noprogress To TextGrid (silences): 80, 0, -15, 0.1, 0.1, "silent", "sounding"
 	
+	# Get source sound
 	selectObject: .teSourceRecording
 	call extract_DiffLPC_source
 	.teSource = selected: "Sound"
 	
+	# Get source filter
 	selectObject: .teSourceRecording
 	call extract_LPC_filter
 	.teFilter = selected: "LPC"
 	
+	###################################################################
+	#
 	# Replace Original source with TE source
-	
-	# Construct a source signal that is long enough
+	#
+	###################################################################
+
+	###################################################################
+	#
+	# Construct a new source signal that is long enough
+	#
+	###################################################################
 	.teSourceCopy = -1
 	.durationOfCopy = 0
 	while .durationOfCopy + 0.001 < .origDuration
@@ -293,34 +325,65 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	selectObject: .teSourceCopy
 	Rename: "CroppedSource"
 	
-	# Scale intensity
-	selectObject: .teSourceCopy
-	plusObject: .origIntensity
-	.scaledTEsource = Multiply: 0.9
-	Rename: "ScaledSource"
-	
-	# Superimpose Pitch of original over new source
-	select .scaledTEsource
-	.newSourceManipulation = noprogress To Manipulation: 0.01, 75, 600
-	.newSourcePitch = Extract pitch tier
-	.meanSourcePitch = Get mean (curve): 0, 0
-	# Reduce pitch movements
-	select .origPitchTier
-	.meanTargetPitch = Get mean (curve): 0, 0
-	if .meanTargetPitch > 0
-		Formula... self * (.meanSourcePitch / .meanTargetPitch)
+	###################################################################
+	#
+	# Copy original intensity countour to new source
+	#
+	###################################################################
+	if .prosody > 0
+		selectObject: .teSourceCopy
+		plusObject: .origIntensity
+		.scaledTEsource = Multiply: 0.9
+		Rename: "ScaledSource"
+		
+		# Clean up
+		select .teSourceCopy
+		Remove
+	else
+		selectObject: .teSourceCopy
+		Rename: "ScaledSource"
+		.scaledTEsource = .teSourceCopy
+		.teSourceCopy = -1
 	endif
-	plus .newSourceManipulation
-	Replace pitch tier
-	select .newSourceManipulation
-	.intonatedTEsource = Get resynthesis (overlap-add)
-	Rename: "IntonatedSource"
 	
-	select .newSourceManipulation
-	plus .newSourcePitch
-	Remove
+	###################################################################
+	#
+	# Superimpose Pitch of original over new source
+	#
+	###################################################################
+	if .prosody > 0
+		select .scaledTEsource
+		.newSourceManipulation = noprogress To Manipulation: 0.01, 75, 600
+		.newSourcePitch = Extract pitch tier
+		.meanSourcePitch = Get mean (curve): 0, 0
+		# Reduce pitch movements
+		select .origPitchTier
+		.meanTargetPitch = Get mean (curve): 0, 0
+		if .meanTargetPitch > 0
+			Formula... self * (.meanSourcePitch / .meanTargetPitch)
+		endif
+		plus .newSourceManipulation
+		Replace pitch tier
+		select .newSourceManipulation
+		.intonatedTEsource = Get resynthesis (overlap-add)
+		Rename: "IntonatedSource"
+		
+		select .newSourceManipulation
+		plus .newSourcePitch
+		plus .scaledTEsource
+		Remove
+	else
+		select .scaledTEsource
+		Rename: "IntonatedSource"		
+		.intonatedTEsource = .scaledTEsource
+		.scaledTEsource = -1
+	endif
 	
+	###################################################################
+	#
 	# Replace voiced parts of original with new voice
+	#
+	###################################################################
 	selectObject: .origSource
 	.newSource = Copy: "NewSource"
 	call replace_samples IntonatedSource NewSource OriginalVoicing 1 V
@@ -331,7 +394,11 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	Scale intensity: 70.0
 	Rename: "OriginalWithTE"
 
+	###################################################################
+	#
 	# Clean up
+	#
+	###################################################################
 	select .origPitchTier
 	plus .origIntensity
 	plus .origFilter
@@ -339,31 +406,38 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	plus .origVoicing
 	plus .teTextGrid
 	plus .teSource
-	plus .scaledTEsource
 	plus .intonatedTEsource
-	plus .teSourceCopy
 	plus .teFilter
 	plus .newSource
 	Remove
 	
+	###################################################################
+	#
 	# Change duration
-	select .speedSound
-	.newSoundManipulation = noprogress To Manipulation: 0.01, 60, 300
-	.newSoundDurTier = Extract duration tier
-	Add point: 0, .scaleDuration
-	
-	# Synthesize
-	select .newSoundManipulation
-	plus .newSoundDurTier
-	Replace duration tier
-
-	select .newSoundManipulation
-	.newSound = noprogress Get resynthesis (overlap-add)
+	#
+	###################################################################
+	if .scaleDuration <> 1
+		select .speedSound
+		.newSoundManipulation = noprogress To Manipulation: 0.01, 60, 300
+		.newSoundDurTier = Extract duration tier
+		Add point: 0, .scaleDuration
 		
-	select .newSoundManipulation
-	plus  .newSoundDurTier
-	plus .speedSound
-	Remove
+		# Synthesize
+		select .newSoundManipulation
+		plus .newSoundDurTier
+		Replace duration tier
+	
+		select .newSoundManipulation
+		.newSound = noprogress Get resynthesis (overlap-add)
+			
+		select .newSoundManipulation
+		plus  .newSoundDurTier
+		plus .speedSound
+		Remove
+	else
+		.newSound = .speedSound
+		.speedSound = -1
+	endif
 	
 	select .newSound 
 endproc
@@ -912,11 +986,24 @@ endproc
 #
 # Extract an LPC filter 
 # Selected Sound
+lpcsourcelib.analysis_type = 2
 procedure extract_LPC_filter
+	if lpcsourcelib.analysis_type = undefined
+		lpcsourcelib.analysis_type = 1
+	endif
+	
     .basename$ = selected$("Sound")
     Resample... 11000 50
     .tmp = Rename... '.basename$'_DownSampled
-    noprogress To LPC (autocorrelation)... 10 0.025 0.005 50
+    if lpcsourcelib.analysis_type = 2
+		noprogress To LPC (covariance): 10, 0.025, 0.005, 50
+    elsif lpcsourcelib.analysis_type = 3
+		noprogress To LPC (burg): 10, 0.025, 0.005, 50
+    elsif lpcsourcelib.analysis_type = 4
+		noprogress To LPC (marple): 10, 0.025, 0.005, 50, 1e-6, 1e-6
+	else # lpcsourcelib.analysis_type = 1 and others
+		noprogress To LPC (autocorrelation): 10, 0.025, 0.005, 50
+	endif
     Rename... '.basename$'_LPC
     
     select .tmp
@@ -930,10 +1017,22 @@ endproc
 # the selected Sound with its LPC
 # Selected Sound
 procedure extract_DiffLPC_source
-    .basename$ = selected$("Sound")
+ 	if lpcsourcelib.analysis_type = undefined
+		lpcsourcelib.analysis_type = 1
+	endif
+	
+   .basename$ = selected$("Sound")
     Resample... 11000 50
     Rename... '.basename$'_DownSampled
-    noprogress To LPC (autocorrelation)... 10 0.025 0.005 50
+    if lpcsourcelib.analysis_type = 2
+		noprogress To LPC (covariance): 10, 0.025, 0.005, 50
+    elsif lpcsourcelib.analysis_type = 3
+		noprogress To LPC (burg): 10, 0.025, 0.005, 50
+    elsif lpcsourcelib.analysis_type = 4
+		noprogress To LPC (marple): 10, 0.025, 0.005, 50, 1e-6, 1e-6
+	else # lpcsourcelib.analysis_type = 1 and others
+		noprogress To LPC (autocorrelation): 10, 0.025, 0.005, 50
+	endif
     Rename... '.basename$'_LPC
     select Sound '.basename$'_DownSampled
     plus LPC '.basename$'_LPC
