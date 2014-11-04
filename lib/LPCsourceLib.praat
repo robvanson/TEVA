@@ -200,17 +200,11 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	selectObject: .originalRecording
 	.origDuration = Get total duration
 	
-	# Voicing
+	# Voicing It is best to determine voicing on the source signal
 	selectObject: .originalRecording
 	.origPoint = noprogress To PointProcess (periodic, cc): 75, 400
 	.origVoicing = noprogress To TextGrid (vuv): 0.02, 0.01
 	Rename: "OriginalVoicing"
-	
-	# Pitch
-	selectObject: .originalRecording
-	.origPitch = noprogress To Pitch: 0, 75, 600
-	.origPitchTier = Down to PitchTier
-	.origMeanPitch = Get mean (curve): 0, 0
 
 	# Source
 	selectObject: .originalRecording
@@ -218,6 +212,12 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	.origSource = selected: "Sound"
 	Rename: "OriginalSource"
 	
+	# Pitch. It is best to determine pitch on the source signal
+	selectObject: .origSource
+	.origPitch = noprogress To Pitch: 0, 75, 600
+	.origPitchTier = Down to PitchTier
+	.origMeanPitch = Get mean (curve): 0, 0
+
 	# Source Intensity
 	selectObject: .origSource
 	call intensityTier_from_LPC_source
