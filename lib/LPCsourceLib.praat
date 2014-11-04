@@ -202,7 +202,7 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	
 	# Voicing
 	selectObject: .originalRecording
-	.origPoint = noprogress To PointProcess (periodic, cc): 75, 600
+	.origPoint = noprogress To PointProcess (periodic, cc): 75, 400
 	.origVoicing = noprogress To TextGrid (vuv): 0.02, 0.01
 	Rename: "OriginalVoicing"
 	
