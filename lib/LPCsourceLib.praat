@@ -262,15 +262,16 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	selectObject: .teSourceRecording
 	.teSourceDuration = Get total duration
 	
-	# Determine segments with speech
-	selectObject: .teSourceRecording
-	.teTextGrid = noprogress To TextGrid (silences): 80, 0, -15, 0.1, 0.1, "silent", "sounding"
-	
 	# Get source sound
 	selectObject: .teSourceRecording
 	call extract_DiffLPC_source
 	.teSource = selected: "Sound"
+	.teSourceDuration = Get total duration
 	
+	# Determine segments with speech
+	selectObject: .teSource
+	.teTextGrid = noprogress To TextGrid (silences): 80, 0, -10, 0.001, 0.001, "silent", "sounding"
+
 	# Get source filter
 	selectObject: .teSourceRecording
 	call extract_LPC_filter
@@ -298,6 +299,13 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 			if .label$ = "sounding" and .durationOfCopy + 0.001 < .origDuration
 				.start = Get start point: 1, .i
 				.end = Get end point: 1, .i
+				# There are silent margins in the source
+				if .start < 0.025
+					.start = 0.025
+				endif
+				if .end > .teSourceDuration - 0.025
+					.end = .teSourceDuration - 0.025
+				endif
 				.duration = .end - .start
 				selectObject: .teSource
 				if .durationOfCopy + .duration > .origDuration
