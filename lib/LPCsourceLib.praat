@@ -200,12 +200,6 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	selectObject: .originalRecording
 	.origDuration = Get total duration
 	
-	# Voicing It is best to determine voicing on the source signal
-	selectObject: .originalRecording
-	.origPoint = noprogress To PointProcess (periodic, cc): 75, 400
-	.origVoicing = noprogress To TextGrid (vuv): 0.02, 0.01
-	Rename: "OriginalVoicing"
-
 	# Source
 	selectObject: .originalRecording
 	call extract_DiffLPC_source
@@ -217,6 +211,12 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	.origPitch = noprogress To Pitch: 0, 75, 600
 	.origPitchTier = Down to PitchTier
 	.origMeanPitch = Get mean (curve): 0, 0
+
+	# Voicing It is best to determine voicing on the source signal
+	selectObject: .origSource
+	.origPoint = noprogress To PointProcess (periodic, cc): 70, 400
+	.origVoicing = noprogress To TextGrid (vuv): 0.025, 0.01
+	Rename: "OriginalVoicing"
 
 	# Source Intensity
 	selectObject: .origSource
@@ -394,8 +394,12 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	###################################################################
 	selectObject: .origSource
 	.newSource = Copy: "NewSource"
-	call replace_samples IntonatedSource NewSource OriginalVoicing 1 V
+	Scale intensity: 70.0
+	selectObject: .intonatedTEsource
+	Scale intensity: 70.0
 	
+	call replace_samples IntonatedSource NewSource OriginalVoicing 1 V
+
 	selectObject: .origFilter
 	plusObject: .newSource
 	.speedSound = Filter: "no"
@@ -450,6 +454,46 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	select .newSound 
 endproc
 
+
+# Get the average impulse response of the source
+procedure deconvolute_impulse_response .minPitch .source
+	select .source
+	.duration = Get total duration
+	.sampleFrequency = Get sampling frequency
+	.points = noprogress To PointProcess (periodic, cc): 75, 400
+	
+	# Calculate window length
+	if .minPitch <= 0
+		.minPitch = 100
+	endif
+	.windowLength = 1.0/.minPitch
+	.halfWindow = .windowLength / 2
+	
+	# generate summation
+	.impulseResponse = Create Sound from formula: "ImpulseResponse", 1, 0.0, .windowLength, .sampleFrequency, "0"
+
+	select .points
+	.numPulses = Get number of points
+	for .p to .numPulses
+		select .points
+		.time = Get time from index: .p
+		.start = .time - .halfWindow
+		.end = .start + .windowLength
+		if .start >= 0 and .end <= .duration
+			select .source
+			.tmp = Extract part: .start, .end, "rectangular", 1.0, "no"
+			Rename: "Impulse"
+			select .impulseResponse
+			Formula: "self + Object_'.tmp'[row,col]"
+			
+			# Clean up
+			select .tmp
+			Remove
+		endif
+	endfor
+	select .impulseResponse
+	Formula: "self / '.numPulses'"
+endproc
 
 #
 # Generate stimuli from Sound+TextGrid
@@ -1102,7 +1146,7 @@ procedure replace_samples .sound1$ .sound2$ .textgrid$ .tier .label$
             .end = Get end point... '.tier' '.i'
             .midpoint = (.start + .end)/2
             select Sound '.sound2$'
-            .etime = 0.001
+            .etime = 0.005
             Formula... if x >= .start and x < .midpoint then self * exp(-(x-.start)/.etime) + Sound_'.sound1$'(x)*(1-exp(-(x-.start)/.etime)) else self fi
             Formula... if x < .end and x >= .midpoint   then self * exp(-(.end - x)/.etime) + Sound_'.sound1$'(x)*(1-exp(-(.end - x)/.etime)) else self fi
         endif
