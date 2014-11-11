@@ -169,7 +169,7 @@ endproc
 # Resynthesize an utterrance with a TE voice from a sustained /a/
 #
 # Debugging
-resynthesize_with_TE_source.testResysnthesis = 1
+resynthesize_with_TE_source.testResysnthesis = 0
 
 procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teSourceRecording
 
@@ -216,10 +216,20 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	.origMeanPitch = Get mean (curve): 0, 0
 
 	# Voicing It is best to determine voicing on the source signal
+	# Use one of these two methods!!!
 	selectObject: .origSource
 	.origPoint = noprogress To PointProcess (periodic, cc): 80, 400
-	.origVoicing = noprogress To TextGrid (vuv): 0.025, 0.01
+	.origVoicing = noprogress To TextGrid (vuv): 0.020, 0.01
 	Rename: "OriginalVoicing"
+	
+	if 0
+		select .origVoicing
+		Remove
+		call voicing_detector .origSource
+		.origVoicing = voicing_detector.voicing
+		select .origVoicing
+		Rename: "OriginalVoicing"
+	endif
 	
 	# Remove spurious voiced intervals
 	select .origVoicing
@@ -1562,5 +1572,18 @@ procedure zero_crossing_rate .soundfile .start .end
 	
 	select .tmp
 	plus .tmpPoint
+	Remove
+endproc
+
+procedure voicing_detector .soundfile
+	select .soundfile
+	.tmp = noprogress To Harmonicity (cc): 0.01, 75, 0.1, 1
+	.tmpMatrix = To Matrix
+	.tmpIntensity = To Intensity
+	.voicing = To TextGrid (silences): -40, 0.01, 0.01, "U", "V"
+
+	select .tmp
+	plus .tmpMatrix
+	plus .tmpIntensity
 	Remove
 endproc
