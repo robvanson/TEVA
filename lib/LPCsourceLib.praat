@@ -168,6 +168,9 @@ endproc
 #
 # Resynthesize an utterrance with a TE voice from a sustained /a/
 #
+# Debugging
+resynthesize_with_TE_source.testResysnthesis = 1
+
 procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teSourceRecording
 
 	# Determine articulation rate etc in original
@@ -214,9 +217,24 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 
 	# Voicing It is best to determine voicing on the source signal
 	selectObject: .origSource
-	.origPoint = noprogress To PointProcess (periodic, cc): 70, 400
+	.origPoint = noprogress To PointProcess (periodic, cc): 80, 400
 	.origVoicing = noprogress To TextGrid (vuv): 0.025, 0.01
 	Rename: "OriginalVoicing"
+	
+	# Remove spurious voiced intervals
+	select .origVoicing
+	.numIntervals = Get number of intervals: 1
+	for .interval to .numIntervals
+		select .origVoicing
+		.label$ = Get label of interval: 1, .interval
+		.start = Get start point: 1, .interval
+		.end = Get end point: 1, .interval
+		call zero_crossing_rate '.originalRecording' '.start' '.end'
+		if zero_crossing_rate.zc_rate > 5000
+			select .origVoicing
+			Set interval text: 1, .interval, "U"
+		endif
+	endfor
 
 	# Source Intensity
 	selectObject: .origSource
@@ -228,6 +246,19 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	selectObject: .originalRecording
 	call extract_LPC_filter
 	.origFilter = selected: "LPC"
+	
+	# Test resynthesis
+	if .testResysnthesis
+		select .origPoint
+		Copy: "TestVoicing"
+		select .origVoicing
+		Copy: "TestVoicing"
+		selectObject: .origFilter
+		plusObject: .origSource
+		.testSound_1 = Filter: "no"
+		Scale intensity: 70.0
+		Rename: "TestSynthesis_1"
+	endif
 	
 	# Clean up
 	select .origPoint
@@ -333,6 +364,15 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	selectObject: .teSourceCopy
 	Rename: "CroppedSource"
 	
+	# Test resynthesis
+	if .testResysnthesis
+		selectObject: .origFilter
+		plusObject: .teSourceCopy
+		.testSound_2 = Filter: "no"
+		Scale intensity: 70.0
+		Rename: "TestSynthesis_2"
+	endif
+	
 	###################################################################
 	#
 	# Copy original intensity countour to new source
@@ -354,6 +394,15 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 		.teSourceCopy = -1
 	endif
 	
+	# Test resynthesis
+	if .testResysnthesis
+		selectObject: .origFilter
+		plusObject: .scaledTEsource
+		.testSound_3 = Filter: "no"
+		Scale intensity: 70.0
+		Rename: "TestSynthesis_3"
+	endif
+
 	###################################################################
 	#
 	# Superimpose Pitch of original over new source
@@ -387,6 +436,15 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 		.scaledTEsource = -1
 	endif
 	
+	# Test resynthesis
+	if .testResysnthesis
+		selectObject: .origFilter
+		plusObject: .intonatedTEsource
+		.testSound_4 = Filter: "no"
+		Scale intensity: 70.0
+		Rename: "TestSynthesis_4"
+	endif
+	
 	###################################################################
 	#
 	# Replace voiced parts of original with new voice
@@ -405,6 +463,15 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	.speedSound = Filter: "no"
 	Scale intensity: 70.0
 	Rename: "OriginalWithTE"
+	
+	# Test resynthesis
+	if .testResysnthesis
+		selectObject: .origFilter
+		plusObject: .newSource
+		.testSound_5 = Filter: "no"
+		Scale intensity: 70.0
+		Rename: "TestSynthesis_5"
+	endif
 
 	###################################################################
 	#
@@ -1482,3 +1549,18 @@ procedure syllable_nuclei .silence_threshold .minimum_dip_between_peaks .minimum
 	.asd = '.speakingtot'/'.voicedcount'
 endproc
 
+procedure zero_crossing_rate .soundfile .start .end
+	select .soundfile
+	.tmp = Extract part: .start, .end, "rectangular", 1, "no"
+	.duration = Get total duration
+	.tmpPoint = noprogress To PointProcess (zeroes): 1, "yes", "yes"
+	.zero_crossings = Get number of points
+	.zc_rate = -1
+	if .duration > 0
+		.zc_rate = .zero_crossings / .duration
+	endif
+	
+	select .tmp
+	plus .tmpPoint
+	Remove
+endproc
