@@ -14,7 +14,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/stat/praat_Stat.cpp d
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_script.cpp demo_praat_sources/sys/praat_script.cpp
 --- praat_sources/sys/praat_script.cpp	2011-09-02 13:53:33.000000000 +0200
 +++ demo_praat_sources/sys/praat_script.cpp	2011-10-28 07:54:25.000000000 +0200
-@@ -575,6 +575,7 @@ void praat_executeScriptFromText (wchar 
+@@ -587,6 +587,7 @@ void praat_executeScriptFromText (wchar 
  		autoInterpreter interpreter = Interpreter_create (NULL, NULL);
  		Interpreter_run (interpreter.peek(), text);
  	} catch (MelderError) {
