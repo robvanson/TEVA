@@ -254,8 +254,13 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 
 	# Original filter
 	selectObject: .originalRecording
+	.tmp = Copy: "AdditiveNoise"
+	Formula... self + randomGauss(0,0.00000001)
 	call extract_LPC_filter
 	.origFilter = selected: "LPC"
+	Rename: "OriginalFilter"
+	select .tmp
+	Remove
 	
 	# Test resynthesis
 	if .testResysnthesis
@@ -269,7 +274,7 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 		Scale intensity: 70.0
 		Rename: "TestSynthesis_1"
 	endif
-	
+
 	# Clean up
 	select .origPoint
 	plus .origPitch
