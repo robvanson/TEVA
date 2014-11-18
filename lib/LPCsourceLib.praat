@@ -252,10 +252,11 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	.origIntensity = selected: "IntensityTier"
 	.origMeanInt = intensityTier_from_LPC_source.energy
 
-	# Original filter. Add some noise to prevent instable filters on silent stretches
+	# Original filter. 
+	# Add some white noise to silent stretches to prevent instable filters
 	selectObject: .originalRecording
 	.tmp = Copy: "AdditiveNoise"
-	Formula... self + randomGauss(0,0.00000001)
+	Formula... if abs(self) < 0.00001 then self + randomGauss(0,0.00001) else self fi
 	call extract_LPC_filter
 	.origFilter = selected: "LPC"
 	Rename: "OriginalFilter"
