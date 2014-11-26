@@ -711,9 +711,14 @@ procedure processConfigSource .change$ .clickX .clickY .pressed$
 		@getOpenFile: "'.originalRecording'"
 		# Restore the original recording
 		te.originalRecording = .originalRecording
-	else
+	elsif te.openSound > 0
 		select te.openSound
 		te.originalRecording = Copy: "OriginalRecording"
+	else
+		# Nothing to do, reset button
+		call Draw_button '.table$' '.label$' 0
+		config.source$ = "Original"
+		goto SKIPVOICESOURCE
 	endif
 
 	# Change original sound
@@ -781,6 +786,7 @@ procedure processConfigSource .change$ .clickX .clickY .pressed$
 			endif
 		endwhile
 	endif
+	label SKIPVOICESOURCE
     call Draw_button '.table$' Source_'config.source$' 2
 endproc
 
