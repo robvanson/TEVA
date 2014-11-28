@@ -810,6 +810,9 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 	.row = findLabel.row
 	select Table '.table$'
 	.helpText$ = Get value... '.row' Helptext
+	call convert_praat_to_latin1 '.helpText$'
+	.helpText$ = convert_praat_to_latin1.text$
+	
 	clicked = -1
 	while clicked <> 5
 		# The speaker Text
