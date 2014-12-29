@@ -96,7 +96,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	trace ("after picture window shows: locale is %s", setlocale (LC_ALL, NULL));
  }
  
-@@ -1654,6 +1672,14 @@ void praat_run (void) {
+@@ -1666,6 +1684,14 @@ void praat_run (void) {
  						s ++;
  					}
  				}
