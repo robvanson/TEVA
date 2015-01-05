@@ -96,6 +96,19 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	trace ("after picture window shows: locale is %s", setlocale (LC_ALL, NULL));
  }
  
+@@ -1529,9 +1547,9 @@ void praat_run (void) {
+ 		Melder_assert ((double) dummy == 40000.0);
+ 		Melder_assert ((double) (int16_t) dummy == -25536.0);
+ 	}
+-	{ uint32_t dummy = 0xffffffff;
+-		Melder_assert (wcsequ (Melder_integer (dummy), L"4294967295"));
+-	}
++//	{ uint32_t dummy = 0xffffffff;
++//		Melder_assert (wcsequ (Melder_integer (dummy), L"4294967295"));
++//	}
+ 
+ 	if (sizeof (off_t) < 8)
+ 		Melder_fatal ("sizeof(off_t) is less than 8. Compile Praat with -D_FILE_OFFSET_BITS=64.");
 @@ -1666,6 +1684,14 @@ void praat_run (void) {
  						s ++;
  					}
