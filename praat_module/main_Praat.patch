@@ -1,14 +1,14 @@
 --- praat_sources/main/main_Praat.cpp	2013-06-26 09:06:04.000000000 +0200
 +++ demo_praat_sources/main/main_Praat.cpp	2013-06-28 14:47:39.000000000 +0200
-@@ -44,10 +44,12 @@ static void logo (Graphics g) {
- 	Graphics_text (g, 0.5, 0.16, L"Copyright © 1992–" xstr(PRAAT_YEAR) " by Paul Boersma and David Weenink");
+@@ -49,10 +49,12 @@ static void logo (Graphics g) {
+ 	Graphics_text (g, 0.5, 0.16, UTF32_C ("Copyright © 1992–" xstr(PRAAT_YEAR) " by Paul Boersma and David Weenink"));
  }
  
 +#include "demopraatapplication.h"
  int main (int argc, char *argv []) {
  	try {
  		praat_setLogo (130, 80, logo);
--		praat_init ("Praat", argc, argv);
+-		praat_init ("Praat", (unsigned int) argc, argv);
 +		praat_setStandAloneScriptText (myDemoScript);
 +		praat_init ("TEVA", argc, argv);
  		INCLUDE_LIBRARY (praat_uvafon_init)

@@ -6,6 +6,7 @@ UNAME=$(uname -s)
 MAKECMD=make
 EXECPATH=./praat
 TARGETNAME=${APPLICATIONNAME}
+ZIPNAME=${TARGETNAME}
 
 PRAATSOURCES=./praat_sources
 if [[ ${1:-Normal} == "MinGW" ]]; then
@@ -13,6 +14,8 @@ if [[ ${1:-Normal} == "MinGW" ]]; then
 	if [[ ! -d ${PRAATSOURCES} ]]; then
 		exit
 	fi
+	# Temporary cludge to recompile this file without -O2
+	touch ${PRAATSOURCES}/dwsys/regularExp.cpp
 elif [[ -d ../praat_sources ]]; then
 	PRAATSOURCES=../praat_sources
 elif [[ -d ../../demo_praat_sources ]]; then
@@ -28,14 +31,24 @@ if [[  -e ${PRAATSOURCES}/makefile.defs && -n `grep -l mingw32 ${PRAATSOURCES}/m
 	else
 		TARGETNAME=${APPLICATIONNAME}.exe
 	fi
+	ZIPNAME=${TARGETNAME}
 	UNAME=MinGW
 elif [[ ${UNAME} == "Darwin" ]]; then
-	SDK=`ls -1d /Developer/SDKs/*|tail -1`
-	MAKECMD="xcodebuild -project praat32.xcodeproj"
-	if [[ -n ${SDK} ]]; then
+	MAKECMD="xcodebuild -project praat64.xcodeproj"
+	if [[ -d ${PRAATSOURCES}/praat32.xcodeproj ]]; then
+		if [[ -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs ]]; then
+			SDK=`ls -1d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/*|grep 10.6`
+		else
+			SDK=`ls -1d /Developer/SDKs/*|grep 10.6`
+		fi
 		MAKECMD="xcodebuild -project praat32.xcodeproj -sdk ${SDK}"
+		EXECPATH="./build/Configuration1/Praat.app"
+		ZIPNAME=${ZIPNAME}_32.app
+	else
+		MAKECMD="xcodebuild -project praat64.xcodeproj"
+		EXECPATH="./build/Configuration64/Praat.app"
+		ZIPNAME=${ZIPNAME}_64.app
 	fi
-	EXECPATH="./build/Configuration1/Praat.app"
 	TARGETNAME=${APPLICATIONNAME}.app
 fi
 
@@ -58,7 +71,7 @@ else
 	ln -s ${CURRENTWORKINGDIR}/${APPLICATIONNAME}expanded.h ./demopraatapplication.h
 fi
 # Create a file containing the Build number
-grep 'build_SHA$ = "' ${CURRENTWORKINGDIR}/TEVAexpanded.praat | grep ':' | perl -ane '/\"([A-F0-9]+)\s+([\d\-]+)(.*)\"/;print "<i>$1</i> <b>$2</b>$3\n";' > ${CURRENTWORKINGDIR}/Build_SHA.html
+grep 'build_SHA$ = "' ${CURRENTWORKINGDIR}/${APPLICATIONNAME}expanded.praat | grep ':' | perl -ane '/\"([A-F0-9]+)\s+([\d\-]+)(.*)\"/;print "<i>$1</i> <b>$2</b>$3\n";' > ${CURRENTWORKINGDIR}/Build_SHA.html
 
 # Get the manual into the tutorials manual
 cp ../fon/manual_tutorials.cpp ../fon/manual_tutorials.cppORIGINAL
@@ -103,22 +116,22 @@ if [[ -d ${CURRENTWORKINGDIR}/${TARGETNAME} ]]; then
 	rm -r ${CURRENTWORKINGDIR}/${TARGETNAME}
 fi
 mv ${EXECPATH} ${CURRENTWORKINGDIR}/${TARGETNAME}
+
 	
 cd ${CURRENTWORKINGDIR}
-zip -r ${TARGETNAME}.zip ${TARGETNAME}
+zip -r ${ZIPNAME}.zip ${TARGETNAME}
 
 # Create MD5SUM
 if [[ -n `which md5` ]] ; then 
-	if [[ -f ${TARGETNAME} ]]; then
-		md5 ${TARGETNAME} > ${TARGETNAME}.md5
+	if [[ -f ${CURRENTWORKINGDIR}/${TARGETNAME} ]]; then
+		md5 ${CURRENTWORKINGDIR}/${TARGETNAME} > ${CURRENTWORKINGDIR}/${TARGETNAME}.md5
 	fi
-	md5 ${TARGETNAME}.zip > ${TARGETNAME}.zip.md5
+	md5 ${CURRENTWORKINGDIR}/${ZIPNAME}.zip > ${CURRENTWORKINGDIR}/${ZIPNAME}.zip.md5
 fi
 if [[ -n `which md5sum` ]] ; then 
-	if [[ -f ${TARGETNAME} ]]; then
-		md5sum ${TARGETNAME} > ${TARGETNAME}.md5
+	if [[ -f ${CURRENTWORKINGDIR}/${TARGETNAME} ]]; then
+		md5sum ${CURRENTWORKINGDIR}/${TARGETNAME} > ${CURRENTWORKINGDIR}/${TARGETNAME}.md5
 	fi
-	md5sum ${TARGETNAME}.zip > ${TARGETNAME}.zip.md5
+	md5sum ${CURRENTWORKINGDIR}/${ZIPNAME}.zip > ${CURRENTWORKINGDIR}/${ZIPNAME}.zip.md5
 fi
-cd -
 
