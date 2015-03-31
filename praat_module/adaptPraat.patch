@@ -369,7 +369,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
 +++ demo_praat_sources/sys/praat_objectMenus.cpp	2012-02-22 13:48:24.000000000 +0100
 @@ -492,8 +492,10 @@ FORM (SearchManual, L"Search manual", L"
  	TEXTFIELD (L"query", L"")
- 	OK
+ 	OK2
  DO
 +	#ifndef DEMOAPP
  	if (theCurrentPraatApplication -> batch)
@@ -377,10 +377,10 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
 +	#endif
  	Manual manPage = Manual_create (L"Intro", theCurrentPraatApplication -> manPages, false);
  	Manual_search (manPage, GET_STRING (L"query"));
- END
+ END2 }
 @@ -504,8 +506,10 @@ FORM (GoToManualPage, L"Go to manual pag
  	LIST (L"Page", numberOfPages, pages, 1)}
- 	OK
+ 	OK2
  DO
 +	#ifndef DEMOAPP
  	if (theCurrentPraatApplication -> batch)
@@ -388,7 +388,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
 +	#endif
  	Manual manPage = Manual_create (L"Intro", theCurrentPraatApplication -> manPages, false);
  	HyperPage_goToPage_i (manPage, GET_INTEGER (L"Page"));
- END
+ END2 }
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_praat_sources/sys/GuiMenu.cpp
 --- praat_sources/sys/GuiMenu.cpp	2012-09-27 09:10:50.000000000 +0200
 +++ demo_praat_sources/sys/GuiMenu.cpp	2012-10-25 09:55:23.000000000 +0200
