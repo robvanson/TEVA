@@ -1809,11 +1809,13 @@ procedure write_help_text .table$ .label$
 	# Draw pop-up
 	.mm2wc = demo Horizontal mm to wc... 1
 	.lineWidth = 2/.mm2wc
+	.arrowSize = .lineWidth / 3
 	demo Line width... '.lineWidth'
-	demo Arrow size... '.lineWidth'
  	demo Colour... 'popUp.bordercolor$'
 	demo Paint rectangle... 'popUp.backgroundcolor$' '.htXleft' '.htXright' '.htYlow' '.htYhigh'
 	demo Draw rectangle... '.htXleft' '.htXright' '.htYlow' '.htYhigh'
+	demo Line width... '.arrowSize'
+	demo Arrow size... '.arrowSize'
 	demo Draw arrow... '.xstart' '.ystart' '.xend' '.yend'
 	demo Line width... 'defaultLineWidth'
 	demo Arrow size... 1

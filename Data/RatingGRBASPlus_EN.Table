@@ -11,7 +11,7 @@ $Scales	Chose a grade on the line between left (poor) and right (good) descripto
 >Breathiness	Breathiness	Poor;Good	BREATHINESS: Grade of breathiness, the fraction of the non-modulated turbulence noise in the produced sound
 >Asthenia	Asthenia	  Poor;Good	ASTHENIA: The overall weakness of voice
 >Strain	Strain	Poor;Good	STRAIN: Strained quality, (tenseness of voice, overall muscular tension)
->Nasality	Nasality	Poor;Good	Nasal segments are pronounced nasal, non-nasel sounds are not nasalized
+>Nasality	Nasality	Poor;Good	Nasality: Nasal segments are pronounced nasal, non-nasel sounds are not nasalized
 >Prosody	Prosody	Monotonous;Normal	The speaker speaks in a monotoneous voice or a normal prosody
 >Accent	Accent	Strong;None	Accent: The speaker speaks with a strong accent or dialect
 Help	Scale Help	#	Press the scale you want information on, "Help" to continue
