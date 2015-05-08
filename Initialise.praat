@@ -261,7 +261,6 @@ procedure init_window
 		canvasYL = Get value... '.row' LowY
 		canvasYH = Get value... '.row' HighY
 		wipeCanvasArea$ = "demo Paint rectangle... White 'canvasXL' 'canvasXR' 'canvasYL' 'canvasYH'"
-
 	endif
 	
 	# Draw background

@@ -964,9 +964,9 @@ procedure get_feedback_text .language$ .key$
 endproc
 
 # Get the label
-procedure buttonClicked table$ .x .y
+procedure buttonClicked .table$ .x .y
 	.label$ = ""
-	select Table 'table$'
+	select Table '.table$'
 	.bo$ = selected$("Table")
 	.bo$ = "Table_"+.bo$
 	.numRows = Get number of rows
