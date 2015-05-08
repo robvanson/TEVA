@@ -1,0 +1,17 @@
+Label	Text	Key	Helptext
+!Author	Author	!	R.J.J.H. van Son
+!Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
+!License	License	!	GNU GPL version 2 or later
+!CANVAS	Display	¤	Display area
+$Scales	Kies een gradering op de lijn tussen links (slechte) en rechts (goede/normale) beoordelingen van de spraak	#	Visual Analogue rating Scales
+>Intelligibility	Verstaanbaarheid	Slecht;Goed	Hoe verstaanbaar is de spreker
+>Articulation	Articulatie	Onnauwkeurig;goed	Hoe nauwkeurig is de articulatie
+>Grade	Algemene stemkwaliteit	Slecht;Goed	Algemene kwaliteit van de stem
+>Roughness	Schorheid	Slecht;Goed	ROUGHNESS: The grade of roughness, in relation to the irregular fluctuation of the fundamental frequency
+>Breathiness	Heesheid	Slecht;Goed	BREATHINESS: Grade of breathiness, the fraction of the non-modulated turbulence noise in the produced sound
+>Asthenia	Astheen	  Slecht;Goed	ASTHENIA: The overall weakness of voice
+>Strain	Geknepenheid	Slecht;Goed	STRAIN: Strained quality, (tenseness of voice, overall muscular tension)
+>Nasality	Nasaliteit	Slecht;Goed	Nasale klanken zijn nasaal en niet nasale zijn niet genasaliseerd
+>Prosody	Prosodie	Vlak;Gevariëerd	Is de prosodie monotoon/vlak of gevarieerd
+>Accent	Accent	Sterk;Geen	De spreker spreekt met een sterk/geen accent of dialect
+Help	Schaal Help	#	Press the scale you want information on, "Help" to continue

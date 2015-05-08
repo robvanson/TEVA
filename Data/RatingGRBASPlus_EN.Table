@@ -5,13 +5,13 @@ Label	Text	Key	Helptext
 !CANVAS	Display	¤	Display area
 $Scales	Chose a grade on the line between left (poor) and right (good) descriptors of speech	#	Visual Analogue rating Scales
 >Intelligibility	Intelligibility	Poor;Good	The impression of intelligibility
->Articulation	Articulation	Imprecise;Good	The impression of intelligibility
+>Articulation	Articulation	Imprecise;Good	Articulation is precise or imprecise
 >Grade	Grade	Poor;Good	GRADE: The degree of hoarseness, amount of noise in the produced sound
 >Roughness	Roughness	Poor;Good	ROUGHNESS: The grade of roughness, in relation to the irregular fluctuation of the fundamental frequency
 >Breathiness	Breathiness	Poor;Good	BREATHINESS: Grade of breathiness, the fraction of the non-modulated turbulence noise in the produced sound
->Nasality	Nasality	Poor;Good	The impression of intelligibility
->Prosody	Prosody	Monotonous;Normal	The impression of intelligibility
 >Asthenia	Asthenia	  Poor;Good	ASTHENIA: The overall weakness of voice
 >Strain	Strain	Poor;Good	STRAIN: Strained quality, (tenseness of voice, overall muscular tension)
->Accent	Accent	Strong;None	STRAIN: Strained quality, (tenseness of voice, overall muscular tension)
+>Nasality	Nasality	Poor;Good	Nasal segments are pronounced nasal, non-nasel sounds are not nasalized
+>Prosody	Prosody	Monotonous;Normal	The speaker speaks in a monotoneous voice or a normal prosody
+>Accent	Accent	Strong;None	Accent: The speaker speaks with a strong accent or dialect
 Help	Scale Help	#	Press the scale you want information on, "Help" to continue
