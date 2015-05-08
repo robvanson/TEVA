@@ -169,7 +169,7 @@ procedure processConfigSpeakerData .clickX .clickY .pressed$
 	.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
 	call load_local_preferences '.dataDir$'
 
-    call Draw_button 'table$' '.label$' 0
+    call Draw_button '.table$' '.label$' 0
 endproc
 
 procedure processConfigSpeakerDirectory .clickX .clickY .pressed$
@@ -229,7 +229,7 @@ procedure processConfigSpeakerDirectory .clickX .clickY .pressed$
 		Remove
 	endif
 	
-    call Draw_button 'table$' '.label$' 0
+    call Draw_button '.table$' '.label$' 0
 endproc
 
 procedure processConfigSpeakerMerge .clickX .clickY .pressed$
@@ -260,7 +260,7 @@ procedure processConfigSpeakerMerge .clickX .clickY .pressed$
 			Remove
 		endif
 	endif
-    call Draw_button 'table$' '.label$' 0
+    call Draw_button '.table$' '.label$' 0
 endproc
 
 procedure processConfigSpeakerRevert .clickX .clickY .pressed$
@@ -292,7 +292,7 @@ procedure processConfigSpeakerRevert .clickX .clickY .pressed$
 		endif
 	endif
 	
-    call Draw_button 'table$' '.label$' 0
+    call Draw_button '.table$' '.label$' 0
 endproc
 
 procedure processConfigSaveSpeaker .clickX .clickY .pressed$
@@ -320,7 +320,7 @@ procedure processConfigSaveSpeaker .clickX .clickY .pressed$
 			config.speakerData$ = .filename$
 		endif
 	endif
-    call Draw_button 'table$' '.label$' 0
+    call Draw_button '.table$' '.label$' 0
 endproc
 
 procedure processConfigSaveAudio .clickX .clickY .pressed$
@@ -341,7 +341,7 @@ procedure processConfigSaveAudio .clickX .clickY .pressed$
 			Remove
 		endif
 	endif
-    call Draw_button 'table$' '.label$' 0
+    call Draw_button '.table$' '.label$' 0
 endproc
 
 procedure processConfigSaveAll .clickX .clickY .pressed$
@@ -351,7 +351,7 @@ procedure processConfigSaveAll .clickX .clickY .pressed$
 	config.saveAll = not config.saveAll
 
 	.displayButton = 2*config.saveAll
-    call Draw_button 'table$' '.label$' '.displayButton'
+    call Draw_button '.table$' '.label$' '.displayButton'
 endproc
 
 procedure processConfigCloseSpeaker .clickX .clickY .pressed$
@@ -376,7 +376,7 @@ procedure processConfigCloseSpeaker .clickX .clickY .pressed$
 			config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST StartTime EndTime
 		endif
 	endif
-    call Draw_button 'table$' '.label$' 0
+    call Draw_button '.table$' '.label$' 0
 endproc
 
 procedure processConfigSpeakerSerial .input$ .clickX .clickY .pressed$
@@ -406,7 +406,7 @@ procedure processConfigAutoSelect .clickX .clickY .pressed$
 	config.autoSelect = not config.autoSelect
 
 	.displayButton = 2*config.autoSelect
-    call Draw_button 'table$' '.label$' '.displayButton'
+    call Draw_button '.table$' '.label$' '.displayButton'
 endproc
 
 procedure processConfigSpeakerRandomize .clickX .clickY .pressed$
@@ -428,7 +428,7 @@ procedure processConfigSpeakerRandomize .clickX .clickY .pressed$
 			Randomize rows
 		endif
 	endif
-    call Draw_button 'table$' '.label$' 0
+    call Draw_button '.table$' '.label$' 0
 endproc
 
 procedure processConfigSpeakerSort .clickX .clickY .pressed$
@@ -450,7 +450,7 @@ procedure processConfigSpeakerSort .clickX .clickY .pressed$
 			Sort rows... ID Audio Text Description
 		endif
 	endif
-    call Draw_button 'table$' '.label$' 0
+    call Draw_button '.table$' '.label$' 0
 endproc
 
 procedure processConfigRecordingTime .clickX .clickY .pressed$
@@ -573,7 +573,7 @@ procedure processConfigRecordingTime .clickX .clickY .pressed$
 			endif
 		endif
 	endwhile
-    call Draw_button 'table$' '.label$' 0
+    call Draw_button '.table$' '.label$' 0
 endproc
 
 procedure processConfigShowBackground .clickX .clickY .pressed$
@@ -581,7 +581,7 @@ procedure processConfigShowBackground .clickX .clickY .pressed$
 	.label$ = "ShowBackground"
 	config.showBackground = not config.showBackground
 	.displayButton = 2*config.showBackground
-    call Draw_button 'table$' '.label$' '.displayButton'
+    call Draw_button '.table$' '.label$' '.displayButton'
 endproc
 
 procedure processConfigInput .input$ .clickX .clickY .pressed$
@@ -626,7 +626,7 @@ procedure processConfigVasScaleTicks .clickX .clickY .pressed$
 	.label$ = "VasScaleTicks"
 	config.vasScaleTicks = not config.vasScaleTicks
 	.displayButton = 2*config.vasScaleTicks
-    call Draw_button 'table$' '.label$' '.displayButton'
+    call Draw_button '.table$' '.label$' '.displayButton'
 endproc
 
 procedure processConfigFrequency .frequencyK$ .clickX .clickY .pressed$
@@ -650,7 +650,7 @@ procedure processConfigShowFormants .clickX .clickY .pressed$
 	.label$ = "ShowFormants"
 	config.showFormants = not config.showFormants
 	.displayButton = 2*config.showFormants
-    call Draw_button 'table$' '.label$' '.displayButton'
+    call Draw_button '.table$' '.label$' '.displayButton'
 endproc
 
 procedure processConfigCalcGNE .clickX .clickY .pressed$
@@ -658,7 +658,7 @@ procedure processConfigCalcGNE .clickX .clickY .pressed$
 	.label$ = "CalcGNE"
 	config.calcGNE = not config.calcGNE
 	.displayButton = 2*config.calcGNE
-    call Draw_button 'table$' '.label$' '.displayButton'
+    call Draw_button '.table$' '.label$' '.displayButton'
 endproc
 
 procedure processConfigInstruction .clickX .clickY .pressed$
