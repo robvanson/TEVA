@@ -74,7 +74,7 @@ procedure global_initialization
 	te.buttons$ = ""
 	te.config$ = ""
 	config.input$ = "Microphone"
-	config.showBackground = 1
+	config.showBackground = 0
 	config.recordingTime$ = "4"
 	config.speakerData$ = ""
 	config.speakerDataBackup$ = ""
