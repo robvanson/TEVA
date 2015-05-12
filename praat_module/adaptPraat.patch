@@ -1,14 +1,21 @@
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/melder_audio.cpp demo_praat_sources/sys/melder_audio.cpp
 --- praat_sources/sys/melder_audio.cpp	2014-12-29 08:24:04.000000000 +0100
-+++ demo_praat_sources/sys/melder_audio.cpp	2015-05-11 13:17:51.000000000 +0200
-@@ -516,7 +516,7 @@ void MelderAudio_play16 (int16_t *buffer
++++ demo_praat_sources/sys/melder_audio.cpp	2015-05-12 09:48:06.000000000 +0200
+@@ -515,10 +515,14 @@ void MelderAudio_play16 (int16_t *buffer
+ 	my numberOfChannels = numberOfChannels;
  	my callback = playCallback;
  	my closure = playClosure;
++	#ifdef DEMOAPP
++		my asynchronicity = kMelder_asynchronicityLevel_ASYNCHRONOUS;
++	#else
  	my asynchronicity =
--		Melder_batch ? kMelder_asynchronicityLevel_SYNCHRONOUS :
-+		Melder_batch ? kMelder_asynchronicityLevel_ASYNCHRONOUS :
+ 		Melder_batch ? kMelder_asynchronicityLevel_SYNCHRONOUS :
  		(Melder_backgrounding && ! Melder_asynchronous) ? kMelder_asynchronicityLevel_INTERRUPTABLE :
  		kMelder_asynchronicityLevel_ASYNCHRONOUS;
++	#endif
  	if (my asynchronicity > preferences. maximumAsynchronicity)
+ 		my asynchronicity = preferences. maximumAsynchronicity;
+ 	trace ("asynchronicity %d", (int) my asynchronicity);
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/stat/praat_Stat.cpp demo_praat_sources/stat/praat_Stat.cpp
 --- praat_sources/stat/praat_Stat.cpp	2011-10-01 13:32:45.000000000 +0200
 +++ demo_praat_sources/stat/praat_Stat.cpp	2011-11-18 08:55:32.000000000 +0100
