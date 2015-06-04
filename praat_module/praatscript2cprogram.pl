@@ -13,7 +13,7 @@ print <<'ENDOFHEADER';
  *
  */
 
-static wchar_t myDemoScript [] = L""
+static char32_t myDemoScript [] = U""
 ENDOFHEADER
 while(<>){
 	# Protect special characters
