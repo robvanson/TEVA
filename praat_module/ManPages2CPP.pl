@@ -117,7 +117,7 @@ while (my $SourceFile = shift(@ARGV))
 		# Handle start quotes
 		if($Text =~ /^\s*\"[^\"]/)
 		{
-			$Startmarker = "(${CanvasParam}L\"";
+			$Startmarker = "(${CanvasParam}U\"";
 			$Text =~ s/^\s*\"//g;
 		};
 		# Handle end quotes	
@@ -133,7 +133,7 @@ while (my $SourceFile = shift(@ARGV))
 		$ManPageText .= "$Macro $Startmarker$Text$Endmarker\n" unless $skipScript;
 	};
 
-	print FILEOUT "MAN_BEGIN (L\"$Title\", L\"$Author\", $Date)\n";
+	print FILEOUT "MAN_BEGIN (U\"$Title\", U\"$Author\", $Date)\n";
 	print FILEOUT $ManPageText;
 	print FILEOUT "MAN_END\n\n";
 	

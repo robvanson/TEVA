@@ -85,7 +85,7 @@ TAILLINES=$(wc -l ../fon/manual_tutorials.cpp|perl -ane "print \$_ - ${NUMLINES}
 head -n ${NUMLINES} ../fon/manual_tutorials.cppORIGINAL > ../fon/manual_tutorials.cpp
 cat  ${CURRENTWORKINGDIR}/manual_${APPLICATIONNAME}.cpp >> ../fon/manual_tutorials.cpp
 tail -${TAILLINES} ../fon/manual_tutorials.cppORIGINAL >> ../fon/manual_tutorials.cpp
-
+cp ../fon/manual_tutorials.cpp ~/Desktop/manual_tutorials.cpp
 touch main_Praat.cpp
 
 # Patch main_Praat
