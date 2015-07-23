@@ -1,12 +1,12 @@
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_praat_sources/sys/praat.cpp
 --- praat_sources/sys/praat.cpp	2015-07-14 08:17:48.000000000 +0200
 +++ demo_praat_sources/sys/praat.cpp	2015-07-14 10:08:59.000000000 +0200
-@@ -1142,7 +1142,7 @@ void praat_init (const char *title, unsi
+@@ -1144,7 +1144,7 @@ void praat_init (const char *title, unsi
  		 * Make sure that the program's private directory exists.
  		 */
  		#if defined (UNIX)
--			Melder_sprint (name,256, U".", Melder_peek8to32 (programName), U"-dir");   // for example .myProg-dir
-+			Melder_sprint (name,256, U".", Melder_peek8to32 (praatP.title), U"-dir");   // for example .myProg-dir
+-			Melder_sprint (name,256, U".", programName, U"-dir");   // for example .myProg-dir
++			Melder_sprint (name,256, U".", praatP.title, U"-dir");   // for example .myProg-dir
  		#elif defined (macintosh)
- 			Melder_sprint (name,256, Melder_peek8to32 (praatP.title), U" Prefs");   // for example MyProg Prefs
+ 			Melder_sprint (name,256, praatP.title, U" Prefs");   // for example MyProg Prefs
  		#elif defined (_WIN32)
