@@ -6,7 +6,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		 */
  		#if defined (UNIX)
 -			Melder_sprint (name,256, U".", programName, U"-dir");   // for example .myProg-dir
-+			Melder_sprint (name,256, U".", praatP.title, U"-dir");   // for example .myProg-dir
++			Melder_sprint (name,256, U".", programName, U"");   // for example .myProg-dir
  		#elif defined (macintosh)
  			Melder_sprint (name,256, praatP.title, U" Prefs");   // for example MyProg Prefs
  		#elif defined (_WIN32)
