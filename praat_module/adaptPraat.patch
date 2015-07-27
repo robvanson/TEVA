@@ -235,7 +235,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  	LOOP {
  		iam (LongSound);
  		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
-@@ -718,7 +720,9 @@ static void cb_SoundEditor_publication (
+@@ -717,7 +719,9 @@ static void cb_SoundEditor_publication (
  	}
  }
  DIRECT2 (Sound_edit) {
@@ -245,7 +245,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  	LOOP {
  		iam (Sound);
  		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
-@@ -1397,8 +1401,10 @@ static void cb_SoundRecorder_publication
+@@ -1396,8 +1400,10 @@ static void cb_SoundRecorder_publication
  	praat_updateSelection ();
  }
  static void do_Sound_record (int numberOfChannels) {
@@ -256,7 +256,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  	if (theSoundRecorder) {
  		if (numberOfChannels == thePreviousNumberOfChannels) {
  			Editor_raise (theSoundRecorder);
-@@ -1448,10 +1454,21 @@ FORM (Sound_recordFixedTime, U"Record So
+@@ -1447,10 +1453,21 @@ FORM (Sound_recordFixedTime, U"Record So
  	POSITIVE (U"Duration (seconds)", U"1.0")
  	OK2
  DO
