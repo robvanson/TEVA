@@ -39,7 +39,11 @@ endif
 buttonsFileName$ = "MainPage"
 
 # These are simply "useful" defaults
-localTableDir$ = "Data"
+if build_SHA$ = "-"
+	localTableDir$ = "Data"
+else
+	localTableDir$ = ""
+endif
 buttonsTableName$ = "MainPage"
 configTableName$ = "Config"
 feedbackTablePrefix$ = "Feedback"
@@ -670,7 +674,13 @@ procedure set_window_title .table$ .addedText$
 	call convert_praat_to_latin1 '.windowText$'
 	.windowText$ = convert_praat_to_latin1.text$
 
-    demoWindowTitle(.windowText$+ " " +.addedText$)
+	if index(.windowText$, "$$$")
+		.displayWindowText$ = replace$(.windowText$, "$$$", .addedText$, 0)
+	else
+		.displayWindowText$ = .windowText$ + .addedText$
+	endif
+	
+    demoWindowTitle(.displayWindowText$ )
 endproc
 
 # Handle language setting 
@@ -2135,9 +2145,8 @@ procedure loadTable .tableName$
 	if .tableName$ = "MainPage"
 		.tableFileName$ = buttonsFileName$
 	endif
-	
 	# Search for the table in local, preference, and global directories
-	if fileReadable("'localTableDir$'/'.tableFileName$'.Table")
+	if localTableDir$ <> "" and fileReadable("'localTableDir$'/'.tableFileName$'.Table")
     	.table = nocheck Read from file... 'localTableDir$'/'.tableFileName$'.Table
     	Rename: .tableName$
 	elsif fileReadable("'preferencesTableDir$'/'.tableFileName$'.Table")
@@ -2159,6 +2168,15 @@ procedure loadTable .tableName$
 		call emergency_table_exit '.tableFileName$' cannot be found
 	endif
 	
+	# Check whether this is a real table
+	selectObject: .table
+	.fullName$ = selected$ ()
+	.type$ = extractWord$(.fullName$, "")
+	if .type$ <> "Table"
+		Remove
+		.table = -1
+	endif
+
 	if .table <= 0
 		call emergency_table_exit '.tableFileName$' corrupted or cannot be found
 	endif
@@ -2166,7 +2184,7 @@ endproc
 
 procedure checkTable .tableName$
 	.available = 0
-	if fileReadable("'localTableDir$'/'.tableName$'.Table")
+	if localTableDir$ <> "" and fileReadable("'localTableDir$'/'.tableName$'.Table")
     	.available = 1
 	elsif fileReadable("'preferencesTableDir$'/'.tableName$'.Table")
     	.available = 1
@@ -2930,6 +2948,13 @@ procedure emergency_table_exit .message$
 	if preferencesAppFile$ <> "" and fileReadable(preferencesAppFile$)
 		deleteFile(preferencesAppFile$)
 	endif
+	# Put out message
+	call get_feedback_text 'config.language$' Cancel
+	call convert_praat_to_latin1 'get_feedback_text.text$'
+	.cancelText$ = convert_praat_to_latin1.text$
+	beginPause: "Fatal Error"
+	comment: .message$
+	endPause: .cancelText$, 1
 	exit '.message$'
 endproc
 
