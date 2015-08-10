@@ -85,6 +85,13 @@ TAILLINES=$(wc -l ../fon/manual_tutorials.cpp|perl -ane "print \$_ - ${NUMLINES}
 head -n ${NUMLINES} ../fon/manual_tutorials.cppORIGINAL > ../fon/manual_tutorials.cpp
 cat  ${CURRENTWORKINGDIR}/manual_${APPLICATIONNAME}.cpp >> ../fon/manual_tutorials.cpp
 tail -${TAILLINES} ../fon/manual_tutorials.cppORIGINAL >> ../fon/manual_tutorials.cpp
+
+# Get the icons into the main folder
+mv ../main/Praat.icns ../main/PraatBACKUP.icns
+mv ../main/praat_win.ico ../main/praat_winBACKUP.ico
+cp ${CURRENTWORKINGDIR}/TEVA.icns ../main/Praat.icns
+cp ${CURRENTWORKINGDIR}/TEVA_win.ico ../main/praat_win.ico
+
 touch main_Praat.cpp
 
 # Patch main_Praat
@@ -108,7 +115,9 @@ if [[ -s ${CURRENTWORKINGDIR}/sys_praat_name.patch ]]; then
 fi
 
 cd main/
-rm -f demopraatapplication.h ../fon/manual_tutorials.cpp
+rm -f demopraatapplication.h ../fon/manual_tutorials.cpp Praat.icns praat_win.ico
+mv PraatBACKUP.icns Praat.icns
+mv praat_winBACKUP.ico praat_win.ico
 mv ../fon/manual_tutorials.cppORIGINAL ../fon/manual_tutorials.cpp
 if [[ -s ${CURRENTWORKINGDIR}/main_Praat.patch ]]; then
 	patch -R main_Praat.cpp ${CURRENTWORKINGDIR}/main_Praat.patch
