@@ -103,7 +103,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		trace (U"creating the dynamic menu in the Objects window");
  		praat_actions_createDynamicMenu (raam);
  		trace (U"showing the Objects window");
-+#ifndef DEMOAPP
++#if ! defined(DEMOAPP) || defined(UNIX)
  		GuiThing_show (raam);
 +#endif
  	//Melder_fatal (U"stop");
