@@ -19,7 +19,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/melder_audio.cpp 
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/stat/praat_Stat.cpp demo_praat_sources/stat/praat_Stat.cpp
 --- praat_sources/stat/praat_Stat.cpp	2011-10-01 13:32:45.000000000 +0200
 +++ demo_praat_sources/stat/praat_Stat.cpp	2011-11-18 08:55:32.000000000 +0100
-@@ -420,7 +420,9 @@ DO
+@@ -422,7 +422,9 @@ DO
  END2 }
  
  DIRECT2 (Table_edit) {
@@ -32,9 +32,9 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/stat/praat_Stat.cpp d
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_script.cpp demo_praat_sources/sys/praat_script.cpp
 --- praat_sources/sys/praat_script.cpp	2011-09-02 13:53:33.000000000 +0200
 +++ demo_praat_sources/sys/praat_script.cpp	2011-10-28 07:54:25.000000000 +0200
-@@ -585,6 +585,7 @@ void praat_executeScriptFromText (wchar 
- 		autoInterpreter interpreter = Interpreter_create (NULL, NULL);
- 		Interpreter_run (interpreter.peek(), text);
+@@ -586,6 +586,7 @@ void praat_executeScriptFromText (wchar 
+ 		autostring32 string = Melder_dup (text);
+ 		Interpreter_run (interpreter.peek(), string.peek());
  	} catch (MelderError) {
 +		exit (0);
  		Melder_throw (U"Script not completed.");
@@ -43,7 +43,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_script.cpp 
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Graphics_text.cpp demo_praat_sources/sys/Graphics_text.cpp
 --- praat_sources/sys/Graphics_text.cpp	2011-09-29 12:27:01.000000000 +0200
 +++ demo_praat_sources/sys/Graphics_text.cpp	2011-10-27 09:14:57.000000000 +0200
-@@ -146,7 +146,7 @@ static HFONT loadFont (GraphicsScreen me
+@@ -154,7 +154,7 @@ static HFONT loadFont (GraphicsScreen me
  		ipaInited = TRUE;
  		if (! charisAvailable && ! doulosAvailable) {
  			/* BUG: The next warning may cause reentry of drawing (on window exposure) and lead to crash. Some code must be non-reentrant !! */
@@ -69,10 +69,10 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	GuiWindow raam = NULL;
  	if (Melder_batch) {
 +		#if defined (DEMOAPP) && gtk
-+			char objectWindowTitle [100];
 +			Machine_initLookAndFeel (argc, argv);
-+			sprintf (objectWindowTitle, "%s Objects", praatP.title);
-+			GuiWindow_create (0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0, Melder_peek8to32 (objectWindowTitle), gui_cb_quit, NULL, 0);
++			char32 objectWindowTitle [100];
++			Melder_sprint (objectWindowTitle,100, praatP.title, U"");
++			GuiWindow_create (0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, 1, 1, objectWindowTitle, gui_cb_quit, NULL, 0);
 +		#endif
  		#if defined (UNIX) || defined (macintosh) || defined (_WIN32) && defined (CONSOLE_APPLICATION)
  			MelderString_empty (& theCurrentPraatApplication -> batchName);
@@ -103,7 +103,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		trace (U"creating the dynamic menu in the Objects window");
  		praat_actions_createDynamicMenu (raam);
  		trace (U"showing the Objects window");
-+#if ! defined(DEMOAPP) || defined(UNIX)
++#ifndef DEMOAPP
  		GuiThing_show (raam);
 +#endif
  	//Melder_fatal (U"stop");
@@ -182,7 +182,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_picture.cpp
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_init.cpp demo_praat_sources/fon/praat_TextGrid_init.cpp
 --- praat_sources/fon/praat_TextGrid_init.cpp	2011-09-12 10:17:12.000000000 +0200
 +++ demo_praat_sources/fon/praat_TextGrid_init.cpp	2011-09-12 10:59:25.000000000 +0200
-@@ -855,7 +855,9 @@ static void cb_TextGridEditor_publicatio
+@@ -857,7 +857,9 @@ static void cb_TextGridEditor_publicatio
  	}
  }
  DIRECT2 (TextGrid_edit) {
@@ -192,7 +192,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
  	Sound sound = NULL;
  	LOOP {
  		if (CLASS == classSound) sound = (Sound) OBJECT;   // may stay NULL
-@@ -886,7 +888,9 @@ DIRECT (TextGrid_edit)
+@@ -888,7 +890,9 @@ DIRECT (TextGrid_edit)
  END2 }
  
  DIRECT2 (TextGrid_LongSound_edit) {
@@ -202,7 +202,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
  	LongSound longSound = NULL;
  	int ilongSound = 0;
  	LOOP {
-@@ -902,7 +906,9 @@ DIRECT (TextGrid_LongSound_edit)
+@@ -904,7 +908,9 @@ DIRECT (TextGrid_LongSound_edit)
  END2 }
  
  DIRECT2 (TextGrid_SpellingChecker_edit) {
@@ -212,7 +212,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
  	SpellingChecker spellingChecker = NULL;
  	int ispellingChecker = 0;
  	Sound sound = NULL;
-@@ -919,7 +925,9 @@ DIRECT (TextGrid_SpellingChecker_edit)
+@@ -921,7 +927,9 @@ DIRECT (TextGrid_SpellingChecker_edit)
  END2 }
  
  DIRECT2 (TextGrid_LongSound_SpellingChecker_edit) {
@@ -245,7 +245,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  	LOOP {
  		iam (Sound);
  		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
-@@ -1396,8 +1400,10 @@ static void cb_SoundRecorder_publication
+@@ -1398,8 +1402,10 @@ static void cb_SoundRecorder_publication
  	praat_updateSelection ();
  }
  static void do_Sound_record (int numberOfChannels) {
@@ -256,7 +256,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  	if (theSoundRecorder) {
  		if (numberOfChannels == thePreviousNumberOfChannels) {
  			Editor_raise (theSoundRecorder);
-@@ -1447,10 +1453,21 @@ FORM (Sound_recordFixedTime, U"Record So
+@@ -1449,10 +1455,21 @@ FORM (Sound_recordFixedTime, U"Record So
  	POSITIVE (U"Duration (seconds)", U"1.0")
  	OK2
  DO
@@ -394,7 +394,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/dwtools/Intensity_ext
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus.cpp demo_praat_sources/sys/praat_objectMenus.cpp
 --- praat_sources/sys/praat_objectMenus.cpp	2012-02-22 13:04:43.000000000 +0100
 +++ demo_praat_sources/sys/praat_objectMenus.cpp	2012-02-22 13:48:24.000000000 +0100
-@@ -502,8 +502,10 @@ FORM (SearchManual, U"Search manual", U"
+@@ -505,8 +505,10 @@ FORM (SearchManual, U"Search manual", U"
  	TEXTFIELD (U"query", U"")
  	OK2
  DO
@@ -405,7 +405,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
  	Manual manPage = Manual_create (U"Intro", theCurrentPraatApplication -> manPages, false);
  	Manual_search (manPage, GET_STRING (U"query"));
  END2 }
-@@ -514,8 +516,10 @@ FORM (GoToManualPage, U"Go to manual pag
+@@ -517,8 +519,10 @@ FORM (GoToManualPage, U"Go to manual pag
  	LIST (U"Page", numberOfPages, pages, 1)}
  	OK2
  DO

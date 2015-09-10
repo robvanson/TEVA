@@ -512,7 +512,11 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
     .centerX = (.leftX + .rightX)/2
     .centerY = .lowY + 0.6*(.highY-.lowY)
     .radius = min(.verCoeff * (.highY - .lowY ), (.rightX - .leftX))/3
-	.newText$ = replace_regex$(.buttonText$, "['.buttonKey$']", "#%&", 1)
+	.keyText$ = replace$(.buttonKey$, "\", "", 0)
+	.keyText$ = replace$(.keyText$, "-", "", 0)
+	if .keyText$ <> "" and index_regex(.keyText$, "[\[\]]") <= 0
+		.newText$ = replace_regex$(.buttonText$, "['.keyText$']", "#%&", 1)
+	endif
 	if .newText$ = ""
 		.newText$ = .buttonText$
 	endif
