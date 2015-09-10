@@ -1049,7 +1049,7 @@ procedure record_sound
 	
 	# There is a very nasty delay before the first recording starts, do a dummy record
 	if not variableExists("recordingInitialized")
-    	noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 'te.recordingSampleFrequency' 0.1
+		call basic_sound_recording 'te.recordingSampleFrequency' 0.1
 		Remove
 		recordingInitialized = 1
 	endif
@@ -1090,7 +1090,7 @@ procedure record_sound
 		demo 'defaultFontColor$'
 		popUp.backgroundcolor$ = .originalPopUpcolor$
 		# Wait a moment
-    	noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 'te.recordingSampleFrequency' 'te.waitRecordingTask'
+		call basic_sound_recording 'te.recordingSampleFrequency' 'te.waitRecordingTask'
 		Remove
 	endif
 
@@ -1106,7 +1106,9 @@ procedure record_sound
 	endif
 
     # Record
-    .recording = noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 1 'te.recordingSampleFrequency' '.rectime'
+ 	call basic_sound_recording 'te.recordingSampleFrequency' '.rectime'
+    .recording = basic_sound_recording.sound
+
 	# Keep track of current sound
 	call getTimeStamp
 	te.recordingTimeStamp$ = getTimeStamp.string$
@@ -1168,6 +1170,17 @@ procedure record_sound
 	endif
 	
 	select te.openSound
+endproc
+
+# Uses global variables!!!
+procedure basic_sound_recording .samplingFrequency .recordingTime
+	.sound = nocheck noprogress nowarn Record Sound (fixed time)... 'config.input$' 0.99 0.5 '.samplingFrequency' '.recordingTime'
+	if .sound = undefined
+		.sound = Create Sound: "Pronunciation", 0, .recordingTime, .samplingFrequency, "0"
+	endif
+	
+	# The recorded sound should now be the selected object!!!
+	select .sound
 endproc
 
 procedure setup_recordingTask
