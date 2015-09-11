@@ -353,9 +353,9 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.de
  
  CXXFLAGS = $(CFLAGS) -Wshadow
  
-diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.mingw32 demo_praat_sources/makefiles/makefile.defs.mingw32
---- praat_sources/makefiles/makefile.defs.mingw32	2011-09-19 12:26:39.000000000 +0200
-+++ demo_praat_sources/makefiles/makefile.defs.mingw32	2011-09-19 15:33:55.000000000 +0200
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.darmin32 demo_praat_sources/makefiles/makefile.defs.darmin32
+--- praat_sources/makefiles/makefile.defs.darmin32	2011-09-19 12:26:39.000000000 +0200
++++ demo_praat_sources/makefiles/makefile.defs.darmin32	2011-09-19 15:33:55.000000000 +0200
 @@ -7,7 +7,7 @@ CC = /mingw32/bin/gcc -std=gnu99 -isyste
  
  CXX = /mingw32/bin/g++ -std=c++0x -isystem /mingw32/include/c++/4.7.0 -isystem /mingw32/include -Wshadow
@@ -365,9 +365,9 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.de
  
  CXXFLAGS = $(CFLAGS)
  
-diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.mingw64 demo_praat_sources/makefiles/makefile.defs.mingw64--- praat_sources/makefiles/makefile.defs.mingw32	2011-09-19 12:26:39.000000000 +0200
---- praat_sources/makefiles/makefile.defs.mingw64	2011-09-19 12:26:39.000000000 +0200
-+++ demo_praat_sources/makefiles/makefile.defs.mingw64	2011-09-19 15:33:37.000000000 +0200
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.darmin64 demo_praat_sources/makefiles/makefile.defs.mingw64--- praat_sources/makefiles/makefile.defs.mingw32	2011-09-19 12:26:39.000000000 +0200
+--- praat_sources/makefiles/makefile.defs.darmin64	2011-09-19 12:26:39.000000000 +0200
++++ demo_praat_sources/makefiles/makefile.defs.darmin64	2011-09-19 15:33:37.000000000 +0200
 @@ -7,7 +7,7 @@ CC = /mingw64/bin/gcc -std=gnu99 -isyste
  
  CXX = /mingw64/bin/g++ -std=c++0x -isystem /mingw64/include/c++/4.7.0 -isystem /mingw64/include -Wshadow -m64
