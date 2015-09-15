@@ -365,7 +365,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.de
  
  CXXFLAGS = $(CFLAGS)
  
-diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.darmin64 demo_praat_sources/makefiles/makefile.defs.mingw64
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.darmin64 demo_praat_sources/makefiles/makefile.defs.darmin64
 --- praat_sources/makefiles/makefile.defs.darmin64	2011-09-19 12:26:39.000000000 +0200
 +++ demo_praat_sources/makefiles/makefile.defs.darmin64	2011-09-19 15:33:37.000000000 +0200
 @@ -7,7 +7,7 @@ CC = /mingw64/bin/gcc -std=gnu99 -isyste
@@ -377,6 +377,30 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.de
  
  CXXFLAGS = $(CFLAGS)
  
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.mingw32 demo_praat_sources/makefiles/makefile.defs.mingw32
+--- praat_sources/makefiles/makefile.defs.mingw32	2015-09-11 08:38:17.000000000 +0200
++++ demo_praat_sources/makefiles/makefile.defs.mingw32	2015-09-15 15:45:42.000000000 +0200
+@@ -9,7 +9,7 @@ CC = $(PREFIX)gcc -std=gnu99
+ 
+ CXX = $(PREFIX)g++ -std=gnu++11 -Wshadow
+ 
+-CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -Dmain=wingwmain -O1
++CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -Dmain=wingwmain -O1 -DDEMOAPP
+ # Probably implicit: -m32 -mwin32 -march=i686 -mtune=generic
+ 
+ CXXFLAGS = $(CFLAGS)
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.mingw64 demo_praat_sources/makefiles/makefile.defs.mingw64
+--- praat_sources/makefiles/makefile.defs.mingw64	2015-09-11 08:38:17.000000000 +0200
++++ demo_praat_sources/makefiles/makefile.defs.mingw64	2015-09-15 15:48:18.000000000 +0200
+@@ -9,7 +9,7 @@ CC = $(PREFIX)gcc -std=gnu99
+ 
+ CXX = $(PREFIX)g++ -std=gnu++11 -Wshadow
+ 
+-CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1
++CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1 -DEMOAPP
+ # Probably implicit: -m64 -mwin32 -march=x86_64 -mtune=generic
+ 
+ CXXFLAGS = $(CFLAGS)
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/dwtools/Intensity_extensions.cpp demo_praat_sources/dwtools/Intensity_extensions.cpp
 --- praat_sources/dwtools/Intensity_extensions.cpp	2011-09-20 11:40:46.000000000 +0200
 +++ demo_praat_sources/dwtools/Intensity_extensions.cpp	2011-09-28 11:45:46.000000000 +0200
