@@ -397,7 +397,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.de
  CXX = $(PREFIX)g++ -std=gnu++11 -Wshadow
  
 -CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1
-+CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1 -DEMOAPP
++CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1 -DDEMOAPP
  # Probably implicit: -m64 -mwin32 -march=x86_64 -mtune=generic
  
  CXXFLAGS = $(CFLAGS)
