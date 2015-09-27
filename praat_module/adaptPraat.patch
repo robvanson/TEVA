@@ -43,7 +43,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_script.cpp 
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Graphics_text.cpp demo_praat_sources/sys/Graphics_text.cpp
 --- praat_sources/sys/Graphics_text.cpp	2011-09-29 12:27:01.000000000 +0200
 +++ demo_praat_sources/sys/Graphics_text.cpp	2011-10-27 09:14:57.000000000 +0200
-@@ -154,7 +154,7 @@ static HFONT loadFont (GraphicsScreen me
+@@ -151,7 +151,7 @@ static HFONT loadFont (GraphicsScreen me
  		ipaInited = TRUE;
  		if (! charisAvailable && ! doulosAvailable) {
  			/* BUG: The next warning may cause reentry of drawing (on window exposure) and lead to crash. Some code must be non-reentrant !! */
@@ -281,8 +281,8 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Ui.cpp demo_praat_sources/sys/Ui.cpp
 --- praat_sources/sys/Ui.cpp	2014-01-27 09:02:44.000000000 +0100
 +++ demo_praat_sources/sys/Ui.cpp	2014-03-27 12:22:58.000000000 +0100
-@@ -765,12 +765,16 @@ void UiForm_finish (I) {
- 	iam (UiForm);
+@@ -729,12 +729,16 @@ void UiForm_finish (I) {
+ void UiForm_finish (UiForm me) {
  	if (! my d_dialogParent && ! my isPauseForm) return;
  
 +	int numberOfContinueButtons = my numberOfContinueButtons;
@@ -384,8 +384,8 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.de
  
  CXX = $(PREFIX)g++ -std=gnu++11 -Wshadow
  
--CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -Dmain=wingwmain -O1
-+CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -Dmain=wingwmain -O1 -DDEMOAPP
+-CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1
++CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1 -DDEMOAPP
  # Probably implicit: -m32 -mwin32 -march=i686 -mtune=generic
  
  CXXFLAGS = $(CFLAGS)
@@ -443,7 +443,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_praat_sources/sys/GuiMenu.cpp
 --- praat_sources/sys/GuiMenu.cpp	2012-09-27 09:10:50.000000000 +0200
 +++ demo_praat_sources/sys/GuiMenu.cpp	2012-10-25 09:55:23.000000000 +0200
-@@ -367,7 +367,9 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+@@ -368,7 +368,9 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
  
  		}
  	#elif motif
@@ -453,7 +453,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_
  			my d_xmMenuTitle = XmCreateCascadeButton (theGuiTopMenuBar, Melder_peek32to8 (title), NULL, 0);
  			if (str32equ (title, U"Help"))
  				XtVaSetValues (theGuiTopMenuBar, XmNmenuHelpWidget, my d_xmMenuTitle, NULL);
-@@ -376,6 +378,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+@@ -377,6 +379,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
  				XtSetSensitive (my d_xmMenuTitle, False);
  			XtVaSetValues (my d_xmMenuTitle, XmNsubMenuId, my d_widget, NULL);
  			XtManageChild (my d_xmMenuTitle);
@@ -461,7 +461,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_
  		} else {
  			my d_xmMenuTitle = XmCreateCascadeButton (window -> d_xmMenuBar, Melder_peek32to8 (title), NULL, 0);
  			if (str32equ (title, U"Help"))
-@@ -386,6 +389,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
+@@ -387,6 +390,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
  			XtVaSetValues (my d_xmMenuTitle, XmNsubMenuId, my d_widget, NULL);
  			XtManageChild (my d_xmMenuTitle);
  		}
