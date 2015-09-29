@@ -35,7 +35,7 @@ if [[  -e ${PRAATSOURCES}/makefile.defs && -n `grep -l mingw32 ${PRAATSOURCES}/m
 	UNAME=MinGW
 elif [[ ${UNAME} == "Darwin" ]]; then
 	MAKECMD="xcodebuild -project praat64.xcodeproj"
-	if [[ `ls -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.*.sdk` ]]; then
+	if [[ `ls -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk 2>/dev/null` ]]; then
 		SDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
 		MAKECMD="xcodebuild -project praat64.xcodeproj -sdk ${SDK}"
 		EXECPATH="./build/Configuration64/Praat.app"
@@ -137,14 +137,21 @@ zip -r ${ZIPNAME}.zip ${TARGETNAME}
 # Create MD5SUM
 if [[ -n `which md5` ]] ; then 
 	if [[ -f ${CURRENTWORKINGDIR}/${TARGETNAME} ]]; then
-		md5 ${CURRENTWORKINGDIR}/${TARGETNAME} > ${CURRENTWORKINGDIR}/${TARGETNAME}.md5
+		cd ${CURRENTWORKINGDIR}/; md5 ${TARGETNAME} > ${TARGETNAME}.md5 ; cd -
 	fi
-	md5 ${CURRENTWORKINGDIR}/${ZIPNAME}.zip > ${CURRENTWORKINGDIR}/${ZIPNAME}.zip.md5
+	cd ${CURRENTWORKINGDIR}/; md5 ${ZIPNAME}.zip > ${ZIPNAME}.zip.md5 ; cd -
 fi
 if [[ -n `which md5sum` ]] ; then 
 	if [[ -f ${CURRENTWORKINGDIR}/${TARGETNAME} ]]; then
-		md5sum ${CURRENTWORKINGDIR}/${TARGETNAME} > ${CURRENTWORKINGDIR}/${TARGETNAME}.md5
+		cd ${CURRENTWORKINGDIR}/; md5sum ${TARGETNAME} > ${TARGETNAME}.md5 ; cd -
 	fi
-	md5sum ${CURRENTWORKINGDIR}/${ZIPNAME}.zip > ${CURRENTWORKINGDIR}/${ZIPNAME}.zip.md5
+	cd ${CURRENTWORKINGDIR}/; md5sum ${ZIPNAME}.zip > ${ZIPNAME}.zip.md5 ; cd -
 fi
 
+# Create SHA1
+if [[ -n `which shasum` ]] ; then 
+	if [[ -f ${CURRENTWORKINGDIR}/${TARGETNAME} ]]; then
+		cd ${CURRENTWORKINGDIR}/; shasum -p ${TARGETNAME} > ${TARGETNAME}.sha1 ; cd -
+	fi
+	cd ${CURRENTWORKINGDIR}/; shasum -p ${ZIPNAME}.zip > ${ZIPNAME}.zip.sha1 ; cd -
+fi
