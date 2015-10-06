@@ -32,8 +32,8 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/stat/praat_Stat.cpp d
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_script.cpp demo_praat_sources/sys/praat_script.cpp
 --- praat_sources/sys/praat_script.cpp	2011-09-02 13:53:33.000000000 +0200
 +++ demo_praat_sources/sys/praat_script.cpp	2011-10-28 07:54:25.000000000 +0200
-@@ -586,6 +586,7 @@ void praat_executeScriptFromText (wchar 
- 		autostring32 string = Melder_dup (text);
+@@ -589,6 +589,7 @@ void praat_executeScriptFromText (wchar 
+ 		autostring32 string = Melder_dup (text);   // copy, because Interpreter will change it (UGLY)
  		Interpreter_run (interpreter.peek(), string.peek());
  	} catch (MelderError) {
 +		exit (0);
@@ -44,7 +44,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Graphics_text.cpp
 --- praat_sources/sys/Graphics_text.cpp	2011-09-29 12:27:01.000000000 +0200
 +++ demo_praat_sources/sys/Graphics_text.cpp	2011-10-27 09:14:57.000000000 +0200
 @@ -151,7 +151,7 @@ static HFONT loadFont (GraphicsScreen me
- 		ipaInited = TRUE;
+ 		ipaInited = true;
  		if (! charisAvailable && ! doulosAvailable) {
  			/* BUG: The next warning may cause reentry of drawing (on window exposure) and lead to crash. Some code must be non-reentrant !! */
 -			Melder_warning (U"The phonetic font is not available.\nSeveral characters may not look correct.\nSee www.praat.org");
@@ -55,7 +55,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Graphics_text.cpp
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_praat_sources/sys/praat.cpp
 --- praat_sources/sys/praat.cpp	2014-04-22 11:09:57.000000000 +0200
 +++ demo_praat_sources/sys/praat.cpp	2014-04-22 11:53:58.000000000 +0200
-@@ -1175,7 +1175,7 @@ void praat_init (const char *title, unsi
+@@ -1176,7 +1176,7 @@ void praat_init (const char *title, unsi
  		 */
  		char32 name [256];
  		#if defined (UNIX)
@@ -64,7 +64,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#elif defined (macintosh)
  			Melder_sprint (name,256, praatP.title, U" Prefs");   // for example MyProg Prefs
  		#elif defined (_WIN32)
-@@ -1258,6 +1258,12 @@ void praat_init (const char *title, unsi
+@@ -1259,6 +1259,12 @@ void praat_init (const char *title, unsi
  
  	GuiWindow raam = NULL;
  	if (Melder_batch) {
@@ -77,7 +77,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#if defined (UNIX) || defined (macintosh) || defined (_WIN32) && defined (CONSOLE_APPLICATION)
  			MelderString_empty (& theCurrentPraatApplication -> batchName);
  			for (unsigned int i = iarg_batchName; i < argc; i ++) {
-@@ -1304,9 +1310,11 @@ void praat_init (const char *title, unsi
+@@ -1305,9 +1311,11 @@ void praat_init (const char *title, unsi
  		#if motif
  			GuiApp_setApplicationShell (theCurrentPraatApplication -> topShell -> d_xmShell);
  		#endif
@@ -89,7 +89,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	}
  	Thing_recognizeClassesByName (classCollection, classStrings, classManPages, classSortedSetOfString, NULL);
  	if (Melder_batch) {
-@@ -1316,6 +1324,9 @@ void praat_init (const char *title, unsi
+@@ -1317,6 +1325,9 @@ void praat_init (const char *title, unsi
  		trace (U"adding fixed buttons without GUI");
  		praat_addFixedButtons (NULL);
  	} else {
@@ -99,7 +99,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  
  		#ifdef macintosh
  			#if ! useCarbon
-@@ -1343,7 +1354,9 @@ void praat_init (const char *title, unsi
+@@ -1344,7 +1355,9 @@ void praat_init (const char *title, unsi
  		trace (U"creating the dynamic menu in the Objects window");
  		praat_actions_createDynamicMenu (raam);
  		trace (U"showing the Objects window");
@@ -109,7 +109,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	//Melder_fatal (U"stop");
  		#if defined (UNIX) && ! defined (NO_GRAPHICS)
  			try {
-@@ -1374,7 +1387,12 @@ void praat_init (const char *title, unsi
+@@ -1375,7 +1388,12 @@ void praat_init (const char *title, unsi
  
  	trace (U"creating the Picture window");
  	trace (U"before picture window shows: locale is ", Melder_peek8to32 (setlocale (LC_ALL, NULL)));
@@ -123,7 +123,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	trace (U"after picture window shows: locale is ", Melder_peek8to32 (setlocale (LC_ALL, NULL)));
  
  	if (unknownCommandLineOption) {
-@@ -1530,11 +1548,11 @@ void praat_run (void) {
+@@ -1531,11 +1549,11 @@ void praat_run (void) {
  		if (! str32equ (Melder_integer (dummy), U"1000000000000"))
  			Melder_fatal (U"The number 1000000000000 is mistaken written on this machine as ", dummy, U".");
  	}
@@ -140,7 +140,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	{ double dummy = 3000000000.0;
  		Melder_assert ((uint32) dummy == 3000000000);
  	}
-@@ -1680,6 +1698,14 @@ void praat_run (void) {
+@@ -1681,6 +1699,14 @@ void praat_run (void) {
  						s ++;
  					}
  				}
@@ -448,21 +448,21 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/GuiMenu.cpp demo_
  		}
  	#elif motif
 +		#if not ( defined( DEMOAPP ) && defined( macintosh ) )
- 		if (window == NULL) {
+ 		if (! window) {
 +		#endif
- 			my d_xmMenuTitle = XmCreateCascadeButton (theGuiTopMenuBar, Melder_peek32to8 (title), NULL, 0);
+ 			my d_xmMenuTitle = XmCreateCascadeButton (theGuiTopMenuBar, Melder_peek32to8 (title), nullptr, 0);
  			if (str32equ (title, U"Help"))
- 				XtVaSetValues (theGuiTopMenuBar, XmNmenuHelpWidget, my d_xmMenuTitle, NULL);
+ 				XtVaSetValues (theGuiTopMenuBar, XmNmenuHelpWidget, my d_xmMenuTitle, nullptr);
 @@ -377,6 +379,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
  				XtSetSensitive (my d_xmMenuTitle, False);
- 			XtVaSetValues (my d_xmMenuTitle, XmNsubMenuId, my d_widget, NULL);
+ 			XtVaSetValues (my d_xmMenuTitle, XmNsubMenuId, my d_widget, nullptr);
  			XtManageChild (my d_xmMenuTitle);
 +		#if not ( defined( DEMOAPP ) && defined( macintosh ) )
  		} else {
- 			my d_xmMenuTitle = XmCreateCascadeButton (window -> d_xmMenuBar, Melder_peek32to8 (title), NULL, 0);
+ 			my d_xmMenuTitle = XmCreateCascadeButton (window -> d_xmMenuBar, Melder_peek32to8 (title), nullptr, 0);
  			if (str32equ (title, U"Help"))
 @@ -387,6 +390,7 @@ GuiMenu GuiMenu_createInWindow (GuiWindo
- 			XtVaSetValues (my d_xmMenuTitle, XmNsubMenuId, my d_widget, NULL);
+ 			XtVaSetValues (my d_xmMenuTitle, XmNsubMenuId, my d_widget, nullptr);
  			XtManageChild (my d_xmMenuTitle);
  		}
 +		#endif
