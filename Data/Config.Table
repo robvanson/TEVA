@@ -61,7 +61,7 @@ MuteOutput	70	+15	74	+5	{0.65,0.60,0.45}	DrawNull
 Test	70	+15	67	+5	Black	DrawTest
 $Rating	70	+15	59	+5	Black	DrawNull
 RatingForm_Vowel	70	+15	54	+5	Black	DrawNull
-RatingForm_GRBASPlus	70	+15	48	+5	Black	DrawNull
+RatingForm_Text	70	+15	48	+5	Black	DrawNull
 RatingForm_INFVo	70	+15	42	+5	Black	DrawNull
 RatingForm_GRBAS	70	+15	36	+5	Black	DrawNull
 VasScaleTicks	70	+15	29	+5	{0.65,0.60,0.45}	DrawNull

@@ -3,7 +3,9 @@ Label	Text	Key	Helptext
 !Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
 !License	License	!	GNU GPL version 2 or later
 !CANVAS	Display	¤	Display area
-$Scales	Chose a grade on the line between left (poor) and right (good) descriptors of speech	#	Visual Analogue rating Scales
->Impression	Impression of overall voice quality (similarity to normal speech)	Least;Most	The overall voice quality (like GRADE in GRBAS)
->Intelligibility	Intelligibility: Impression of the difficulty/ease of decoding the speech signal	Poor;Good	The impression of intelligibility. : A speaker with good intelligibility is easy to decode.
+$HoarsenessTxt	Heesheid: Toegenomen ruis in het stemgeluid normaal;licht;matig;ernstig afwijkend	!	Heesheid: Toegenomen ruis in het stemgeluid normaal;licht;matig;ernstig afwijkend
+Hoarseness_0	normaal	!	Heesheid normaal
+$Scales	Kies een positie op de schaal tussen links (slecht) en rechts (goed) die de kwaliteit van de spraak het best weergeeft	#	Visuele Analoge beoordelingsschalen
+>Intelligibility	Indruk van verstaanbaarheid: Hoe verstaanbaar is de spraak	Slecht;Goed	De Indruk van verstaanbaarheid : Hoe moeilijk of makkelijk is het om de spreker te verstaan.
+>Impression	Indruk van stemkwaliteit: Hoe goed/normaal/aangenaam is de stem	Slecht;Goed	De algemene stemkwaliteit (zoals de GRADE in GRBAS)
 Help	Scale Help	#	Press the scale you want information on, "Help" to continue

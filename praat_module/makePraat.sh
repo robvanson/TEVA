@@ -35,7 +35,8 @@ if [[  -e ${PRAATSOURCES}/makefile.defs && -n `grep -l mingw32 ${PRAATSOURCES}/m
 	UNAME=MinGW
 elif [[ ${UNAME} == "Darwin" ]]; then
 	MAKECMD="xcodebuild -project praat64.xcodeproj"
-	if [[ `ls -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk 2>/dev/null` ]]; then
+echo ${2:-Normal}
+	if [[ `ls -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.1*.sdk 2>/dev/null` ]]; then
 		SDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
 		MAKECMD="xcodebuild -project praat64.xcodeproj -sdk ${SDK}"
 		EXECPATH="./build/Configuration64/Praat.app"

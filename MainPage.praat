@@ -1294,15 +1294,25 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 				call Draw_button 'te.rating$' 'buttonClicked.label$' 0
 			elsif buttonClicked.label$ = "!CANVAS"
 				# Ignore
-			else
+			elsif startsWith(buttonClicked.label$, ">")
 				.labelRating$ = replace_regex$(buttonClicked.label$, "^[^a-zA-Z]+([A-Za-z])", "\l\1", 0)
 				'.labelRating$' = buttonClicked.fractionX
 				call set_RatingValues config.speakerDataTable Rating.'.labelRating$' 'buttonClicked.fractionX'
 				call get_RatingValues 'config.speakerDataTable' 'te.ratingTable'
-
+	
 				.fractionYRating = buttonClicked.fractionY
 				call Draw_button_internal 1 'te.rating$' 'buttonClicked.label$' 0
 				call link_RatingValues 'te.ratingTable' 'config.speakerDataTable' 'buttonClicked.label$'
+			elsif index(buttonClicked.label$, "_")
+				.labelRating$ = replace_regex$(buttonClicked.label$, "^([^_]*)_.*$", "\l\1", 0)
+				.value$ = replace_regex$(buttonClicked.label$, "^[^_]*_(.*)$", "\1", 0)
+				call set_RawRatingValues config.speakerDataTable Rating.'.labelRating$' '.value$'
+				call get_RatingValues 'config.speakerDataTable' 'te.ratingTable'
+				
+				if variableExists("'.labelRating$'$")
+					.pressed$ = '.labelRating$'$
+					call Draw_button_internal 1 'te.rating$' '.labelRating$'_'.pressed$' 2
+				endif
 			endif
 		endif
 		goto ESCAPEDISPLAYSELECT
@@ -3436,6 +3446,12 @@ procedure get_RatingValues .speakerDataTable .ratingTable
 			.ratingKey$ = Get value... .ratingRow Label
 			if startsWith(.ratingKey$, ">")
 				.variableName$ = replace_regex$(.ratingKey$, "^[^a-zA-Z]+([A-Za-z])", "\l\1", 0)
+			elsif index(.ratingKey$, "_")
+				.variableName$ = replace_regex$(.ratingKey$, "^([^_]+)_.*$", "\l\1", 0)
+			else
+				.variableName$ = .ratingKey$
+			endif
+			if index_regex(.variableName$, "[^$,:;]") <= 0
 				call get_speakerInfo 'speakerID$'
 				.row = get_speakerInfo.row
 				select .speakerDataTable
@@ -3451,6 +3467,7 @@ procedure get_RatingValues .speakerDataTable .ratingTable
 						.value = Get value... .row Rating.'.variableName$'
 						if not .value = undefined
 							'.variableName$' = (.value - 1)/999
+							'.variableName$'$ = "'.value'"
 						endif
 						# Ranges
 						if index(.valueTxt$, ";")
@@ -3492,6 +3509,27 @@ procedure set_RatingValues .speakerDataTable .variable$ .value$
 			Append column: .variable$
 		endif
 		Set numeric value... .row '.variable$' '.tableValue:0'
+		
+		call WriteSpeakerData
+		
+	endif
+endproc
+
+procedure set_RawRatingValues .speakerDataTable .variable$ .value$
+	if .speakerDataTable > 0
+		call get_speakerInfo 'speakerID$'
+		.row = get_speakerInfo.row
+		select .speakerDataTable
+		.numRows = Get number of rows
+		if .row <= 0 or .row > .numRows
+			.row = 1
+		endif
+		# Check if column exists
+		.col = Get column index: .variable$
+		if .col <= 0
+			Append column: .variable$
+		endif
+		Set numeric value... .row '.variable$' '.value$'
 		
 		call WriteSpeakerData
 		
