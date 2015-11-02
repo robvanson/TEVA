@@ -17,20 +17,6 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/melder_audio.cpp 
  	if (my asynchronicity > preferences. maximumAsynchronicity)
  		my asynchronicity = preferences. maximumAsynchronicity;
  	trace (U"asynchronicity ", my asynchronicity);
-diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/stat/praat_Stat.cpp demo_praat_sources/stat/praat_Stat.cpp
---- praat_sources/stat/praat_Stat.cpp	2011-10-01 13:32:45.000000000 +0200
-+++ demo_praat_sources/stat/praat_Stat.cpp	2011-11-18 08:55:32.000000000 +0100
-# Allow viewing tables
-@@ -421,7 +421,9 @@ DO
- END2 }
- 
- DIRECT2 (Table_edit) {
-+#ifndef DEMOAPP
- 	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot edit a Table from batch.");
-+#endif
- 	LOOP {
- 		iam (Table);
- 		autoTableEditor editor = TableEditor_create (ID_AND_FULL_NAME, me);
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_script.cpp demo_praat_sources/sys/praat_script.cpp
 --- praat_sources/sys/praat_script.cpp	2011-09-02 13:53:33.000000000 +0200
 +++ demo_praat_sources/sys/praat_script.cpp	2011-10-28 07:54:25.000000000 +0200
@@ -212,87 +198,11 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_picture.cpp
  	}
  
  	// TODO: Paul: deze moet VOOR de update functies anders krijgen die void_me 0x0
-diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_init.cpp demo_praat_sources/fon/praat_TextGrid_init.cpp
---- praat_sources/fon/praat_TextGrid_init.cpp	2011-09-12 10:17:12.000000000 +0200
-+++ demo_praat_sources/fon/praat_TextGrid_init.cpp	2011-09-12 10:59:25.000000000 +0200
-# Allow editing of TextGrids
-@@ -855,7 +855,9 @@ static void cb_TextGridEditor_publicatio
- 	}
- }
- DIRECT2 (TextGrid_edit) {
-+#ifndef DEMOAPP
- 	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot view or edit a TextGrid from batch.");
-+#endif
- 	Sound sound = nullptr;
- 	LOOP {
- 		if (CLASS == classSound) sound = (Sound) OBJECT;   // may stay null
-@@ -886,7 +888,9 @@ DIRECT (TextGrid_edit)
- END2 }
- 
- DIRECT2 (TextGrid_LongSound_edit) {
-+#ifndef DEMOAPP
- 	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot view or edit a TextGrid from batch.");
-+#endif
- 	LongSound longSound = nullptr;
- 	int ilongSound = 0;
- 	LOOP {
-@@ -902,7 +906,9 @@ DIRECT (TextGrid_LongSound_edit)
- END2 }
- 
- DIRECT2 (TextGrid_SpellingChecker_edit) {
-+#ifndef DEMOAPP
- 	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot view or edit a TextGrid from batch.");
-+#endif
- 	SpellingChecker spellingChecker = NULL;
- 	int ispellingChecker = 0;
- 	Sound sound = NULL;
-@@ -919,7 +925,9 @@ DIRECT (TextGrid_SpellingChecker_edit)
- END2 }
- 
- DIRECT2 (TextGrid_LongSound_SpellingChecker_edit) {
-+#ifndef DEMOAPP
- 	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot view or edit a TextGrid from batch.");
-+#endif
- 	LongSound longSound = NULL;
- 	SpellingChecker spellingChecker = nullptr;
- 	int ilongSound = 0, ispellingChecker = 0;
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.cpp demo_praat_sources/fon/praat_Sound_init.cpp
 --- praat_sources/fon/praat_Sound_init.cpp	2012-10-11 10:39:47.000000000 +0200
 +++ demo_praat_sources/fon/praat_Sound_init.cpp	2012-10-18 15:09:22.000000000 +0200
-# Allow editing of Long/Sounds
-@@ -172,7 +172,9 @@ DO
- END2 }
- 
- DIRECT2 (LongSound_view) {
-+#ifndef DEMOAPP
- 	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot view or edit a LongSound from batch.");
-+#endif
- 	LOOP {
- 		iam (LongSound);
- 		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
-@@ -717,7 +719,9 @@ static void cb_SoundEditor_publication (
- 	}
- }
- DIRECT2 (Sound_edit) {
-+#ifndef DEMOAPP
- 	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot view or edit a Sound from batch.");
-+#endif
- 	LOOP {
- 		iam (Sound);
- 		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
-@@ -1394,8 +1398,10 @@ static void cb_SoundRecorder_publication
- 	praat_updateSelection ();
- }
- static void do_Sound_record (int numberOfChannels) {
-+#ifndef DEMOAPP
- 	if (theCurrentPraatApplication -> batch)
- 		Melder_throw (U"Cannot record a Sound from batch.");
-+#endif
- 	if (theSoundRecorder) {
- 		if (numberOfChannels == thePreviousNumberOfChannels) {
- 			Editor_raise (theSoundRecorder);
 # Handle situation where there is no sound input in Windows
-@@ -1446,10 +1452,21 @@ FORM (Sound_recordFixedTime, U"Record So
+@@ -1446,10 +1446,21 @@ FORM (Sound_recordFixedTime, U"Record So
  	POSITIVE (U"Duration (seconds)", U"1.0")
  	OK2
  DO
