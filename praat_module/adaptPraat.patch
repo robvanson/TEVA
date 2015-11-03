@@ -46,17 +46,18 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
 --- praat_sources/sys/praat.cpp	2014-04-22 11:09:57.000000000 +0200
 +++ demo_praat_sources/sys/praat.cpp	2014-04-22 11:53:58.000000000 +0200
 # When running thePraatStandAloneScriptText, block the Melder_batch flag
-@@ -1201,7 +1201,7 @@ void praat_init (const char32 *title, un
+@@ -1201,7 +1201,9 @@ void praat_init (const char32 *title, un
  	}
  	//Melder_casual (U"Script file name <<", theCurrentPraatApplication -> batchName.string, U">>");
  
--	Melder_batch |= !! thePraatStandAloneScriptText;
-+	//Melder_batch |= !! thePraatStandAloneScriptText;
++	#if ! ( defined (_WIN32) && defined (DEMOAPP) )
+ 	Melder_batch |= !! thePraatStandAloneScriptText;
++	#endif
  
  	/*
  	 * Running the Praat shell from the command line:
 # Change the name of the Unix preference dir
-@@ -1253,7 +1253,7 @@ void praat_init (const char *title, unsi
+@@ -1253,7 +1255,7 @@ void praat_init (const char *title, unsi
  		 */
  		char32 name [256];
  		#if defined (UNIX)
@@ -66,7 +67,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  			Melder_sprint (name,256, praatP.title, U" Prefs");   // for example MyProg Prefs
  		#elif defined (_WIN32)
 # Something in Linux (GTK)? Do not know what?
-@@ -1337,6 +1337,12 @@ void praat_init (const char *title, unsi
+@@ -1337,6 +1339,12 @@ void praat_init (const char *title, unsi
  
  	GuiWindow raam = nullptr;
  	if (Melder_batch) {
@@ -80,7 +81,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		for (unsigned int i = praatP.argumentNumber - 1; i < argc; i ++) {
  			if (i >= praatP.argumentNumber) MelderString_append (& theCurrentPraatApplication -> batchName, U" ");
 # Supress opening the object window
-@@ -1380,9 +1386,11 @@ void praat_init (const char *title, unsi
+@@ -1380,9 +1388,11 @@ void praat_init (const char *title, unsi
  		#if motif
  			GuiApp_setApplicationShell (theCurrentPraatApplication -> topShell -> d_xmShell);
  		#endif
@@ -93,7 +94,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	Thing_recognizeClassesByName (classCollection, classStrings, classManPages, classSortedSetOfString, nullptr);
  	if (Melder_batch) {
 # Seems to speed startup, but not sure whether it is necessary
-@@ -1392,6 +1400,9 @@ void praat_init (const char *title, unsi
+@@ -1392,6 +1402,9 @@ void praat_init (const char *title, unsi
  		trace (U"adding fixed buttons without GUI");
  		praat_addFixedButtons (nullptr);
  	} else {
@@ -104,7 +105,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#ifdef macintosh
  			#if ! useCarbon
 # Supress opening the object window
-@@ -1419,7 +1430,9 @@ void praat_init (const char *title, unsi
+@@ -1419,7 +1432,9 @@ void praat_init (const char *title, unsi
  		trace (U"creating the dynamic menu in the Objects window");
  		praat_actions_createDynamicMenu (raam);
  		trace (U"showing the Objects window");
@@ -115,7 +116,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#if defined (UNIX) && ! defined (NO_GRAPHICS)
  			try {
 # Initialize a picture window, but close it immediately
-@@ -1450,7 +1463,12 @@ void praat_init (const char *title, unsi
+@@ -1450,7 +1465,12 @@ void praat_init (const char *title, unsi
  
  	trace (U"creating the Picture window");
  	trace (U"before picture window shows: locale is ", Melder_peek8to32 (setlocale (LC_ALL, nullptr)));
@@ -130,7 +131,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  
  	if (unknownCommandLineOption) {
 # No idea why this is needed?
-@@ -1606,11 +1624,11 @@ void praat_run (void) {
+@@ -1606,11 +1626,11 @@ void praat_run (void) {
  		if (! str32equ (Melder_integer (dummy), U"1000000000000"))
  			Melder_fatal (U"The number 1000000000000 is mistaken written on this machine as ", dummy, U".");
  	}
@@ -148,7 +149,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		Melder_assert ((uint32) dummy == 3000000000);
  	}
 # Next chunk is needed to start the Demo window under Windows (motif)
-@@ -1721,10 +1739,20 @@ void praat_run () {
+@@ -1721,10 +1741,20 @@ void praat_run () {
  		#elif cocoa
  			[NSApp run];
  		#elif motif
@@ -201,8 +202,40 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_picture.cpp
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.cpp demo_praat_sources/fon/praat_Sound_init.cpp
 --- praat_sources/fon/praat_Sound_init.cpp	2012-10-11 10:39:47.000000000 +0200
 +++ demo_praat_sources/fon/praat_Sound_init.cpp	2012-10-18 15:09:22.000000000 +0200
+# View and edit Long/Sounds in a DemoApp (when Melder_back = True)
+@@ -172,7 +172,9 @@ DO
+ END2 }
+ 
+ DIRECT2 (LongSound_view) {
++#ifndef DEMOAPP
+ 	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot view or edit a LongSound from batch.");
++#endif
+ 	LOOP {
+ 		iam (LongSound);
+ 		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
+@@ -717,7 +719,9 @@ static void cb_SoundEditor_publication (
+ 	}
+ }
+ DIRECT2 (Sound_edit) {
++#ifndef DEMOAPP
+ 	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot view or edit a Sound from batch.");
++#endif
+ 	LOOP {
+ 		iam (Sound);
+ 		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
+@@ -1394,8 +1398,10 @@ static void cb_SoundRecorder_publication
+ 	praat_updateSelection ();
+ }
+ static void do_Sound_record (int numberOfChannels) {
++#ifndef DEMOAPP
+ 	if (theCurrentPraatApplication -> batch)
+ 		Melder_throw (U"Cannot record a Sound from batch.");
++#endif
+ 	if (theSoundRecorder) {
+ 		if (numberOfChannels == thePreviousNumberOfChannels) {
+ 			Editor_raise (theSoundRecorder);
 # Handle situation where there is no sound input in Windows
-@@ -1446,10 +1446,21 @@ FORM (Sound_recordFixedTime, U"Record So
+@@ -1446,10 +1452,21 @@ FORM (Sound_recordFixedTime, U"Record So
  	POSITIVE (U"Duration (seconds)", U"1.0")
  	OK2
  DO
@@ -289,68 +322,6 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/UiPause.cpp demo_
  		//Melder_flushError ();
  		//Melder_clearError ();
  	} else {
-#
-# Add DEMOAPP flag to compiler
-diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.linux.alsa demo_praat_sources/makefiles/makefile.defs.linux.alsa
---- praat_sources/makefiles/makefile.defs.linux.alsa	2011-09-12 10:17:12.000000000 +0200
-+++ demo_praat_sources/makefiles/makefile.defs.linux.alsa	2011-09-12 13:28:59.000000000 +0200
-@@ -7,7 +7,7 @@ CC = gcc -std=gnu99
- 
- CXX = g++ -std=c++11
- 
--CFLAGS = -DUNIX -Dlinux -DALSA -D_FILE_OFFSET_BITS=64 `pkg-config --cflags gtk+-2.0` -Werror=missing-prototypes -Werror=implicit -Wreturn-type -Wunused -Wunused-parameter -Wuninitialized -O1 -g1 -pthread
-+CFLAGS = -DUNIX -Dlinux -DALSA -D_FILE_OFFSET_BITS=64 `pkg-config --cflags gtk+-2.0` -Werror=missing-prototypes -Werror=implicit -Wreturn-type -Wunused -Wunused-parameter -Wuninitialized -DDEMOAPP -O1 -g1 -pthread
- 
- CXXFLAGS = $(CFLAGS) -Wshadow
- 
-diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.darmin32 demo_praat_sources/makefiles/makefile.defs.darmin32
---- praat_sources/makefiles/makefile.defs.darmin32	2011-09-19 12:26:39.000000000 +0200
-+++ demo_praat_sources/makefiles/makefile.defs.darmin32	2011-09-19 15:33:55.000000000 +0200
-@@ -7,7 +7,7 @@ CC = /mingw32/bin/gcc -std=gnu99 -isyste
- 
- CXX = /mingw32/bin/g++ -std=c++0x -isystem /mingw32/include/c++/4.7.0 -isystem /mingw32/include -Wshadow
- 
--CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -D_FILE_OFFSET_BITS=64 -Dmain=wingwmain -O1 -pthread
-+CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -D_FILE_OFFSET_BITS=64 -Dmain=wingwmain -O1 -pthread -DDEMOAPP
- 
- CXXFLAGS = $(CFLAGS)
- 
-diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.darmin64 demo_praat_sources/makefiles/makefile.defs.darmin64
---- praat_sources/makefiles/makefile.defs.darmin64	2011-09-19 12:26:39.000000000 +0200
-+++ demo_praat_sources/makefiles/makefile.defs.darmin64	2011-09-19 15:33:37.000000000 +0200
-@@ -7,7 +7,7 @@ CC = /mingw64/bin/gcc -std=gnu99 -isyste
- 
- CXX = /mingw64/bin/g++ -std=c++0x -isystem /mingw64/include/c++/4.7.0 -isystem /mingw64/include -Wshadow -m64
- 
--CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -D_FILE_OFFSET_BITS=64 -Dmain=wingwmain -O1 -pthread
-+CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -D_FILE_OFFSET_BITS=64 -Dmain=wingwmain -O1 -pthread -DDEMOAPP
- 
- CXXFLAGS = $(CFLAGS)
- 
-diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.mingw32 demo_praat_sources/makefiles/makefile.defs.mingw32
---- praat_sources/makefiles/makefile.defs.mingw32	2015-09-11 08:38:17.000000000 +0200
-+++ demo_praat_sources/makefiles/makefile.defs.mingw32	2015-09-15 15:45:42.000000000 +0200
-@@ -9,7 +9,7 @@ CC = $(PREFIX)gcc -std=gnu99
- 
- CXX = $(PREFIX)g++ -std=gnu++11 -Wshadow
- 
--CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1
-+CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1 -DDEMOAPP
- # Probably implicit: -m32 -mwin32 -march=i686 -mtune=generic
- 
- CXXFLAGS = $(CFLAGS)
-diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.mingw64 demo_praat_sources/makefiles/makefile.defs.mingw64
---- praat_sources/makefiles/makefile.defs.mingw64	2015-09-11 08:38:17.000000000 +0200
-+++ demo_praat_sources/makefiles/makefile.defs.mingw64	2015-09-15 15:48:18.000000000 +0200
-@@ -9,7 +9,7 @@ CC = $(PREFIX)gcc -std=gnu99
- 
- CXX = $(PREFIX)g++ -std=gnu++11 -Wshadow
- 
--CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1
-+CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1 -DDEMOAPP
- # Probably implicit: -m64 -mwin32 -march=x86_64 -mtune=generic
- 
- CXXFLAGS = $(CFLAGS)
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/dwtools/Intensity_extensions.cpp demo_praat_sources/dwtools/Intensity_extensions.cpp
 --- praat_sources/dwtools/Intensity_extensions.cpp	2011-09-20 11:40:46.000000000 +0200
 +++ demo_praat_sources/dwtools/Intensity_extensions.cpp	2011-09-28 11:45:46.000000000 +0200
@@ -434,3 +405,123 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/DemoEditor.cpp de
  		Melder_throw (U"You interrupted the script.");
  	}
  }
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/stat/praat_Stat.cpp demo_praat_sources/stat/praat_Stat.cpp
+--- praat_sources/stat/praat_Stat.cpp	2011-10-01 13:32:45.000000000 +0200
++++ demo_praat_sources/stat/praat_Stat.cpp	2011-11-18 08:55:32.000000000 +0100
+# Allow to view tables when in a Demo app
+@@ -421,7 +421,9 @@ DO
+ END2 }
+ 
+ DIRECT2 (Table_edit) {
++#ifndef DEMOAPP
+ 	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot edit a Table from batch.");
++#endif
+ 	LOOP {
+ 		iam (Table);
+ 		autoTableEditor editor = TableEditor_create (ID_AND_FULL_NAME, me);
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_init.cpp demo_praat_sources/fon/praat_TextGrid_init.cpp
+--- praat_sources/fon/praat_TextGrid_init.cpp	2011-09-12 10:17:12.000000000 +0200
++++ demo_praat_sources/fon/praat_TextGrid_init.cpp	2011-09-12 10:59:25.000000000 +0200
+# View and edit TextGrids in a DemoApp (when Melder_back = True)
+@@ -855,7 +855,9 @@ static void cb_TextGridEditor_publicatio
+ 	}
+ }
+ DIRECT2 (TextGrid_edit) {
++#ifndef DEMOAPP
+ 	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot view or edit a TextGrid from batch.");
++#endif
+ 	Sound sound = nullptr;
+ 	LOOP {
+ 		if (CLASS == classSound) sound = (Sound) OBJECT;   // may stay null
+@@ -886,7 +888,9 @@ DIRECT (TextGrid_edit)
+ END2 }
+ 
+ DIRECT2 (TextGrid_LongSound_edit) {
++#ifndef DEMOAPP
+ 	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot view or edit a TextGrid from batch.");
++#endif
+ 	LongSound longSound = nullptr;
+ 	int ilongSound = 0;
+ 	LOOP {
+@@ -902,7 +906,9 @@ DIRECT (TextGrid_LongSound_edit)
+ END2 }
+ 
+ DIRECT2 (TextGrid_SpellingChecker_edit) {
++#ifndef DEMOAPP
+ 	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot view or edit a TextGrid from batch.");
++#endif
+ 	SpellingChecker spellingChecker = NULL;
+ 	int ispellingChecker = 0;
+ 	Sound sound = NULL;
+@@ -919,7 +925,9 @@ DIRECT (TextGrid_SpellingChecker_edit)
+ END2 }
+ 
+ DIRECT2 (TextGrid_LongSound_SpellingChecker_edit) {
++#ifndef DEMOAPP
+ 	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot view or edit a TextGrid from batch.");
++#endif
+ 	LongSound longSound = NULL;
+ 	SpellingChecker spellingChecker = nullptr;
+ 	int ilongSound = 0, ispellingChecker = 0;
+#
+# Add DEMOAPP flag to compiler
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.linux.alsa demo_praat_sources/makefiles/makefile.defs.linux.alsa
+--- praat_sources/makefiles/makefile.defs.linux.alsa	2011-09-12 10:17:12.000000000 +0200
++++ demo_praat_sources/makefiles/makefile.defs.linux.alsa	2011-09-12 13:28:59.000000000 +0200
+@@ -7,7 +7,7 @@ CC = gcc -std=gnu99
+ 
+ CXX = g++ -std=c++11
+ 
+-CFLAGS = -DUNIX -Dlinux -DALSA -D_FILE_OFFSET_BITS=64 `pkg-config --cflags gtk+-2.0` -Werror=missing-prototypes -Werror=implicit -Wreturn-type -Wunused -Wunused-parameter -Wuninitialized -O1 -g1 -pthread
++CFLAGS = -DUNIX -Dlinux -DALSA -D_FILE_OFFSET_BITS=64 `pkg-config --cflags gtk+-2.0` -Werror=missing-prototypes -Werror=implicit -Wreturn-type -Wunused -Wunused-parameter -Wuninitialized -DDEMOAPP -O1 -g1 -pthread
+ 
+ CXXFLAGS = $(CFLAGS) -Wshadow
+ 
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.darmin32 demo_praat_sources/makefiles/makefile.defs.darmin32
+--- praat_sources/makefiles/makefile.defs.darmin32	2011-09-19 12:26:39.000000000 +0200
++++ demo_praat_sources/makefiles/makefile.defs.darmin32	2011-09-19 15:33:55.000000000 +0200
+@@ -7,7 +7,7 @@ CC = /mingw32/bin/gcc -std=gnu99 -isyste
+ 
+ CXX = /mingw32/bin/g++ -std=c++0x -isystem /mingw32/include/c++/4.7.0 -isystem /mingw32/include -Wshadow
+ 
+-CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -D_FILE_OFFSET_BITS=64 -Dmain=wingwmain -O1 -pthread
++CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -D_FILE_OFFSET_BITS=64 -Dmain=wingwmain -O1 -pthread -DDEMOAPP
+ 
+ CXXFLAGS = $(CFLAGS)
+ 
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.darmin64 demo_praat_sources/makefiles/makefile.defs.darmin64
+--- praat_sources/makefiles/makefile.defs.darmin64	2011-09-19 12:26:39.000000000 +0200
++++ demo_praat_sources/makefiles/makefile.defs.darmin64	2011-09-19 15:33:37.000000000 +0200
+@@ -7,7 +7,7 @@ CC = /mingw64/bin/gcc -std=gnu99 -isyste
+ 
+ CXX = /mingw64/bin/g++ -std=c++0x -isystem /mingw64/include/c++/4.7.0 -isystem /mingw64/include -Wshadow -m64
+ 
+-CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -D_FILE_OFFSET_BITS=64 -Dmain=wingwmain -O1 -pthread
++CFLAGS = -DWINVER=0x0500 -D_WIN32_WINNT=0x0500 -D_WIN32_IE=0x0500 -DUNICODE -D_FILE_OFFSET_BITS=64 -Dmain=wingwmain -O1 -pthread -DDEMOAPP
+ 
+ CXXFLAGS = $(CFLAGS)
+ 
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.mingw32 demo_praat_sources/makefiles/makefile.defs.mingw32
+--- praat_sources/makefiles/makefile.defs.mingw32	2015-09-11 08:38:17.000000000 +0200
++++ demo_praat_sources/makefiles/makefile.defs.mingw32	2015-09-15 15:45:42.000000000 +0200
+@@ -9,7 +9,7 @@ CC = $(PREFIX)gcc -std=gnu99
+ 
+ CXX = $(PREFIX)g++ -std=gnu++11 -Wshadow
+ 
+-CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1
++CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1 -DDEMOAPP
+ # Probably implicit: -m32 -mwin32 -march=i686 -mtune=generic
+ 
+ CXXFLAGS = $(CFLAGS)
+diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.defs.mingw64 demo_praat_sources/makefiles/makefile.defs.mingw64
+--- praat_sources/makefiles/makefile.defs.mingw64	2015-09-11 08:38:17.000000000 +0200
++++ demo_praat_sources/makefiles/makefile.defs.mingw64	2015-09-15 15:48:18.000000000 +0200
+@@ -9,7 +9,7 @@ CC = $(PREFIX)gcc -std=gnu99
+ 
+ CXX = $(PREFIX)g++ -std=gnu++11 -Wshadow
+ 
+-CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1
++CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1 -DDEMOAPP
+ # Probably implicit: -m64 -mwin32 -march=x86_64 -mtune=generic
+ 
+ CXXFLAGS = $(CFLAGS)
