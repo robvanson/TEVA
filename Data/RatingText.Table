@@ -6,6 +6,9 @@ Label	LeftX	RightX	LowY	HighY	Color	Draw
 $Scales	5	80	90	+5	Black	DrawNull
 $HoarsenessTxt	5	80	66	+5	Black	DrawNull
 Hoarseness_0	5	+10	61	+5	Black	DrawNull
+Hoarseness_1	^+15	+10	61	+5	Black	DrawNull
+Hoarseness_2	^+15	+10	61	+5	Black	DrawNull
+Hoarseness_3	^+15	+10	61	+5	Black	DrawNull
 >Intelligibility	5	80	51	+4	Black	DrawNull
 >Impression	5	80	^-10	+4	Black	DrawNull
 Help	70	85	25	+5	Black	DrawNull

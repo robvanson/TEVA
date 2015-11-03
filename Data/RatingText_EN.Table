@@ -4,7 +4,10 @@ Label	Text	Key	Helptext
 !License	License	!	GNU GPL version 2 or later
 !CANVAS	Display	¤	Display area
 $HoarsenessTxt	Heesheid: Toegenomen ruis in het stemgeluid normaal;licht;matig;ernstig afwijkend	!	Heesheid: Toegenomen ruis in het stemgeluid normaal;licht;matig;ernstig afwijkend
-Hoarseness_0	normaal	!	Heesheid normaal
+Hoarseness_0	normaal	!	Heesheid: normale stem
+Hoarseness_1	hees	!	Heesheid: hees
+Hoarseness_2	heser	!	Heesheid: erger
+Hoarseness_3	heest	!	Heesheid: ergst
 $Scales	Kies een positie op de schaal tussen links (slecht) en rechts (goed) die de kwaliteit van de spraak het best weergeeft	#	Visuele Analoge beoordelingsschalen
 >Intelligibility	Indruk van verstaanbaarheid: Hoe verstaanbaar is de spraak	Slecht;Goed	De Indruk van verstaanbaarheid : Hoe moeilijk of makkelijk is het om de spreker te verstaan.
 >Impression	Indruk van stemkwaliteit: Hoe goed/normaal/aangenaam is de stem	Slecht;Goed	De algemene stemkwaliteit (zoals de GRADE in GRBAS)
