@@ -231,11 +231,11 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound_init.
  	if (theCurrentPraatApplication -> batch)
  		Melder_throw (U"Cannot record a Sound from batch.");
 +#endif
- 	if (theSoundRecorder) {
- 		if (numberOfChannels == thePreviousNumberOfChannels) {
- 			Editor_raise (theSoundRecorder);
+ 	if (theSoundRecorder && numberOfChannels == thePreviousNumberOfChannels) {
+ 		Editor_raise (theSoundRecorder.get());
+ 	} else {
 # Handle situation where there is no sound input in Windows
-@@ -1446,10 +1452,21 @@ FORM (Sound_recordFixedTime, U"Record So
+@@ -1440,10 +1446,21 @@ FORM (Sound_recordFixedTime, U"Record So
  	POSITIVE (U"Duration (seconds)", U"1.0")
  	OK2
  DO
