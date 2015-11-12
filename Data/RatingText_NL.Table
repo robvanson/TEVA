@@ -3,12 +3,24 @@ Label	Text	Key	Helptext
 !Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
 !License	License	!	GNU GPL version 2 or later
 !CANVAS	Display	¤	Display area
-$HoarsenessTxt	Heesheid: Toegenomen ruis in het stemgeluid normaal;licht;matig;ernstig afwijkend	!	Heesheid: Toegenomen ruis in het stemgeluid normaal;licht;matig;ernstig afwijkend
-()Hoarseness_0	normaal	!	Heesheid: normale stem
-()Hoarseness_1	licht	!	Heesheid: licht hees
-()Hoarseness_2	matig	!	Heesheid: matig hees
-()Hoarseness_3	ernstig	!	Heesheid: ernstig afwijkend
-$Scales	Kies een positie op de schaal tussen links (slecht) en rechts (goed) die de kwaliteit van de spraak het best weergeeft	#	Visuele Analoge beoordelingsschalen
+$Hoarseness1Txt	Heesheid (toegenomen ruis in het stemgeluid)	!	Heesheid (toegenomen ruis in het stemgeluid): conventies van GRBASI.B schaal
+()Hoarseness1_0	normaal	!	Heesheid: normale stem
+()Hoarseness1_1	licht	!	Heesheid: licht hees
+()Hoarseness1_2	matig	!	Heesheid: matig hees
+()Hoarseness1_3	ernstig	!	Heesheid: ernstig afwijkend
+$Hoarseness2Txt	Schorheid (onregelmatig en ruw stemgeluid)	!	Schorheid (onregelmatig en ruw stemgeluid): conventies van RBASI.R schaal
+()Hoarseness2_0	normaal	!	Schorheid: normale stem
+()Hoarseness2_1	licht	!	Schorheid: licht hees
+()Hoarseness2_2	matig	!	Schorheid: matig hees
+()Hoarseness2_3	ernstig	!	Schorheid: ernstig afwijkend
+$NoiseTxt	Bijgeluiden (aanwezigheid van niet-talige sprekergeluiden) 	!	Bijgeluiden (aanwezigheid van niet-talige sprekergeluiden)
+()Noise_0	nooit	!	Bijgeluiden: nooit
+()Noise_1	soms	!	Bijgeluiden: soms (af en toe eens tussen twee deelzinnen)
+()Noise_2	meestal	!	Bijgeluiden: meestal/continu (ongeveer voor elk woord) 
+$AccentedTxt	Accentgraad (hoorbaarheid van sprekerafkomst)   	!	Accentgraad (hoorbaarheid van sprekerafkomst):  
+()Accented_0	niet	!	Accentgraad: afkomst niet hoorbaar
+()Accented_1	licht	!	Accentgraad: sommige klanken verwijzen tot op zekere hoogte naar het dialect van de spreker 
+()Accented_2	duidelijk	!	Accentgraad: de spraak verraadt duidelijk de afkomst (dialect) van de spreker 
 >Intelligibility	Indruk van verstaanbaarheid: Hoe verstaanbaar is de spraak	Slecht;Goed	De Indruk van verstaanbaarheid : Hoe moeilijk of makkelijk is het om de spreker te verstaan.
 >Impression	Indruk van stemkwaliteit: Hoe goed/normaal/aangenaam is de stem	Slecht;Goed	De algemene stemkwaliteit (zoals de GRADE in GRBAS)
 Help	Scale Help	#	Press the scale you want information on, "Help" to continue
