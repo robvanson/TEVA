@@ -1296,7 +1296,8 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 				# Ignore
 			elsif startsWith(buttonClicked.label$, ">")
 				.labelRating$ = replace_regex$(buttonClicked.label$, "^[^a-zA-Z]+([A-Za-z])", "\l\1", 0)
-				'.labelRating$' = buttonClicked.fractionX
+				rating.'.labelRating$' = buttonClicked.fractionX
+printline rating.'.labelRating$' = 'buttonClicked.fractionX'
 				call set_RatingValues config.speakerDataTable Rating.'.labelRating$' 'buttonClicked.fractionX'
 				call get_RatingValues 'config.speakerDataTable' 'te.ratingTable'
 	
@@ -1306,15 +1307,15 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 			elsif index(buttonClicked.label$, "_")
 				.labelRating$ = replace_regex$(buttonClicked.label$, "^([^_]*)_.*$", "\l\1", 0)
 				.value$ = replace_regex$(buttonClicked.label$, "^[^_]*_(.*)$", "\1", 0)
-				if variableExists("'.labelRating$'$")
-					.pressed$ = '.labelRating$'$
+				if variableExists("rating.'.labelRating$'$")
+					.pressed$ = rating.'.labelRating$'$
 					.labelRatingName$ = replace_regex$(.labelRating$, "^([A-Za-z])", "\u\1", 0)
 					call Draw_button_internal 1 'te.rating$' '.labelRatingName$'_'.pressed$' 0
 				endif
 				call set_RawRatingValues config.speakerDataTable Rating.'.labelRating$' '.value$'
 				call get_RatingValues 'config.speakerDataTable' 'te.ratingTable'
-				if variableExists("'.labelRating$'$")
-					.pressed$ = '.labelRating$'$
+				if variableExists("rating.'.labelRating$'$")
+					.pressed$ = rating.'.labelRating$'$
 					.labelRatingName$ = replace_regex$(.labelRating$, "^([A-Za-z])", "\u\1", 0)
 					call Draw_button_internal 1 'te.rating$' '.labelRatingName$'_'.pressed$' 2
 				endif
@@ -3458,7 +3459,7 @@ procedure get_RatingValues .speakerDataTable .ratingTable
 				.variableName$ = replace_regex$(.variableName$, "_.*$", "", 0)
 			endif
 			.variableName$ = replace_regex$(.variableName$, "^([A-Za-z])", "\l\1", 0)
-			if index_regex(.variableName$, "[$,:;]") <= 0
+			if index_regex(.variableName$, "[$,:;!]") <= 0
 				call get_speakerInfo 'speakerID$'
 				.row = get_speakerInfo.row
 				select .speakerDataTable
@@ -3467,22 +3468,22 @@ procedure get_RatingValues .speakerDataTable .ratingTable
 				if .row > 0
 					if .column > 0
 						# Clean up earlier values
-						'.variableName$' = -1
-						'.variableName$'ArrayLength = 0
-						'.variableName$'Array[1] = -1
+						rating.'.variableName$' = -1
+						rating.'.variableName$'ArrayLength = 0
+						rating.'.variableName$'Array[1] = -1
 						.valueTxt$ = Get value... .row Rating.'.variableName$'
 						.value = Get value... .row Rating.'.variableName$'
 						if not .value = undefined
-							'.variableName$' = (.value - 1)/999
-							'.variableName$'$ = "'.value'"
+							rating.'.variableName$' = (.value - 1)/999
+							rating.'.variableName$'$ = "'.value'"
 						endif
 						# Ranges
 						if index(.valueTxt$, ";")
-							'.variableName$'ArrayLength = 0
+							rating.'.variableName$'ArrayLength = 0
 							while index_regex(.valueTxt$, "[0-9]") > 0
-								'.variableName$'ArrayLength += 1
+								rating.'.variableName$'ArrayLength += 1
 								.value = extractNumber(.valueTxt$, "")
-								'.variableName$'Array['.variableName$'ArrayLength] = (.value - 1)/999
+								rating.'.variableName$'Array['.variableName$'ArrayLength] = (.value - 1)/999
 								if index(.valueTxt$, ";")
 									.valueTxt$ = right$(.valueTxt$, (length(.valueTxt$) - index(.valueTxt$, ";")))
 								else
@@ -3582,7 +3583,7 @@ procedure link_RatingValues .ratingTable .speakerTable .buttonLabel$
 							.variableLabel$ = Get value... '.r' Label
 							.variable$ = replace_regex$(.variableLabel$, "^\>(.)", "\l\1", 0)
 							.labelRating$ = replace_regex$(.variable$, "^[^a-zA-Z]+([A-Za-z])", "\l\1", 0)
-							'.labelRating$' = .newValue
+							rating.'.labelRating$' = .newValue
 							call set_RatingValues '.speakerTable' Rating.'.variable$' '.newValue'
 							call get_RatingValues '.speakerTable' '.ratingTable'
 							call Draw_button_internal 1 '.rating$' '.variableLabel$' 0

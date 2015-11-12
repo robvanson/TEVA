@@ -623,6 +623,7 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 		
 		# Draw current position tick
 		.varName$ = replace_regex$(.label$, "^[^a-zA-Z]+([a-zA-Z])", "\l\1", 0)
+		.varName$ = "rating.'.varName$'"
 		.varNameArray$ = "'.varName$'Array"
 		.fraction = -1
 		# Several values
