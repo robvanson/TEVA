@@ -1297,7 +1297,7 @@ procedure processMainPageCANVAS .clickX .clickY .pressed$
 			elsif startsWith(buttonClicked.label$, ">")
 				.labelRating$ = replace_regex$(buttonClicked.label$, "^[^a-zA-Z]+([A-Za-z])", "\l\1", 0)
 				rating.'.labelRating$' = buttonClicked.fractionX
-printline rating.'.labelRating$' = 'buttonClicked.fractionX'
+
 				call set_RatingValues config.speakerDataTable Rating.'.labelRating$' 'buttonClicked.fractionX'
 				call get_RatingValues 'config.speakerDataTable' 'te.ratingTable'
 	
@@ -1305,19 +1305,25 @@ printline rating.'.labelRating$' = 'buttonClicked.fractionX'
 				call Draw_button_internal 1 'te.rating$' 'buttonClicked.label$' 0
 				call link_RatingValues 'te.ratingTable' 'config.speakerDataTable' 'buttonClicked.label$'
 			elsif index(buttonClicked.label$, "_")
-				.labelRating$ = replace_regex$(buttonClicked.label$, "^([^_]*)_.*$", "\l\1", 0)
+				.labelPrefix$ = ""
+				.labelRating$ = buttonClicked.label$
 				.value$ = replace_regex$(buttonClicked.label$, "^[^_]*_(.*)$", "\1", 0)
+				if startsWith(buttonClicked.label$, "()")
+					.labelPrefix$ = replace_regex$(.labelRating$, "^([^a-zA-Z]+).*$", "\1", 0)
+					.labelRating$ = replace_regex$(.labelRating$, "^[^a-zA-Z]+", "", 0)
+				endif
+				.labelRating$ = replace_regex$(.labelRating$, "^([^_]*)_.*$", "\l\1", 0)
 				if variableExists("rating.'.labelRating$'$")
 					.pressed$ = rating.'.labelRating$'$
 					.labelRatingName$ = replace_regex$(.labelRating$, "^([A-Za-z])", "\u\1", 0)
-					call Draw_button_internal 1 'te.rating$' '.labelRatingName$'_'.pressed$' 0
+					call Draw_button_internal 1 'te.rating$' '.labelPrefix$''.labelRatingName$'_'.pressed$' 0
 				endif
 				call set_RawRatingValues config.speakerDataTable Rating.'.labelRating$' '.value$'
 				call get_RatingValues 'config.speakerDataTable' 'te.ratingTable'
 				if variableExists("rating.'.labelRating$'$")
 					.pressed$ = rating.'.labelRating$'$
 					.labelRatingName$ = replace_regex$(.labelRating$, "^([A-Za-z])", "\u\1", 0)
-					call Draw_button_internal 1 'te.rating$' '.labelRatingName$'_'.pressed$' 2
+					call Draw_button_internal 1 'te.rating$' '.labelPrefix$''.labelRatingName$'_'.pressed$' 2
 				endif
 			endif
 		endif
@@ -3450,7 +3456,7 @@ procedure get_RatingValues .speakerDataTable .ratingTable
 		for .ratingRow to .numRatingRows
 			select .ratingTable
 			.ratingKey$ = Get value... .ratingRow Label
-			if startsWith(.ratingKey$, ">")
+			if startsWith(.ratingKey$, ">") or startsWith(.ratingKey$, "()")
 				.variableName$ = replace_regex$(.ratingKey$, "^[^a-zA-Z]+([A-Za-z])", "\l\1", 0)
 			else
 				.variableName$ = .ratingKey$

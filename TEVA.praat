@@ -460,7 +460,51 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 	endif
 	
     # If label starts with "$", it is a text field. Then do not draw the button
-	if not startsWith(.label$, "$")
+	if startsWith(.label$, "()")
+		.radius = (.highY - .lowY)/4
+		.innerRadius = 2* .radius / 3
+		.circleX = (.shiftRightX + .shiftLeftX)/2
+		.circleY = (.shiftHighY + .shiftLowY)/2 + (.shiftHighY - .shiftLowY)/4
+
+    	# Give some depth to button: Draw flank outline
+		if .shiftDown or .shiftX or .shiftY
+			if .push <= 0
+    			demo Paint circle: .flankBackGroundColorUp$, .circleX, .circleY, .radius
+				demo Colour: .flankLineColorUp$
+    			demo Line width: .flankLineWidthUp
+			else
+    			demo Paint circle: .flankBackGroundColorDown$, .circleX, .circleY, .radius
+				demo Colour: .flankLineColorDown$
+    			demo Line width: .flankLineWidthDown
+			endif
+    		demo Draw circle: .circleX, .circleY, .radius
+		endif
+		
+		.circleX = (.rightX + .leftX)/2
+		.circleY = (.highY + .lowY)/2 + (.highY - .lowY)/4
+
+    	# Draw the button top
+		if .push = 0
+			demo Paint circle: .topBackGroundColorUp$, .circleX, .circleY, .radius
+			demo Colour: .topLineColorUp$
+			demo Line width: .topLineWidthUp
+		elsif .push < 0
+			demo Paint circle: .topBackGroundColorDisabled$, .circleX, .circleY, .radius
+			demo Colour: .topLineColorDisabled$
+			demo Line width: .topLineWidthDisabled
+		else
+			# Button Down
+			.circleX = (.rightX + .leftX)/2 - .shiftDown
+			.circleY = (.highY + .lowY)/2 + (.highY - .lowY)/4 - .shiftDown
+
+			demo Paint circle: .topBackGroundColorDown$, .circleX, .circleY, .radius
+			demo Paint circle: "Black", .circleX, .circleY, .innerRadius
+			demo Colour: .topLineColorDown$
+			demo Line width: .topLineWidthDown
+		endif
+    	demo Draw circle: .circleX, .circleY, .radius
+		
+	elsif not startsWith(.label$, "$")
     	# Give some depth to button: Draw flank outline
 		if .shiftDown or .shiftX or .shiftY
 			if .push <= 0
@@ -657,6 +701,8 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 			demo Line width... 1.5
 			demo Draw line... '.midpoint' '.lowY' '.midpoint' '.highY'
 		endif
+	elsif startsWith(.label$, "()")
+		demo Text special... '.centerX' Centre '.lowY' Half 'defaultFont$' '.buttonFontSize' 0 '.newText$'
     else
 		demo Text special... '.centerX' Centre '.anchorY' '.verticalAlignment$' 'defaultFont$' '.buttonFontSize' '.rotation' '.newText$'
 	endif
