@@ -3,24 +3,24 @@ Label	Text	Key	Helptext
 !Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
 !License	License	!	GNU GPL version 2 or later
 !CANVAS	Display	¤	Display area
-$Hoarseness1Txt	Heesheid (toegenomen ruis in het stemgeluid)	!	Heesheid (toegenomen ruis in het stemgeluid): conventies van GRBASI.B schaal
-()Hoarseness1_0	normaal	!	Heesheid: normale stem
-()Hoarseness1_1	licht	!	Heesheid: licht hees
-()Hoarseness1_2	matig	!	Heesheid: matig hees
-()Hoarseness1_3	ernstig	!	Heesheid: ernstig afwijkend
-$Hoarseness2Txt	Schorheid (onregelmatig en ruw stemgeluid)	!	Schorheid (onregelmatig en ruw stemgeluid): conventies van RBASI.R schaal
-()Hoarseness2_0	normaal	!	Schorheid: normale stem
-()Hoarseness2_1	licht	!	Schorheid: licht hees
-()Hoarseness2_2	matig	!	Schorheid: matig hees
-()Hoarseness2_3	ernstig	!	Schorheid: ernstig afwijkend
-$NoiseTxt	Bijgeluiden (aanwezigheid van niet-talige sprekergeluiden) 	!	Bijgeluiden (aanwezigheid van niet-talige sprekergeluiden)
-()Noise_0	nooit	!	Bijgeluiden: nooit
-()Noise_1	soms	!	Bijgeluiden: soms (af en toe eens tussen twee deelzinnen)
-()Noise_2	meestal	!	Bijgeluiden: meestal/continu (ongeveer voor elk woord) 
-$AccentedTxt	Accentgraad (hoorbaarheid van sprekerafkomst)   	!	Accentgraad (hoorbaarheid van sprekerafkomst):  
-()Accented_0	niet	!	Accentgraad: afkomst niet hoorbaar
-()Accented_1	licht	!	Accentgraad: sommige klanken verwijzen tot op zekere hoogte naar het dialect van de spreker 
-()Accented_2	duidelijk	!	Accentgraad: de spraak verraadt duidelijk de afkomst (dialect) van de spreker 
+$HuskinessTxt	Huskiness (increased noise in the voice)	!	Huskiness (increased noise in the voice): convention of GRBASI.B scale
+()Huskiness_0	normal	!	Huskiness: normal voice
+()Huskiness_1	light	!	Huskiness: light huskiness
+()Huskiness_2	moderate	!	Huskiness: moderate huskiness
+()Huskiness_3	severe	!	Huskiness: severely abnormal
+$HoarsenessTxt	Hoarseness (irregular and raw voice)	!	Hoarseness (irregular and raw voice): conventiona of GRBASI.R scale
+()Hoarseness_0	normal	!	Hoarseness: normal voice
+()Hoarseness_1	light	!	Hoarseness: light Hoarseness
+()Hoarseness_2	moderate	!	Hoarseness: moderate Hoarseness
+()Hoarseness_3	severe	!	Hoarseness: severely abnormal
+$NoiseTxt	Noise (presence of non-speech speaker noise) 	!	Noise (presence of non-speech speaker noise)
+()Noise_0	never	!	Noise: never
+()Noise_1	sometimes	!	Noise: sometimes (now and then between phrases)
+()Noise_2	mostly	!	Noise: most of the time/always (almost before every word) 
+$AccentedTxt	Accentedness (audibility of the origin of the speaker)   	!	Accentedness (hoorbaarheid van sprekerafkomst):  
+()Accented_0	not	!	Accentedness: origin not audible
+()Accented_1	slight	!	Accentedness: some sounds do refer to the origin of the speaker 
+()Accented_2	clear	!	Accentedness: the speech does clearly reveal the origin (dialect) of the speaker 
+>Intelligibility	Intelligibility: Impression of the difficulty/ease of decoding the speech signal	Poor;Good	Intelligibility: Impression of the difficulty/ease of decoding the speech signal
 >Impression	Impression of overall voice quality (similarity to normal speech)	Least;Most	The overall voice quality (like GRADE in GRBAS)
->Intelligibility	Intelligibility: Impression of the difficulty/ease of decoding the speech signal	Poor;Good	The impression of intelligibility. : A speaker with good intelligibility is easy to decode.
 Help	Scale Help	#	Press the scale you want information on, "Help" to continue

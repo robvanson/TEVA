@@ -3,16 +3,16 @@ Label	Text	Key	Helptext
 !Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
 !License	License	!	GNU GPL version 2 or later
 !CANVAS	Display	¤	Display area
-$Hoarseness1Txt	Heesheid (toegenomen ruis in het stemgeluid)	!	Heesheid (toegenomen ruis in het stemgeluid): conventies van GRBASI.B schaal
-()Hoarseness1_0	normaal	!	Heesheid: normale stem
-()Hoarseness1_1	licht	!	Heesheid: licht hees
-()Hoarseness1_2	matig	!	Heesheid: matig hees
-()Hoarseness1_3	ernstig	!	Heesheid: ernstig afwijkend
-$Hoarseness2Txt	Schorheid (onregelmatig en ruw stemgeluid)	!	Schorheid (onregelmatig en ruw stemgeluid): conventies van RBASI.R schaal
-()Hoarseness2_0	normaal	!	Schorheid: normale stem
-()Hoarseness2_1	licht	!	Schorheid: licht hees
-()Hoarseness2_2	matig	!	Schorheid: matig hees
-()Hoarseness2_3	ernstig	!	Schorheid: ernstig afwijkend
+$HuskinessTxt	Heesheid (toegenomen ruis in het stemgeluid)	!	Heesheid (toegenomen ruis in het stemgeluid): conventies van GRBASI.B schaal
+()Huskiness_0	normaal	!	Heesheid: normale stem
+()Huskiness_1	licht	!	Heesheid: licht hees
+()Huskiness_2	matig	!	Heesheid: matig hees
+()Huskiness_3	ernstig	!	Heesheid: ernstig afwijkend
+$HoarsenessTxt	Schorheid (onregelmatig en ruw stemgeluid)	!	Schorheid (onregelmatig en ruw stemgeluid): conventies van RBASI.R schaal
+()Hoarseness_0	normaal	!	Schorheid: normale stem
+()Hoarseness_1	licht	!	Schorheid: licht hees
+()Hoarseness_2	matig	!	Schorheid: matig hees
+()Hoarseness_3	ernstig	!	Schorheid: ernstig afwijkend
 $NoiseTxt	Bijgeluiden (aanwezigheid van niet-talige sprekergeluiden) 	!	Bijgeluiden (aanwezigheid van niet-talige sprekergeluiden)
 ()Noise_0	nooit	!	Bijgeluiden: nooit
 ()Noise_1	soms	!	Bijgeluiden: soms (af en toe eens tussen twee deelzinnen)
