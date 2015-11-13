@@ -274,6 +274,17 @@ procedure Draw_all_buttons .table$
 		.label$ = Get value... '.row' Label
 		if startsWith(.label$, ">")
 		    call Draw_button_internal 1 '.table$' '.label$' 0
+		elsif startsWith(.label$, "()")
+			.pressed$ = "0"
+			.labelName$ = replace_regex$(.label$, "^[^A-Za-z]+([^_]+)(_.*)?$", "\l\1", 0)
+			.varValue$ = replace_regex$(.label$, "^[^_]+_(.*)$", "\1", 0)
+			if variableExists("rating.'.labelName$'$") 
+				.tmp$ = rating.'.labelName$'$
+				if .tmp$ = .varValue$
+					.pressed$ = "2"
+				endif
+			endif
+		    call Draw_button_internal 1 '.table$' '.label$' '.pressed$'
 			
         elsif not startsWith(.label$, "!") 
 			.pressed = 0
@@ -281,7 +292,7 @@ procedure Draw_all_buttons .table$
 			# A variable with the same name as the button will act as a
 			# "pressed state"
 			.variableName$ = .varPrefix$+"."+(replace_regex$(.label$, "^(.)", "\l\1", 0))
-			# Simple boolean vairables
+			# Simple boolean variables
 			if index(.variableName$, "_") <= 0 and variableExists(.variableName$)
 				# True: Pressed
 				if '.variableName$' > 0
@@ -461,10 +472,10 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 	
     # If label starts with "$", it is a text field. Then do not draw the button
 	if startsWith(.label$, "()")
-		.radius = (.highY - .lowY)/4
+		.radius = min((.shiftRightX - .shiftLeftX), (.highY - .lowY)/4)
 		.innerRadius = 2* .radius / 3
 		.circleX = (.shiftRightX + .shiftLeftX)/2
-		.circleY = (.shiftHighY + .shiftLowY)/2 + (.shiftHighY - .shiftLowY)/4
+		.circleY = .shiftHighY - .radius
 
     	# Give some depth to button: Draw flank outline
 		if .shiftDown or .shiftX or .shiftY
@@ -481,7 +492,7 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 		endif
 		
 		.circleX = (.rightX + .leftX)/2
-		.circleY = (.highY + .lowY)/2 + (.highY - .lowY)/4
+		.circleY = .highY - .radius
 
     	# Draw the button top
 		if .push = 0
@@ -492,10 +503,15 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
 			demo Paint circle: .topBackGroundColorDisabled$, .circleX, .circleY, .radius
 			demo Colour: .topLineColorDisabled$
 			demo Line width: .topLineWidthDisabled
+		elsif .push = 1
+			demo Paint circle: .topBackGroundColorDisabled$, .circleX, .circleY, .radius
+			demo Paint circle: "Grey", .circleX, .circleY, .innerRadius
+			demo Colour: .topLineColorDisabled$
+			demo Line width: .topLineWidthDisabled
 		else
 			# Button Down
 			.circleX = (.rightX + .leftX)/2 - .shiftDown
-			.circleY = (.highY + .lowY)/2 + (.highY - .lowY)/4 - .shiftDown
+			.circleY = .highY -.radius - .shiftDown
 
 			demo Paint circle: .topBackGroundColorDown$, .circleX, .circleY, .radius
 			demo Paint circle: "Black", .circleX, .circleY, .innerRadius
