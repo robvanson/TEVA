@@ -21,7 +21,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_script.cpp 
 --- praat_sources/sys/praat_script.cpp	2011-09-02 13:53:33.000000000 +0200
 +++ demo_praat_sources/sys/praat_script.cpp	2011-10-28 07:54:25.000000000 +0200
 # In case of an error, terminate the program
-@@ -589,6 +589,7 @@ void praat_executeScriptFromText (wchar 
+@@ -593,6 +593,7 @@ void praat_executeScriptFromText (wchar 
  		autostring32 string = Melder_dup (text);   // copy, because Interpreter will change it (UGLY)
  		Interpreter_run (interpreter.peek(), string.peek());
  	} catch (MelderError) {
@@ -43,10 +43,10 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Graphics_text.cpp
  	}
  	wcscpy (spec. lfFaceName,
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_praat_sources/sys/praat.cpp
---- praat_sources/sys/praat.cpp	2014-04-22 11:09:57.000000000 +0200
-+++ demo_praat_sources/sys/praat.cpp	2014-04-22 11:53:58.000000000 +0200
+--- praat_sources/sys/praat.cpp	2016-01-11 08:45:44.000000000 +0100
++++ demo_praat_sources/sys/praat.cpp	2016-01-27 15:29:23.000000000 +0100
 # When running thePraatStandAloneScriptText, block the Melder_batch flag
-@@ -1169,7 +1169,9 @@ void praat_init (const char32 *title, un
+@@ -1169,7 +1169,9 @@ void praat_init (const char32 *title, in
  	}
  	//Melder_casual (U"Script file name <<", theCurrentPraatApplication -> batchName.string, U">>");
  
@@ -57,7 +57,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	/*
  	 * Running the Praat shell from the command line:
 # Change the name of the Unix preference dir
-@@ -1221,7 +1223,7 @@ void praat_init (const char *title, unsi
+@@ -1221,7 +1223,7 @@ void praat_init (const char32 *title, in
  		 */
  		char32 name [256];
  		#if defined (UNIX)
@@ -67,7 +67,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  			Melder_sprint (name,256, praatP.title, U" Prefs");   // for example MyProg Prefs
  		#elif defined (_WIN32)
 # Something in Linux (GTK)? Do not know what?
-@@ -1305,6 +1307,12 @@ void praat_init (const char *title, unsi
+@@ -1305,6 +1307,12 @@ void praat_init (const char32 *title, in
  
  	GuiWindow raam = nullptr;
  	if (Melder_batch) {
@@ -80,8 +80,8 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		MelderString_empty (& theCurrentPraatApplication -> batchName);
  		for (unsigned int i = praatP.argumentNumber - 1; i < argc; i ++) {
  			if (i >= praatP.argumentNumber) MelderString_append (& theCurrentPraatApplication -> batchName, U" ");
-# Supress opening the object window
-@@ -1348,9 +1356,11 @@ void praat_init (const char *title, unsi
+# Supress opening the object window, initialize praat under Mac 64 bit (cocoa) Needed for 10.7
+@@ -1348,10 +1356,32 @@ void praat_init (const char32 *title, in
  		#if motif
  			GuiApp_setApplicationShell (theCurrentPraatApplication -> topShell -> d_xmShell);
  		#endif
@@ -91,10 +91,31 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		trace (U"after objects window shows locale ", Melder_peek8to32 (setlocale (LC_ALL, nullptr)));
 +#endif
  	}
++
++	#if cocoa
++	{
++		trace (U"starting the application");
++		Machine_initLookAndFeel (argc, argv);
++		/*
++		 * Start the application.
++		 */
++		//[NSApplication sharedApplication];
++		[GuiCocoaApplication sharedApplication];
++
++		trace (U"creating and installing the Objects window");
++		char32 objectWindowTitle [100];
++		double x, y;
++		trace (U"locale ", Melder_peek8to32 (setlocale (LC_ALL, nullptr)));
++		Gui_getWindowPositioningBounds (& x, & y, nullptr, nullptr);
++		trace (U"locale ", Melder_peek8to32 (setlocale (LC_ALL, nullptr)));
++	}
++	#endif
++
  	Thing_recognizeClassesByName (classCollection, classStrings, classManPages, classStringSet, nullptr);
  	Thing_recognizeClassByOtherName (classStringSet, U"SortedSetOfString");
+ 	if (Melder_batch) {
 # Seems to speed startup, but not sure whether it is necessary
-@@ -1361,6 +1371,9 @@ void praat_init (const char *title, unsi
+@@ -1361,6 +1391,9 @@ void praat_init (const char32 *title, in
  		trace (U"adding fixed buttons without GUI");
  		praat_addFixedButtons (nullptr);
  	} else {
@@ -105,7 +126,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#ifdef macintosh
  			#if ! useCarbon
 # Supress opening the object window
-@@ -1388,7 +1401,9 @@ void praat_init (const char *title, unsi
+@@ -1388,7 +1421,9 @@ void praat_init (const char32 *title, in
  		trace (U"creating the dynamic menu in the Objects window");
  		praat_actions_createDynamicMenu (raam);
  		trace (U"showing the Objects window");
@@ -116,7 +137,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#if defined (UNIX) && ! defined (NO_GRAPHICS)
  			try {
 # Initialize a picture window, but close it immediately
-@@ -1419,7 +1434,12 @@ void praat_init (const char *title, unsi
+@@ -1419,7 +1454,12 @@ void praat_init (const char32 *title, in
  
  	trace (U"creating the Picture window");
  	trace (U"before picture window shows: locale is ", Melder_peek8to32 (setlocale (LC_ALL, nullptr)));
@@ -131,25 +152,17 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  
  	if (unknownCommandLineOption) {
 # No idea why this is needed?
-@@ -1575,11 +1595,11 @@ void praat_run (void) {
- 		if (! str32equ (Melder_integer (dummy), U"1000000000000"))
+@@ -1576,7 +1616,7 @@ void praat_run () {
  			Melder_fatal (U"The number 1000000000000 is mistaken written on this machine as ", dummy, U".");
  	}
--	{ uint32_t dummy = 0xffffffff;
+ 	{ uint32_t dummy = 0xffffffff;
 -		Melder_assert ((int64) dummy == 4294967295LL);
--		Melder_assert (str32equ (Melder_integer (dummy), U"4294967295"));
--		Melder_assert (double (dummy) == 4294967295.0);
--	}
-+	{ uint32_t dummy = 0xffffffff;
 +		Melder_assert ((int64_t) dummy == 4294967295LL);
-+		Melder_assert (str32equ (Melder_integer (dummy), U"4294967295"));
-+		Melder_assert (double (dummy) == 4294967295.0);
-+	}
- 	{ double dummy = 3000000000.0;
- 		Melder_assert ((uint32) dummy == 3000000000);
+ 		Melder_assert (str32equ (Melder_integer (dummy), U"4294967295"));
+ 		Melder_assert (double (dummy) == 4294967295.0);
  	}
 # Next chunk is needed to start the Demo window under Windows (motif)
-@@ -1690,10 +1710,20 @@ void praat_run () {
+@@ -1690,10 +1730,20 @@ void praat_run () {
  		#elif cocoa
  			[NSApp run];
  		#elif motif
@@ -397,7 +410,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/DemoEditor.cpp de
 --- praat_sources/sys/DemoEditor.cpp	2014-05-09 08:59:02.000000000 +0200
 +++ demo_praat_sources/sys/DemoEditor.cpp	2014-05-16 10:30:28.000000000 +0200
 # Close the script and stop Praat. If you do not stop praat, you retain Zombie Praat processes under Windows
-@@ -249,6 +249,7 @@ void Demo_waitForInput (Interpreter inte
+@@ -253,6 +253,7 @@ void Demo_waitForInput (Interpreter inte
  	if (theReferenceToTheOnlyDemoEditor -> userWantsToClose) {
  		Interpreter_stop (interpreter);
  		forget (theReferenceToTheOnlyDemoEditor);
@@ -508,8 +521,8 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.de
  
  CXX = $(PREFIX)g++ -std=gnu++11 -Wshadow
  
--CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1
-+CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1 -DDEMOAPP
+-CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O3
++CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O3 -DDEMOAPP
  # Probably implicit: -m32 -mwin32 -march=i686 -mtune=generic
  
  CXXFLAGS = $(CFLAGS)
@@ -520,8 +533,8 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/makefiles/makefile.de
  
  CXX = $(PREFIX)g++ -std=gnu++11 -Wshadow
  
--CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1
-+CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O1 -DDEMOAPP
+-CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O3
++CFLAGS = -municode -D_FILE_OFFSET_BITS=64 -O3 -DDEMOAPP
  # Probably implicit: -m64 -mwin32 -march=x86_64 -mtune=generic
  
  CXXFLAGS = $(CFLAGS)
