@@ -312,8 +312,14 @@ procedure resynthesize_with_TE_source .prosody .targetAR .originalRecording .teS
 	
 	# Get source sound
 	selectObject: .teSourceRecording
-	call extract_DiffLPC_source
-	.teSource = selected: "Sound"
+	.sourceName$ = selected$("Sound")
+	if index_regex(.sourceName$, "(?i_LPCsource)") <= 0
+		call extract_DiffLPC_source
+		.teSource = selected: "Sound"
+	else
+		selectObject: .teSourceRecording
+		.teSource = Copy: "TESource"
+	endif
 	.teSourceDuration = Get total duration
 	
 	# Determine segments with speech
