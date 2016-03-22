@@ -274,7 +274,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Ui.cpp demo_praat
 --- praat_sources/sys/Ui.cpp	2014-01-27 09:02:44.000000000 +0100
 +++ demo_praat_sources/sys/Ui.cpp	2014-03-27 12:22:58.000000000 +0100
 # Increase size of Pause Forms
-@@ -716,12 +716,16 @@ void UiForm_finish (I) {
+@@ -712,12 +712,16 @@ void UiForm_finish (I) {
  void UiForm_finish (UiForm me) {
  	if (! my d_dialogParent && ! my isPauseForm) return;
  
@@ -436,7 +436,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
 --- praat_sources/fon/praat_TextGrid_init.cpp	2011-09-12 10:17:12.000000000 +0200
 +++ demo_praat_sources/fon/praat_TextGrid_init.cpp	2011-09-12 10:59:25.000000000 +0200
 # View and edit TextGrids in a DemoApp (when Melder_back = True)
-@@ -861,7 +861,9 @@ static void cb_TextGridEditor_publicatio
+@@ -863,7 +863,9 @@ static void cb_TextGridEditor_publicatio
  	}
  }
  DIRECT2 (TextGrid_edit) {
@@ -446,7 +446,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
  	Sound sound = nullptr;
  	LOOP {
  		if (CLASS == classSound) sound = (Sound) OBJECT;   // may stay null
-@@ -894,7 +896,9 @@ DIRECT (TextGrid_edit)
+@@ -896,7 +898,9 @@ DIRECT (TextGrid_edit)
  END2 }
  
  DIRECT2 (TextGrid_LongSound_edit) {
@@ -456,7 +456,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
  	LongSound longSound = nullptr;
  	int ilongSound = 0;
  	LOOP {
-@@ -911,7 +915,9 @@ DIRECT (TextGrid_LongSound_edit)
+@@ -913,7 +917,9 @@ DIRECT (TextGrid_LongSound_edit)
  END2 }
  
  DIRECT2 (TextGrid_SpellingChecker_edit) {
@@ -466,7 +466,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_in
  	SpellingChecker spellingChecker = nullptr;
  	int ispellingChecker = 0;
  	Sound sound = nullptr;
-@@ -929,7 +935,9 @@ DIRECT (TextGrid_SpellingChecker_edit)
+@@ -931,7 +937,9 @@ DIRECT (TextGrid_SpellingChecker_edit)
  END2 }
  
  DIRECT2 (TextGrid_LongSound_SpellingChecker_edit) {
