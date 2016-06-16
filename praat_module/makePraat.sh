@@ -36,25 +36,32 @@ if [[  -e ${PRAATSOURCES}/makefile.defs && -n `grep -l mingw32 ${PRAATSOURCES}/m
 elif [[ ${UNAME} == "Darwin" ]]; then
 	MAKECMD="xcodebuild -project praat64.xcodeproj"
 echo ${2:-Normal}
-	if [[ `ls -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.1*.sdk 2>/dev/null` ]]; then
-		SDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
-		MAKECMD="xcodebuild -project praat64.xcodeproj -sdk ${SDK}"
-		EXECPATH="./build/Configuration64/Praat.app"
-		ZIPNAME=${ZIPNAME}_64.app
-	elif [[ -d ${PRAATSOURCES}/praat32.xcodeproj && ${1:-Normal} != "OSX64" ]]; then
-		if [[ -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs ]]; then
-			SDK=`ls -1d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/*|grep 10.6`
-		else
-			SDK=`ls -1d /Developer/SDKs/*|grep 10.6`
-		fi
-		MAKECMD="xcodebuild -project praat32.xcodeproj -sdk ${SDK}"
-		EXECPATH="./build/Configuration1/Praat.app"
-		ZIPNAME=${ZIPNAME}_32.app
-	else
-		MAKECMD="xcodebuild -project praat64.xcodeproj"
-		EXECPATH="./build/Configuration64/Praat.app"
-		ZIPNAME=${ZIPNAME}_64.app
-	fi
+
+	# Not in use anymore
+	#if [[ `ls -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.1*.sdk 2>/dev/null` ]]; then
+	#	SDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
+	#	MAKECMD="xcodebuild -project praat64.xcodeproj -sdk ${SDK}"
+	#	EXECPATH="./build/Configuration64/Praat.app"
+	#	ZIPNAME=${ZIPNAME}_64.app
+	#elif [[ -d ${PRAATSOURCES}/praat32.xcodeproj && ${1:-Normal} != "OSX64" ]]; then
+	#	if [[ -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs ]]; then
+	#		SDK=`ls -1d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/*|grep 10.6`
+	#	else
+	#		SDK=`ls -1d /Developer/SDKs/*|grep 10.6`
+	#	fi
+	#	MAKECMD="xcodebuild -project praat32.xcodeproj -sdk ${SDK}"
+	#	EXECPATH="./build/Configuration1/Praat.app"
+	#	ZIPNAME=${ZIPNAME}_32.app
+	#else
+	#	MAKECMD="xcodebuild -project praat64.xcodeproj"
+	#	EXECPATH="./build/Configuration64/Praat.app"
+	#	ZIPNAME=${ZIPNAME}_64.app
+	#fi
+	
+	MAKECMD="xcodebuild -project praat64.xcodeproj"
+	EXECPATH="./build/Configuration64/Praat.app"
+	ZIPNAME=${ZIPNAME}_64.app
+
 	TARGETNAME=${APPLICATIONNAME}.app
 fi
 
