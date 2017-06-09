@@ -59,7 +59,7 @@ form Counting Syllables in Sound Utterances
    real Minimum_dip_between_peaks_(dB) 2
    real Minimum_pause_duration_(s) 0.3
    boolean Keep_Soundfiles_and_Textgrids yes
-   sentence directory /Users/robvanson/Desktop/TEconversion
+   sentence directory /Users/robvanson/surfdrive/
 endform
 
  
@@ -85,7 +85,7 @@ for ifile to numberOfFiles
    
    call syllable_nuclei .soundFile
 endfor
-.soundFile = Read from file... ~/Desktop/TEconversion/rob_80_dappere.wav
+.soundFile = Read from file... /Users/rob/surfdrive/NKI/Studenten/VoiceConversion/ookhetweer.wav
 call syllable_nuclei .soundFile
 printline 'syllable_nuclei.soundname$', 'syllable_nuclei.voicedcount', 'syllable_nuclein.pause', 'syllable_nuclei.originaldur:2', 'syllable_nuclei.speakingtot:2', 'syllable_nuclei.speakingrate:2', 'syllable_nuclei.articulationrate:2', 'syllable_nuclei.asd:3'
 
