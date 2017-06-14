@@ -242,19 +242,19 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound.cpp d
  	OK
  DO
 +#if defined (_WIN32) && defined (DEMOAPP)
-+	UINT numberOfDevices = waveInGetNumDevs (), i;
-+	if(numberOfDevices > 0) {
++	//UINT numberOfDevices = waveInGetNumDevs (), i;
++	//if(numberOfDevices > 0) {
 +#endif
  	CREATE_ONE
  		autoSound result = Sound_record_fixedTime (inputSource,
  			gain, balance, Melder_atof (samplingFrequency), duration);
  	CREATE_ONE_END (U"untitled")
 +#if defined (_WIN32) && defined (DEMOAPP)
-+	} else {
++	//} else {
 +	// Create an empty sound if no input is available
-+	autoSound me = Sound_createSimple (1, GET_REAL (U"Duration"), GET_REAL (U"Sampling frequency"));
-+	praat_new (me.move(), U"untitled");	
-+	};
++	//autoSound me = Sound_createSimple (1, GET_REAL (U"Duration"), GET_REAL (U"Sampling frequency"));
++	//praat_new (me.move(), U"untitled");	
++	//};
 +#endif
  }
  
