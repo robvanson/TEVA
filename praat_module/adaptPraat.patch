@@ -236,29 +236,6 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound.cpp d
  	LOOP {
  		iam (Sound);
  		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
-# Handle situation where there is no sound input in Windows
-@@ -1285,10 +1289,21 @@ FORM (RECORD1_Sound_record_fixedTime, U"
- 	POSITIVE4 (duration, U"Duration (seconds)", U"1.0")
- 	OK
- DO
-+#if defined (_WIN32) && defined (DEMOAPP)
-+	//UINT numberOfDevices = waveInGetNumDevs (), i;
-+	//if(numberOfDevices > 0) {
-+#endif
- 	CREATE_ONE
- 		autoSound result = Sound_record_fixedTime (inputSource,
- 			gain, balance, Melder_atof (samplingFrequency), duration);
- 	CREATE_ONE_END (U"untitled")
-+#if defined (_WIN32) && defined (DEMOAPP)
-+	//} else {
-+	// Create an empty sound if no input is available
-+	//autoSound me = Sound_createSimple (1, GET_REAL (U"Duration"), GET_REAL (U"Sampling frequency"));
-+	//praat_new (me.move(), U"untitled");	
-+	//};
-+#endif
- }
- 
- extern "C" void* Praat_Sound_resample (void* sound, double newSamplingFrequency, int precision);
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Ui.cpp demo_praat_sources/sys/Ui.cpp
 --- praat_sources/sys/Ui.cpp	2014-01-27 09:02:44.000000000 +0100
 +++ demo_praat_sources/sys/Ui.cpp	2014-03-27 12:22:58.000000000 +0100
