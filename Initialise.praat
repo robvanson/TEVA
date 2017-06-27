@@ -85,6 +85,8 @@ procedure global_initialization
 	else
 		config.speakerSerial$ = "None"
 	endif
+	config.rootDirectory$ = shellDirectory$
+	config.localInitializationFile$ = "TEVAinit.settings"
 	config.saveAll = 0
 	config.autoSelect = 0
 	config.calcGNE = 0
@@ -186,6 +188,25 @@ procedure global_initialization
 
 endproc
 
+# Allow the initialization from a local file
+procedure local_setup .localSettings$
+	# Load local preferences if present
+	if fileReadable(.localSettings$)
+		.localSetup = Read from file: .localSettings$
+		.numPairs = Get number of rows
+		.keyName$ = Get column label: 1
+		.valueName$ = Get column label: 2
+		for .r to .numPairs
+			.key$ = Get value: .r, .keyName$
+			.value$ = Get value: .r, .valueName$
+			if variableExists(.key$)
+				'.key$' = .value$
+			endif
+		endfor
+	endif
+
+endproc
+
 procedure global_setup
 	# Set up directories if they do not exist already
 	call set_up_directories
@@ -203,7 +224,11 @@ procedure global_setup
 	endif
 	
 	# Load local preferences if present
-
+	if fileReadable(config.rootDirectory$+config.localInitializationFile$)
+		call local_setup 'config.rootDirectory$''config.localInitializationFile$'
+	elsif fileReadable(homeDirectory$+"/"+config.localInitializationFile$)
+		call local_setup 'homeDirectory$'/'config.localInitializationFile$'
+	endif
 endproc
 
 procedure switch_speaker_next_button .set_nextItem$
