@@ -24,7 +24,6 @@
 # 
 mainPage.outputPraatObject$ = "Draw"
 
-
 # Define some variables
 procedure initializeMainPage
 	# Do not recalculate needlessly
@@ -932,7 +931,7 @@ procedure processMainPageSpeaker .clickX .clickY .pressed$
 			call convert_praat_to_latin1 'get_feedback_text.text$'
 			.openDialogue$ = convert_praat_to_latin1.text$
 			.filename$ = chooseReadFile$ (.openDialogue$)
-			if .filename$ <> "" and fileReadable(.filename$)
+			if .filename$ <> ""
 				te.currentFileName$ = .filename$
 				call load_audio_file 'speakerID$' 'te.currentFileName$'
 				call autoSetPathType
@@ -1069,7 +1068,7 @@ procedure processMainPageNextItem .clickX .clickY .pressed$
 	call reset_analysis
 	speakerID$ = .newSpeakerID$
 	te.currentFileName$ = .newFileName$
-	if te.currentFileName$ <> "" and fileReadable(te.currentFileName$)
+	if te.currentFileName$ <> ""
 		call load_audio_file 'speakerID$' 'te.currentFileName$'
 	else
 		call set_new_speakerdata 'speakerID$'
@@ -1115,7 +1114,7 @@ procedure processMainPagePreviousItem .clickX .clickY .pressed$
 	call reset_analysis
 	speakerID$ = .newSpeakerID$
 	te.currentFileName$ = .newFileName$
-	if te.currentFileName$ <> "" and fileReadable(te.currentFileName$)
+	if te.currentFileName$ <> ""
 		call load_audio_file 'speakerID$' 'te.currentFileName$'
 	else
 		call set_new_speakerdata 'speakerID$'

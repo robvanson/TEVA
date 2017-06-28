@@ -193,10 +193,6 @@ procedure global_setup
 	call set_up_directories
 	# Get saved preferences
 	call read_preferences ""
-	# Set inital language
-	call set_language 'config.language$'
-	# Set Speaker color
-	call switch_speaker_next_button 'config.speakerSerial$'
 	
 	# Load local preferences if present
 	if fileReadable(config.rootDirectory$+config.localInitializationFile$)
@@ -205,6 +201,11 @@ procedure global_setup
 		call read_preferences 'homeDirectory$'/'config.localInitializationFile$'
 	endif
 	
+	# Set inital language
+	call set_language 'config.language$'
+	# Set Speaker color
+	call switch_speaker_next_button 'config.speakerSerial$'
+
 	# Expand relative file names
 	call expand_releative_paths
 	
@@ -444,6 +445,9 @@ procedure read_preferences .preferencesFile$
 endproc
 
 procedure write_preferences .preferencesFile$
+	if te.rememberPreferences <= 0
+		goto ENDOFWRITEPREFERENCES
+	endif
 	Create Table with column names... Preferences 0 Key Value
 	if index_regex(.preferencesFile$, "[a-zA-Z0-9]") <= 0
 		.preferencesFile$ = preferencesAppFile$
@@ -503,7 +507,7 @@ procedure write_preferences .preferencesFile$
 	select Table Preferences
 	Write to table file... '.preferencesFile$'
 	Remove
-
+	label ENDOFWRITEPREFERENCES
 endproc
 
 procedure get_nextSpeaker .speakerID$
@@ -854,7 +858,7 @@ procedure ReadSpeakerData .speakerData$
 endproc
 
 procedure load_audio_file .newSpeakerID$ .fileName$
-	if .fileName$ <> "" and fileReadable(.fileName$)
+	if .fileName$ <> ""
 		call getOpenFile '.fileName$'
 		Rename... Speech
 		recordedSound$ = selected$("Sound")

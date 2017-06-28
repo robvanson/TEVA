@@ -73,6 +73,7 @@ te.rating$ = ""
 te.useFullASTselection = 1
 te.useAnnotationInterface = 0
 te.defaultLanguage$ = "EN"
+te.rememberPreferences = 1
 config.recordingTaskFile$ = ""
 config.recordingTarget$ = ""
 config.recordingScreen$ = ""
@@ -156,6 +157,8 @@ endif
 # This is the actual code run at startup
 # 
 ##########################################################
+# This has to be initialized very early because of loading of automatic experiments
+mainPage.outputPraatObject$ = "Draw"
 
 # Load supporting scripts
 # Include tables in script format (always needed)
@@ -1957,7 +1960,9 @@ procedure printPageToPrinter
 endproc
 
 procedure getOpenFile .openDialogue$
-	if fileReadable(.openDialogue$)
+	# Check existence of (first) audiofile
+	.testFile$ = replace_regex$(.openDialogue$, "\{([^,]+)[^\}]*\}", "\1", 0)
+	if fileReadable(.testFile$)
 		.filename$ = .openDialogue$
 	elsif index_regex(.openDialogue$, "[^0-9]") <= 0
 		.filename$ = .openDialogue$
@@ -3113,12 +3118,58 @@ procedure extend_directory_path .root$ .path$
 	endwhile
 endproc
 
+# Read a list of audio files and concatenate them
+procedure readAudioList .filename$
+	.start = index(.filename$, "{")
+	.end = index(.filename$, "}")
+	.length = length(.filename$)
+	.prev$ = left$(.filename$, .start - 1)
+	.post$ = right$(.filename$, .length - .end)
+	.inside$ = mid$(.filename$, .start + 1, .end - .start - 1)
+	.n = 0
+	while length(.inside$) > 0
+		.stretch = index(.inside$, ",") - 1
+		if .stretch < 0
+			.stretch = length(.inside$)
+		endif
+		.mid$ = left$(.inside$, .stretch)
+		if length(.inside$) - .stretch - 1 > 0
+			.inside$ = right$(.inside$, length(.inside$) - .stretch - 1)
+		else
+			.inside$ = ""
+		endif
+		if index_regex(.prev$+.mid$+.post$, "(?i\.(wav|au|snd|aif[fc]?|flac|mp3))$") > 0 and fileReadable(.prev$+.mid$+.post$)
+			.n += 1
+			.audio[.n] = Read from file: .prev$+.mid$+.post$
+		endif
+	endwhile
+	selectObject: .audio[1]
+	for .i from 2 to .n
+		plusObject: .audio[.i]
+	endfor
+	.audioID = Concatenate
+	selectObject: .audio[1]
+	for .i from 2 to .n
+		plusObject: .audio[.i]
+	endfor
+	Remove
+	selectObject: .audioID
+endproc
 
 # Safely read an audio file
 procedure readAudio .filename$
 	.audioID = -1
-	if .filename$ <> "" and fileReadable(.filename$) and index_regex(.filename$, "(?i\.(wav|au|snd|aif[fc]?|flac|mp3))$") > 0
-		.audioID = nocheck Read from file... '.filename$'
+	# Check existence of (first) audiofile
+	.testFile$ = replace_regex$(.filename$, "\{([^,]+)[^\}]*\}", "\1", 0)
+
+	if .filename$ <> "" and fileReadable(.testFile$) and index_regex(.testFile$, "(?i\.(wav|au|snd|aif[fc]?|flac|mp3))$") > 0
+		# Do some magic, concatenate audio inside {} brackects
+		if index(.filename$, "{")
+			call readAudioList '.filename$'
+			.audioID = readAudioList.audioID
+		else
+			.audioID = nocheck Read from file... '.filename$'
+		endif
 		if .audioID = undefined or .audioID <= 0
 			.audioID = -1
 		else
