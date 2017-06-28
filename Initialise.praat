@@ -86,7 +86,7 @@ procedure global_initialization
 		config.speakerSerial$ = "None"
 	endif
 	config.rootDirectory$ = shellDirectory$
-	config.localInitializationFile$ = "TEVAinit.settings"
+	config.localInitializationFile$ = "TEVAinit.tsv"
 	config.saveAll = 0
 	config.autoSelect = 0
 	config.calcGNE = 0
@@ -188,25 +188,6 @@ procedure global_initialization
 
 endproc
 
-# Allow the initialization from a local file
-procedure local_setup .localSettings$
-	# Load local preferences if present
-	if fileReadable(.localSettings$)
-		.localSetup = Read from file: .localSettings$
-		.numPairs = Get number of rows
-		.keyName$ = Get column label: 1
-		.valueName$ = Get column label: 2
-		for .r to .numPairs
-			.key$ = Get value: .r, .keyName$
-			.value$ = Get value: .r, .valueName$
-			if variableExists(.key$)
-				'.key$' = .value$
-			endif
-		endfor
-	endif
-
-endproc
-
 procedure global_setup
 	# Set up directories if they do not exist already
 	call set_up_directories
@@ -217,17 +198,27 @@ procedure global_setup
 	# Set Speaker color
 	call switch_speaker_next_button 'config.speakerSerial$'
 	
+	# Load local preferences if present
+	if fileReadable(config.rootDirectory$+config.localInitializationFile$)
+		call read_preferences 'config.rootDirectory$''config.localInitializationFile$'
+	elsif fileReadable(homeDirectory$+"/"+config.localInitializationFile$)
+		call read_preferences 'homeDirectory$'/'config.localInitializationFile$'
+	endif
+	
+	# Expand relative file names
+	call expand_releative_paths
+	
+	# In case a SpeakerData table is given, load speakerdata, and set to first item
+	if config.speakerData$ <> ""
+		call ReadSpeakerData 'config.speakerData$'
+		# Set display to first item
+		call processMainPageNextItem 0 0 0
+	endif
+	
 	# Set up speaker data table, if needed
 	if config.speakerDataTable <= 0
 		config.speakerData$ = ""
 		config.speakerDataTable = Create Table with column names... SpeakerData 1 ID Text Description Audio AST StartTime EndTime
-	endif
-	
-	# Load local preferences if present
-	if fileReadable(config.rootDirectory$+config.localInitializationFile$)
-		call local_setup 'config.rootDirectory$''config.localInitializationFile$'
-	elsif fileReadable(homeDirectory$+"/"+config.localInitializationFile$)
-		call local_setup 'homeDirectory$'/'config.localInitializationFile$'
 	endif
 endproc
 
@@ -246,6 +237,27 @@ procedure switch_speaker_next_button .set_nextItem$
 		call unhide_button 'te.buttons$' !Speaker
 		call hide_button 'te.buttons$' NextItem
 		call hide_button 'te.buttons$' PreviousItem
+	endif
+endproc
+
+procedure expand_releative_paths
+	# config.speakerData$
+	if startsWith(config.speakerData$, "./")
+		config.speakerData$ = replace_regex$(config.speakerData$, "^\./", "'config.rootDirectory$'", 0)
+	elsif startsWith(config.speakerData$, "~/")
+		config.speakerData$ = replace_regex$(config.speakerData$, "^~/", "'homeDirectory$'/", 0)
+	endif
+	# config.sourceFile$
+	if startsWith(config.sourceFile$, "./")
+		config.sourceFile$ = replace_regex$(config.sourceFile$, "^\./", "'config.rootDirectory$'", 0)
+	elsif startsWith(config.sourceFile$, "~/")
+		config.sourceFile$ = replace_regex$(config.sourceFile$, "^~/", "'homeDirectory$'/", 0)
+	endif
+	# config.openLog$
+	if startsWith(config.openLog$, "./")
+		config.openLog$ = replace_regex$(config.openLog$, "^\./", "'config.rootDirectory$'", 0)
+	elsif startsWith(config.openLog$, "~/")
+		config.openLog$ = replace_regex$(config.openLog$, "^~/", "'homeDirectory$'/", 0)
 	endif
 endproc
 
