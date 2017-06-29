@@ -86,6 +86,10 @@ procedure global_initialization
 		config.speakerSerial$ = "None"
 	endif
 	config.rootDirectory$ = shellDirectory$
+	# In macs, use the Volume "TEVAexp"
+	if macintosh
+		config.rootDirectory$ = "/Volumes/TEVAexp"
+	endif
 	config.localInitializationFile$ = "TEVAinit.tsv"
 	config.saveAll = 0
 	config.autoSelect = 0
