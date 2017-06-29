@@ -85,11 +85,6 @@ procedure global_initialization
 	else
 		config.speakerSerial$ = "None"
 	endif
-	config.rootDirectory$ = shellDirectory$
-	# In macs, use the Volume "TEVAexp"
-	if macintosh
-		config.rootDirectory$ = "/Volumes/TEVAexp/"
-	endif
 	config.localInitializationFile$ = "TEVAinit.tsv"
 	config.saveAll = 0
 	config.autoSelect = 0
@@ -105,12 +100,21 @@ procedure global_initialization
 	config.source$ = "Original"
 	config.sourceFile$ = ""
 	# config.useCache
+	# Use a hidden cach directory to store results of lengthy analysis
 	# config.useCache > 0 : Enforce a cache
 	# config.useCache = 0 : Use cache if present
 	# config.useCache < 0 : Never use a cache
 	config.useCache = 0
 	localCacheDir$ = ".tevaCache"
-
+	
+	# root directory for automatic runs (experiments)
+	# the root directory always ends with a /
+	config.rootDirectory$ = shellDirectory$
+	# In macs, use the Volume "TEVAexp"
+	if macintosh
+		config.rootDirectory$ = "/Volumes/TEVAexp/"
+	endif
+	
 	pathologicalType = 0
 	pathologicalTypeText$ = "- Pathological type = 'pathologicalType'"
 	predictedPathType = 0
@@ -412,26 +416,29 @@ procedure read_preferences .preferencesFile$
 	
 			for .row to .numPrefKeys
 				.variableName$ = Get value... '.row' Key
-				if variableExists(.variableName$)
-					.variableValue = Get value... '.row' Value
-					if .variableValue <> undefined
-						'.variableName$' = '.variableValue'
-					endif
-				elsif variableExists(.variableName$+"$")
-					.variableValue$ = Get value... '.row' Value
-					# Double check language!!!!
-					if .variableName$ = "config.language"
-						.buttonsTable$ = te.buttons$
-						if .buttonsTable$ = ""
-							.buttonsTable$ = buttonsTableName$
+				# Check names of variables
+				if index_regex(.variableName$, "^(te|config|mainPage)\.")
+					if variableExists(.variableName$)
+						.variableValue = Get value... '.row' Value
+						if .variableValue <> undefined
+							'.variableName$' = '.variableValue'
 						endif
-						call checkTable '.buttonsTable$'_'.variableValue$'
-						if not checkTable.available
-							.variableValue$ = te.defaultLanguage$
+					elsif variableExists(.variableName$+"$")
+						.variableValue$ = Get value... '.row' Value
+						# Double check language!!!!
+						if .variableName$ = "config.language"
+							.buttonsTable$ = te.buttons$
+							if .buttonsTable$ = ""
+								.buttonsTable$ = buttonsTableName$
+							endif
+							call checkTable '.buttonsTable$'_'.variableValue$'
+							if not checkTable.available
+								.variableValue$ = te.defaultLanguage$
+							endif
 						endif
+						.variableName$ = .variableName$+"$"
+						'.variableName$' = "'.variableValue$'"
 					endif
-					.variableName$ = .variableName$+"$"
-					'.variableName$' = "'.variableValue$'"
 				endif
 			endfor
 			select Table '.preferenceTable$'

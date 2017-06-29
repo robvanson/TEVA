@@ -3138,9 +3138,24 @@ procedure readAudioList .filename$
 		else
 			.inside$ = ""
 		endif
+		# Read audio file
 		if index_regex(.prev$+.mid$+.post$, "(?i\.(wav|au|snd|aif[fc]?|flac|mp3))$") > 0 and fileReadable(.prev$+.mid$+.post$)
 			.n += 1
 			.audio[.n] = Read from file: .prev$+.mid$+.post$
+			# Check result and clean up if wrong
+			if .audio[.n] = undefined or .audio[.n] <= 0
+				.audio[.n] = -1
+				.n -= 1
+			else
+				.fullName$ = selected$ ()
+				.type$ = extractWord$(.fullName$, "")
+				if .type$ <> "Sound"
+					Remove
+					.audio[.n] = -1
+					.n -= 1
+				endif
+			endif
+		
 		endif
 	endwhile
 	selectObject: .audio[1]
