@@ -199,8 +199,8 @@ procedure global_setup
 	call read_preferences ""
 	
 	# Load local preferences if present
-	if fileReadable(config.rootDirectory$+config.localInitializationFile$)
-		call read_preferences 'config.rootDirectory$''config.localInitializationFile$'
+	if fileReadable(config.rootDirectory$+"/"+config.localInitializationFile$)
+		call read_preferences 'config.rootDirectory$'/'config.localInitializationFile$'
 	elsif fileReadable(homeDirectory$+"/"+config.localInitializationFile$)
 		call read_preferences 'homeDirectory$'/'config.localInitializationFile$'
 	endif
