@@ -88,7 +88,7 @@ procedure global_initialization
 	config.rootDirectory$ = shellDirectory$
 	# In macs, use the Volume "TEVAexp"
 	if macintosh
-		config.rootDirectory$ = "/Volumes/TEVAexp"
+		config.rootDirectory$ = "/Volumes/TEVAexp/"
 	endif
 	config.localInitializationFile$ = "TEVAinit.tsv"
 	config.saveAll = 0
@@ -199,8 +199,8 @@ procedure global_setup
 	call read_preferences ""
 	
 	# Load local preferences if present
-	if fileReadable(config.rootDirectory$+"/"+config.localInitializationFile$)
-		call read_preferences 'config.rootDirectory$'/'config.localInitializationFile$'
+	if fileReadable(config.rootDirectory$+config.localInitializationFile$)
+		call read_preferences 'config.rootDirectory$''config.localInitializationFile$'
 	elsif fileReadable(homeDirectory$+"/"+config.localInitializationFile$)
 		call read_preferences 'homeDirectory$'/'config.localInitializationFile$'
 	endif
