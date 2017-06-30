@@ -107,6 +107,7 @@ procedure global_initialization
 	config.useCache = 0
 	localCacheDir$ = ".tevaCache"
 	
+	#
 	# root directory for automatic runs (experiments)
 	# the root directory always ends with a /
 	config.rootDirectory$ = shellDirectory$
@@ -172,7 +173,6 @@ procedure global_initialization
 	noDrawingSelection = 0
 	selectionIsDrawn = 0
 
-	
 	globaltablelists$ = ""
 	if unix
 		globaltablelists$ = "/etc/praat/'demoAppName$'/Data"	
@@ -253,24 +253,11 @@ endproc
 
 # In a rating experiment, all unnecessary buttons are removed
 procedure hide_buttons_for_rating_experiment
-		call hide_button 'te.buttons$' Record
-		call hide_button 'te.buttons$' Config
-		call hide_button 'te.buttons$' Help
-		call hide_button 'te.buttons$' Save
-		call hide_button 'te.buttons$' Draw_Sound
-		call hide_button 'te.buttons$' Draw_Pitch
-		call hide_button 'te.buttons$' Draw_Spectrogram
-		call hide_button 'te.buttons$' Draw_Ltas
-		call hide_button 'te.buttons$' Draw_Intensity
-		call hide_button 'te.buttons$' Draw_Harmonicity
-		call hide_button 'te.buttons$' Draw_Rating
-		call hide_button 'te.buttons$' File
-		call hide_button 'te.buttons$' Select
-		call hide_button 'te.buttons$' ToSelection
-		call hide_button 'te.buttons$' ZoomOut
-		call hide_button 'te.buttons$' ZoomIn
-		call hide_button 'te.buttons$' Previous
-		call hide_button 'te.buttons$' Next
+		call hide_all_buttons 'te.buttons$'
+		call unhide_button 'te.buttons$' Play
+		call unhide_button 'te.buttons$' Quit
+		call unhide_button 'te.buttons$' Refresh
+		call unhide_button 'te.buttons$' Speaker
 endproc
 
 procedure expand_releative_paths

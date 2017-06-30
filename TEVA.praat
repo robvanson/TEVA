@@ -987,6 +987,18 @@ procedure unhide_button .table$ .label$
 	endif
 endproc
 
+procedure hide_all_buttons .table$
+	select Table '.table$'
+	.numRows = Get number of rows
+	for .row to .numRows
+		select Table '.table$'
+		.label$ = Get value: .row, "Label"
+		if not startsWith(.label$, "!")
+			call hide_button '.table$' '.label$'
+		endif
+	endfor
+endproc
+
 # Search row in table on label
 procedure findKey .table$ .label$
 	.row = 0
