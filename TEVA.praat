@@ -209,7 +209,7 @@ while demoWaitForInput()
 	endif
 	
 	# You cannot select a text field
-	if startsWith(.label$, "$")
+	if startsWith(.label$, "$") or startsWith(.label$, "!")
 		.label$ = ""
 	endif
 	
@@ -364,6 +364,12 @@ procedure Draw_button_internal .erase_button_area .table$ .label$ .push
     select Table '.table$'
     .row = Search column... Label '.label$'
 	if .row < 1
+		if not startsWith(.label$, "!")
+			.rowHidden = Search column... Label !'.label$'
+			if .rowHidden > 0
+				goto NOBUTTON
+			endif
+		endif
 		call emergency_table_exit Button Table '.table$' does not have a row with label '.label$'
 	endif
 	
@@ -812,7 +818,7 @@ procedure set_language .lang$
     te.buttons$ = selected$("Table")
     call relative2absolutePosition 'te.buttons$'
 	if te.ratingExperiment
-		call hide_buttons_for_rating
+		call hide_buttons_for_rating_experiment
 	endif
     # Load configuration table
     call loadLanguageTable 'configTableName$' 'config.language$'

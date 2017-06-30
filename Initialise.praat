@@ -108,14 +108,14 @@ procedure global_initialization
 	localCacheDir$ = ".tevaCache"
 	
 	# root directory for automatic runs (experiments)
-	# NOT YET READY!!!
-	te.ratingExperiment = 0
 	# the root directory always ends with a /
 	config.rootDirectory$ = shellDirectory$
 	# In macs, use the Volume "TEVAexp"
 	if macintosh
 		config.rootDirectory$ = "/Volumes/TEVAexp/"
 	endif
+	# Set to 1 to clean GUI interface
+	te.ratingExperiment = 0
 	
 	pathologicalType = 0
 	pathologicalTypeText$ = "- Pathological type = 'pathologicalType'"
@@ -252,9 +252,10 @@ procedure switch_speaker_next_button .set_nextItem$
 endproc
 
 # In a rating experiment, all unnecessary buttons are removed
-procedure hide_buttons_for_rating
+procedure hide_buttons_for_rating_experiment
 		call hide_button 'te.buttons$' Record
 		call hide_button 'te.buttons$' Config
+		call hide_button 'te.buttons$' Help
 		call hide_button 'te.buttons$' Save
 		call hide_button 'te.buttons$' Draw_Sound
 		call hide_button 'te.buttons$' Draw_Pitch
