@@ -1,0 +1,34 @@
+Creating a listening experiment
+
+First, format an replacable storage medium, e.g., an USB thumbdrive and name it "TEVAexp".
+
+On this replacable drive, create a file called "TEVAinit.tsv which contains the following lines with tab separated entries:
+
+Key	Value
+config.speakerData	./Stimuli.Table
+config.language	NL
+config.source	Original
+config.speakerSerial	Forw
+config.showBackground	0
+config.muteOutput	0
+config.ratingForm	Vowel
+config.vasScaleTicks	0
+mainPage.draw	Rating
+te.rememberPreferences	0
+te.ratingExperiment	1
+
+You can change the config.language from "NL" to any other supported language (EN, DE, JA). You can select a Rating form other than "Vowel" (Text, INFVo, GRBAS).
+
+Create a file called "Stimuli.tsv" like this (with tab separated columns):
+ID	Text	Description	Audio
+A	Sentence	S 1	Stimuli/{A_S1_1,beep,A_S1_2}.wav
+B	Sentence	S 1	Stimuli/{B_S1_2,beep,B_S1_1}.wav
+C	Sentence	S 1	Stimuli/{C_S1_1,beep,C_S1_2}.wav
+
+The four columns contain, respectively, the ID code of the stimulus, the text that might be displayed, a description of the stimulus, and a path to the audio, starting at the map where the Stimuli.tsv file is stored. The content between the {}-brackets is split on ","-commas and and a file path is constructed with each of them. So, "Stimuli/{A_S1_1,beep,A_S1_2}.wav" in dicates three files:
+Stimuli/A_S1_1.wav
+Stimuli/beep.wav
+Stimuli/A_S1_2.wav
+These files are loaded and concatenated. The final result is a single audio file.
+
+
