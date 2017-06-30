@@ -108,6 +108,8 @@ procedure global_initialization
 	localCacheDir$ = ".tevaCache"
 	
 	# root directory for automatic runs (experiments)
+	# NOT YET READY!!!
+	te.ratingExperiment = 0
 	# the root directory always ends with a /
 	config.rootDirectory$ = shellDirectory$
 	# In macs, use the Volume "TEVAexp"
@@ -247,6 +249,27 @@ procedure switch_speaker_next_button .set_nextItem$
 		call hide_button 'te.buttons$' NextItem
 		call hide_button 'te.buttons$' PreviousItem
 	endif
+endproc
+
+# In a rating experiment, all unnecessary buttons are removed
+procedure hide_buttons_for_rating
+		call hide_button 'te.buttons$' Record
+		call hide_button 'te.buttons$' Config
+		call hide_button 'te.buttons$' Save
+		call hide_button 'te.buttons$' Draw_Sound
+		call hide_button 'te.buttons$' Draw_Pitch
+		call hide_button 'te.buttons$' Draw_Spectrogram
+		call hide_button 'te.buttons$' Draw_Ltas
+		call hide_button 'te.buttons$' Draw_Intensity
+		call hide_button 'te.buttons$' Draw_Harmonicity
+		call hide_button 'te.buttons$' Draw_Rating
+		call hide_button 'te.buttons$' File
+		call hide_button 'te.buttons$' Select
+		call hide_button 'te.buttons$' ToSelection
+		call hide_button 'te.buttons$' ZoomOut
+		call hide_button 'te.buttons$' ZoomIn
+		call hide_button 'te.buttons$' Previous
+		call hide_button 'te.buttons$' Next
 endproc
 
 procedure expand_releative_paths

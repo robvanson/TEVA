@@ -811,6 +811,9 @@ procedure set_language .lang$
     select loadLanguageTable.tableID
     te.buttons$ = selected$("Table")
     call relative2absolutePosition 'te.buttons$'
+	if te.ratingExperiment
+		call hide_buttons_for_rating
+	endif
     # Load configuration table
     call loadLanguageTable 'configTableName$' 'config.language$'
     select loadLanguageTable.tableID
