@@ -210,7 +210,10 @@ while demoWaitForInput()
 	
 	# You cannot select a text field
 	if startsWith(.label$, "$") or startsWith(.label$, "!")
-		.label$ = ""
+		# All caps labels are "unhideable"
+		if index_regex(.label$, "[a-z]") > 0
+			.label$ = ""
+		endif
 	endif
 	
 	# Do things

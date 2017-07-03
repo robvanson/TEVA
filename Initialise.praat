@@ -462,7 +462,9 @@ procedure read_preferences .preferencesFile$
 			Remove
 			te.ratingTable = -1
 		endif
-
+		
+		# Handle relative paths
+		call expand_releative_paths
 	endif
 endproc
 
@@ -753,9 +755,10 @@ procedure ReadSpeakerData .speakerData$
 		# New SpeakerData, forget old backup
 		config.speakerDataBackup$ = ""
 		config.createBackup = 1
-		
 		# Set local preferences
 		.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
+		# After loading speaker data, this becomes the root directory.
+		config.rootDirectory$ = .dataDir$+"/"
 		call load_local_preferences '.dataDir$'
 		# Find the table
 		if index_regex(.speakerData$, "\.(?itsv|table)")
@@ -826,6 +829,8 @@ procedure ReadSpeakerData .speakerData$
 			endif
 			# Set local preferences
 			.dataDir$ = replace_regex$(config.speakerData$, "(^|[/:\\])[^/:\\]+$", "", 0)
+			# After loading speaker data, this becomes the root directory.
+			config.rootDirectory$ = .dataDir$+"/"
 			call load_local_preferences '.dataDir$'
 		else
 			# Reset SpeakerData table
