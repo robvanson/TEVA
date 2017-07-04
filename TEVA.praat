@@ -73,7 +73,8 @@ te.rating$ = ""
 te.useFullASTselection = 1
 te.useAnnotationInterface = 0
 te.defaultLanguage$ = "EN"
-te.rememberPreferences = 1
+config.rememberPreferences = 1
+config.randomizeSpeakerData = 0
 config.recordingTaskFile$ = ""
 config.recordingTarget$ = ""
 config.recordingScreen$ = ""
@@ -820,7 +821,7 @@ procedure set_language .lang$
     select loadLanguageTable.tableID
     te.buttons$ = selected$("Table")
     call relative2absolutePosition 'te.buttons$'
-	if te.ratingExperiment
+	if config.ratingExperiment
 		call hide_buttons_for_rating_experiment
 	endif
     # Load configuration table

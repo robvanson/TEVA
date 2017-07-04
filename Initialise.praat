@@ -116,7 +116,8 @@ procedure global_initialization
 		config.rootDirectory$ = "/Volumes/TEVAexp/"
 	endif
 	# Set to 1 to clean GUI interface
-	te.ratingExperiment = 0
+	config.ratingExperiment = 0
+	config.randomizeSpeakerData = 0
 	
 	pathologicalType = 0
 	pathologicalTypeText$ = "- Pathological type = 'pathologicalType'"
@@ -428,7 +429,7 @@ procedure read_preferences .preferencesFile$
 			for .row to .numPrefKeys
 				.variableName$ = Get value... '.row' Key
 				# Check names of variables
-				if index_regex(.variableName$, "^(te|config|mainPage)\.")
+				if index_regex(.variableName$, "^(config|mainPage)\.")
 					if variableExists(.variableName$)
 						.variableValue = Get value... '.row' Value
 						if .variableValue <> undefined
@@ -469,7 +470,7 @@ procedure read_preferences .preferencesFile$
 endproc
 
 procedure write_preferences .preferencesFile$
-	if te.rememberPreferences <= 0
+	if config.rememberPreferences <= 0
 		goto ENDOFWRITEPREFERENCES
 	endif
 	Create Table with column names... Preferences 0 Key Value
@@ -551,6 +552,13 @@ procedure get_nextSpeaker .speakerID$
 			.row = 1
 			.reset = 1
 		endif
+						
+		# Randomize rows if necessary
+		if .reset > 0 and config.randomizeSpeakerData
+			select config.speakerDataTable
+			Randomize rows
+		endif
+
 		.speakerID$ = Get value... '.row' ID
 	endif
 	call  get_speakerInfo '.speakerID$'
@@ -579,6 +587,13 @@ procedure get_previousSpeaker .speakerID$
 			.row = 1
 			.reset = 1
 		endif
+		
+		# Randomize rows if necessary
+		if .reset > 0 and config.randomizeSpeakerData
+			select config.speakerDataTable
+			Randomize rows
+		endif
+
 		.speakerID$ = Get value... '.row' ID
 	endif
 	call  get_speakerInfo '.speakerID$'
@@ -832,6 +847,12 @@ procedure ReadSpeakerData .speakerData$
 			# After loading speaker data, this becomes the root directory.
 			config.rootDirectory$ = .dataDir$+"/"
 			call load_local_preferences '.dataDir$'
+					
+			# Randomize rows if necessary
+			if config.randomizeSpeakerData
+				select config.speakerDataTable
+				Randomize rows
+			endif
 		else
 			# Reset SpeakerData table
 			call initializeSpeakerData
@@ -969,6 +990,11 @@ procedure WriteSpeakerData
 			endif
 		endif
 		select config.speakerDataTable
+		# Sort rows if necessary
+		if configSpeakerDataTable > 0 and config.randomizeSpeakerData
+			select config.speakerDataTable
+			Sort rows: "ID"
+		endif
 		Save as tab-separated file... 'config.speakerData$'
 	endif
 endproc
