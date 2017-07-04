@@ -1,0 +1,10 @@
+Label	Text	Key	Helptext
+!Author	Author	!	R.J.J.H. van Son
+!Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
+!License	License	!	GNU GPL version 2 or later
+!CANVAS	Display	¤	Display area
+$Scales	Kies een positie op de lijn tussen links (A) en rechts (B) welk fragment het best past bij de beschrijving	#	Visual Analogue rating Scales
+>Healthy	Welk fragment lijkt het meest op normale spraak?	A;B	Een oordeel over de afstand tot normale spraak.
+>Naturalness	Welk fragment lijkt het meest op "normale" TE spraak?	 A;B	Is een oordeel over de afstand tot TE spraak
+>Quality	Welke stem klinkt het best? (kwaliteit)	A;B	Voice: overall voice quality
+Help	Schaal Hulp	#	Klik op de schaal waar u informatie over wilt, "Help" om verder te gaan

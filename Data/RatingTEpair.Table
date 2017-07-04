@@ -1,0 +1,10 @@
+Label	LeftX	RightX	LowY	HighY	Color	Draw	Link	Value
+!Author	0	0	0	0	Black	DrawNull	-	
+!Copyright	0	0	0	0	Black	DrawNull	-	
+!License	0	0	0	0	Black	DrawNull	-	
+!CANVAS	5	85	25	95	Black	DrawNull	-	
+$Scales	5	80	90	+5	Black	DrawNull	-	
+>Healthy	5	80	76	+4	Black	DrawNull	-	
+>Naturalness	5	80	58	+4	Black	DrawNull	-	
+>Quality	5	80	40	+4	Black	DrawNull	-	
+Help	70	85	25	+5	Black	DrawNull	-	

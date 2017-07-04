@@ -64,7 +64,8 @@ RatingForm_Vowel	70	+15	54	+5	Black	DrawNull
 RatingForm_Text	70	+15	48	+5	Black	DrawNull
 RatingForm_INFVo	70	+15	42	+5	Black	DrawNull
 RatingForm_GRBAS	70	+15	36	+5	Black	DrawNull
-VasScaleTicks	70	+15	29	+5	{0.65,0.60,0.45}	DrawNull
+RatingForm_TEpair	70	+15	30	+5	Black	DrawNull
+VasScaleTicks	70	+15	23	+5	{0.65,0.60,0.45}	DrawNull
 Instruction	90	+10	65	+10	Black	DrawInstruction
 Manual	90	+10	52.5	+10	Black	DrawManual
 Credits	90	+10	40	+10	Black	DrawCredits
