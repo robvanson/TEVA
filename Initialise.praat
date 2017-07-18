@@ -225,6 +225,25 @@ procedure global_setup
 		call ReadSpeakerData 'config.speakerData$'
 		# Set display to first item
 		call processMainPageNextItem 0 0 0
+		# Search first empty row
+		if config.speakerDataTable > 0 and speakerID$ <> "" and speakerID$ <> "0"
+			selectObject: config.speakerDataTable
+			.numColumns = Get number of columns
+			.numRows = Get number of rows
+			.first = 1
+			if .numColumns > 4
+				for .c from 5 to .numColumns
+					.cLabel$ = Get column label: .c
+					.r = Search column: .cLabel$, "?"
+					if .r > .first
+						.first = .r
+					endif
+				endfor
+			endif
+			if .first < .numRows
+				speakerID$ = Get value: .first, "ID"
+			endif
+		endif
 	endif
 	
 	# Set up speaker data table, if needed
