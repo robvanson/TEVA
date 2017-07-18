@@ -991,7 +991,7 @@ procedure WriteSpeakerData
 		endif
 		select config.speakerDataTable
 		# Sort rows if necessary
-		if config.SpeakerDataTable > 0 and config.randomizeSpeakerData
+		if config.speakerDataTable > 0 and config.randomizeSpeakerData
 			select config.speakerDataTable
 			Sort rows: "ID"
 		endif
