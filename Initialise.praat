@@ -111,9 +111,9 @@ procedure global_initialization
 	# root directory for automatic runs (experiments)
 	# the root directory always ends with a /
 	config.rootDirectory$ = shellDirectory$
-	# In macs, use the Volume "TEVAexp"
+	# On macs, use the Volume "TEVAEXP" (case sensitive)
 	if macintosh
-		config.rootDirectory$ = "/Volumes/TEVAexp/"
+		config.rootDirectory$ = "/Volumes/TEVAEXP/"
 	endif
 	# Set to 1 to clean GUI interface
 	config.ratingExperiment = 0
