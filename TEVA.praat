@@ -3166,9 +3166,9 @@ procedure readAudioList .filename$
 		# Read audio file
 		if index_regex(.prev$+.mid$+.post$, "(?i\.(wav|au|snd|aif[fc]?|flac|mp3))$") > 0 and fileReadable(.prev$+.mid$+.post$)
 			.n += 1
-			.audio[.n] = Read from file: .prev$+.mid$+.post$
+			.tmp = Read from file: .prev$+.mid$+.post$
 			# Check result and clean up if wrong
-			if .audio[.n] = undefined or .audio[.n] <= 0
+			if .tmp = undefined or .tmp <= 0
 				.audio[.n] = -1
 				.n -= 1
 			else
@@ -3178,6 +3178,11 @@ procedure readAudioList .filename$
 					Remove
 					.audio[.n] = -1
 					.n -= 1
+				else
+					selectObject: .tmp
+					.audio[.n] = Resample: te.defaultSampleFreq, 50
+					selectObject: .tmp
+					Remove
 				endif
 			endif
 		
