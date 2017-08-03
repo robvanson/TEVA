@@ -4,7 +4,7 @@ Label	Text	Key	Helptext
 !License	License	!	GNU GPL version 2 or later
 !CANVAS	Display	¤	Display area
 $Scales	Chose a grade on the line between left (fragment A) and right (fragment B) which is closest to the description (center is "the same")	#	Visual Analogue rating Scales
->Roughness	Roughness: which fragment sounds more "Rough" and by how much (center is "equally")	A;B	Is a judgement of the roughness of a TE speaker
->Tightness	Tightness: which fragment sounds more "Tight" and by how much (center is "equally")	A;B	Is a judgement of tightness of a TE speaker
+!>Roughness	Roughness: which fragment sounds more "Rough" and by how much (center is "equally")	A;B	Is a judgement of the roughness of a TE speaker
+!>Tightness	Tightness: which fragment sounds more "Tight" and by how much (center is "equally")	A;B	Is a judgement of tightness of a TE speaker
 >Naturalness	Which fragment sounds most like "real" TE speech and by how much (center is "equally")	A;B	TE-ness of voice
 Help	Scale Help	#	Press the scale you want information on, "Help" to continue
