@@ -3,8 +3,8 @@ Label	Text	Key	Helptext
 !Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
 !License	License	!	GNU GPL version 2 or later
 !CANVAS	Display	¤	Display area
-$Scales	Kies een positie op de lijn tussen links (A) en rechts (B) welk fragment het best past bij de beschrijving (midden is "gelijk")	#	Visual Analogue rating Scales
+$Scales	Kies een positie op de lijn tussen het eerste fragment (links, A) en het tweede fragment (rechts, B) het midden is "gelijk"	#	Visual Analogue rating Scales
 !>Roughness	Roughness: which fragment sounds more "Rough" and by how much (center is "equally")	A;B	Is a judgement of the roughness of a TE speaker
 !>Tightness	Tightness: which fragment sounds more "Tight" and by how much (center is "equally")	A;B	Is a judgement of tightness of a TE speaker
->Naturalness	Welk fragment klinkt het meest als "echte" TE spraak, en hoeveel meer: aan de uiteinden "heel erg veel meer"	A;B	TE-ness of voice
+>Naturalness	Welk fragment klinkt het beste als "echte" TE spraak, en hoeveel beter: aan de uiteinden "heel erg veel beter"	A;B	TE-ness of voice
 Help	Schaal Hulp	#	Klik op de schaal waar u informatie over wilt, "Help" om verder te gaan
