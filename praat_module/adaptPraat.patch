@@ -2,7 +2,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/melder_audio.cpp 
 --- praat_sources/sys/melder_audio.cpp	2014-12-29 08:24:04.000000000 +0100
 +++ demo_praat_sources/sys/melder_audio.cpp	2015-05-12 09:48:06.000000000 +0200
 # Allow playback in the background
-@@ -1019,10 +1019,14 @@ void MelderAudio_play16 (int16_t *buffer
+@@ -1016,10 +1016,14 @@ void MelderAudio_play16 (int16_t *buffer
  	my numberOfChannels = numberOfChannels;
  	my callback = playCallback;
  	my closure = playClosure;
@@ -10,9 +10,9 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/melder_audio.cpp 
 +		my asynchronicity = kMelder_asynchronicityLevel_ASYNCHRONOUS;
 +	#else
  	my asynchronicity =
- 		Melder_batch ? kMelder_asynchronicityLevel_SYNCHRONOUS :
- 		(Melder_backgrounding && ! Melder_asynchronous) ? kMelder_asynchronicityLevel_INTERRUPTABLE :
- 		kMelder_asynchronicityLevel_ASYNCHRONOUS;
+ 		Melder_batch ? kMelder_asynchronicityLevel::SYNCHRONOUS :
+ 		(Melder_backgrounding && ! Melder_asynchronous) ? kMelder_asynchronicityLevel::INTERRUPTABLE :
+ 		kMelder_asynchronicityLevel::ASYNCHRONOUS;
 +	#endif
  	if (my asynchronicity > preferences. maximumAsynchronicity)
  		my asynchronicity = preferences. maximumAsynchronicity;
@@ -216,26 +216,26 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_Sound.cpp d
 --- praat_sources/fon/praat_Sound.cpp	2017-06-08 11:26:20.000000000 +0200
 +++ demo_praat_sources/fon/praat_Sound.cpp	2017-06-08 12:22:45.000000000 +0200
 # View and edit Long/Sounds in a DemoApp (when Melder_back = True)
-@@ -157,7 +157,9 @@ DO
+@@ -156,7 +156,9 @@ DO
  }
  
  DIRECT (WINDOW_LongSound_view) {
 +#ifndef DEMOAPP
  	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot view or edit a LongSound from batch.");
 +#endif
- 	LOOP {
- 		iam (LongSound);
+ 	FIND_ONE_WITH_IOBJECT (LongSound)
  		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
-@@ -671,7 +673,9 @@ static void cb_SoundEditor_publication (
+ 		praat_installEditor (editor.get(), IOBJECT);
+@@ -659,7 +661,9 @@ static void cb_SoundEditor_publication (
  	}
  }
  DIRECT (WINDOW_Sound_viewAndEdit) {
 +#ifndef DEMOAPP
  	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot view or edit a Sound from batch.");
 +#endif
- 	LOOP {
- 		iam (Sound);
+ 	FIND_ONE_WITH_IOBJECT (Sound)
  		autoSoundEditor editor = SoundEditor_create (ID_AND_FULL_NAME, me);
+ 		Editor_setPublicationCallback (editor.get(), cb_SoundEditor_publication);
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Ui.cpp demo_praat_sources/sys/Ui.cpp
 --- praat_sources/sys/Ui.cpp	2014-01-27 09:02:44.000000000 +0100
 +++ demo_praat_sources/sys/Ui.cpp	2014-03-27 12:22:58.000000000 +0100
@@ -304,15 +304,15 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/UiPause.cpp demo_
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/dwtools/Intensity_extensions.cpp demo_praat_sources/dwtools/Intensity_extensions.cpp
 --- praat_sources/dwtools/Intensity_extensions.cpp	2011-09-20 11:40:46.000000000 +0200
 +++ demo_praat_sources/dwtools/Intensity_extensions.cpp	2011-09-28 11:45:46.000000000 +0200
-@@ -65,9 +65,9 @@ TextGrid Intensity_to_TextGrid_detectSil
- 		Vector_getMinimumAndX (me, 0, 0, 1, NUM_PEAK_INTERPOLATE_PARABOLIC, &intensity_min_db, &xOfMinimum);
+@@ -69,9 +69,9 @@ TextGrid Intensity_to_TextGrid_detectSil
+ 		Vector_getMinimumAndX (me, 0.0, 0.0, 1, NUM_PEAK_INTERPOLATE_PARABOLIC, & intensity_min_db, & xOfMinimum);
  		double intensity_dbRange = intensity_max_db - intensity_min_db;
  
--		if (intensity_dbRange < 10) {
--			Melder_warning (U"The loudest and softest part in your sound only differ by ", intensity_dbRange, U" dB.");
+-		if (intensity_dbRange < 10.0) {
+-			Melder_warning (U"The loudest and softest part in your sound differ by only ", intensity_dbRange, U" dB.");
 -		}
-+		/*if (intensity_dbRange < 10) {
-+			Melder_warning (U"The loudest and softest part in your sound only differ by ", intensity_dbRange, U" dB.");
++		/*if (intensity_dbRange < 10.0) {
++			Melder_warning (U"The loudest and softest part in your sound differ by only ", intensity_dbRange, U" dB.");
 +		}*/
  		double intensityThreshold = intensity_max_db - fabs (silenceThreshold_dB);
  
@@ -372,42 +372,42 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/stat/praat_Stat.cpp d
 --- praat_sources/stat/praat_Stat.cpp	2017-06-08 11:26:20.000000000 +0200
 +++ demo_praat_sources/stat/praat_Stat.cpp	2017-06-09 15:14:12.000000000 +0200
 # Allow to view tables when in a Demo app
-@@ -291,7 +291,9 @@ DIRECT (HELP_StatisticsTutorial) {
+@@ -290,7 +290,9 @@ DIRECT (HELP_StatisticsTutorial) {
  // MARK: View & Edit
  
  DIRECT (WINDOW_Table_viewAndEdit) {
 +#ifndef DEMOAPP
  	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot edit a Table from batch.");
 +#endif
- 	LOOP {
- 		iam_LOOP (Table);
+ 	FIND_ONE_WITH_IOBJECT (Table)
  		autoTableEditor editor = TableEditor_create (ID_AND_FULL_NAME, me);
+ 		praat_installEditor (editor.get(), IOBJECT);
 --- praat_sources/stat/praat_Stat.cpp	2011-10-01 13:32:45.000000000 +0200
 +++ demo_praat_sources/stat/praat_Stat.cpp	2011-11-18 08:55:32.000000000 +0100
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/fon/praat_TextGrid_init.cpp demo_praat_sources/fon/praat_TextGrid_init.cpp
 --- praat_sources/fon/praat_TextGrid_init.cpp	2017-06-08 11:26:20.000000000 +0200
 +++ demo_praat_sources/fon/praat_TextGrid_init.cpp	2017-06-09 15:49:13.000000000 +0200
 # View and edit TextGrids in a DemoApp (when Melder_back = True)
-@@ -703,7 +703,9 @@ static void cb_TextGridEditor_publicatio
+@@ -700,7 +700,9 @@ static void cb_TextGridEditor_publicatio
  	}
  }
  DIRECT (WINDOW_TextGrid_viewAndEdit) {
 +#ifndef DEMOAPP
  	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot view or edit a TextGrid from batch.");
 +#endif
- 	Sound sound = nullptr;
- 	LOOP {
- 		if (CLASS == classSound) sound = (Sound) OBJECT;   // may stay null
-@@ -721,7 +723,9 @@ FORM (WINDOW_TextGrid_viewAndEditWithCal
- 	SENTENCE4 (callbackText, U"Callback text", U"r1")
+ 	FIND_TWO_WITH_IOBJECT (TextGrid, Sound)   // Sound may be NULL
+ 		autoTextGridEditor editor = TextGridEditor_create (ID_AND_FULL_NAME, me, you, true, nullptr, nullptr);
+ 		Editor_setPublicationCallback (editor.get(), cb_TextGridEditor_publication);
+@@ -713,7 +715,9 @@ FORM (WINDOW_TextGrid_viewAndEditWithCal
+ 	SENTENCE (callbackText, U"Callback text", U"r1")
  	OK
  DO
 +#ifndef DEMOAPP
  	if (theCurrentPraatApplication -> batch) Melder_throw (U"Cannot view or edit a TextGrid from batch.");
 +#endif
- 	Sound sound = nullptr;
- 	LOOP {
- 		if (CLASS == classSound) sound = (Sound) OBJECT;   // may stay null
+ 	FIND_TWO_WITH_IOBJECT (TextGrid, Sound)   // Sound may be NULL
+ 		autoTextGridEditor editor = TextGridEditor_create (ID_AND_FULL_NAME, me, you, true, nullptr, Melder_peek32to8 (callbackText));
+ 		Editor_setPublicationCallback (editor.get(), cb_TextGridEditor_publication);
 @@ -736,7 +740,9 @@ DO
  END }
  
