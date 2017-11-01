@@ -7,7 +7,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/melder_audio.cpp 
  	my callback = playCallback;
  	my closure = playClosure;
 +	#ifdef DEMOAPP
-+		my asynchronicity = kMelder_asynchronicityLevel_ASYNCHRONOUS;
++		my asynchronicity = kMelder_asynchronicityLevel::ASYNCHRONOUS;
 +	#else
  	my asynchronicity =
  		Melder_batch ? kMelder_asynchronicityLevel::SYNCHRONOUS :
