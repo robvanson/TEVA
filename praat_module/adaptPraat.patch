@@ -46,7 +46,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
 --- praat_sources/sys/praat.cpp	2016-01-11 08:45:44.000000000 +0100
 +++ demo_praat_sources/sys/praat.cpp	2016-01-27 15:29:23.000000000 +0100
 # When running thePraatStandAloneScriptText, block the Melder_batch flag
-@@ -1149,7 +1149,9 @@ void praat_init (const char32 *title, in
+@@ -1150,7 +1150,9 @@ void praat_init (const char32 *title, in
  	}
  	//Melder_casual (U"Script file name <<", theCurrentPraatApplication -> batchName.string, U">>");
  
@@ -57,7 +57,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	/*
  	 * Running the Praat shell from the command line:
 # Change the name of the Unix preference dir
-@@ -1201,7 +1203,7 @@ void praat_init (const char32 *title, in
+@@ -1202,7 +1204,7 @@ void praat_init (const char32 *title, in
  		 */
  		char32 name [256];
  		#if defined (UNIX)
@@ -67,7 +67,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  			Melder_sprint (name,256, praatP.title, U" Prefs");   // for example MyProg Prefs
  		#elif defined (_WIN32)
 # Something in Linux (GTK)? Do not know what?
-@@ -1285,6 +1287,12 @@ void praat_init (const char32 *title, in
+@@ -1286,6 +1288,12 @@ void praat_init (const char32 *title, in
  
  	GuiWindow raam = nullptr;
  	if (Melder_batch) {
@@ -81,7 +81,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		for (int i = praatP.argumentNumber - 1; i < argc; i ++) {
  			if (i >= praatP.argumentNumber) MelderString_append (& theCurrentPraatApplication -> batchName, U" ");
 # Supress opening the object window, initialize praat under Mac 64 bit (cocoa) Needed for 10.7
-@@ -1326,10 +1334,32 @@ void praat_init (const char32 *title, in
+@@ -1327,10 +1335,32 @@ void praat_init (const char32 *title, in
  		#if motif
  			GuiApp_setApplicationShell (theCurrentPraatApplication -> topShell -> d_xmShell);
  		#endif
@@ -115,7 +115,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  	Thing_recognizeClassByOtherName (classStringSet, U"SortedSetOfString");
  	if (Melder_batch) {
 # Seems to speed startup, but not sure whether it is necessary
-@@ -1339,6 +1369,9 @@ void praat_init (const char32 *title, in
+@@ -1340,6 +1370,9 @@ void praat_init (const char32 *title, in
  		trace (U"adding fixed buttons without GUI");
  		praat_addFixedButtons (nullptr);
  	} else {
@@ -126,7 +126,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#ifdef macintosh
  			AEInstallEventHandler (758934755, 0, (AEEventHandlerProcPtr) (mac_processSignal8), 0, false);   // for receiving sendpraat
 # Supress opening the object window
-@@ -1360,7 +1393,9 @@ void praat_init (const char32 *title, in
+@@ -1361,7 +1394,9 @@ void praat_init (const char32 *title, in
  		trace (U"creating the dynamic menu in the Objects window");
  		praat_actions_createDynamicMenu (raam);
  		trace (U"showing the Objects window");
@@ -137,7 +137,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		#if defined (UNIX) && ! defined (NO_GUI)
  			try {
 # Initialize a picture window, but close it immediately
-@@ -1391,7 +1426,12 @@ void praat_init (const char32 *title, in
+@@ -1392,7 +1427,12 @@ void praat_init (const char32 *title, in
  
  	trace (U"creating the Picture window");
  	trace (U"before picture window shows: locale is ", Melder_peek8to32 (setlocale (LC_ALL, nullptr)));
@@ -152,7 +152,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  
  	if (unknownCommandLineOption) {
 # No idea why this is needed?
-@@ -1557,7 +1597,7 @@ void praat_run () {
+@@ -1614,7 +1654,7 @@ void praat_run () {
  			Melder_fatal (U"The number 1000000000000 is mistakenly written on this machine as ", dummy, U".");
  	}
  	{ uint32_t dummy = 0xffffffff;
@@ -162,7 +162,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat.cpp demo_pr
  		Melder_assert (double (dummy) == 4294967295.0);
  	}
 # Next chunk is needed to start the Demo window under Windows (motif)
-@@ -1723,10 +1763,20 @@ void praat_run () {
+@@ -1780,10 +1820,20 @@ void praat_run () {
  			trace (U"locale is ", Melder_peek8to32 (setlocale (LC_ALL, nullptr)));
  			gtk_main ();
  		#elif motif
@@ -191,7 +191,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_picture.cpp
 --- praat_sources/sys/praat_picture.cpp	2012-09-27 09:10:50.000000000 +0200
 +++ demo_praat_sources/sys/praat_picture.cpp	2012-10-15 13:47:43.000000000 +0200
 # Supress picture window
-@@ -1542,8 +1542,10 @@ void praat_picture_open (void) {
+@@ -1539,8 +1539,10 @@ void praat_picture_open (void) {
  		#if gtk
  			gtk_window_present (GTK_WINDOW (dialog -> d_gtkWindow));
  		#elif motif
@@ -202,7 +202,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_picture.cpp
  		#elif cocoa
  			GuiThing_show (dialog);
  		#endif
-@@ -1835,7 +1837,9 @@ void praat_picture_init (void) {
+@@ -1832,7 +1834,9 @@ void praat_picture_init (void) {
  		width = height = resolution * 12;
  		scrollWindow = GuiScrolledWindow_createShown (dialog, margin, 0, Machine_getMenuBarHeight () + margin, 0, 1, 1, 0);
  		drawingArea = GuiDrawingArea_createShown (scrollWindow, width, height, nullptr, nullptr, nullptr, nullptr, nullptr, 0);
@@ -240,7 +240,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/Ui.cpp demo_praat
 --- praat_sources/sys/Ui.cpp	2014-01-27 09:02:44.000000000 +0100
 +++ demo_praat_sources/sys/Ui.cpp	2014-03-27 12:22:58.000000000 +0100
 # Increase size of Pause Forms
-@@ -714,12 +714,16 @@ void UiForm_finish (I) {
+@@ -717,12 +717,16 @@ void UiForm_finish (I) {
  void UiForm_finish (UiForm me) {
  	if (! my d_dialogParent && ! my isPauseForm) return;
  
@@ -304,7 +304,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/UiPause.cpp demo_
 diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/dwtools/Intensity_extensions.cpp demo_praat_sources/dwtools/Intensity_extensions.cpp
 --- praat_sources/dwtools/Intensity_extensions.cpp	2011-09-20 11:40:46.000000000 +0200
 +++ demo_praat_sources/dwtools/Intensity_extensions.cpp	2011-09-28 11:45:46.000000000 +0200
-@@ -69,9 +69,9 @@ TextGrid Intensity_to_TextGrid_detectSil
+@@ -67,9 +67,9 @@ TextGrid Intensity_to_TextGrid_detectSil
  		Vector_getMinimumAndX (me, 0.0, 0.0, 1, NUM_PEAK_INTERPOLATE_PARABOLIC, & intensity_min_db, & xOfMinimum);
  		double intensity_dbRange = intensity_max_db - intensity_min_db;
  
@@ -321,7 +321,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
 --- praat_sources/sys/praat_objectMenus.cpp	2012-02-22 13:04:43.000000000 +0100
 +++ demo_praat_sources/sys/praat_objectMenus.cpp	2012-02-22 13:48:24.000000000 +0100
 # Allow the man pages
-@@ -509,8 +509,10 @@ FORM (SearchManual, U"Search manual", U"
+@@ -510,8 +510,10 @@ FORM (SearchManual, U"Search manual", U"
  	TEXTFIELD (query, U"Search for strings (separate with spaces):", U"")
  	OK
  DO
@@ -332,7 +332,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/sys/praat_objectMenus
  	autoManual manual = Manual_create (U"Intro", theCurrentPraatApplication -> manPages, false);
  	Manual_search (manual.get(), query);
  	manual.releaseToUser();
-@@ -522,8 +524,10 @@ FORM (GoToManualPage, U"Go to manual pag
+@@ -523,8 +525,10 @@ FORM (GoToManualPage, U"Go to manual pag
  	LIST (pageNumber, U"Page", numberOfPages, pages, 1)
  	OK
  DO
@@ -372,7 +372,7 @@ diff -Naurp -x '*.[oah]' -x '.git*' -x praat praat_sources/stat/praat_Stat.cpp d
 --- praat_sources/stat/praat_Stat.cpp	2017-06-08 11:26:20.000000000 +0200
 +++ demo_praat_sources/stat/praat_Stat.cpp	2017-06-09 15:14:12.000000000 +0200
 # Allow to view tables when in a Demo app
-@@ -290,7 +290,9 @@ DIRECT (HELP_StatisticsTutorial) {
+@@ -295,7 +295,9 @@ DIRECT (HELP_StatisticsTutorial) {
  // MARK: View & Edit
  
  DIRECT (WINDOW_Table_viewAndEdit) {
