@@ -1,8 +1,8 @@
 Creating a listening experiment
 
-First, format an replacable storage medium, e.g., an USB thumbdrive and name it "TEVAexp".
+First, format an replacable storage medium, e.g., an USB thumbdrive and name it "TEVAEXP" (case is important).
 
-On this replacable drive, create a file called "TEVAinit.tsv which contains the following lines with tab separated entries:
+On this replacable drive, create a file called "TEVAinit.tsv" which contains the following lines with tab separated entries:
 
 Key	Value
 config.speakerData	./Stimuli.Table
@@ -30,5 +30,7 @@ Stimuli/A_S1_1.wav
 Stimuli/beep.wav
 Stimuli/A_S1_2.wav
 These files are loaded and concatenated. The final result is a single audio file.
+
+The stimulus file can be made variable. Replace the part you want to change to "[[Text to ask for replacement]]". Then a window will pop up that asks for "Text to ask for replacement". For instance, if the stimulus tables are numbered from "./Stimuli_1.Table" to "./Stimuli_45.Table", you can enter: "./Stimuli_[[Subject number]].Table" in "TEVAinit.tsv". The pop-up window will aks for "Subject number". The answer will replace the [[Subject number]] in the name. The answer should be exact!. Spaces etc are not removed.
 
 
