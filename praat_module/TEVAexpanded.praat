@@ -1,5 +1,5 @@
 
-build_SHA$ = "16381E5437 2017-11-02T09:01:12Z"
+build_SHA$ = "479BC911BD 2024-08-26T09:49:39Z"
 #
 # TEVA 1.1
 # 
@@ -11929,6 +11929,23 @@ procedure global_setup
 	
 	# In case a SpeakerData table is given, load speakerdata, and set to first item
 	if config.speakerData$ <> ""
+		# Allow to ask for a new table component
+		if index_regex(config.speakerData$, "\[\[[^\]]*\]\]")
+			.requestText$ = replace_regex$(config.speakerData$, "^.*\[\[([^\]]*)\]\].*$", "\1", 0)
+			call getLanguageTexts Config SpeakerData
+			beginPause("")
+				sentence (.requestText$, "")
+			clicked = endPause ("'getLanguageTexts.cancelText$'", "'getLanguageTexts.continueText$'", 2, 1)
+			# Cancel
+			if clicked = 2
+				.requestTextVar$ = replace_regex$(.requestText$, "^([A-Z])", "\l\1", 0)
+				.requestTextVar$ = replace_regex$(.requestTextVar$, "\s*\(.*$", "", 0)
+				.requestTextVar$ = replace_regex$(.requestTextVar$, "[\s.?!()/\\\\]", "_", 0)
+				.replaceText$ = '.requestTextVar$'$
+				config.speakerData$ = replace_regex$(config.speakerData$, "\[\[[^\]]*\]\]", "[[]]", 0)
+				config.speakerData$ = replace$(config.speakerData$, "[[]]", .replaceText$, 0)
+			endif
+		endif
 		call ReadSpeakerData 'config.speakerData$'
 		# Set display to first item
 		call processMainPageNextItem 0 0 0
