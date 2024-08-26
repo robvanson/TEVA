@@ -1,0 +1,177 @@
+<html><head><meta name="robots" content="index,follow"><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Analysis</title></head><body bgcolor="#FFFFFF">
+
+<table border=0 cellpadding=0 cellspacing=0><tr><td bgcolor="#CCCC00"><table border=4 cellpadding=9><tr><td align=middle bgcolor="#000000"><font face="Palatino,Times" size=6 color="#999900"><b>
+Analysis
+</b></font></table></table>
+<p>
+Praat commands used to calculate the analysis results</p>
+<p>
+TEVA is a Praat script. The commands used to perform the analysis and draw the 
+displays are listed here:</p>
+<h3>
+Displays</h3>
+<h3>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Sound.html" target="_blank">Sound</a></h3>
+<code>
+-<br></code>
+<h3>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Pitch.html" target="_blank">Pitch</a></h3>
+<code>
+select Sound SND<br></code>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Pitch__cc____.html" target="_blank">To Pitch (cc)...</a> 0 40 15 yes 0.03 0.40 0.045 0.35 0.14 300<br></code>
+<p>
+There are three options, a low and high pitch cutoff (300 and 600Hz), and a compatible option 
+that implements the settings of Van As 2001</p>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Pitch__cc____.html" target="_blank">To Pitch (cc)...</a> 0 40 15 no  0.03 0.40 0.01 0.35 0.14 250<br></code>
+<h3>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Spectrogram.html" target="_blank">Spectrogram</a></h3>
+<code>
+select Sound SND<br></code>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Spectrogram___.html" target="_blank">To Spectrogram...</a> 0.1 'F<sub>n</sub>' 0.001 10 Gaussian<br></code>
+<p>
+F<sub>n</sub> is the Nyquist frequency</p>
+<code>
+select Sound SND<br></code>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Formant__burg____.html" target="_blank">To Formant (burg)...</a> 0.02 4 4400 0.1 50<br></code>
+<h3>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Ltas.html" target="_blank">Ltas</a></h3>
+<code>
+select Sound SND<br></code>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Spectrum___.html" target="_blank">To Spectrum...</a> yes<br></code>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Spectrum__To_Ltas__1-to-1_.html" target="_blank">To Ltas (1-to-1)</a><br></code>
+<h3>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Intensity.html" target="_blank">Intensity</a></h3>
+<code>
+select Sound SND<br></code>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Intensity___.html" target="_blank">To Intensity...</a> 60 0 yes<br></code>
+<h3>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Harmonicity.html" target="_blank">Harmonicity</a></h3>
+<code>
+select Sound SND<br></code>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Harmonicity__cc____.html" target="_blank">To Harmonicity (cc)...</a> 'dT' 40 0 1.0<br></code>
+<p>
+dT is the time step. The position of the maximum Harmonicity is determined on a smoothed 
+low-pass filtered contour using <i>'dT' 40 0 4.5</i> (low-pass 5Hz and 5Hz transition), <i>not</i> on the highest peak.</p>
+<h3>
+Measurements</h3>
+<h3>
+Voiced fraction</h3>
+<code>
+select Sound SND<br></code>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Pitch___.html" target="_blank">To Pitch...</a> 0 60 600<br></code>
+<p>
+Count the number of voiced frames in the window and divide by the total number of frames. 
+Using these settings, the step size (frame duration) is 0.0125s.</p>
+<h3>
+GNE (glottal to noise excitation ratio) </h3>
+<code>
+select Sound SND<br></code>
+<code>
+Extract part... 'T<sub>1</sub>' 'T<sub>2</sub>' rectangular 1.0 false<br></code>
+<code>
+To Harmonicity (gne)... 500 4500 1000 80<br></code>
+<code>
+gne = Get maximum<br></code>
+<p>
+T<sub>1</sub> and T<sub>2</sub> are the start and end time, respectively</p>
+<h3>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Voice_2__Jitter.html" target="_blank">Jitter</a></h3>
+<code>
+select Sound SND<br></code>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Pitch___.html" target="_blank">To Pitch...</a> 0 60 600<br></code>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Pitch__To_PointProcess.html" target="_blank">To PointProcess</a><br></code>
+<code>
+jitter = <a href="http://www.fon.hum.uva.nl/praat/manual/PointProcess__Get_jitter__local____.html" target="_blank">Get jitter (local)...</a> 'T<sub>1</sub>' 'T<sub>2</sub>' 0.0001 0.05 5<br></code>
+<p>
+T<sub>1</sub> and T<sub>2</sub> are the start and end time, respectively</p>
+<h3>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Voice_3__Shimmer.html" target="_blank">Shimmer</a></h3>
+<code>
+select Sound SND<br></code>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Pitch___.html" target="_blank">To Pitch...</a> 0 60 600<br></code>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Pitch__To_PointProcess.html" target="_blank">To PointProcess</a><br></code>
+<code>
+select Sound SND<br></code>
+<code>
+plus PointProcess SND<br></code>
+<code>
+shimmer = Get shimmer (local)... 'T<sub>1</sub>' 'T<sub>2</sub>' 0.0001 0.05 5 5<br></code>
+<p>
+T<sub>1</sub> and T<sub>2</sub> are the start and end time, respectively</p>
+<h3>
+BED (band energy difference)</h3>
+<code>
+select Sound SND<br></code>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Spectrum___.html" target="_blank">To Spectrum...</a> yes<br></code>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Spectrum__To_Ltas__1-to-1_.html" target="_blank">To Ltas (1-to-1)</a><br></code>
+<code>
+Get number of bins<br></code>
+<p>
+Average power over bins. Where <code>lowPower</code> is the average power over bins between 
+0 and 500 Hz and <code>highPower</code> is the average power over bins between 4000 and 5000 Hz</p>
+<code>
+bed = 10 * log10(lowPower / highPower)<br></code>
+<h3>
+CoG (spectral center of gravity)</h3>
+<code>
+select Sound SND<br></code>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Sound__To_Spectrum___.html" target="_blank">To Spectrum...</a> yes<br></code>
+<code>
+<a href="http://www.fon.hum.uva.nl/praat/manual/Spectrum__To_Ltas__1-to-1_.html" target="_blank">To Ltas (1-to-1)</a><br></code>
+<code>
+Get number of bins<br></code>
+<p>
+Sum the power (<code>10<sup>(power/10)</sup></code>), <code>sumPower</code> over the bins and the product of frequency and energy
+(<code>f * 10<sup>(power/10)</sup></code>), <code>productFreq</code>, over all bins.</p>
+<code>
+cog = productFreq / sumPower<br></code>
+<h3>
+Maximum Voicing Duration (MVD)</h3>
+<code>
+select Pitch SND<br></code>
+<code>
+To PointProcess<br></code>
+<code>
+To TextGrid (vuv)... 0.2 0.1<br></code>
+<code>
+Get longest interval with label <i>V</i><br></code>
+<h3>
+Formant quality factors (QF_i)</h3>
+<code>
+select Formant SND<br></code>
+<code>
+medianF = <a href="http://www.fon.hum.uva.nl/praat/manual/Formant__Get_quantile___.html" target="_blank">Get quantile...</a> 'i' 'T<sub>1</sub>' 'T<sub>2</sub>' Hertz 0.50<br></code>
+<code>
+medianB = <a href="http://www.fon.hum.uva.nl/praat/manual/Formant__Get_quantile___.html" target="_blank">Get quantile of bandwidth...</a> 'i' 'T<sub>1</sub>' 'T<sub>2</sub>' Hertz 0.50<br></code>
+<code>
+qf = medianF / medianB<br></code>
+<h3>Links to this page</h3>
+<ul>
+<li><a href="Acoustic_Signal_Typing.html">Acoustic Signal Typing</a>
+<li><a href="Example_evaluating_AST.html">Example evaluating AST</a>
+<li><a href="NKI_TE-VOICE_ANALYSIS_tool__EN_.html">NKI TE-VOICE ANALYSIS tool (EN)</a>
+<li><a href="Overview_of_Main_page.html">Overview of Main page</a>
+</ul>
+<hr>
+<address>
+	<p>&copy; R.J.J.H. van Son, December 13, 2011</p>
+</address>
+</body>
+</html>

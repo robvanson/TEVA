@@ -1,0 +1,10 @@
+Label	Text	Key	Helptext
+!Author	Author	!	R.J.J.H. van Son
+!Copyright	Copyright	!	Copyright \co 2010-2012 R.J.J.H. van Son \&  the NKI
+!License	License	!	GNU GPL version 2 or later
+!CANVAS	Display	¤	Display area
+$Scales	Kies een positie op de lijn tussen links (synthetisch), midden (TE) en rechts (laryngaal) welke beschrijving het best past bij het fragment	#	Visual Analogue rating Scales
+!>Healthy	Welk fragment lijkt het meest op normale spraak?	A;B	Een oordeel over de afstand tot normale spraak.
+>Naturalness	klinkt het fragment niet menselijk (links), als echte TE spraak (midden) of als normale laryngale spraak (rechts)	 synthetisch;laryngaal	Is een oordeel over de afstand tot TE spraak
+!>Quality	Welke stem klinkt het best? (kwaliteit)	A;B	Voice: overall voice quality
+Help	Schaal Hulp	#	Klik op de schaal waar u informatie over wilt, "Help" om verder te gaan

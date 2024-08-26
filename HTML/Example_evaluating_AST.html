@@ -1,0 +1,114 @@
+<html><head><meta name="robots" content="index,follow"><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Example evaluating AST</title></head><body bgcolor="#FFFFFF">
+
+<table border=0 cellpadding=0 cellspacing=0><tr><td bgcolor="#CCCC00"><table border=4 cellpadding=9><tr><td align=middle bgcolor="#000000"><font face="Palatino,Times" size=6 color="#999900"><b>
+Example evaluating AST
+</b></font></table></table>
+<p>
+A tutorial example of how to evaluate the Acoustic Signal Typing on a sample of recordings</p>
+<h3>
+Download and open the example corpus</h3>
+<p>
+Download the TEVA_AST_example.zip file from [To be announced] and extract it to a convenient location. 
+Open TEVA and then click the <i>Open</i> button on the <a href="Overview_of_Main_page.html">Main page</a>. A file selection window will 
+open. Navigate into the map you just downloaded and select <i>SignaltypeVoiceSamples.Table</i>. Then click <i>Choose</i>. The 
+<a href="Overview_of_Main_page.html">Main page</a> now contains a display of an empty sound. <i>SignaltypeVoiceSamples.Table</i> 
+contains data on a number of recordings. You must now select the recording you want to use. </p>
+<p align=middle><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><a href="Speaker_screenshot.png" target="_blank"><img height=250 width=450 src=Speaker_screenshot.png></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></p><h3>
+Select speakers</h3>
+<p>
+Click on the <i>Speaker</i> button (lower left). A new window will open. Click on the <b>=</b> button. 
+You now see a table with 5 columns and 4 lines (enlarge the window if you do not see all of it). The headings 
+read <i>ID</i>, <i>Text</i>, <i>Description</i>, <i>Audio</i>, and <i>AST</i>. Except for the <i>Description</i> column, all columns contain 
+metadata for the recordings mentioned in the <i>Audio</i> column. Close the Info window and click in the TEVA window 
+to view the Speaker window.</p>
+<p>
+The Speaker window has three text fields. The top one contains the ID of the recording, the next field 
+a short description of the speaker (e.g., name or ID, age, sex, etc.). You can change this field, or even create 
+it for a newly recorded voice. If you enter an ID, or just the start of the ID, or row number in the table, 
+the corresponding speaker from the Info window will be read and displayed in TEVA. If you empty the ID field 
+completely and replace it with a single dash <b>-</b>, the current record will be removed from the table.</p>
+<p align=middle><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><a href="SpeakerInfo_screenshot.png" target="_blank"><img height=250 width=450 src=SpeakerInfo_screenshot.png></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></a></p><p>
+Put a single <i>3</i> in the top field of the Speaker window to select the third entry in the Table. 
+Then Click the <i>Continue</i> button. You now see a display of the recording of the fourth speaker. You see the ID of this 
+speaker and the <a href="Acoustic_Signal_Typing.html">Pathological Type</a> as it was recorded in the Table.</p>
+<h3>
+Find a stable interval</h3>
+<p>
+Inspect the recording using the <i>Sound</i> and <i>Spectrogram</i> windows. You can change the frequency range of the <i>Spectrogram</i> 
+by selecting the desired top frequency in the <a href="Overview_of_Configuration_page.html">Configuration page</a>. After selecting the most stable 
+part of the speech, decide how the speech can be judged according to following statements as <i>Good</i>, <i>Mediocre</i>, or <i>Bad</i>. See also 
+<a href="Acoustic_Signal_Typing.html">Acoustic Signal Typing</a></p>
+<ul>
+<li>
+&nbsp;The speaker can keep a stable /a/ sound over more than 2 seconds
+<li>
+&nbsp;There are clear harmonics up to 1000Hz
+<li>
+&nbsp;There is at least one stable harmonic for longer than 2 seconds
+<li>
+&nbsp;There are harmonics in part of the sample, for longer than 1 second
+</ul>
+<p>
+With these statements in mind, pick an interval where the vowel is most stable. You can use 
+the <i>Zoom in</i> and <i>Zoom out</i> buttons as well as the <i>Previous</i> (move left) and <i>Next</i> (move right) buttons 
+to navigate around.</p>
+<p>
+When you found a part that you think is most stable, select an interval of 200 ms. Click the <i>Select</i> button. 
+You are now asked to click on the position in the display where you want the start of the interval. When you do that, 
+a vertical blue line appears. Now you are asked to click on the position in the display where the end of the interval 
+should come. Click there. Alternatively, you can simply click inside the display window to select the first boundary.
+After that it proceeds as with the <i>Select</i> button. Make sure that the interval is at least 100 ms 
+long. You can find the times of start and end points at the top of the graph. You can <i>Zoom in</i> or go <i>To selection</i>, 
+but that is not necessary. </p>
+<h3>
+Acoustic analysis</h3>
+<p>
+Inspect the other displays, <i>Pitch</i>, <i>Ltas</i>, <i>Intensity</i>, and <i>Harmonicity</i>. Below each 
+of these displays, analysis parameters will be printed about the selected interval (see also 
+<a href="Analysis.html">Analysis</a> and <a href="AST_categories.html">AST categories</a>). Do these acoustic parameters support your evaluation of the preceding 
+statements? Use the <i>Previous</i> (move left) and <i>Next</i> (move right) buttons to move the selected interval around 
+and see how this affects the acoustic parameters. </p>
+<h3>
+Entering the Pathological Type</h3>
+<p>
+When you have decided what type of pathological voice the recording has, you simply push one of the numbers 
+<i>1-4</i>, and the type is recorded. The type will be displayed in the window and in the title bar. Push <i>0</i> to remove 
+the type.</p>
+<h3>
+Speeding up evaluations in long lists</h3>
+<p>
+In case you need to examine a large number of recordings in sequence, a simplification exists. Select the 
+<i>Serial</i> button on the <a href="Overview_of_Configuration_page.html">Configuration page</a>. When you go back to the <a href="Overview_of_Main_page.html">Main page</a>, 
+the <i>Speaker</i> button now reads <i>Nxt</i> and has turned blue. Clicking on this <i>Nxt</i> button now automatically reads and displays 
+the next recording in the list. Just click on the <i>Serial</i> button again to reset TEVA to the default behavior.</p>
+<h3>
+Saving your work</h3>
+<p>
+After evaluating the sounds, the pathological types and remarks added to the Speaker Info table should be saved 
+to disk. Go to the <a href="Overview_of_Configuration_page.html">Configuration page</a> and click on <i>Save</i>. Fill in the name you want the file 
+to have (or use the default) and click <i>Save</i>. During the work, every change or addition made to the Speaker Info table 
+is saved into a backup file with the same name as the original file and an added <b>~</b> character. When you <i>Save</i> or <i>Close</i> 
+the table, this backup file is removed. Otherwise, it will remain until you open the table again and change something in it. 
+If you accidently forgot to save the table, you can simply open the backup file and save it under the old, or a new, name.</p>
+<p>
+To save the complete analysis of a single recording, use the <a href="VoicePrints.html">Print</a> button on the 
+<a href="Overview_of_Main_page.html">Main page</a>. This will ask for a place and name to save a directory with all the displays and 
+all the analysis data for the current time interval.</p>
+<h3>
+Advanced topic: Pre-set local preferences</h3>
+<p>
+For some projects, e.g., evaluation of a large corpus by judges or teaching a course, each user should start TEVA 
+using the same preferences settings. For that purpose, the preferences can be pre-set in a file called <i>TEVApreferences.tsv</i> 
+or <i>.tevarc</i> stored in the same directory as the <i>&lt;list&gt;.Table</i> file (the former file is visible, the latter is hidden). 
+When the <i>&lt;list&gt;.Table</i> file is opened, the settings file is read. See the global preferences file for the available settings.</p>
+<h3>Links to this page</h3>
+<ul>
+<li><a href="TEVA_Tutorials.html">TEVA Tutorials</a>
+</ul>
+<hr>
+<address>
+	<p>&copy; R.J.J.H. van Son, February 8, 2012</p>
+</address>
+</body>
+</html>
